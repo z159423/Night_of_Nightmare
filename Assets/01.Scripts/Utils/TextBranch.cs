@@ -10,7 +10,7 @@ public class TextBranch
     {
         var provider = AssetDatabase.LoadAssetAtPath<SheetsServiceProvider>("Assets/8.Localize/Google Sheets Service.asset");
         var google = new GoogleSheets(provider);
-        google.SpreadSheetId = "18pyeTydLxRmR36YZh5uvLH6_f7qhwbWzFQsUulgLXsA";
+        google.SpreadSheetId = "1gGz8N69Lev_Th8mJVw0T3KLGzHOIZCvgTnpvHmstYzY";
         return google;
     }
 
