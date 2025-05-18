@@ -1,0 +1,788 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: TextScript Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: TextScript
+  m_TableCollectionNameGuidString: cc1218b9f41eafd4cba5907c35c21c4a
+  m_Entries:
+  - m_Id: 9781141594112
+    m_Key: global.str_korea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781149982720
+    m_Key: global.str_english
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781149982721
+    m_Key: global.str_japanese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781149982722
+    m_Key: global.str_simplified_chinese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177024
+    m_Key: global.str_traditional_chinese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177025
+    m_Key: global.str_germany
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177026
+    m_Key: global.str_espanol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177027
+    m_Key: global.str_upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177028
+    m_Key: global.str_tower_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177029
+    m_Key: global.str_tower_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177030
+    m_Key: global.str_tower_name_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177031
+    m_Key: global.str_tower_name_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177032
+    m_Key: global.str_tower_name_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177033
+    m_Key: global.str_tower_name_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177034
+    m_Key: global.str_tower_name_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177035
+    m_Key: global.str_tower_name_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177036
+    m_Key: global.str_tower_name_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177037
+    m_Key: global.str_tower_name_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177038
+    m_Key: global.str_tower_name_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177039
+    m_Key: global.str_tower_name_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177040
+    m_Key: global.str_tower_name_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177041
+    m_Key: global.str_door_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177042
+    m_Key: global.str_door_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177043
+    m_Key: global.str_door_name_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177044
+    m_Key: global.str_door_name_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177045
+    m_Key: global.str_door_name_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177046
+    m_Key: global.str_door_name_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177047
+    m_Key: global.str_door_name_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177048
+    m_Key: global.str_door_name_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177049
+    m_Key: global.str_door_name_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177050
+    m_Key: global.str_door_name_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177051
+    m_Key: global.str_door_name_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177052
+    m_Key: global.str_door_name_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177053
+    m_Key: global.str_door_name_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177054
+    m_Key: global.str_bed_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177055
+    m_Key: global.str_bed_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177056
+    m_Key: global.str_bed_name_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177057
+    m_Key: global.str_bed_name_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177058
+    m_Key: global.str_bed_name_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177059
+    m_Key: global.str_bed_name_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177060
+    m_Key: global.str_bed_name_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177061
+    m_Key: global.str_bed_name_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177062
+    m_Key: global.str_bed_name_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177063
+    m_Key: global.str_bed_name_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177064
+    m_Key: global.str_dynamo_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177065
+    m_Key: global.str_dynamo_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177066
+    m_Key: global.str_dynamo_name_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177067
+    m_Key: global.str_dynamo_name_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177068
+    m_Key: global.str_dynamo_name_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177069
+    m_Key: global.str_dynamo_name_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177070
+    m_Key: global.str_dynamo_name_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177071
+    m_Key: global.str_dynamo_name_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177072
+    m_Key: global.str_dynamo_name_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177073
+    m_Key: global.str_dynamo_name_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177074
+    m_Key: global.str_mineral_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177075
+    m_Key: global.str_mineral_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177076
+    m_Key: global.str_mineral_name_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177077
+    m_Key: global.str_mineral_name_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177078
+    m_Key: global.str_desc_produce_gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177079
+    m_Key: global.str_desc_produce_energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177080
+    m_Key: global.str_desc_atk_dmg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177081
+    m_Key: global.str_desc_atk_range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177082
+    m_Key: global.str_desc_hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177083
+    m_Key: global.str_desc_repair_door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177084
+    m_Key: global.str_view_ads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177085
+    m_Key: global.str_desc_need_object
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177086
+    m_Key: global.str_sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177087
+    m_Key: global.str_desc_sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177088
+    m_Key: global.str_build_max_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177089
+    m_Key: global.str_tuto_desc_goto_bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177090
+    m_Key: global.str_tuto_desc_achieve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177091
+    m_Key: global.str_tuto_desc_build
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177092
+    m_Key: global.str_lamp_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177093
+    m_Key: global.str_lamp_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177094
+    m_Key: global.str_repair_building_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177095
+    m_Key: global.str_repair_building_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177096
+    m_Key: global.str_spell_blocker_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177097
+    m_Key: global.str_spell_blocker_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177098
+    m_Key: global.str_energy_shield_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177099
+    m_Key: global.str_energy_shield_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177100
+    m_Key: global.str_ATM_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177101
+    m_Key: global.str_ATM_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177102
+    m_Key: global.str_cooler_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177103
+    m_Key: global.str_cooler_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177104
+    m_Key: global.str_trap_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177105
+    m_Key: global.str_trap_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177106
+    m_Key: global.str_thorn_bush_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177107
+    m_Key: global.str_thorn_bush_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177108
+    m_Key: global.str_guillotine_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177109
+    m_Key: global.str_guillotine_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177110
+    m_Key: global.str_telescope_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177111
+    m_Key: global.str_telescope_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177112
+    m_Key: global.str_antenna_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177113
+    m_Key: global.str_antenna_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177114
+    m_Key: global.str_tower_boost_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177115
+    m_Key: global.str_tower_boost_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177116
+    m_Key: global.str_fly_frog_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177117
+    m_Key: global.str_fly_frog_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177118
+    m_Key: global.str_axe_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177119
+    m_Key: global.str_axe_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177120
+    m_Key: global.str_axe_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177121
+    m_Key: global.str_mirror_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177122
+    m_Key: global.str_mirror_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177123
+    m_Key: global.str_mirror_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177124
+    m_Key: global.str_flower_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177125
+    m_Key: global.str_flower_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177126
+    m_Key: global.str_flower_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177127
+    m_Key: global.str_auto_tower_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177128
+    m_Key: global.str_auto_tower_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177129
+    m_Key: global.str_auto_tower_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177130
+    m_Key: global.str_sheep_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177131
+    m_Key: global.str_sheep_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177132
+    m_Key: global.str_shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177133
+    m_Key: global.str_character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177134
+    m_Key: global.str_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177135
+    m_Key: global.str_boost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177136
+    m_Key: global.str_mastery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177137
+    m_Key: global.str_rank_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177138
+    m_Key: global.str_challenge_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177139
+    m_Key: global.str_start_match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177140
+    m_Key: global.str_matching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177141
+    m_Key: global.str_finding_player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177142
+    m_Key: global.str_touch_and_start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177143
+    m_Key: global.str_gamestart_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177144
+    m_Key: global.str_win_reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177145
+    m_Key: global.str_lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177146
+    m_Key: global.str_tuto_desc_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177147
+    m_Key: global.str_tuto_desc_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177148
+    m_Key: global.str_tuto_desc_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177149
+    m_Key: global.str_tuto_desc_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177150
+    m_Key: global.str_tuto_desc_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177151
+    m_Key: global.str_tuto_desc_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177152
+    m_Key: global.str_tuto_desc_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177153
+    m_Key: global.str_tuto_desc_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177154
+    m_Key: global.str_tuto_desc_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177155
+    m_Key: global.str_tuto_desc_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177156
+    m_Key: global.str_tuto_desc_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177157
+    m_Key: global.str_tuto_desc_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177158
+    m_Key: global.str_toast_enemy_level_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177159
+    m_Key: global.str_toast_enemy_spd_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177160
+    m_Key: global.str_toast_enemy_dmg_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177161
+    m_Key: global.str_character_name_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177162
+    m_Key: global.str_character_name_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177163
+    m_Key: global.str_character_name_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177164
+    m_Key: global.str_character_name_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177165
+    m_Key: global.str_character_name_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177166
+    m_Key: global.str_character_name_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177167
+    m_Key: global.str_character_desc_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177168
+    m_Key: global.str_character_desc_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177169
+    m_Key: global.str_character_desc_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177170
+    m_Key: global.str_character_desc_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177171
+    m_Key: global.str_character_desc_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177172
+    m_Key: global.str_character_desc_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177173
+    m_Key: global.str_purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177174
+    m_Key: global.str_choice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177175
+    m_Key: global.str_choiced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177176
+    m_Key: global.str_repair_door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177177
+    m_Key: global.str_free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177178
+    m_Key: global.str_exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177179
+    m_Key: global.str_exit_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177180
+    m_Key: global.str_claim_reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177181
+    m_Key: global.str_claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177182
+    m_Key: global.str_update_coming_soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177183
+    m_Key: global.str_me
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177184
+    m_Key: global.str_continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177185
+    m_Key: global.str_owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177186
+    m_Key: global.str_no_lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177187
+    m_Key: global.str_max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177188
+    m_Key: global.str_lol_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177189
+    m_Key: global.str_moth_skill_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177190
+    m_Key: global.str_leaderboard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177191
+    m_Key: global.str_boost_lamp_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177192
+    m_Key: global.str_boost_hammer_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177193
+    m_Key: global.str_boost_hammer_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177194
+    m_Key: global.str_boost_protect_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177195
+    m_Key: global.str_boost_protect_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177196
+    m_Key: global.str_boost_overheat_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177197
+    m_Key: global.str_boost_overheat_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177198
+    m_Key: global.str_day_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177199
+    m_Key: global.str_top_user
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177200
+    m_Key: global.str_building_category_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177201
+    m_Key: global.str_building_category_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177202
+    m_Key: global.str_building_category_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177203
+    m_Key: global.str_building_category_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177204
+    m_Key: global.str_building_category_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177205
+    m_Key: global.str_remove_ads_ticket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177206
+    m_Key: global.str_gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177207
+    m_Key: global.str_boost_pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177208
+    m_Key: global.str_not_enough_rank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177209
+    m_Key: global.str_infinity_result_title
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6408920652587728968
+  references:
+    version: 2
+    RefIds:
+    - rid: 6408920652587728968
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1747561773317

@@ -1,0 +1,781 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextScript_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: cc1218b9f41eafd4cba5907c35c21c4a, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 9781141594112
+    m_Localized: "\uD55C\uAD6D\uC5B4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781149982720
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781149982721
+    m_Localized: "\u65E5\u672C\u8A9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781149982722
+    m_Localized: "\u7B80\u4F53\u4E2D\u6587"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177024
+    m_Localized: "\u7E41\u9AD4\u4E2D\u6587"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177025
+    m_Localized: Deutsch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177026
+    m_Localized: "espa\xF1ol"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177027
+    m_Localized: Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177028
+    m_Localized: Seed Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177029
+    m_Localized: Corn Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177030
+    m_Localized: Milk Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177031
+    m_Localized: Bread Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177032
+    m_Localized: Fork Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177033
+    m_Localized: Shovel Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177034
+    m_Localized: Sickle Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177035
+    m_Localized: Lever Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177036
+    m_Localized: Pitchfork Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177037
+    m_Localized: Mace Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177038
+    m_Localized: Sword Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177039
+    m_Localized: Bow Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177040
+    m_Localized: Gun Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177041
+    m_Localized: Door Lv.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177042
+    m_Localized: Door Lv.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177043
+    m_Localized: Door Lv.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177044
+    m_Localized: Door Lv.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177045
+    m_Localized: Door Lv.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177046
+    m_Localized: Door Lv.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177047
+    m_Localized: Door Lv.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177048
+    m_Localized: Door Lv.8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177049
+    m_Localized: Door Lv.9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177050
+    m_Localized: Door Lv.10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177051
+    m_Localized: Door Lv.11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177052
+    m_Localized: Door Lv.12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177053
+    m_Localized: Door Lv.13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177054
+    m_Localized: Bed Lv.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177055
+    m_Localized: Bed Lv.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177056
+    m_Localized: Bed Lv.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177057
+    m_Localized: Bed Lv.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177058
+    m_Localized: Bed Lv.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177059
+    m_Localized: Bed Lv.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177060
+    m_Localized: Bed Lv.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177061
+    m_Localized: Bed Lv.8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177062
+    m_Localized: Bed Lv.9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177063
+    m_Localized: Bed Lv.10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177064
+    m_Localized: Dynamo Lv.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177065
+    m_Localized: Dynamo Lv.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177066
+    m_Localized: Dynamo Lv.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177067
+    m_Localized: Dynamo Lv.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177068
+    m_Localized: Dynamo Lv.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177069
+    m_Localized: Dynamo Lv.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177070
+    m_Localized: Dynamo Lv.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177071
+    m_Localized: Dynamo Lv.8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177072
+    m_Localized: Dynamo Lv.9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177073
+    m_Localized: Dynamo Lv.10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177074
+    m_Localized: Copper Ore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177075
+    m_Localized: Silver Ore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177076
+    m_Localized: Gold Ore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177077
+    m_Localized: Diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177078
+    m_Localized: 'Production: {0} gold/s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177079
+    m_Localized: 'Production: {0} energy/s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177080
+    m_Localized: 'Attack: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177081
+    m_Localized: 'Range: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177082
+    m_Localized: 'HP: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177083
+    m_Localized: Upgrades the door.\nCan only be used once!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177084
+    m_Localized: Watch Ad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177085
+    m_Localized: 'Required: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177086
+    m_Localized: Sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177087
+    m_Localized: Destroys the building.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177088
+    m_Localized: Max Level!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177089
+    m_Localized: Go to bed and lie down!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177090
+    m_Localized: Upgrade to {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177091
+    m_Localized: Build {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177092
+    m_Localized: Lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177093
+    m_Localized: Use a lamp to build a random Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177094
+    m_Localized: Repair Station
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177095
+    m_Localized: Recovers 2% of door HP every second
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177096
+    m_Localized: Spell Blocker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177097
+    m_Localized: '30% chance to cancel enemy skill\nCooldown: 30 sec'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177098
+    m_Localized: Energy Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177099
+    m_Localized: 'Grants invincibility for 3 sec when door HP is low\nCooldown: 120
+      sec'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177100
+    m_Localized: Golden Chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177101
+    m_Localized: Turret gains gold per attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177102
+    m_Localized: Cooler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177103
+    m_Localized: Enemies attacking the door have 20% slower attack speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177104
+    m_Localized: Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177105
+    m_Localized: 'Snares enemy for 2 sec if HP is 20% or less\nCooldown: 120 sec'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177106
+    m_Localized: Thorn Bush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177107
+    m_Localized: Deals 1% max HP/sec to enemies attacking the door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177108
+    m_Localized: Guillotine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177109
+    m_Localized: 'Deals 10% max HP\nif HP is 20% or less Cooldown: 120 sec'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177110
+    m_Localized: Telescope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177111
+    m_Localized: Increases turret attack range by 20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177112
+    m_Localized: Satellite Antenna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177113
+    m_Localized: Increases turret attack speed by 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177114
+    m_Localized: Turret Booster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177115
+    m_Localized: Closer enemies increase turret fire rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177116
+    m_Localized: Golden\nFrog {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177117
+    m_Localized: Gain {0} gold each time a fly is eaten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177118
+    m_Localized: Axe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177119
+    m_Localized: Golden Axe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177120
+    m_Localized: "Throws an axe dealing {1}% max HP if enemy HP \u2264 {0}%\\n(Infinite
+      range)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177121
+    m_Localized: Silver Mirror
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177122
+    m_Localized: Golden Mirror
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177123
+    m_Localized: Deals {0}% max HP damage per sec\n(Infinite range)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177124
+    m_Localized: Flower Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177125
+    m_Localized: Lush Flower Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177126
+    m_Localized: Gain {0} gold whenever the door is attacked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177127
+    m_Localized: Auto Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177128
+    m_Localized: Golden Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177129
+    m_Localized: Gain gold on each attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177130
+    m_Localized: Sheep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177131
+    m_Localized: Generates gold every second.\nMore gold when allies die
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177132
+    m_Localized: SHOP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177133
+    m_Localized: Character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177134
+    m_Localized: Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177135
+    m_Localized: BOOST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177136
+    m_Localized: Mastery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177137
+    m_Localized: Rank Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177138
+    m_Localized: Challenge Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177139
+    m_Localized: Start Match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177140
+    m_Localized: Matching... {0}sec
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177141
+    m_Localized: Finding Player. . .
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177142
+    m_Localized: Touch to Start!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177143
+    m_Localized: Match complete!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177144
+    m_Localized: Win Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177145
+    m_Localized: Defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177146
+    m_Localized: Lie down on the bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177147
+    m_Localized: Buy Bed Lv.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177148
+    m_Localized: Reach Door Level 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177149
+    m_Localized: Buy Bed Lv.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177150
+    m_Localized: Buy Bed Lv.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177151
+    m_Localized: Buy {0}/2 Turrets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177152
+    m_Localized: Buy Bed Lv.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177153
+    m_Localized: Buy {0}/2 Dynamo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177154
+    m_Localized: Buy Bed Lv.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177155
+    m_Localized: Buy Turret Lv.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177156
+    m_Localized: Build Copper Ore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177157
+    m_Localized: You have completed the tutorial!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177158
+    m_Localized: The nightmare grows stronger...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177159
+    m_Localized: The nightmare is excited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177160
+    m_Localized: The nightmare is enraged!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177161
+    m_Localized: Farmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177162
+    m_Localized: Repairman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177163
+    m_Localized: Lamp Girl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177164
+    m_Localized: Miner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177165
+    m_Localized: Scientist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177166
+    m_Localized: Chef
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177167
+    m_Localized: Install 2 turrets\nfor free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177168
+    m_Localized: Install 1 repair station\nfor free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177169
+    m_Localized: Install 1 lamp\nfor free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177170
+    m_Localized: 10% discount on\nall minerals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177171
+    m_Localized: 10% discount on all generators\nStart with 10 energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177172
+    m_Localized: All turret attack speed +15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177173
+    m_Localized: Purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177174
+    m_Localized: Select
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177175
+    m_Localized: Selected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177176
+    m_Localized: REPAIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177177
+    m_Localized: Free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177178
+    m_Localized: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177179
+    m_Localized: Do you want to give up\nand leave the game?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177180
+    m_Localized: Claim x{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177181
+    m_Localized: Claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177182
+    m_Localized: Update Coming Soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177183
+    m_Localized: YOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177184
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177185
+    m_Localized: 'Owned: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177186
+    m_Localized: No Lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177187
+    m_Localized: Max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177188
+    m_Localized: '*Creepy laughter'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177189
+    m_Localized: '*Moth''s powder attack'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177190
+    m_Localized: Leaderboard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177191
+    m_Localized: Required to build a lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177192
+    m_Localized: Hammer Throw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177193
+    m_Localized: Stuns the enemy for\n{0} seconds and deals {1}% \nof max HP as damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177194
+    m_Localized: Holy Protection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177195
+    m_Localized: Makes the door invincible\nfor {0} seconds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177196
+    m_Localized: Overheat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177197
+    m_Localized: Turret attack speed is\ndoubled for {0} seconds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177198
+    m_Localized: Night {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177199
+    m_Localized: Top {0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177200
+    m_Localized: Base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177201
+    m_Localized: Ore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177202
+    m_Localized: Guard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177203
+    m_Localized: Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177204
+    m_Localized: Buff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177205
+    m_Localized: Remove Ads Ticket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177206
+    m_Localized: Gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177207
+    m_Localized: Boost Pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9781154177208
+    m_Localized: Unlocks after 1 win in Rank Mode
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
