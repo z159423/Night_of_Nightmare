@@ -7,13 +7,12 @@ using System.Text.RegularExpressions;
 
 public class Managers : SingletonStatic<Managers>
 {
-    public static Managers instance = null;
-
     public static ResourceManager Resource { get; set; } = new ResourceManager();
     public static LocalizeManager Localize { get; set; } = new LocalizeManager();
     public static PoolManager Pool { get; set; } = new PoolManager();
     public static AudioManager AudioManager { get; set; } = new AudioManager();
     public static UIManager UI { get; set; } = new UIManager();
+    public static LocalDataManager LocalData { get; set; } = new LocalDataManager();
 
     void CreateManagers()
     {
@@ -22,18 +21,26 @@ public class Managers : SingletonStatic<Managers>
         Pool = transform.AddComponent<PoolManager>();
         UI = transform.AddComponent<UIManager>();
 
-        AudioManager = Resource.Instantiate("Managers/AudioManager", transform).GetComponent<AudioManager>();
+        AudioManager = Resource.Instantiate("AudioManager", transform).GetComponent<AudioManager>();
     }
 
     private void Awake()
     {
-        if (instance != null)
-            Destroy(gameObject);
-        else
+        DontDestroyOnLoad(this);
+        CreateManagers();
+    }
+
+    private void Update()
+    {
+        LocalDataSave();
+    }
+
+    public void LocalDataSave()
+    {
+        if (LocalData?.IsSave ?? false)
         {
-            DontDestroyOnLoad(this);
-            CreateManagers();
-            instance = this;
+            PlayerPrefs.Save();
+            LocalData.IsSave = false;
         }
     }
 }

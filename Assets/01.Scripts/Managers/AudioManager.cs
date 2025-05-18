@@ -7,7 +7,6 @@ using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
-
     public Sound[] Bgm;
     public GameObject bgmPrefab;
     private AudioSource BGMaudioSource;

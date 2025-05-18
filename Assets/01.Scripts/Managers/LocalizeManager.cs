@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine.Localization;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Text.RegularExpressions;
+using UnityEngine.Localization.Settings;
+
 
 /// <summary>
 /// 이 클래스는 현지화를 도와주는 기능을 포함하고 있습니다.
@@ -11,10 +13,68 @@ using System.Text.RegularExpressions;
 public class LocalizeManager : MonoBehaviour
 {
     public Regex _regex;
+    public int LangIndex { get; private set; } = 0;
+
+    bool init = false;
+
 
     private void Start()
     {
         _regex = new Regex(@"[\u0600-\u06FF]+");
+
+        if (!init)
+            Setting();
+    }
+
+    public void Setting()
+    {
+        LangIndex = Managers.LocalData.LanguageIndex;
+        if (LangIndex < 0) // 첫 셋팅
+        {
+            var lang = Application.systemLanguage;
+            switch (lang)
+            {
+                case (SystemLanguage.English):
+                    LangIndex = 0;
+                    break;
+                case (SystemLanguage.Korean):
+                    LangIndex = 1;
+                    break;
+                case (SystemLanguage.Japanese):
+                    LangIndex = 2;
+                    break;
+                case (SystemLanguage.ChineseSimplified):
+                    LangIndex = 3;
+                    break;
+                case (SystemLanguage.ChineseTraditional):
+                    LangIndex = 4;
+                    break;
+                case (SystemLanguage.German):
+                    LangIndex = 5;
+                    break;
+                case (SystemLanguage.Spanish):
+                    LangIndex = 6;
+                    break;
+
+                default:
+                    LangIndex = 0;
+                    break;
+            }
+            Managers.LocalData.LanguageIndex = LangIndex;
+        }
+
+        UnityEngine.ResourceManagement.ResourceManager.ExceptionHandler += (handle, ex) =>
+        {
+            if (ex != null)
+            {
+                init = false;
+                Debug.LogException(ex);
+            }
+        };
+
+        init = true;
+
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[LangIndex];
     }
 
     /// <summary>

@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public partial class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     int _order = 10;
 
