@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb9c12a8c6c949f7af83a3d238359d0, type: 3}
-  m_Name: vFolders Data
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Default Local Group_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  folderDatas_byGuid:
-    keys: []
-    values: []
-  bookmarks: []
+  m_Group: {fileID: 11400000, guid: 4fa69dd0bf93b7b4486721925a0f73ab, type: 2}
+  m_StaticContent: 0
