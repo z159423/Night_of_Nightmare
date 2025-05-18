@@ -11,6 +11,7 @@ using System.Text;
 using DG.Tweening;
 using Object = UnityEngine.Object;
 using System.Runtime.InteropServices;
+using UnityEngine.UI;
 
 public static class Util
 {
@@ -135,6 +136,19 @@ public static class Util
     public static T FindComponent<T>(this MonoBehaviour mono, string n) where T : Object
     {
         return FindComponent<T>(mono.gameObject, n);
+    }
+
+    public static void AddButtonEvent(this Button go, UnityEngine.Events.UnityAction action, bool sound = true)
+    {
+        go.onClick.RemoveAllListeners();
+        go.onClick.AddListener(() =>
+        {
+            if (Input.touchCount < 2) action.Invoke();
+            if (sound)
+            {
+                // Managers.AudioManager.Play("button click");
+            }
+        });
     }
 
     public static T DeepCopy<T>(T obj)
