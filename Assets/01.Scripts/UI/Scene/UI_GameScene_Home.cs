@@ -14,7 +14,9 @@ public class UI_GameScene_Home : UI_Scene
         CharacterBtn,
         HomeBtn,
         BoostBtn,
-        QeustBtn
+        QeustBtn,
+        RankModeBtn,
+        ChallengeModeBtn
     }
 
     enum Texts
@@ -30,7 +32,7 @@ public class UI_GameScene_Home : UI_Scene
     public override void Init()
     {
         base.Init();
-        Managers.UI.SetCanvas(gameObject, true);
+        // Managers.UI.SetCanvas(gameObject, true);
 
         if (!_init)
         {
@@ -109,6 +111,11 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.QeustBtn).AddButtonEvent(() =>
         {
 
+        });
+
+        GetButton(Buttons.RankModeBtn).onClick.AddListener(() =>
+        {
+            Managers.UI.ShowPopupUI<Match_Making_Popup>();
         });
     }
 

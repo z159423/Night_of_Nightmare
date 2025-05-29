@@ -23,7 +23,7 @@ public class UI_GameScene_Loading : UI_Scene
     public override void Init()
     {
         base.Init();
-        Managers.UI.SetCanvas(gameObject, true);
+        // Managers.UI.SetCanvas(gameObject, true);
 
         if (!_init)
         {
