@@ -117,6 +117,11 @@ public class UI_GameScene_Home : UI_Scene
         {
             Managers.UI.ShowPopupUI<Match_Making_Popup>();
         });
+
+        GetButton(Buttons.ChallengeModeBtn).onClick.AddListener(() =>
+        {
+            Managers.UI.ShowPopupUI<ChallengeMode_Popup>();
+        });
     }
 
     public override void Show()
