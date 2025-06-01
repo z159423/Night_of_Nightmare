@@ -11,11 +11,11 @@ public class TextOutliner : MonoBehaviour
     void Start()
     {
         tmp = GetComponent<TextMeshProUGUI>();
-        
+
         // 텍스트마다 개별 머티리얼 생성
         instanceMaterial = new Material(tmp.fontSharedMaterial);
         tmp.fontMaterial = instanceMaterial;
-        
+
         // 아웃라인 색상 설정
         instanceMaterial.SetColor("_OutlineColor", outlineColor);
         instanceMaterial.SetFloat("_OutlineWidth", outlineWidth);

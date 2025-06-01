@@ -26,7 +26,7 @@ public class LocalizeManager : MonoBehaviour
             Setting();
     }
 
-    public void Setting()
+    public IEnumerator Setting()
     {
         LangIndex = Managers.LocalData.LanguageIndex;
         if (LangIndex < 0) // 첫 셋팅
@@ -74,7 +74,17 @@ public class LocalizeManager : MonoBehaviour
 
         init = true;
 
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[LangIndex];
+        // Wait until AvailableLocales are initialized and have at least one locale
+        yield return LocalizationSettings.InitializationOperation;
+        var locales = LocalizationSettings.AvailableLocales.Locales;
+        if (locales != null && locales.Count > LangIndex)
+        {
+            LocalizationSettings.SelectedLocale = locales[LangIndex];
+        }
+        else
+        {
+            Debug.LogWarning("Locales not initialized or LangIndex out of range.");
+        }
     }
 
     /// <summary>

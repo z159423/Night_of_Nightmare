@@ -8,24 +8,12 @@ public partial struct GameObserverType
 {
     public enum Game
     {
-        Crystal,
-        Drone,
-        ChangeModuleInventory,
-        IAP,
-        InGameCrystal,
-        PlayerDie,
-        GoMainMenu,
-        StartStage,
-        ReStartStage,
-        Revive,
-        DoubleCrystal
+        OnChangeHomeLowerBtn
     }
 
     public enum Data
     {
-        Timer,
-        OnChangeLocalizeSetting,
-        RV
+        
     }
 }
 

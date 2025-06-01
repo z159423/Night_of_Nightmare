@@ -25,9 +25,21 @@ public class UI_GameScene_Home : UI_Scene
         TicketCount
     }
 
+    public enum LowerBtnTypes
+    {
+        ShopBtn,
+        CharacterBtn,
+        HomeBtn,
+        BoostBtn,
+        QeustBtn
+    }
+
     bool _init = false;
 
     public LowerBtn selectedLowerBtn;
+    public LowerBtnTypes selectedLowerBtnType;
+
+    private IapShop_Popup iapShopPopup;
 
     public override void Init()
     {
@@ -41,6 +53,15 @@ public class UI_GameScene_Home : UI_Scene
 
         GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>().Select();
         selectedLowerBtn = GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>();
+
+        this.SetListener(GameObserverType.Game.OnChangeHomeLowerBtn, () =>
+        {
+            if (iapShopPopup != null && selectedLowerBtnType != LowerBtnTypes.ShopBtn)
+            {
+                iapShopPopup.ClosePopupUI();
+                iapShopPopup = null;
+            }
+        });
     }
 
     public void FirstSetting()
@@ -67,6 +88,11 @@ public class UI_GameScene_Home : UI_Scene
 
             selectedLowerBtn.UnSelect();
             selectedLowerBtn = lowerbtn;
+
+            iapShopPopup = Managers.UI.ShowPopupUI<IapShop_Popup>();
+            selectedLowerBtnType = LowerBtnTypes.ShopBtn;
+
+            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
         });
 
         GetButton(Buttons.CharacterBtn).onClick.AddListener(() =>
@@ -80,6 +106,11 @@ public class UI_GameScene_Home : UI_Scene
 
             selectedLowerBtn.UnSelect();
             selectedLowerBtn = lowerbtn;
+            
+            selectedLowerBtnType = LowerBtnTypes.CharacterBtn;
+
+            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
+
         });
 
         GetButton(Buttons.HomeBtn).AddButtonEvent(() =>
@@ -93,6 +124,11 @@ public class UI_GameScene_Home : UI_Scene
 
             selectedLowerBtn.UnSelect();
             selectedLowerBtn = lowerbtn;
+
+            selectedLowerBtnType = LowerBtnTypes.HomeBtn;
+
+            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
+
         });
 
         GetButton(Buttons.BoostBtn).AddButtonEvent(() =>
@@ -106,6 +142,11 @@ public class UI_GameScene_Home : UI_Scene
 
             selectedLowerBtn.UnSelect();
             selectedLowerBtn = lowerbtn;
+
+            selectedLowerBtnType = LowerBtnTypes.BoostBtn;
+
+            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
+
         });
 
         GetButton(Buttons.QeustBtn).AddButtonEvent(() =>
