@@ -1637,6 +1637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedLowerBtn: {fileID: 0}
+  selectedLowerBtnType: 0
 --- !u!1 &5633999032928212378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,7 +3056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: eca04b58248457b43aeff9abf0a0f681, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a156e7d60acb0e418072843ec7382d9, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

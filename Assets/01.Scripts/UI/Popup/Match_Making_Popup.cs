@@ -24,6 +24,10 @@ public class Match_Making_Popup : UI_Popup
 
     }
 
+    GameObject matching;
+    GameObject ranking;
+
+
     public override void Init()
     {
         base.Init();
@@ -37,6 +41,9 @@ public class Match_Making_Popup : UI_Popup
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
 
+        matching = gameObject.FindRecursive("Matching");
+        ranking = gameObject.FindRecursive("Ranking");
+
         GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
         GetButton(Buttons.MatchBtn).AddButtonEvent(StartMatching);
         GetButton(Buttons.InfoBtn).AddButtonEvent(() =>
@@ -47,7 +54,8 @@ public class Match_Making_Popup : UI_Popup
 
     private void StartMatching()
     {
-
+        matching.SetActive(true);
+        ranking.SetActive(false);
     }
 
 

@@ -40,6 +40,8 @@ public class UI_GameScene_Home : UI_Scene
     public LowerBtnTypes selectedLowerBtnType;
 
     private IapShop_Popup iapShopPopup;
+    private BoostShop_Popup boostShopPopup;
+
 
     public override void Init()
     {
@@ -60,6 +62,12 @@ public class UI_GameScene_Home : UI_Scene
             {
                 iapShopPopup.ClosePopupUI();
                 iapShopPopup = null;
+            }
+
+            if (boostShopPopup != null && selectedLowerBtnType != LowerBtnTypes.BoostBtn)
+            {
+                boostShopPopup.ClosePopupUI();
+                boostShopPopup = null;
             }
         });
     }
@@ -106,7 +114,7 @@ public class UI_GameScene_Home : UI_Scene
 
             selectedLowerBtn.UnSelect();
             selectedLowerBtn = lowerbtn;
-            
+
             selectedLowerBtnType = LowerBtnTypes.CharacterBtn;
 
             GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
@@ -147,6 +155,7 @@ public class UI_GameScene_Home : UI_Scene
 
             GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
 
+            boostShopPopup = Managers.UI.ShowPopupUI<BoostShop_Popup>();
         });
 
         GetButton(Buttons.QeustBtn).AddButtonEvent(() =>
