@@ -4,14 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Match_Making_Popup : UI_Popup
+public class Tier_Popup : UI_Popup
 {
     enum Buttons
     {
         ExitBtn,
-        MatchBtn,
-        InfoBtn,
-        MatchingBtn
     }
 
     enum Images
@@ -24,13 +21,19 @@ public class Match_Making_Popup : UI_Popup
 
     }
 
-    GameObject matching;
-    GameObject ranking;
-
+    GameObject layout;
 
     public override void Init()
     {
         base.Init();
+
+        foreach (var tier in Define.TierToScore.Keys)
+        {
+            var tierBox = Managers.Resource.Instantiate("TierBox").GetComponent<TierBox>();
+            tierBox.Init();
+            tierBox.Setting(tier);
+            tierBox.transform.SetParent(layout.transform, false);
+        }
     }
 
     public override void FirstSetting()
@@ -41,23 +44,10 @@ public class Match_Making_Popup : UI_Popup
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
 
-        matching = gameObject.FindRecursive("Matching");
-        ranking = gameObject.FindRecursive("Ranking");
+        layout = gameObject.FindRecursive("Layout");
 
         GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
-        GetButton(Buttons.MatchBtn).AddButtonEvent(StartMatching);
-        GetButton(Buttons.InfoBtn).AddButtonEvent(() =>
-        {
-            Managers.UI.ShowPopupUI<Tier_Popup>();
-        });
     }
-
-    private void StartMatching()
-    {
-        matching.SetActive(true);
-        ranking.SetActive(false);
-    }
-
 
     public override void Reset()
     {
