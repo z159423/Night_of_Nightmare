@@ -50,6 +50,12 @@ public class Match_Making_Popup : UI_Popup
         {
             Managers.UI.ShowPopupUI<Tier_Popup>();
         });
+
+        GetButton(Buttons.MatchingBtn).AddButtonEvent(() =>
+        {
+            Exit();
+            Managers.Game.OnRankGameStart();
+        });
     }
 
     private void StartMatching()

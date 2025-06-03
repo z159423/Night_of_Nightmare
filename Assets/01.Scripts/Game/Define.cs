@@ -89,4 +89,11 @@ public class Define
         {Tier.GrandMaster, 3800},
         {Tier.Challenger, 4200}
     };
+
+    public enum GameMode
+    {
+        None,
+        Home,
+        Map
+    }
 }
