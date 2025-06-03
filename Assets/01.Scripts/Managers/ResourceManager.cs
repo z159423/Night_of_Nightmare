@@ -104,4 +104,9 @@ public class ResourceManager : MonoBehaviour
         for (int i = 0; i < count; i++)
             Destroy(go.transform.GetChild(i).gameObject);
     }
+
+    public Sprite GetCharactorImage(int id)
+    {
+        return Resources.Load<Sprite>($"spr_charactor_0{id}");
+    }
 }
