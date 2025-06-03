@@ -10,6 +10,7 @@ public class CharactorController : MonoBehaviour
 
     [Header("Player")]
     public NavMeshAgent player; // 움직일 플레이어 오브젝트
+    public PlayerCharactor playerCharactor;
     public float maxSpeed = 5f; // 최대 속도
 
     private Vector2 startTouchPosition;
@@ -52,7 +53,10 @@ public class CharactorController : MonoBehaviour
             Vector3 move = new Vector3(moveDir.x, moveDir.y, 0) * (maxSpeed * distanceRatio) * Time.deltaTime;
 
             if (player != null)
+            {
                 player.Move(move);
+                playerCharactor.OnMove();
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -61,6 +65,8 @@ public class CharactorController : MonoBehaviour
             isDragging = false;
             joystickBackground.gameObject.SetActive(false);
             joystickHandle.anchoredPosition = Vector2.zero;
+
+            playerCharactor.OnMoveStop();
         }
     }
 }

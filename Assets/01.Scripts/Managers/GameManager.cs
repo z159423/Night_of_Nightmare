@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
             charactorController = Managers.Resource.Instantiate("ControllerCanvas").GetComponent<CharactorController>();
 
             charactorController.player = playerCharactor.GetComponent<NavMeshAgent>();
+            charactorController.playerCharactor = playerCharactor;
+
         }
 
         cameras[GameMode.Map].Follow = playerCharactor.transform;
