@@ -34,4 +34,12 @@ public class PlayerCharactor : Charactor
         }
         body.DOLocalRotate(Vector3.zero, 0.1f);
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Bed>(out Bed bed))
+        {
+            bed.OnActive(charactorType, true);
+        }
+    }
 }

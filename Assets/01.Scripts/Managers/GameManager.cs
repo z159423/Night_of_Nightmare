@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             charactorController = Managers.Resource.Instantiate("ControllerCanvas").GetComponent<CharactorController>();
 
-            charactorController.player = playerCharactor.GetComponent<NavMeshAgent>();
+            charactorController.player = playerCharactor.GetComponentInParent<NavMeshAgent>();
             charactorController.playerCharactor = playerCharactor;
 
         }

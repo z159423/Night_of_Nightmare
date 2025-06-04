@@ -11,16 +11,18 @@ public class Room : MonoBehaviour
 
     void OnValidate()
     {
+        
+    }
+
+    void Start()
+    {
         if (tiles.Length == 0)
             tiles = gameObject.GetComponentsInChildren<Tile>(true);
         if (bed = null)
             bed = gameObject.GetComponentInChildren<Bed>();
         if (door = null)
             door = gameObject.GetComponentInChildren<Door>();
-    }
-
-    void Start()
-    {
+            
         foreach (Tile tile in tiles)
         {
             tile.gameObject.SetActive(false);

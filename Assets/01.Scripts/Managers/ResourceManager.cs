@@ -107,6 +107,6 @@ public class ResourceManager : MonoBehaviour
 
     public Sprite GetCharactorImage(int id)
     {
-        return Resources.Load<Sprite>($"spr_charactor_0{id}");
+        return Resources.Load<Sprite>($"Charactors/spr_character_0{id}");
     }
 }
