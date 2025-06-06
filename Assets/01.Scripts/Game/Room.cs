@@ -8,12 +8,6 @@ public class Room : MonoBehaviour
     [SerializeField] private Bed bed;
     [SerializeField] private Door door;
 
-
-    void OnValidate()
-    {
-        
-    }
-
     void Start()
     {
         if (tiles.Length == 0)
@@ -22,10 +16,19 @@ public class Room : MonoBehaviour
             bed = gameObject.GetComponentInChildren<Bed>();
         if (door = null)
             door = gameObject.GetComponentInChildren<Door>();
-            
+
         foreach (Tile tile in tiles)
         {
             tile.gameObject.SetActive(false);
+        }
+    }
+    
+    public void OnActive()
+    {
+        foreach (Tile tile in tiles)
+        {
+            tile.gameObject.SetActive(true);
+            tile.OnActive();
         }
     }
 }

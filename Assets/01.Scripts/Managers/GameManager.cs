@@ -1,66 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
-using UnityEngine.AI;
 using static Define;
 
 public class GameManager : MonoBehaviour
 {
     public GameMode currentGameMode = GameMode.Home;
-    public Dictionary<GameMode, CinemachineVirtualCamera> cameras = new Dictionary<GameMode, CinemachineVirtualCamera>();
-
+    public PlayerCharactor playerCharactor;
     private CharactorController charactorController;
 
-    public PlayerCharactor playerCharactor;
+    public int coin = 0;
+    public int energy = 0;
+    public int ticket = 0;
+
+
+    void Start()
+    {
+        this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
+        {
+
+        });
+    }
+
 
     public void ChangeGameMode(GameMode mode)
     {
         if (currentGameMode == mode)
             return;
 
-        ChangeCamera(mode);
+        Managers.Camera.ChangeCamera(mode);
         currentGameMode = mode;
 
         switch (mode)
         {
             case GameMode.Home:
-                Managers.UI.ShowSceneUI<UI_GameScene_Home>();
+                var scene1 = Managers.UI.ShowSceneUI<UI_GameScene_Home>();
+                scene1.Init();
                 break;
             case GameMode.Map:
-                Managers.UI.ShowSceneUI<UI_GameScene_Map>();
+                var scene2 = Managers.UI.ShowSceneUI<UI_GameScene_Map>();
+                scene2.Init();
                 break;
-        }
-    }
-
-    public void ChangeCamera(GameMode mode)
-    {
-        // 현재 게임 모드의 카메라 priority를 낮춤
-        if (cameras.TryGetValue(currentGameMode, out var prevCamera))
-        {
-            prevCamera.Priority = 0;
-        }
-
-        // 새 게임 모드의 카메라 priority를 높임
-        if (cameras.TryGetValue(mode, out var newCamera))
-        {
-            newCamera.Priority = 10;
         }
     }
 
     public void OnRankGameStart()
     {
-        ChangeGameMode(GameMode.Map);
+        Managers.Game.ChangeGameMode(GameMode.Map);
 
         if (charactorController == null)
         {
             charactorController = Managers.Resource.Instantiate("ControllerCanvas").GetComponent<CharactorController>();
 
-            charactorController.player = playerCharactor.GetComponentInParent<NavMeshAgent>();
-            charactorController.playerCharactor = playerCharactor;
+            charactorController.player = Managers.Game.playerCharactor.GetComponentInParent<UnityEngine.AI.NavMeshAgent>();
+            charactorController.playerCharactor = Managers.Game.playerCharactor;
+
+            Managers.Camera.TurnVinettaEffect(false);
 
         }
 
-        cameras[GameMode.Map].Follow = playerCharactor.transform;
+        Managers.Camera.cameras[GameMode.Map].Follow = Managers.Game.playerCharactor.transform;
     }
 }

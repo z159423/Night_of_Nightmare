@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-    using DG.Tweening;
+using DG.Tweening;
 
 
 public class PlayerCharactor : Charactor
@@ -39,7 +39,12 @@ public class PlayerCharactor : Charactor
     {
         if (collision.TryGetComponent<Bed>(out Bed bed))
         {
-            bed.OnActive(charactorType, true);
+            if (!bed.active)
+            {
+                bed.OnActive(charactorType, true);
+                gameObject.SetActive(false);
+                GameObserver.Call(GameObserverType.Game.OnActivePlayerBed);
+            }
         }
     }
 }

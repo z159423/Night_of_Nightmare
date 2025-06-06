@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Cinemachine;
+using System.Linq;
 
 public class CharactorController : MonoBehaviour
 {
@@ -16,57 +18,129 @@ public class CharactorController : MonoBehaviour
     private Vector2 startTouchPosition;
     private bool isDragging;
 
+    private CinemachineVirtualCamera mapVirtualCamera;
+
     private void Start()
     {
         // 처음에는 조이스틱 UI를 숨김
         joystickBackground.gameObject.SetActive(false);
+
+        this.SetListener(GameObserverType.Game.OnActivePlayerBed, () =>
+        {
+            isDragging = false;
+            joystickBackground.gameObject.SetActive(false);
+            playerCharactor.OnMoveStop();
+        });
+
+        mapVirtualCamera = Managers.Camera.cameras[Define.GameMode.Map];
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // 터치 시작 지점
             startTouchPosition = Input.mousePosition;
-            joystickBackground.position = startTouchPosition;
-            joystickBackground.gameObject.SetActive(true);
-            isDragging = true;
         }
 
-        if (Input.GetMouseButton(0) && isDragging)
+        if (Managers.Camera.currentMapCameraMode == CameraManager.MapCameraMode.Player)
         {
-            Vector2 currentTouchPosition = Input.mousePosition;
-            Vector2 direction = currentTouchPosition - startTouchPosition;
-
-            // 최대 이동 반경 (배경 이미지 크기의 절반)
-            float maxDistance = joystickBackground.sizeDelta.x * 0.5f;
-
-            // 핸들 이동 제한
-            Vector2 clampedDirection = Vector2.ClampMagnitude(direction, maxDistance);
-            joystickHandle.anchoredPosition = clampedDirection;
-
-            // 캐릭터 이동 속도 (조이스틱 거리 비례)
-            float distanceRatio = clampedDirection.magnitude / maxDistance;
-            Vector2 moveDir = clampedDirection.normalized;
-
-            // 이동
-            Vector3 move = new Vector3(moveDir.x, moveDir.y, 0) * (maxSpeed * distanceRatio) * Time.deltaTime;
-
-            if (player != null)
+            if (Input.GetMouseButton(0))
             {
-                player.Move(move);
-                playerCharactor.OnMove();
+                Vector2 currentTouchPosition = Input.mousePosition;
+                Vector2 direction = currentTouchPosition - startTouchPosition;
+
+                // 드래그 거리가 임계값 이상일 때만 isDragging 활성화
+                float dragThreshold = 10f;
+                if (!isDragging && direction.magnitude > dragThreshold)
+                {
+                    isDragging = true;
+                    joystickBackground.position = startTouchPosition;
+                    joystickBackground.gameObject.SetActive(true);
+                }
+
+                if (isDragging)
+                {
+                    float maxDistance = joystickBackground.sizeDelta.x * 0.5f;
+                    Vector2 clampedDirection = Vector2.ClampMagnitude(direction, maxDistance);
+                    joystickHandle.anchoredPosition = clampedDirection;
+
+                    float distanceRatio = clampedDirection.magnitude / maxDistance;
+                    Vector2 moveDir = clampedDirection.normalized;
+
+                    Vector3 move = new Vector3(moveDir.x, moveDir.y, 0) * (maxSpeed * distanceRatio) * Time.deltaTime;
+
+                    if (player != null)
+                    {
+                        player.Move(move);
+                        playerCharactor.OnMove();
+                    }
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                isDragging = false;
+                joystickBackground.gameObject.SetActive(false);
+                joystickHandle.anchoredPosition = Vector2.zero;
+
+                playerCharactor.OnMoveStop();
             }
         }
-
-        if (Input.GetMouseButtonUp(0))
+        else if (Managers.Camera.currentMapCameraMode == CameraManager.MapCameraMode.Room)
         {
-            // 터치 끝나면 조이스틱 숨기기
-            isDragging = false;
-            joystickBackground.gameObject.SetActive(false);
-            joystickHandle.anchoredPosition = Vector2.zero;
+            if (Input.GetMouseButton(0))
+            {
+                Vector2 currentTouchPosition = Input.mousePosition;
+                Vector2 dragDelta = currentTouchPosition - startTouchPosition;
 
-            playerCharactor.OnMoveStop();
+                float dragThreshold = 10f;
+                if (!isDragging && dragDelta.magnitude > dragThreshold  && Managers.UI._currentPopup == null)
+                {
+                    isDragging = true;
+                }
+
+                if (isDragging)
+                {
+                    float cameraMoveSpeed = 0.5f;
+                    Vector3 move = new Vector3(-dragDelta.x, -dragDelta.y, 0) * cameraMoveSpeed * Time.deltaTime;
+
+                    if (mapVirtualCamera != null)
+                    {
+                        mapVirtualCamera.transform.Translate(move, Space.World);
+
+                        Vector3 pos = mapVirtualCamera.transform.position;
+                        pos.x = Mathf.Clamp(pos.x, 188f, 222f);
+                        pos.y = Mathf.Clamp(pos.y, -29f, 3f);
+                        mapVirtualCamera.transform.position = pos;
+                    }
+
+                    startTouchPosition = currentTouchPosition;
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (!isDragging)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
+                    var tiles = hits.Where(w => w.transform.GetComponent<Tile>() != null).FirstOrDefault();
+                    var structures = hits.Where(w => w.transform.GetComponent<Structure>() != null).FirstOrDefault();
+
+                    if (tiles != default(RaycastHit2D))
+                    {
+                        var popup = Managers.UI.ShowPopupUI<Structure_Popup>();
+                        popup.Init();
+                        popup.Setting(tiles.transform.GetComponent<Tile>());
+                    }
+
+                    if (structures != default(RaycastHit2D))
+                    {
+                        //구조물 클릭시 업그레이드 팝업
+                    }
+                }
+                isDragging = false;
+            }
         }
     }
 }

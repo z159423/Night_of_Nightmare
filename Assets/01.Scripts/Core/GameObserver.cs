@@ -9,7 +9,10 @@ public partial struct GameObserverType
     public enum Game
     {
         OnChangeHomeLowerBtn,
-        OnChangeCoinCount
+        OnChangeCoinCount,
+        OnActivePlayerBed,
+        OnChangeEnergyCount,
+        OnChangeTicketCount,
     }
 
     public enum Data

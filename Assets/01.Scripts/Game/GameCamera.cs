@@ -8,6 +8,6 @@ public class GameCamera : MonoBehaviour
 
     void Start()
     {
-        Managers.Game.cameras.Add(cameraMode, GetComponent<Cinemachine.CinemachineVirtualCamera>());
+        Managers.Camera.cameras.Add(cameraMode, GetComponent<Cinemachine.CinemachineVirtualCamera>());
     }
 }

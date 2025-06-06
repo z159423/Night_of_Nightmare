@@ -14,6 +14,8 @@ public class Managers : SingletonStatic<Managers>
     public static UIManager UI { get; set; } = new UIManager();
     public static LocalDataManager LocalData { get; set; } = new LocalDataManager();
     public static GameManager Game { get; set; } = new GameManager();
+    public static CameraManager Camera { get; set; } = new CameraManager();
+
 
 
     void CreateManagers()
@@ -23,6 +25,7 @@ public class Managers : SingletonStatic<Managers>
         Pool = transform.AddComponent<PoolManager>();
         UI = transform.AddComponent<UIManager>();
         Game = transform.AddComponent<GameManager>();
+        Camera = transform.AddComponent<CameraManager>();
 
         AudioManager = Resource.Instantiate("AudioManager", transform).GetComponent<AudioManager>();
     }

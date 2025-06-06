@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public DOTweenAnimation animation;
+
     void Start()
     {
-        
+        animation = GetComponent<DOTweenAnimation>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnActive()
     {
-        
+        if (animation != null)
+        {
+            animation.DORestart();
+        }
+        else
+        {
+            Debug.LogWarning("DOTweenAnimation component is not assigned to the Tile.");
+        }
     }
 }

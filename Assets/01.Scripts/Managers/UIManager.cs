@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
 
     Queue<Type> _cleanPopupStack = new Queue<Type>();
 
+    public UI_Popup _currentPopup;
+
 
     // Tribe //
 
@@ -156,6 +158,8 @@ public class UIManager : MonoBehaviour
             PopupCasting(popup);
 
         popup.Init();
+
+        _currentPopup = popup;
 
         return popup;
     }
