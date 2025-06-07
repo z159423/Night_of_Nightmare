@@ -25,4 +25,10 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("LanguageIndex", -1);
         set { PlayerPrefs.SetInt("LanguageIndex", value); IsSave = true; }
     }
+
+    public int PlayerWinCount
+    {
+        get => PlayerPrefs.GetInt("PlayerWinCount", 0);
+        set { PlayerPrefs.SetInt("PlayerWinCount", value); IsSave = true; }
+    }
 }

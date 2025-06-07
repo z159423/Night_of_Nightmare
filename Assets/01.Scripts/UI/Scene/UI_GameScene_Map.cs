@@ -68,8 +68,31 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.PauseBtn).onClick.AddListener(() =>
         {
-
+            Managers.UI.ShowPopupUI<Exit_Popup>();
         });
+    }
+
+    public void ClearCharactorIcons()
+    {
+        foreach (Transform child in playerLayout)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void SetPlayerIcon(Define.CharactorType type)
+    {
+        var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
+
+        icon.GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
+    }
+
+    public void SetCharactorIcon(Define.CharactorType type)
+    {
+        var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
+        icon.GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
+
+        icon.gameObject.FindRecursive("Arrrow").SetActive(false);
     }
 
     public override void Show()

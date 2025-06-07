@@ -13,6 +13,8 @@ public partial struct GameObserverType
         OnActivePlayerBed,
         OnChangeEnergyCount,
         OnChangeTicketCount,
+        OnChangeGemCount,
+
     }
 
     public enum Data

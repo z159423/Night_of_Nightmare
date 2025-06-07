@@ -2,40 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor.Build.Pipeline.Interfaces;
+using UnityEngine.AI;
 
 
-public class PlayerCharactor : Charactor
+public class PlayerCharactor : PlayerableCharactor
 {
-    private Transform body;
-    private Tween _moveTween;
-
-    void Start()
+    public void Setting()
     {
-        body = gameObject.FindRecursive("Body").transform;
         Managers.Game.playerCharactor = this;
+
+        if (Managers.UI._currentScene is UI_GameScene_Map)
+            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetPlayerIcon(charactorType);
+
+        StartCoroutine(GetGold());
+
+        GetComponentInParent<NavMeshAgent>(true).enabled = true;
     }
 
-    public void OnMove()
+    protected override void Start()
     {
-        if (_moveTween != null && _moveTween.IsActive())
-            return;
-
-        _moveTween = body.DOLocalRotate(new Vector3(0, 0, 3), 0.15f)
-            .SetLoops(-1, LoopType.Yoyo)
-            .From(new Vector3(0, 0, -3));
+        base.Start();
     }
 
-    public void OnMoveStop()
-    {
-        if (_moveTween != null && _moveTween.IsActive())
-        {
-            _moveTween.Kill();
-            _moveTween = null;
-        }
-        body.DOLocalRotate(Vector3.zero, 0.1f);
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Bed>(out Bed bed))
         {
@@ -46,5 +36,16 @@ public class PlayerCharactor : Charactor
                 GameObserver.Call(GameObserverType.Game.OnActivePlayerBed);
             }
         }
+    }
+
+    protected override void Hit(int damage)
+    {
+        // AI 캐릭터는 Hit 메서드를 구현하지 않음
+        // 필요시 AI 캐릭터의 행동을 정의할 수 있음
+    }
+
+    protected override void Die()
+    {
+        
     }
 }

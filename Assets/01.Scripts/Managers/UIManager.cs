@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
 
     List<UI_Scene> _scenes = new List<UI_Scene>();
-    UI_Scene _currentScene;
+    public UI_Scene _currentScene;
 
     Queue<Type> _cleanPopupStack = new Queue<Type>();
 

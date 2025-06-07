@@ -12,9 +12,9 @@ public class Room : MonoBehaviour
     {
         if (tiles.Length == 0)
             tiles = gameObject.GetComponentsInChildren<Tile>(true);
-        if (bed = null)
+        if (bed == null)
             bed = gameObject.GetComponentInChildren<Bed>();
-        if (door = null)
+        if (door == null)
             door = gameObject.GetComponentInChildren<Door>();
 
         foreach (Tile tile in tiles)
@@ -22,9 +22,14 @@ public class Room : MonoBehaviour
             tile.gameObject.SetActive(false);
         }
     }
-    
-    public void OnActive()
+
+    public void OnActive(bool isPlayer)
     {
+        door.CloseDoor();
+
+        if (!isPlayer)
+            return;
+
         foreach (Tile tile in tiles)
         {
             tile.gameObject.SetActive(true);

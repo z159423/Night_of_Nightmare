@@ -2,13 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
-public class Charactor : MonoBehaviour
+
+public abstract class Charactor : MonoBehaviour
 {
-    public Define.CharactorType charactorType;
+    protected Transform body;
+    private Tween _moveTween;
+    protected SpriteRenderer bodySpriteRenderer;
 
-    void Awake()
+    protected NavMeshAgent agent;
+
+    protected virtual void Start()
     {
-        
+        body = gameObject.FindRecursive("Body").transform;
+        agent = gameObject.GetComponentInParent<NavMeshAgent>();
+
+        agent.updateRotation = false;
     }
+
+    public virtual void SetBodySkin()
+    {
+    }
+
+    public void OnMove()
+    {
+        if (_moveTween != null && _moveTween.IsActive())
+            return;
+
+        _moveTween = body.DOLocalRotate(new Vector3(0, 0, 3), 0.15f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .From(new Vector3(0, 0, -3));
+    }
+
+    public void OnMoveStop()
+    {
+        if (_moveTween != null && _moveTween.IsActive())
+        {
+            _moveTween.Kill();
+            _moveTween = null;
+        }
+        body.DOLocalRotate(Vector3.zero, 0.1f);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+    }
+
+    protected abstract void Hit(int damage);
 }

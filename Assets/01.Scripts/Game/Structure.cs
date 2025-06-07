@@ -10,7 +10,7 @@ public class Structure : MonoBehaviour
     public bool playerStructure = false;
 
 
-    void OnValidate()
+    protected virtual void Start()
     {
         if (spriteRenderer == null)
         {

@@ -16,8 +16,9 @@ public class Door : Structure
 
     public bool isClose = false;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         upgradeIcon.SetActive(false);
 
         switch (closeType)

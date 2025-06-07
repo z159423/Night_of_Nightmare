@@ -70,6 +70,9 @@ public class UI_GameScene_Home : UI_Scene
                 boostShopPopup = null;
             }
         });
+
+        GetTextMesh(Texts.GemText).text = Managers.Game.coin.ToString();
+        GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
     }
 
     public void FirstSetting()
@@ -171,6 +174,16 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.ChallengeModeBtn).onClick.AddListener(() =>
         {
             Managers.UI.ShowPopupUI<ChallengeMode_Popup>();
+        });
+
+        this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
+        {
+            GetTextMesh(Texts.GemText).text = Managers.Game.coin.ToString();
+        });
+
+        this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
+        {
+            GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
         });
     }
 

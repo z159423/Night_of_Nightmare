@@ -109,4 +109,14 @@ public class ResourceManager : MonoBehaviour
     {
         return Resources.Load<Sprite>($"Charactors/spr_character_0{id}");
     }
+
+    public Sprite GetCharactorIcons(int id)
+    {
+        return Resources.Load<Sprite>($"CharactorIcons/spr_character_{id}_ui");
+    }
+
+    public Sprite GetEnemyImage(int id)
+    {
+        return Resources.Load<Sprite>($"Enemy/spr_enemy_{id}");
+    }
 }

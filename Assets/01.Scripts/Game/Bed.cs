@@ -45,6 +45,8 @@ public class Bed : MonoBehaviour
         bed.enabled = false;
         player.enabled = false;
         upgradeIcon.SetActive(false);
+
+        Managers.Game.beds.Add(this);
     }
 
     public void OnActive(Define.CharactorType charactorType, bool isPlayer)
@@ -69,6 +71,6 @@ public class Bed : MonoBehaviour
             Managers.Camera.ChangeMapCameraMode(CameraManager.MapCameraMode.Room);
         }
 
-        gameObject.GetComponentInParent<Room>().OnActive();
+        gameObject.GetComponentInParent<Room>().OnActive(isPlayer);
     }
 }
