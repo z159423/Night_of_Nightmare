@@ -11,10 +11,10 @@ public class Door : Structure
         DownToUp
     }
 
-    public int Hp { get; private set; } = 100;
     [SerializeField] CloseType closeType;
 
     public bool isClose = false;
+
 
     protected override void Start()
     {
@@ -30,6 +30,9 @@ public class Door : Structure
                 transform.localPosition += new Vector3(0, -0.8f, 0);
                 break;
         }
+
+        MaxHp = 100;
+        Hp = MaxHp;
     }
 
     public void CloseDoor()
@@ -45,15 +48,34 @@ public class Door : Structure
                 transform.DOLocalMoveY(transform.localPosition.y + 0.8f, 1);
                 break;
         }
+
+        ShowHpBar();
     }
 
-    public void Hit(int damage)
+    public override void Hit(int damage)
     {
-        Hp -= damage;
-        if (Hp <= 0)
+        base.Hit(damage);
+
+        ShowHpBar();
+    }
+
+    public void ShowHpBar()
+    {
+        if (hpBar != null)
         {
-            DestroyDoor();
+            hpBar.gameObject.SetActive(true);
+            hpBarBody.localScale = new Vector3((float)Hp / MaxHp, 1, 1);
         }
+    }
+
+    public override void Upgrade()
+    {
+
+    }
+
+    public void RepaireDoor()
+    {
+
     }
 
     public void DestroyDoor()

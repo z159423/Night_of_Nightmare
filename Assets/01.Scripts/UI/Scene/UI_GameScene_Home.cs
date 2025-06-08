@@ -168,7 +168,9 @@ public class UI_GameScene_Home : UI_Scene
 
         GetButton(Buttons.RankModeBtn).onClick.AddListener(() =>
         {
-            Managers.UI.ShowPopupUI<Match_Making_Popup>();
+            var popup = Managers.UI.ShowPopupUI<Match_Making_Popup>();
+
+            
         });
 
         GetButton(Buttons.ChallengeModeBtn).onClick.AddListener(() =>

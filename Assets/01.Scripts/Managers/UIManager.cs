@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    int _order = 10;
+    int _order = -10;
 
     List<UI_Popup> _popupList = new List<UI_Popup>();
 
@@ -114,7 +114,6 @@ public class UIManager : MonoBehaviour
         if (_currentScene != null)
             _currentScene.Hide();
         _currentScene = scene;
-
         _currentScene.Show();
 
         return scene;
@@ -349,7 +348,7 @@ public class UIManager : MonoBehaviour
     {
         switch (popup)
         {
-            
+
         }
     }
 

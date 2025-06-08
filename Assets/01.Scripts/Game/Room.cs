@@ -36,4 +36,41 @@ public class Room : MonoBehaviour
             tile.OnActive();
         }
     }
+
+    public Structure GetAttackableStructure(Vector3 position)
+    {
+        if (door != null && !door.destroyed)
+            return door;
+
+        List<Structure> findStructures = new List<Structure>();
+
+        foreach (Tile tile in tiles)
+        {
+            if (tile.currentStructure != null && !tile.currentStructure.destroyed)
+            {
+                findStructures.Add(tile.currentStructure);
+            }
+        }
+
+        if (bed != null && !bed.destroyed)
+            findStructures.Add(bed);
+
+        if (findStructures.Count == 0)
+            return null;
+
+        Structure closest = findStructures[0];
+        float minDist = Vector3.Distance(position, closest.transform.position);
+
+        for (int i = 1; i < findStructures.Count; i++)
+        {
+            float dist = Vector3.Distance(position, findStructures[i].transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = findStructures[i];
+            }
+        }
+
+        return closest;
+    }
 }

@@ -8,8 +8,12 @@ public abstract class PlayerableCharactor : Charactor
     public int energy = 0;
 
     public Bed currentFindBed;
+    //현재 있는 방
+    public Room currentActiveRoom;
 
     public Define.CharactorType charactorType;
+
+    public bool die = false;
 
     public IEnumerator GetGold()
     {
@@ -33,11 +37,11 @@ public abstract class PlayerableCharactor : Charactor
         {
             if (!bed.active)
             {
-                bed.OnActive(charactorType, false);
+                currentActiveRoom = bed.OnActive(this);
                 gameObject.SetActive(false);
             }
         }
     }
 
-    protected abstract void Die();
+    public abstract void Die();
 }

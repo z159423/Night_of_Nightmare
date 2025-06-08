@@ -503,7 +503,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177140
-    m_Localized: "\u30DE\u30C3\u30C1\u30F3\u30B0\u4E2D {0}\u79D2"
+    m_Localized: "\u30DE\u30C3\u30C1\u30F3\u30B0\u4E2D @1\u79D2"
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177141

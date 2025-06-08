@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Bed : MonoBehaviour
+public class Bed : Structure
 {
     [SerializeField] SpriteRenderer bed;
     [SerializeField] SpriteRenderer player;
@@ -11,12 +11,14 @@ public class Bed : MonoBehaviour
     [SerializeField] SpriteRenderer blanket;
     [SerializeField] DOTweenAnimation blanketAnimation;
 
-    GameObject upgradeIcon;
+    PlayerableCharactor currentCharactor;
+
     public bool active = false;
     bool playerActive = false;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
         {
             //만약 업그레이드 가능한 상태라면
@@ -49,13 +51,23 @@ public class Bed : MonoBehaviour
         Managers.Game.beds.Add(this);
     }
 
-    public void OnActive(Define.CharactorType charactorType, bool isPlayer)
+    public Room OnActive(PlayerableCharactor charactor)
     {
         //캐릭터 타입에 따라 스프라이트 바꿔주기
-        player.sprite = Managers.Resource.GetCharactorImage((int)charactorType + 1);
+        player.sprite = Managers.Resource.GetCharactorImage((int)charactor.charactorType + 1);
+
+        bool isPlayer = charactor is PlayerCharactor;
 
         active = true;
-        this.playerActive = isPlayer;
+        if (isPlayer)
+        {
+            playerActive = true;
+            Managers.Camera.ChangeMapCameraMode(CameraManager.MapCameraMode.Room);
+        }
+        else
+            playerActive = false;
+
+        this.currentCharactor = charactor;
 
         bed.enabled = true;
         bed.color = Color.white;
@@ -66,11 +78,21 @@ public class Bed : MonoBehaviour
         playerAnimation.DORestart();
         blanketAnimation.DORestart();
 
-        if (isPlayer)
-        {
-            Managers.Camera.ChangeMapCameraMode(CameraManager.MapCameraMode.Room);
-        }
 
         gameObject.GetComponentInParent<Room>().OnActive(isPlayer);
+
+        return gameObject.GetComponentInParent<Room>();
+    }
+
+    public override void Upgrade()
+    {
+        
+    }
+
+    protected override void DestroyStructure()
+    {
+        currentCharactor.Die();
+
+        base.DestroyStructure();
     }
 }

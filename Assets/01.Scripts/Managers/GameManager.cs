@@ -11,13 +11,17 @@ public class GameManager : MonoBehaviour
     public PlayerCharactor playerCharactor;
     private CharactorController charactorController;
 
+    public CharactorType selectedPlayerCharactorType = CharactorType.Farmer;
+
     public int coin = 0;
     public int energy = 0;
     public int ticket = 0;
 
     public Map currentMap;
     public List<Bed> beds = new List<Bed>();
-    public List<AiCharactor> aiCharactors = new List<AiCharactor>();
+    public CharactorType[] charactorType;
+    public List<PlayerableCharactor> charactors = new List<PlayerableCharactor>();
+    public EnemyType enemyType;
     public Enemy enemy;
 
     void Start()
@@ -65,14 +69,23 @@ public class GameManager : MonoBehaviour
         SetPos(playerCharactor.transform);
         playerCharactor.GetComponentInChildren<PlayerCharactor>().Setting();
 
+        CharactorType[] tempTypes = new CharactorType[5]
+        {
+            charactorType[0],
+            charactorType[2],
+            charactorType[3],
+            charactorType[4],
+            charactorType[5]
+        };
+
         // ai 캐릭터 생성
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             var aiCharactor = Managers.Resource.Instantiate("AICharactor", currentMap.transform);
 
             SetPos(aiCharactor.transform);
 
-            aiCharactor.GetComponentInChildren<AiCharactor>().SettingAiCharactor();
+            aiCharactor.GetComponentInChildren<AiCharactor>().SettingAiCharactor(tempTypes[i]);
             aiCharactor.GetComponentInChildren<AiCharactor>().ActiveAiCharactor();
         }
 
@@ -96,12 +109,15 @@ public class GameManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(20f); // 적 생성 딜레이
 
-                var _enemy = Managers.Resource.Instantiate("Enemy", currentMap.transform);
+                if (currentMap.transform != null)
+                {
+                    var _enemy = Managers.Resource.Instantiate("Enemy", currentMap.transform);
 
-                SetPos(_enemy.transform);
+                    SetPos(_enemy.transform);
 
-                _enemy.GetComponentInChildren<Enemy>().Setting();
-                enemy = _enemy.GetComponentInChildren<Enemy>();
+                    _enemy.GetComponentInChildren<Enemy>().Setting();
+                    enemy = _enemy.GetComponentInChildren<Enemy>();
+                }
             }
         }
 
@@ -139,6 +155,16 @@ public class GameManager : MonoBehaviour
         Destroy(currentMap.gameObject);
 
         beds.Clear();
-        aiCharactors.Clear();
+        charactors.Clear();
+    }
+
+    public void GameOver()
+    {
+
+    }
+
+    public void GameWin()
+    {
+
     }
 }

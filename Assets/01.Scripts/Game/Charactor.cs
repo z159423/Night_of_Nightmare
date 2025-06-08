@@ -19,6 +19,8 @@ public abstract class Charactor : MonoBehaviour
         agent = gameObject.GetComponentInParent<NavMeshAgent>();
 
         agent.updateRotation = false;
+
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
     public virtual void SetBodySkin()
@@ -49,5 +51,5 @@ public abstract class Charactor : MonoBehaviour
     {
     }
 
-    protected abstract void Hit(int damage);
+    public abstract void Hit(int damage);
 }

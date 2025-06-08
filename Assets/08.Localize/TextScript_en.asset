@@ -501,7 +501,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177140
-    m_Localized: Matching... {0}sec
+    m_Localized: Matching... @1sec
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177141

@@ -15,7 +15,7 @@ public abstract class UI_Scene : UI_Base
 	{
         _graphicRaycaster = GetComponent<GraphicRaycaster>();
 
-        Managers.UI.SetCanvas(gameObject, false);
+        Managers.UI.SetCanvas(gameObject, true);
 
         // this.SetListener(GameObserverType.Data.Fever, OnFeverUpdate);
     }

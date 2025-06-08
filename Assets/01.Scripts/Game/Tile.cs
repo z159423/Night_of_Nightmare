@@ -7,6 +7,8 @@ public class Tile : MonoBehaviour
 {
     public DOTweenAnimation animation;
 
+    public Structure currentStructure;
+
     void Start()
     {
         animation = GetComponent<DOTweenAnimation>();

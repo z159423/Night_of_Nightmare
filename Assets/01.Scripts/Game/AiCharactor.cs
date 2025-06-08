@@ -5,11 +5,9 @@ using UnityEngine.AI;
 
 public class AiCharactor : PlayerableCharactor
 {
-    public bool die = false;
-
-    public void SettingAiCharactor()
+    public void SettingAiCharactor(Define.CharactorType charactorType)
     {
-        charactorType = (Define.CharactorType)Random.Range(0, System.Enum.GetValues(typeof(Define.CharactorType)).Length);
+        this.charactorType = charactorType;
 
         SetBodySkin();
 
@@ -19,12 +17,11 @@ public class AiCharactor : PlayerableCharactor
         StartCoroutine(GetGold());
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
-
     }
 
     public void ActiveAiCharactor()
     {
-        Managers.Game.aiCharactors.Add(this);
+        Managers.Game.charactors.Add(this);
 
         StartCoroutine(wait());
 
@@ -86,14 +83,17 @@ public class AiCharactor : PlayerableCharactor
         }
     }
 
-    protected override void Hit(int damage)
+    public override void Hit(int damage)
     {
         // AI 캐릭터는 Hit 메서드를 구현하지 않음
         // 필요시 AI 캐릭터의 행동을 정의할 수 있음
     }
 
-    protected override void Die()
+    public override void Die()
     {
+        //죽으면 방에 있는 모든 건축물 파괴
+        //플레이어 리스트에서 삭제
 
+        die = true;
     }
 }

@@ -96,4 +96,14 @@ public class Define
         Home,
         Map
     }
+
+    public enum EnemyType
+    {
+        ScareCrow,
+        Clown,
+        MossMan,
+        SlanderMan,
+        TungTungTung,
+        Tralalero
+    }
 }

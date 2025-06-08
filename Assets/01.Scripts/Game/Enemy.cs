@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
+using TMPro;
 
 public class Enemy : Charactor
 {
@@ -15,8 +16,11 @@ public class Enemy : Charactor
 
     public const float MaxHp = 100;
     public float hp = 100;
+    public int level = 1;
 
     public PlayerableCharactor currentTarget;
+    public Structure currentTargetStructure;
+    public int targetIndex;
     public HealZone targetHealZone;
     EnemyState enemyState = EnemyState.Chase;
 
@@ -28,15 +32,25 @@ public class Enemy : Charactor
     private float checkHpTime = 0;
     private float currentCheckHpTime = 0;
 
+    Transform hpBarPivot;
+    Transform hpBarFill;
+    TextMeshPro levelText;
+
 
     // Implementation of the abstract Hit() method from Charactor
-    protected override void Hit(int damage)
+    public override void Hit(int damage)
     {
         // Provide your logic here, for example:
         hp -= damage; // Default damage
         if (hp <= 0)
         {
             // Handle enemy death
+        }
+
+        // Show HP bar
+        if (hpBarPivot != null)
+        {
+            hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
         }
     }
 
@@ -49,10 +63,16 @@ public class Enemy : Charactor
         StartCoroutine(EnemyStateMachine());
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
+
+        hpBarPivot = gameObject.FindRecursive("Pivot").transform;
+        hpBarFill = gameObject.FindRecursive("Fill").transform;
     }
 
     void Update()
     {
+        if (gameObject == null)
+            return;
+
         if (enemyState == EnemyState.Heal && targetHealZone != null && Vector2.Distance(targetHealZone.transform.position, transform.position) < 1.5f)
         {
             hp += MaxHp * 0.0014f; // Heal 0.14% of MaxHp per frame
@@ -66,10 +86,11 @@ public class Enemy : Charactor
                 enemyState = EnemyState.Chase; // Switch back to chasing state
             }
         }
-        else if (currentTarget != null && enemyState == EnemyState.Chase)
+        else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
         {
             // Move towards the target
-            agent.SetDestination(currentTarget.transform.position);
+            if (agent != null)
+                agent.SetDestination(currentTargetStructure.transform.position);
         }
 
         if (enemyState != EnemyState.Heal)
@@ -114,16 +135,26 @@ public class Enemy : Charactor
                 }
                 else if (currentTarget != null && changeStateTime > currentChangeStateTime)
                 {
-                    // Check if the target is within attack range
-                    float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
-
-                    if (canAttack && distanceToTarget < 1.5f) // Example attack range
+                    if (currentTargetStructure == null || currentTargetStructure.destroyed)
                     {
-                        StartCoroutine(Attack());
+                        if (currentTarget != null && !currentTarget.die)
+                            currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
+                        else
+                            FindTarget();
                     }
+                    else
+                    {
+                        // Check if the target is within attack range
+                        float distanceToTarget = Vector2.Distance(transform.position, currentTargetStructure.transform.position);
 
-                    if (currentCheckHpTime > checkHpTime)
-                        checkHpTime = Random.Range(0.5f, 4f);
+                        if (canAttack && distanceToTarget < 1f) // Example attack range
+                        {
+                            StartCoroutine(Attack());
+                        }
+
+                        if (currentCheckHpTime > checkHpTime)
+                            checkHpTime = Random.Range(0.5f, 4f);
+                    }
                 }
                 else
                 {
@@ -151,19 +182,21 @@ public class Enemy : Charactor
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
 
-        players.AddRange(Managers.Game.aiCharactors.Where(n => !n.die));
-        players.Add(Managers.Game.playerCharactor);
+        players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null));
 
         if (players.Count > 0)
         {
             int randomIndex = Random.Range(0, players.Count);
             currentTarget = players[randomIndex];
 
+            targetIndex = Managers.Game.charactors.IndexOf(currentTarget);
 
+            currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
         }
         else
         {
             currentTarget = null;
+            currentTargetStructure = null;
         }
     }
 
@@ -186,19 +219,32 @@ public class Enemy : Charactor
     {
         canAttack = false;
 
-        if (currentTarget != null)
+        if (currentTargetStructure != null)
         {
             Vector3 originalPosition = body.localPosition;
-            Vector3 targetDirection = (currentTarget.transform.localPosition - body.localPosition).normalized;
-            Vector3 dashPosition = body.localPosition + targetDirection * 1.5f;
+            Vector3 targetDirection = (currentTargetStructure.transform.position - body.position).normalized;
+            Vector3 dashPosition = body.localPosition + targetDirection * 1.75f;
 
             // 몸통박치기 애니메이션 (DoTween)
             yield return body.DOLocalMove(dashPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
+
+            currentTargetStructure.Hit(10); // Example damage value'
+
+            if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
+                gameScene_Map.AttackedAnimation(targetIndex);
+
             yield return body.DOLocalMove(originalPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
         }
 
-        yield return new WaitForSeconds(1.5f); // Attack delay
+        yield return new WaitForSeconds(1.2f); // Attack delay
 
         canAttack = true;
     }
+
+    public void LevelUp()
+    {
+        level++;
+        levelText.text = "Lv." + level;
+    }
+
 }

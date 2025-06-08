@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEditor;
+using DG.Tweening;
 
 public class UI_GameScene_Map : UI_Scene
 {
@@ -84,15 +85,33 @@ public class UI_GameScene_Map : UI_Scene
     {
         var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
 
-        icon.GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
+        icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
     }
 
     public void SetCharactorIcon(Define.CharactorType type)
     {
         var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
-        icon.GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
-
+        icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
         icon.gameObject.FindRecursive("Arrrow").SetActive(false);
+    }
+
+    public void AttackedAnimation(int index)
+    {
+        if (!Managers.Game.charactors[index].die)
+        {
+            RectTransform iconRect = playerLayout.GetChild(index).gameObject.FindRecursive("Icon").transform as RectTransform;
+            if (iconRect != null)
+            {
+                iconRect.DOShakeAnchorPos(0.5f, 10f, 30, 90, false, true);
+            }
+            playerLayout.GetChild(index).gameObject.FindRecursive("Icon").GetComponent<Image>().DOColor(Color.red, 0.5f).OnComplete(() =>
+            {
+                playerLayout.GetChild(index).gameObject.FindRecursive("Icon").GetComponent<Image>().DOColor(Color.white, 0.5f);
+            });
+        }
+        else
+            playerLayout.GetChild(index).gameObject.FindRecursive("Icon").GetComponent<Image>().color = new Color32(30, 30, 30, 255);
+
     }
 
     public override void Show()

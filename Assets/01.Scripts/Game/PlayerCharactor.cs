@@ -18,6 +18,8 @@ public class PlayerCharactor : PlayerableCharactor
         StartCoroutine(GetGold());
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
+
+        Managers.Game.charactors.Add(this);
     }
 
     protected override void Start()
@@ -31,21 +33,21 @@ public class PlayerCharactor : PlayerableCharactor
         {
             if (!bed.active)
             {
-                bed.OnActive(charactorType, true);
+                currentActiveRoom = bed.OnActive(this);
                 gameObject.SetActive(false);
                 GameObserver.Call(GameObserverType.Game.OnActivePlayerBed);
             }
         }
     }
 
-    protected override void Hit(int damage)
+    public override void Hit(int damage)
     {
         // AI 캐릭터는 Hit 메서드를 구현하지 않음
         // 필요시 AI 캐릭터의 행동을 정의할 수 있음
     }
 
-    protected override void Die()
+    public override void Die()
     {
-        
+        Managers.Game.GameOver();
     }
 }
