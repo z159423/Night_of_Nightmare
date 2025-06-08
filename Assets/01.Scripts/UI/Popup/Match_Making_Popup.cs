@@ -133,13 +133,15 @@ public class Match_Making_Popup : UI_Popup
 
             box.Init();
             if (!box.isPlayer)
-                box.PlayerSetting(Managers.Game.charactorType[i], "Name");
+                box.PlayerSetting(Managers.Game.charactorType[i], NameGenerator.GetRandomName());
             else
                 box.PlayerSetting(Managers.Game.selectedPlayerCharactorType, "Me");
         }
 
         enemyBox.Init();
-        enemyBox.EnemySetting(enemyType, "Name");
+        var name = NameGenerator.GetRandomName();
+        enemyBox.EnemySetting(enemyType, name);
+        Managers.Game.enemyName = name;
     }
 
 

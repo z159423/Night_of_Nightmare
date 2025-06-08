@@ -11,7 +11,8 @@ public class PlayerBoxUI : UI_Base
     enum Images
     {
         LoadingIcon,
-        PlayerIcon
+        PlayerIcon,
+        Name
     }
 
     enum Texts
@@ -128,6 +129,7 @@ public class PlayerBoxUI : UI_Base
             GetImage(Images.PlayerIcon).SetNativeSize();
 
             GetTextMesh(Texts.NameText).text = Managers.Localize.GetText("global.str_me");
+            GetImage(Images.Name).gameObject.SetActive(true);
 
             // Reset the loading icon rotation
             GetImage(Images.LoadingIcon).gameObject.SetActive(false);
@@ -150,6 +152,7 @@ public class PlayerBoxUI : UI_Base
             GetImage(Images.PlayerIcon).SetNativeSize();
 
             GetTextMesh(Texts.NameText).text = playerName;
+            GetImage(Images.Name).gameObject.SetActive(true);
 
             // Reset the loading icon rotation
             GetImage(Images.LoadingIcon).gameObject.SetActive(false);
@@ -173,6 +176,8 @@ public class PlayerBoxUI : UI_Base
             GetImage(Images.PlayerIcon).SetNativeSize();
 
             GetTextMesh(Texts.NameText).text = playerName;
+            GetImage(Images.Name).gameObject.SetActive(true);
+
 
             // Reset the loading icon rotation
             GetImage(Images.LoadingIcon).gameObject.SetActive(false);

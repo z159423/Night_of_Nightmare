@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public List<PlayerableCharactor> charactors = new List<PlayerableCharactor>();
     public EnemyType enemyType;
     public Enemy enemy;
+    public string enemyName;
 
     void Start()
     {

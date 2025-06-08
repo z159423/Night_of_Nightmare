@@ -35,6 +35,8 @@ public class Enemy : Charactor
     Transform hpBarPivot;
     Transform hpBarFill;
     TextMeshPro levelText;
+    TextMeshPro nameText;
+
 
 
     // Implementation of the abstract Hit() method from Charactor
@@ -66,6 +68,18 @@ public class Enemy : Charactor
 
         hpBarPivot = gameObject.FindRecursive("Pivot").transform;
         hpBarFill = gameObject.FindRecursive("Fill").transform;
+        levelText = gameObject.FindRecursive("LevelText").GetComponent<TextMeshPro>();
+        nameText = gameObject.FindRecursive("NameText").GetComponent<TextMeshPro>();
+
+        SetNameText(Managers.Game.enemyName);
+    }
+
+    public void SetNameText(string name)
+    {
+        if (nameText != null)
+        {
+            nameText.text = name;
+        }
     }
 
     void Update()
@@ -89,7 +103,7 @@ public class Enemy : Charactor
         else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
         {
             // Move towards the target
-            if (agent != null)
+            if (agent != null && agent.isOnNavMesh)
                 agent.SetDestination(currentTargetStructure.transform.position);
         }
 

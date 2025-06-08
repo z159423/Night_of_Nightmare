@@ -921,12 +921,12 @@ GameObject:
   - component: {fileID: 679904721149910947}
   - component: {fileID: 7183137616449673650}
   m_Layer: 0
-  m_Name: Image
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1951246255130284990
 RectTransform:
   m_ObjectHideFlags: 0
