@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using VInspector;
 using static Define;
 
 public class GameManager : MonoBehaviour
@@ -159,9 +159,15 @@ public class GameManager : MonoBehaviour
         charactors.Clear();
     }
 
+    [Button("GameOver")]
     public void GameOver()
     {
+        GoHome();
 
+        var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
+
+        result.Init();
+        result.Setting();
     }
 
     public void GameWin()

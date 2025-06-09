@@ -13,7 +13,7 @@ public class TextSetter : MonoBehaviour
             Text = GetComponent<TextMeshProUGUI>();
     }
 
-    private void Awake()
+    private void start()
     {
         Text.text = Managers.Localize.GetText(KeyString);
     }

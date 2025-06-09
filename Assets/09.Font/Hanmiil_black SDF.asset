@@ -117,9 +117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Hanmiil_black SDF
   m_EditorClassIdentifier: 
-  hashCode: -1583136709
+  hashCode: -1329276497
   material: {fileID: -6946902509292710788}
-  materialHashCode: -794539717
+  materialHashCode: -1624442577
   m_Version: 1.1.0
   m_SourceFontFileGUID: c47b955b92e8ced42b831eedf9de9750
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: c47b955b92e8ced42b831eedf9de9750, type: 3}
@@ -2666,6 +2666,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d7bfd19f67745f4280c56346bb36c63, type: 2}
   - {fileID: 11400000, guid: 552463a18d2fa5f48802e00be1edd1a2, type: 2}
   - {fileID: 11400000, guid: be662382f3042d14394c7381e9742a10, type: 2}
+  - {fileID: 11400000, guid: 603889b9e87ba8c4f9f4090df009ddb0, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: c47b955b92e8ced42b831eedf9de9750
