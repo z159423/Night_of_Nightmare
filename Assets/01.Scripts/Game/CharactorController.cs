@@ -127,7 +127,7 @@ public class CharactorController : MonoBehaviour
                     var tiles = hits.Where(w => w.transform.GetComponent<Tile>() != null).FirstOrDefault();
                     var structures = hits.Where(w => w.transform.GetComponent<Structure>() != null).FirstOrDefault();
 
-                    if (tiles != default(RaycastHit2D))
+                    if (tiles != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {
                         var popup = Managers.UI.ShowPopupUI<Structure_Popup>();
                         popup.Init();

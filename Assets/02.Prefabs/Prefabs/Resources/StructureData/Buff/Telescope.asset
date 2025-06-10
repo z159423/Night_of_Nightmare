@@ -18,8 +18,11 @@ MonoBehaviour:
   guardType: 0
   trapType: 0
   buffType: 0
+  icon: {fileID: 21300000, guid: 7bd23b41adfa4ba468f864cc6254652d, type: 3}
   nameKey: global.str_telescope_name
   descriptionKey: global.str_telescope_desc
   upgradeCoin: 00010000
   upgradeEnergy: 00000000
   purcahseLimit: 1
+  argment1: []
+  argment2: []

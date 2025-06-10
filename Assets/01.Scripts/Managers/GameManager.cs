@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public List<Bed> beds = new List<Bed>();
     public CharactorType[] charactorType;
     public List<PlayerableCharactor> charactors = new List<PlayerableCharactor>();
+
+    //ai들 데이터
+    public List<PlayerData> playerDatas = new List<PlayerData>();
+
     public EnemyType enemyType;
     public Enemy enemy;
     public string enemyName;
@@ -186,5 +190,32 @@ public class GameManager : MonoBehaviour
     public void GameWin()
     {
 
+    }
+}
+
+public class PlayerData
+{
+    public CharactorType type;
+
+    public string name;
+    public int coin;
+    public int energy;
+
+    public List<Structure> structures = new List<Structure>();
+
+    public void BuildStructure(Structure structure)
+    {
+        if (structures.Contains(structure))
+            return;
+
+        structures.Add(structure);
+    }
+
+    public void UpgradeStructure(Structure structure)
+    {
+        if (!structures.Contains(structure))
+            return;
+
+        structure.Upgrade();
     }
 }

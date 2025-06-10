@@ -18,8 +18,11 @@ MonoBehaviour:
   guardType: 1
   trapType: 0
   buffType: 0
+  icon: {fileID: 21300000, guid: 984a1fcec353b8e43beb8d4e56407bfe, type: 3}
   nameKey: global.str_energy_shield_name
   descriptionKey: global.str_energy_shield_desc
   upgradeCoin: 40000000
   upgradeEnergy: 00000000
   purcahseLimit: 1
+  argment1: []
+  argment2: []

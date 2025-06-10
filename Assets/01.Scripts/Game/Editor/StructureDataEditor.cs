@@ -38,12 +38,26 @@ public class StructureDataEditor : Editor
                 break;
         }
 
+        // icon 필드와 미리보기
+        SerializedProperty iconProp = so.FindProperty("icon");
+        EditorGUILayout.PropertyField(iconProp);
+        if (iconProp.objectReferenceValue != null)
+        {
+            Texture2D tex = AssetPreview.GetAssetPreview(iconProp.objectReferenceValue);
+            if (tex != null)
+            {
+                float aspect = (float)tex.width / tex.height;
+                float width = EditorGUIUtility.currentViewWidth * 0.3f;
+                float height = width / aspect;
+                GUILayout.Label(tex, GUILayout.Width(width), GUILayout.Height(height));
+            }
+        }
+
         EditorGUILayout.PropertyField(so.FindProperty("nameKey"));
         EditorGUILayout.PropertyField(so.FindProperty("descriptionKey"));
         EditorGUILayout.PropertyField(so.FindProperty("upgradeCoin"), true);
         EditorGUILayout.PropertyField(so.FindProperty("upgradeEnergy"), true);
         EditorGUILayout.PropertyField(so.FindProperty("purcahseLimit"));
-
         EditorGUILayout.PropertyField(so.FindProperty("argment1"), true);
         EditorGUILayout.PropertyField(so.FindProperty("argment2"), true);
 

@@ -41,7 +41,7 @@ public class Structure_Popup : UI_Popup
 
     private VerticalLayoutGroup layout;
 
-    private TapTypes currentTapType = TapTypes.Basic;
+    private TapTypes currentTapType = TapTypes.Buff;
 
     [SerializeField]
     private Color[] tapColors;
@@ -51,6 +51,8 @@ public class Structure_Popup : UI_Popup
     public override void Init()
     {
         base.Init();
+
+        SelectTap(TapTypes.Basic);
     }
 
     public override void FirstSetting()

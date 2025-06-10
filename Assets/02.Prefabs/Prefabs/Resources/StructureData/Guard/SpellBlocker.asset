@@ -18,8 +18,11 @@ MonoBehaviour:
   guardType: 0
   trapType: 0
   buffType: 0
+  icon: {fileID: 21300000, guid: 83de11215cc7a8b49b62dbfa2305d07b, type: 3}
   nameKey: global.str_spell_blocker_name
   descriptionKey: global.str_spell_blocker_desc
   upgradeCoin: 40000000
   upgradeEnergy: 00000000
   purcahseLimit: 1
+  argment1: []
+  argment2: []

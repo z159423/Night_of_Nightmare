@@ -54,6 +54,9 @@ public class StructureSlot : UI_Base
     {
         _data = data;
 
+        GetImage(Images.Icon).sprite = data.icon;
+        GetImage(Images.Icon).SetNativeSize();
+        
         GetTextMesh(Texts.NameText).text = Managers.Localize.GetText(data.nameKey);
         GetTextMesh(Texts.DescText).text = Managers.Localize.GetText(data.descriptionKey);
         GetTextMesh(Texts.ValueText).text = data.upgradeCoin.Length > 0 ? data.upgradeCoin[0].ToString() : Managers.Localize.GetText("global.str_free");

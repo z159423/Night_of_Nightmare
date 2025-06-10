@@ -14,6 +14,8 @@ public class StructureData : ScriptableObject
     public TrapStructureType trapType;
     public BuffStructureType buffType;
 
+    public Sprite icon;
+
     public string nameKey;
     public string descriptionKey;
 
