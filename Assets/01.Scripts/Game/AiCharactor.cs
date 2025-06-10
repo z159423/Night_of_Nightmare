@@ -32,8 +32,9 @@ public class AiCharactor : PlayerableCharactor
         }
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         // NavMeshAgent가 할당되어 있는지 확인
         if (agent != null)
         {

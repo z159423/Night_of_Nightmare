@@ -82,8 +82,9 @@ public class Enemy : Charactor
         }
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (gameObject == null)
             return;
 
@@ -189,7 +190,7 @@ public class Enemy : Charactor
         {
             bodySpriteRenderer = gameObject.FindRecursive("Icon").GetComponent<SpriteRenderer>();
         }
-        bodySpriteRenderer.sprite = Managers.Resource.GetEnemyImage(Random.Range(1, 6));
+        bodySpriteRenderer.sprite = Managers.Resource.GetEnemyImage((int)Managers.Game.enemyType + 1);
     }
 
     public void FindTarget()

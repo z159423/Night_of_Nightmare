@@ -97,6 +97,14 @@ public class Match_Making_Popup : UI_Popup
                         Exit();
                         Managers.Game.OnRankGameStart();
                     });
+
+                    yield return new WaitForSeconds(5f);
+
+                    if (!Managers.Game.isGameStart)
+                    {
+                        Exit();
+                        Managers.Game.OnRankGameStart();
+                    }
                 }
             }
         });
@@ -144,6 +152,10 @@ public class Match_Making_Popup : UI_Popup
         Managers.Game.enemyName = name;
     }
 
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
     public override void Reset()
     {

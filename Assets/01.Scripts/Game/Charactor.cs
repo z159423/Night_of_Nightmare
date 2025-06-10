@@ -8,6 +8,7 @@ using DG.Tweening;
 public abstract class Charactor : MonoBehaviour
 {
     protected Transform body;
+    public GameObject icon;
     private Tween _moveTween;
     protected SpriteRenderer bodySpriteRenderer;
 
@@ -17,10 +18,24 @@ public abstract class Charactor : MonoBehaviour
     {
         body = gameObject.FindRecursive("Body").transform;
         agent = gameObject.GetComponentInParent<NavMeshAgent>();
+        icon = gameObject.FindRecursive("Icon");
 
         agent.updateRotation = false;
 
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+    }
+
+    protected virtual void Update()
+    {
+        if (agent != null && agent.hasPath && agent.remainingDistance > 0.01f)
+        {
+            // 오른쪽 이동: y 회전 0, 왼쪽 이동: y 회전 180
+            float dir = agent.steeringTarget.x - agent.transform.position.x;
+            if (icon != null)
+            {
+                icon.transform.localRotation = Quaternion.Euler(0, dir >= 0 ? 0 : 180, 0);
+            }
+        }
     }
 
     public virtual void SetBodySkin()

@@ -26,6 +26,28 @@ public class PlayerCharactor : PlayerableCharactor
         base.Start();
     }
 
+    private Vector3 lastPosition;
+
+    protected override void Update()
+    {
+        // NavMeshAgent가 할당되어 있는지 확인
+        if (agent != null)
+        {
+            Vector3 velocity;
+
+            // agent.Move를 사용할 때는 velocity가 자동으로 갱신되지 않으므로 직접 계산
+            velocity = (transform.position - lastPosition) / Time.deltaTime;
+            lastPosition = transform.position;
+
+            // 직접 계산한 velocity가 0이 아니면 방향을 계산
+            if (velocity.sqrMagnitude > 0.01f)
+            {
+                float dir = velocity.x;
+                icon.transform.localRotation = Quaternion.Euler(0, dir >= 0 ? 0 : 180, 0);
+            }
+        }
+    }
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Bed>(out Bed bed))

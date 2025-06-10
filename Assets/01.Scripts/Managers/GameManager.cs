@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     public Enemy enemy;
     public string enemyName;
 
+    public bool isGameStart = false;
+    public Coroutine spawnEnemyCoroutine;
+
     void Start()
     {
         this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
@@ -57,6 +60,8 @@ public class GameManager : MonoBehaviour
 
     public void OnRankGameStart()
     {
+        isGameStart = true;
+
         currentMap = Managers.Resource.Instantiate("Maps/Map1").GetComponent<Map>();
         currentMap.Setting();
 
@@ -104,7 +109,7 @@ public class GameManager : MonoBehaviour
         // 적생성
         if (enemy == null)
         {
-            StartCoroutine(spawnEnemy());
+            spawnEnemyCoroutine = StartCoroutine(spawnEnemy());
 
             IEnumerator spawnEnemy()
             {
@@ -141,6 +146,8 @@ public class GameManager : MonoBehaviour
 
     public void GoHome()
     {
+        isGameStart = false;
+
         Managers.Game.ChangeGameMode(GameMode.Home);
         Managers.Camera.ChangeMapCameraMode(CameraManager.MapCameraMode.Player);
         Managers.Camera.cameras[GameMode.Map].Follow = null;
@@ -157,6 +164,12 @@ public class GameManager : MonoBehaviour
 
         beds.Clear();
         charactors.Clear();
+
+        if (spawnEnemyCoroutine != null)
+        {
+            StopCoroutine(spawnEnemyCoroutine);
+            spawnEnemyCoroutine = null;
+        }
     }
 
     [Button("GameOver")]
