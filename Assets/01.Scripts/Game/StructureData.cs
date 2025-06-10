@@ -20,4 +20,7 @@ public class StructureData : ScriptableObject
     public int[] upgradeCoin;
     public int[] upgradeEnergy;
     public int purcahseLimit = -1;
+
+    public float[] argment1;
+    public float[] argment2;
 }

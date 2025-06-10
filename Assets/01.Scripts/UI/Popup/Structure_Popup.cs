@@ -91,6 +91,15 @@ public class Structure_Popup : UI_Popup
         {
             Destroy(child.gameObject);
         }
+
+        var finds = Managers.Resource.LoadAll<StructureData>($"StructureData/{(TapTypes)(int)currentTapType}");
+
+        foreach (var data in finds)
+        {
+            var slot = Managers.Resource.Instantiate("StructureSlot", layout.transform).GetComponent<StructureSlot>();
+            slot.Init();
+            slot.Setting(data);
+        }
     }
 
     public void Setting(Tile tile)

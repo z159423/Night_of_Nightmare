@@ -38,6 +38,23 @@ public class ResourceManager : MonoBehaviour
         return ret;
     }
 
+    public T[] LoadAll<T>(string path) where T : Object
+    {
+        if (loadedAsset.TryGetValue(path, out object value))
+        {
+            if (value == null)
+            {
+                loadedAsset.Remove(path);
+                return LoadAll<T>(path);
+            }
+            return value as T[];
+        }
+
+        T[] ret = Resources.LoadAll<T>(path);
+        loadedAsset[path] = ret;
+        return ret;
+    }
+
     public GameObject Instantiate(string name, Transform parent = null)
     {
         GameObject original = Load<GameObject>(name);
