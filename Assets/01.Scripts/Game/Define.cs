@@ -106,4 +106,51 @@ public class Define
         TungTungTung,
         Tralalero
     }
+
+    public enum StructureType
+    {
+        Basic,
+        Ore,
+        Guard,
+        Trap,
+        Buff
+    }
+
+    public enum BasicStructureType
+    {
+        Turret,
+        Generator,
+        GoldenChest,
+        Lamp
+    }
+
+    public enum OreStructureType
+    {
+        CopperOre,
+        SilverOre,
+        GoldOre,
+        DiamondOre,
+    }
+
+    public enum GuardStructureType
+    {
+        SpellBlocker,
+        EnergyShield,
+        RepairStation,
+        Cooler
+    }
+
+    public enum TrapStructureType
+    {
+        Trap,
+        ThornBush,
+        Guillotine
+    }
+
+    public enum BuffStructureType
+    {
+        Telescope,
+        SatelliteAntenna,
+        TurretBooster
+    }
 }

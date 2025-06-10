@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
+  m_Name: Turret
+  m_EditorClassIdentifier: 
+  type: 0
+  basicType: 0
+  oreType: 0
+  guardType: 0
+  trapType: 0
+  buffType: 0
+  nameKey: global.str_tower_name
+  descriptionKey: global.str_desc_atk_dmg
+  upgradeCoin: 100000002b00000056000000ac000000c201000084030000920900002e1300005c2600009853000010a400003498010000000000
+  upgradeEnergy: 00000000000000000000000000000000000000002000000040000000800000000001000000020000000400000008000000000000
