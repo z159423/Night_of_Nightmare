@@ -1418,7 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 0.7075472, g: 0.4529836, b: 0.15018693, a: 1}
+  outlineColor: {r: 0.19746311, g: 0.33962262, b: 0.08810965, a: 1}
   outlineWidth: 0.2
 --- !u!114 &8491649430966728405
 MonoBehaviour:
@@ -1433,7 +1433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 8213793554208293293}
-  KeyString: global.str_start_match
+  KeyString: global.str_continue
   IsPassRTL: 0
 --- !u!1 &5902287732612992554
 GameObject:
@@ -2245,7 +2245,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -1522}
-  m_SizeDelta: {x: 700, y: 220}
+  m_SizeDelta: {x: 600, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3328440125512750653
 CanvasRenderer:
@@ -2275,7 +2275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: eca04b58248457b43aeff9abf0a0f681, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51fbdb8f81e1e8c41b4a3a77d19f02ee, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

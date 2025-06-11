@@ -14,9 +14,10 @@ public class AiCharactor : PlayerableCharactor
         if (Managers.UI._currentScene is UI_GameScene_Map)
             Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetCharactorIcon(charactorType);
 
-        StartCoroutine(GetGold());
-
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
+
+        playerData = new PlayerData(charactorType);
+        Managers.Game.aiPlayerDatas.Add(playerData);
     }
 
     public void ActiveAiCharactor()

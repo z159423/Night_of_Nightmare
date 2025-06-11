@@ -17,6 +17,9 @@ public abstract class Structure : MonoBehaviour
     protected int Hp = 1;
     public bool destroyed = false;
 
+    public Define.StructureType type;
+    public int level = 1;
+
 
     protected virtual void Start()
     {
@@ -30,7 +33,7 @@ public abstract class Structure : MonoBehaviour
         if (gameObject.FindRecursive("HpBar") != null)
             hpBar = gameObject.FindRecursive("HpBar").transform;
 
-            if (gameObject.FindRecursive("HpBarBody") != null)
+        if (gameObject.FindRecursive("HpBarBody") != null)
             hpBarBody = gameObject.FindRecursive("HpBarBody").transform;
 
         if (gameObject.FindRecursive("Fill") != null)

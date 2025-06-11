@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
   m_Name: ThornBush
   m_EditorClassIdentifier: 
-  type: 3
-  basicType: 0
-  oreType: 0
-  guardType: 0
-  trapType: 1
-  buffType: 0
+  category: 0
+  structureType: 13
   icon: {fileID: 21300000, guid: 4f55fd2379b4ac44ba27ac3b306cf900, type: 3}
   nameKey: global.str_thorn_bush_name
   descriptionKey: global.str_thorn_bush_desc

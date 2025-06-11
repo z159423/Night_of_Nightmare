@@ -133,11 +133,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01a3f0b2a5c505419bae1b4685cd36c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  playerStructure: 0
+  destroyed: 0
+  type: 100
+  level: 1
   bed: {fileID: 0}
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
   blanket: {fileID: 0}
   blanketAnimation: {fileID: 0}
+  active: 0
 --- !u!61 &317358777061699991
 BoxCollider2D:
   m_ObjectHideFlags: 0

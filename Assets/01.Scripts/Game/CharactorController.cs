@@ -94,7 +94,7 @@ public class CharactorController : MonoBehaviour
                 Vector2 dragDelta = currentTouchPosition - startTouchPosition;
 
                 float dragThreshold = 10f;
-                if (!isDragging && dragDelta.magnitude > dragThreshold  && Managers.UI._currentPopup == null)
+                if (!isDragging && dragDelta.magnitude > dragThreshold && Managers.UI._currentPopup == null)
                 {
                     isDragging = true;
                 }
@@ -129,9 +129,20 @@ public class CharactorController : MonoBehaviour
 
                     if (tiles != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {
-                        var popup = Managers.UI.ShowPopupUI<Structure_Popup>();
-                        popup.Init();
-                        popup.Setting(tiles.transform.GetComponent<Tile>());
+                        if (tiles.transform.GetComponent<Tile>().currentStructure != null)
+                        {
+                            var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
+                            popup.Init();
+                            popup.Setting(tiles.transform.GetComponent<Tile>().currentStructure);
+                        }
+                        else
+                        {
+                            var popup = Managers.UI.ShowPopupUI<Structure_Popup>();
+                            popup.Init();
+                            popup.Setting(tiles.transform.GetComponent<Tile>());
+                        }
+
+                        Managers.Game.selectedTile = tiles.transform.GetComponent<Tile>();
                     }
 
                     if (structures != default(RaycastHit2D))

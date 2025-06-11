@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using VInspector;
+using System.Linq;
 using static Define;
 
 public class GameManager : MonoBehaviour
@@ -13,8 +14,7 @@ public class GameManager : MonoBehaviour
 
     public CharactorType selectedPlayerCharactorType = CharactorType.Farmer;
 
-    public int coin = 0;
-    public int energy = 0;
+    public int gem = 0;
     public int ticket = 0;
 
     public Map currentMap;
@@ -22,8 +22,9 @@ public class GameManager : MonoBehaviour
     public CharactorType[] charactorType;
     public List<PlayerableCharactor> charactors = new List<PlayerableCharactor>();
 
+    public PlayerData playerData;
     //ai들 데이터
-    public List<PlayerData> playerDatas = new List<PlayerData>();
+    public List<PlayerData> aiPlayerDatas = new List<PlayerData>();
 
     public EnemyType enemyType;
     public Enemy enemy;
@@ -32,6 +33,10 @@ public class GameManager : MonoBehaviour
     public bool isGameStart = false;
     public Coroutine spawnEnemyCoroutine;
 
+    public Tile selectedTile;
+
+    Coroutine getReourcesCoroutine;
+
     void Start()
     {
         this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
@@ -39,7 +44,6 @@ public class GameManager : MonoBehaviour
 
         });
     }
-
 
     public void ChangeGameMode(GameMode mode)
     {
@@ -62,9 +66,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [Button("OnRankGameStart")]
     public void OnRankGameStart()
     {
         isGameStart = true;
+
+        playerData = new PlayerData(selectedPlayerCharactorType);
 
         currentMap = Managers.Resource.Instantiate("Maps/Map1").GetComponent<Map>();
         currentMap.Setting();
@@ -78,6 +85,21 @@ public class GameManager : MonoBehaviour
         var playerCharactor = Managers.Resource.Instantiate("PlayerCharactor", currentMap.transform);
         SetPos(playerCharactor.transform);
         playerCharactor.GetComponentInChildren<PlayerCharactor>().Setting();
+
+        getReourcesCoroutine = StartCoroutine(GetResources());
+
+        if (charactorType == null || charactorType.Length == 0)
+        {
+            charactorType = new CharactorType[6]
+            {
+                CharactorType.Farmer,
+                CharactorType.Miner,
+                  CharactorType.ReapireMan,
+                  CharactorType.Chef,
+                  CharactorType.Scientist,
+                  CharactorType.Farmer,
+            };
+        }
 
         CharactorType[] tempTypes = new CharactorType[5]
         {
@@ -174,6 +196,12 @@ public class GameManager : MonoBehaviour
             StopCoroutine(spawnEnemyCoroutine);
             spawnEnemyCoroutine = null;
         }
+
+        if (getReourcesCoroutine != null)
+        {
+            StopCoroutine(getReourcesCoroutine);
+            getReourcesCoroutine = null;
+        }
     }
 
     [Button("GameOver")]
@@ -191,17 +219,38 @@ public class GameManager : MonoBehaviour
     {
 
     }
+
+    public IEnumerator GetResources()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            foreach (var charactor in charactors)
+            {
+                charactor.playerData.GetResources();
+            }
+
+            GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+        }
+    }
 }
 
+[System.Serializable]
 public class PlayerData
 {
     public CharactorType type;
 
-    public string name;
     public int coin;
     public int energy;
 
+    public Room room;
     public List<Structure> structures = new List<Structure>();
+
+    public PlayerData(CharactorType type)
+    {
+        this.type = type;
+    }
 
     public void BuildStructure(Structure structure)
     {
@@ -217,5 +266,17 @@ public class PlayerData
             return;
 
         structure.Upgrade();
+    }
+
+    public void GetResources()
+    {
+        coin += 1;
+        energy += structures.Where(s => s.type == Define.StructureType.Generator).Count();
+    }
+
+    public void UseResource(int coin, int energy)
+    {
+        this.coin -= coin;
+        this.energy -= energy;
     }
 }

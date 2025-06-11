@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using System;
 
 public class Structure_Popup : UI_Popup
 {
@@ -47,6 +49,7 @@ public class Structure_Popup : UI_Popup
     private Color[] tapColors;
 
     private Tile selectedTile;
+
 
     public override void Init()
     {
@@ -96,11 +99,14 @@ public class Structure_Popup : UI_Popup
 
         var finds = Managers.Resource.LoadAll<StructureData>($"StructureData/{(TapTypes)(int)currentTapType}");
 
-        foreach (var data in finds)
+        // Enum 순서대로 정렬
+        var sortedFinds = finds.OrderBy(data => (int)data.structureType).ToList();
+
+        foreach (var data in sortedFinds)
         {
             var slot = Managers.Resource.Instantiate("StructureSlot", layout.transform).GetComponent<StructureSlot>();
             slot.Init();
-            slot.Setting(data);
+            slot.Setting(data, () => Exit());
         }
     }
 

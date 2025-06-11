@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
   m_Name: CopperOre
   m_EditorClassIdentifier: 
-  type: 1
-  basicType: 3
-  oreType: 0
-  guardType: 0
-  trapType: 0
-  buffType: 0
+  category: 0
+  structureType: 4
   icon: {fileID: 21300000, guid: d446cafc6a4417a418fb4ad7543464f9, type: 3}
   nameKey: global.str_mineral_name_1
   descriptionKey: global.str_desc_produce_gold

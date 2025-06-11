@@ -40,12 +40,12 @@ public class UI_GameScene_Map : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
         {
-            GetTextMesh(Texts.GoldText).text = Managers.Game.coin.ToString();
+            GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
         });
 
         this.SetListener(GameObserverType.Game.OnChangeEnergyCount, () =>
         {
-            GetTextMesh(Texts.EnemyCount).text = Managers.Game.energy.ToString();
+            GetTextMesh(Texts.EnemyCount).text = Managers.Game.playerData.energy.ToString();
         });
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
@@ -53,8 +53,8 @@ public class UI_GameScene_Map : UI_Scene
             GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
         });
 
-        GetTextMesh(Texts.GoldText).text = Managers.Game.coin.ToString();
-        GetTextMesh(Texts.EnemyCount).text = Managers.Game.energy.ToString();
+        GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
+        GetTextMesh(Texts.EnemyCount).text = Managers.Game.playerData.energy.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
     }
 

@@ -14,11 +14,10 @@ public class PlayerCharactor : PlayerableCharactor
         if (Managers.UI._currentScene is UI_GameScene_Map)
             Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetPlayerIcon(charactorType);
 
-        StartCoroutine(GetGold());
-
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
 
         Managers.Game.charactors.Add(this);
+        Managers.Game.playerData = playerData;
     }
 
     protected override void Start()

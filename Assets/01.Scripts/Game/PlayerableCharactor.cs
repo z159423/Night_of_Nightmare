@@ -1,26 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class PlayerableCharactor : Charactor
 {
-    public int gold = 0;
-    public int energy = 0;
-
     public Bed currentFindBed;
     //현재 있는 방
     public Room currentActiveRoom;
 
     public Define.CharactorType charactorType;
 
+    public PlayerData playerData;
+
     public bool die = false;
 
-    public IEnumerator GetGold()
-    {
-        yield return new WaitForSeconds(1f);
-
-        gold += 1;
-    }
+    
 
     public override void SetBodySkin()
     {
@@ -39,6 +34,8 @@ public abstract class PlayerableCharactor : Charactor
             {
                 currentActiveRoom = bed.OnActive(this);
                 gameObject.SetActive(false);
+
+                playerData.room = currentActiveRoom;
             }
         }
     }

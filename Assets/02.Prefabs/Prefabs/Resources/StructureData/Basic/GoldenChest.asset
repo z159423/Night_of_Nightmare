@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
   m_Name: GoldenChest
   m_EditorClassIdentifier: 
-  type: 0
-  basicType: 2
-  oreType: 0
-  guardType: 0
-  trapType: 0
-  buffType: 0
+  category: 0
+  structureType: 2
   icon: {fileID: 21300000, guid: c689e4432e8fd4948820b0109132ce17, type: 3}
   nameKey: global.str_ATM_name
   descriptionKey: global.str_ATM_desc
-  upgradeCoin: 
+  upgradeCoin: 20000000
   upgradeEnergy: 
   purcahseLimit: -1
   argment1: []

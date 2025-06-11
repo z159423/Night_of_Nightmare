@@ -71,7 +71,7 @@ public class UI_GameScene_Home : UI_Scene
             }
         });
 
-        GetTextMesh(Texts.GemText).text = Managers.Game.coin.ToString();
+        GetTextMesh(Texts.GemText).text = Managers.Game.gem.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
     }
 
@@ -180,7 +180,7 @@ public class UI_GameScene_Home : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
         {
-            GetTextMesh(Texts.GemText).text = Managers.Game.coin.ToString();
+            GetTextMesh(Texts.GemText).text = Managers.Game.gem.ToString();
         });
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>

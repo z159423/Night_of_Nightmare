@@ -107,7 +107,7 @@ public class Define
         Tralalero
     }
 
-    public enum StructureType
+    public enum StructureCategory
     {
         Basic,
         Ore,
@@ -115,6 +115,33 @@ public class Define
         Trap,
         Buff
     }
+
+    public enum StructureType
+    {
+        Turret,
+        Generator,
+        GoldenChest,
+        Lamp,
+        CopperOre,
+        SilverOre,
+        GoldOre,
+        DiamondOre,
+        SpellBlocker,
+        EnergyShield,
+        RepairStation,
+        Cooler,
+        Trap,
+        ThornBush,
+        Guillotine,
+        Telescope,
+        SatelliteAntenna,
+        TurretBooster,
+
+        Bed = 100,
+        Door = 101
+    }
+
+
 
     public enum BasicStructureType
     {
