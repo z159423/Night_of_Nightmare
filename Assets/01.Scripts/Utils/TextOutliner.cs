@@ -1,11 +1,10 @@
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
 
 public class TextOutliner : MonoBehaviour
 {
-    [SerializeField] private Color outlineColor = Color.red;
-    [SerializeField] private float outlineWidth = 0.2f;
+    [SerializeField] private Color underlayColor = Color.black;
+    [SerializeField] private float underlayDilate = 0.2f;
     private TextMeshProUGUI tmp;
     private TextMeshPro textMeshPro;
     private Material instanceMaterial;
@@ -28,14 +27,24 @@ public class TextOutliner : MonoBehaviour
             textMeshPro.fontMaterial = instanceMaterial;
         }
 
+        instanceMaterial.EnableKeyword("UNDERLAY_ON");
 
-        // 아웃라인 색상 설정
-        instanceMaterial.SetColor("_OutlineColor", outlineColor);
-        instanceMaterial.SetFloat("_OutlineWidth", outlineWidth);
+        // Underlay 효과 적용
+        if (instanceMaterial.HasProperty("_UnderlayColor"))
+            instanceMaterial.SetColor("_UnderlayColor", underlayColor);
+        if (instanceMaterial.HasProperty("_UnderlayDilate"))
+            instanceMaterial.SetFloat("_UnderlayDilate", underlayDilate);
     }
 
-    public void SetOutlineColor(Color color)
+    public void SetUnderlayDilate(float dilate)
     {
-        instanceMaterial.SetColor("_OutlineColor", color);
+        if (instanceMaterial != null && instanceMaterial.HasProperty("_UnderlayDilate"))
+            instanceMaterial.SetFloat("_UnderlayDilate", dilate);
+    }
+
+    public void SetUnderlayColor(Color color)
+    {
+        if (instanceMaterial != null && instanceMaterial.HasProperty("_UnderlayColor"))
+            instanceMaterial.SetColor("_UnderlayColor", color);
     }
 }

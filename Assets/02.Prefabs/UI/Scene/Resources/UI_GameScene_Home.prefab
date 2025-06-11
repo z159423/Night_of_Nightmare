@@ -831,8 +831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 0.2890074, g: 0.49056602, b: 0.122641504, a: 1}
-  outlineWidth: 0.2
+  underlayColor: {r: 0.27950108, g: 0.46226418, b: 0.128649, a: 1}
+  underlayDilate: 1
 --- !u!114 &6404383728994128940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2440,8 +2440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 0.764151, g: 0.38608664, b: 0.111739054, a: 1}
-  outlineWidth: 0.2
+  underlayColor: {r: 0.6886792, g: 0.34114113, b: 0.09420614, a: 1}
+  underlayDilate: 1
 --- !u!114 &3441564274657002377
 MonoBehaviour:
   m_ObjectHideFlags: 0
