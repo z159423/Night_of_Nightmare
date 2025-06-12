@@ -40,7 +40,10 @@ public abstract class Structure : MonoBehaviour
             hpBarFill = gameObject.FindRecursive("Fill").transform;
     }
 
-    public abstract void Upgrade();
+    public virtual void Upgrade()
+    {
+        level++;
+    }
 
     public virtual void Hit(int damage)
     {
@@ -61,11 +64,21 @@ public abstract class Structure : MonoBehaviour
         }
     }
 
-    protected virtual void DestroyStructure()
+    public virtual void DestroyStructure()
     {
         // Implement destruction logic here, e.g., play animation, destroy object
         gameObject.SetActive(false);
 
         destroyed = true;
+    }
+
+    public int GetSellValue()
+    {
+        var data = Managers.Resource.GetStructureData(type);
+        if (data == null)
+            return 0;
+
+        int sellValue = data.upgradeCoin[level] / 4; // 판매가는 업그레이드 비용의 1/4
+        return sellValue;
     }
 }

@@ -36,6 +36,9 @@ public abstract class PlayerableCharactor : Charactor
                 gameObject.SetActive(false);
 
                 playerData.room = currentActiveRoom;
+
+                playerData.structures.Add(currentActiveRoom.bed);
+                playerData.structures.Add(currentActiveRoom.door);
             }
         }
     }

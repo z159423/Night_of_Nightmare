@@ -97,7 +97,7 @@ public class Structure_Popup : UI_Popup
             Destroy(child.gameObject);
         }
 
-        var finds = Managers.Resource.LoadAll<StructureData>($"StructureData/{(TapTypes)(int)currentTapType}");
+        var finds = Managers.Resource.LoadAll<StructureData>($"StructureData/{(TapTypes)(int)currentTapType}").Where(n => !n.baseStructure);
 
         // Enum 순서대로 정렬
         var sortedFinds = finds.OrderBy(data => (int)data.structureType).ToList();
@@ -106,7 +106,17 @@ public class Structure_Popup : UI_Popup
         {
             var slot = Managers.Resource.Instantiate("StructureSlot", layout.transform).GetComponent<StructureSlot>();
             slot.Init();
-            slot.Setting(data, () => Exit());
+            slot.Setting(data, () =>
+            {
+                Managers.Game.playerData.UseResource(data.upgradeCoin[0], data.upgradeEnergy[0]);
+
+                var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == data.structureType);
+                var structure = Instantiate(find, Managers.Game.selectedTile.transform).GetComponentInChildren<Structure>();
+                Managers.Game.playerData.BuildStructure(structure);
+
+                Managers.Game.selectedTile.currentStructure = structure;
+                Exit();
+            });
         }
     }
 

@@ -5,8 +5,8 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     [SerializeField] private Tile[] tiles;
-    [SerializeField] private Bed bed;
-    [SerializeField] private Door door;
+    [SerializeField] public Bed bed;
+    [SerializeField] public Door door;
 
     void Start()
     {

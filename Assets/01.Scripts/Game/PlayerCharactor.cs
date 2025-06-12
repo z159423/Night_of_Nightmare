@@ -58,6 +58,9 @@ public class PlayerCharactor : PlayerableCharactor
                 GameObserver.Call(GameObserverType.Game.OnActivePlayerBed);
 
                 playerData.room = currentActiveRoom;
+
+                playerData.structures.Add(currentActiveRoom.bed);
+                playerData.structures.Add(currentActiveRoom.door);
             }
         }
     }

@@ -5,23 +5,26 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using System;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class Upgrade_Popup : UI_Popup
 {
 
     enum Buttons
     {
-        ExitBtn
+        ExitBtn,
+        SellBtn
     }
 
     enum Images
     {
+        SellSlot,
         TouchGuard
     }
 
     enum Texts
     {
-       
+        SellCoinCount
     }
 
     private VerticalLayoutGroup layout;
@@ -48,6 +51,32 @@ public class Upgrade_Popup : UI_Popup
     public void Setting(Structure structure)
     {
         selectedStructure = structure;
+
+        var data = Managers.Resource.GetStructureData(structure.type);
+        var currentStructure = Managers.Game.playerData.GetStructure(structure.type);
+
+        if (data.baseStructure)
+        {
+            GetButton(Buttons.SellBtn).gameObject.SetActive(false);
+            GetImage(Images.SellSlot).gameObject.SetActive(false);
+        }
+        else
+        {
+            GetButton(Buttons.SellBtn).gameObject.SetActive(true);
+            GetImage(Images.SellSlot).gameObject.SetActive(true);
+
+            int sellCoin = data.upgradeCoin[currentStructure.level] / 4;
+            GetTextMesh(Texts.SellCoinCount).text = sellCoin.ToString();
+            GetButton(Buttons.SellBtn).AddButtonEvent(() => { Managers.Game.playerData.SellStructure(structure); Exit(); });
+        }
+
+        var upgradeSlot = GetComponentInChildren<StructureSlot>();
+        upgradeSlot.Setting(data, () =>
+        {
+            Managers.Game.playerData.UseResource(data.upgradeCoin[0], data.upgradeEnergy[0]);
+            selectedStructure.Upgrade();
+            Exit();
+        }, true);
     }
 
     public override void Reset()

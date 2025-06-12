@@ -41,7 +41,6 @@ public class Turret : Structure
 
     public override void Upgrade()
     {
-        // 업그레이드 로직 구현
-        level++;
+        
     }
 }

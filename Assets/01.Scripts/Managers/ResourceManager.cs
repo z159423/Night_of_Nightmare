@@ -136,4 +136,35 @@ public class ResourceManager : MonoBehaviour
     {
         return Resources.Load<Sprite>($"Enemy/spr_enemy_{id}");
     }
+
+    public StructureData GetStructureData(Define.StructureType type)
+    {
+        var categories = new[]
+        {
+            Define.StructureCategory.Basic,
+            Define.StructureCategory.Buff,
+            Define.StructureCategory.Guard,
+            Define.StructureCategory.Ore,
+            Define.StructureCategory.Trap
+        };
+
+        foreach (var category in categories)
+        {
+            var data = Load<StructureData>($"StructureData/{category}/{type}");
+            if (data != null)
+                return data;
+        }
+
+        return null;
+    }
+
+    public StructureData[] GetStructureDatas(Define.StructureCategory category,Define.StructureType type, bool includeBase = false)
+    {
+        var allData = LoadAll<StructureData>($"StructureData/{category}/{type}");
+        if (includeBase)
+            return allData;
+
+        // baseStructure가 false인 데이터만 필터링
+        return System.Array.FindAll(allData, data => !data.baseStructure);
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using VInspector;
 using System.Linq;
 using static Define;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -234,49 +235,11 @@ public class GameManager : MonoBehaviour
             GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
         }
     }
-}
 
-[System.Serializable]
-public class PlayerData
-{
-    public CharactorType type;
-
-    public int coin;
-    public int energy;
-
-    public Room room;
-    public List<Structure> structures = new List<Structure>();
-
-    public PlayerData(CharactorType type)
+    [Button("AddCoin")]
+    public void AddCoin()
     {
-        this.type = type;
-    }
-
-    public void BuildStructure(Structure structure)
-    {
-        if (structures.Contains(structure))
-            return;
-
-        structures.Add(structure);
-    }
-
-    public void UpgradeStructure(Structure structure)
-    {
-        if (!structures.Contains(structure))
-            return;
-
-        structure.Upgrade();
-    }
-
-    public void GetResources()
-    {
-        coin += 1;
-        energy += structures.Where(s => s.type == Define.StructureType.Generator).Count();
-    }
-
-    public void UseResource(int coin, int energy)
-    {
-        this.coin -= coin;
-        this.energy -= energy;
+        playerData.coin += 1000;
+        GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
     }
 }

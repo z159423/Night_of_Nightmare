@@ -147,6 +147,9 @@ public class CharactorController : MonoBehaviour
 
                     if (structures != default(RaycastHit2D))
                     {
+                        var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
+                        popup.Init();
+                        popup.Setting(structures.transform.GetComponent<Structure>());
                         //구조물 클릭시 업그레이드 팝업
                     }
                 }

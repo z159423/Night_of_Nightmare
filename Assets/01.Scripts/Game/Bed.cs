@@ -89,7 +89,7 @@ public class Bed : Structure
         
     }
 
-    protected override void DestroyStructure()
+    public override void DestroyStructure()
     {
         currentCharactor.Die();
 
