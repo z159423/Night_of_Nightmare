@@ -71,6 +71,7 @@ public class Upgrade_Popup : UI_Popup
         }
 
         var upgradeSlot = GetComponentInChildren<StructureSlot>();
+        upgradeSlot.Init();
         upgradeSlot.Setting(data, () =>
         {
             Managers.Game.playerData.UseResource(data.upgradeCoin[0], data.upgradeEnergy[0]);

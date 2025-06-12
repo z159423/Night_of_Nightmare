@@ -18,7 +18,7 @@ public abstract class Structure : MonoBehaviour
     public bool destroyed = false;
 
     public Define.StructureType type;
-    public int level = 1;
+    public int level = 0;
 
 
     protected virtual void Start()

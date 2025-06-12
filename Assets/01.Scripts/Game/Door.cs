@@ -70,7 +70,14 @@ public class Door : Structure
 
     public override void Upgrade()
     {
+        base.Upgrade();
 
+        var data = Managers.Resource.GetStructureData(type);
+
+        MaxHp = (int)data.argment1[level];
+        Hp = MaxHp;
+
+        GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
     }
 
     public void RepaireDoor()

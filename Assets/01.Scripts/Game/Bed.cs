@@ -86,7 +86,12 @@ public class Bed : Structure
 
     public override void Upgrade()
     {
-        
+        base.Upgrade();
+
+        var data = Managers.Resource.GetStructureData(type);
+
+        blanket.sprite = data.sprite1[level];
+        bed.sprite = data.sprite2[level];
     }
 
     public override void DestroyStructure()

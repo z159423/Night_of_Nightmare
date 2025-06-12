@@ -337,7 +337,7 @@ MonoBehaviour:
   playerStructure: 0
   destroyed: 0
   type: 101
-  level: 1
+  level: 0
   closeType: 0
   isClose: 0
 --- !u!1 &5439407981671576161

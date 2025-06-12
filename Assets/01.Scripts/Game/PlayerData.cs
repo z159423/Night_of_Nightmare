@@ -13,9 +13,13 @@ public class PlayerData
     public Room room;
     public List<Structure> structures = new List<Structure>();
 
+    private StructureData bedData;
+
     public PlayerData(CharactorType type)
     {
         this.type = type;
+
+        bedData = Managers.Resource.GetStructureData(Define.StructureType.Bed);
     }
 
     public void BuildStructure(Structure structure)
@@ -36,7 +40,12 @@ public class PlayerData
 
     public void GetResources()
     {
-        coin += 1;
+        if(bedData == null)
+        {
+            bedData = Managers.Resource.GetStructureData(Define.StructureType.Bed);
+        }
+
+        coin += room == null ? (int)bedData.argment1[0] : (int)bedData.argment1[room.bed.level];
         energy += structures.Where(s => s.type == Define.StructureType.Generator).Count();
     }
 

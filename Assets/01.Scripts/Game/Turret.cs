@@ -41,6 +41,10 @@ public class Turret : Structure
 
     public override void Upgrade()
     {
-        
+        base.Upgrade();
+        var data = Managers.Resource.GetStructureData(type);
+
+        body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
+        head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];
     }
 }

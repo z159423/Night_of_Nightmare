@@ -12,6 +12,9 @@ public class StructureData : ScriptableObject
     public StructureType structureType;
 
     public Sprite icon;
+    public bool baseStructure = false;
+    public bool sellable = true;
+
 
     public string nameKey;
     public string descriptionKey;
@@ -22,4 +25,16 @@ public class StructureData : ScriptableObject
 
     public float[] argment1;
     public float[] argment2;
+
+    public RequireStructure[] requireStructures;
+
+    public Sprite[] sprite1;
+    public Sprite[] sprite2;
+}
+
+[System.Serializable]
+public class RequireStructure
+{
+    public StructureType type;
+    public int level;
 }

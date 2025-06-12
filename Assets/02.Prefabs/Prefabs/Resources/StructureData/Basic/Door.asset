@@ -38,3 +38,19 @@ MonoBehaviour:
   - 40960
   argment2: []
   requireStructures: []
+  sprite1:
+  - {fileID: 21300000, guid: 48ec02a1c3c7e5c4293ca2fb83fb4d72, type: 3}
+  - {fileID: 21300000, guid: 091ee434a9c0ccb49b24c63558ef4fc9, type: 3}
+  - {fileID: 21300000, guid: a2ceea0567cc70649979dd83c42cb683, type: 3}
+  - {fileID: 21300000, guid: 9b812b28276cdae4ca85a7bfe316ee62, type: 3}
+  - {fileID: 21300000, guid: 27e30cb45ca350d4d91133674a8d0274, type: 3}
+  - {fileID: 21300000, guid: d723a2e7c22b20b4e8230c5ec2d85ea2, type: 3}
+  - {fileID: 21300000, guid: 38703693f7b54594196e4933d77d4dcf, type: 3}
+  - {fileID: 21300000, guid: 23b56b427b5cc844992be3a7e7298d30, type: 3}
+  - {fileID: 21300000, guid: b2c9e967dec160d45956c7e6210f8699, type: 3}
+  - {fileID: 21300000, guid: bd7ad4372431bf949b2ea4492f258165, type: 3}
+  - {fileID: 21300000, guid: e17d12a5f179b3d4fb8504e4ca2b5e48, type: 3}
+  - {fileID: 21300000, guid: f1641f67a41dba9439168e8ab4dbc7a7, type: 3}
+  - {fileID: 21300000, guid: eb6fe7413df6faf45b4291bb1c9e40e4, type: 3}
+  - {fileID: 21300000, guid: 82a0b135e87f2254f8a14f90747c5149, type: 3}
+  sprite2: []
