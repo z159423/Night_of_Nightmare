@@ -9,7 +9,10 @@ public class TierBox : UI_Base
 {
     enum Images
     {
-        Icon
+        Icon,
+        Frame,
+        BackYellow,
+        Line
     }
 
     enum Texts
@@ -42,5 +45,29 @@ public class TierBox : UI_Base
         GetImage(Images.Icon).SetNativeSize();
         GetTextMesh(Texts.NameText).text = tier.ToString();
         GetTextMesh(Texts.ScoreText).text = Define.TierToScore[tier].ToString();
+
+        GetTextMesh(Texts.NameText).color = Define.TierColor[tier];
+        GetTextMesh(Texts.ScoreText).color = Define.TierColor[tier];
+
+        if (Managers.LocalData.PlayerRankingPoint < Define.TierToScore[tier])
+        {
+            GetImage(Images.Icon).color = new Color32(90, 90, 90, 255);
+            GetImage(Images.Frame).color = new Color32(90, 90, 90, 255);
+        }
+
+        int nextTierScore = 0;
+        if (Define.TierToScore.ContainsKey(tier + 1))
+            nextTierScore = Define.TierToScore[tier + 1];
+        else
+        {
+            nextTierScore = int.MaxValue;
+            GetImage(Images.Line).gameObject.SetActive(false);
+        }
+
+        // 점수가 해당 Tier에 포함되는 경우만 SetActive true
+        bool isInTier = Managers.LocalData.PlayerRankingPoint < nextTierScore &&
+                        Managers.LocalData.PlayerRankingPoint >= Define.TierToScore[tier];
+
+        GetImage(Images.BackYellow).gameObject.SetActive(isInTier);
     }
 }

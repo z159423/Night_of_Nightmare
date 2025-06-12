@@ -90,6 +90,44 @@ public class Define
         {Tier.Challenger, 4200}
     };
 
+    public static Dictionary<Tier, Color32> TierColor = new Dictionary<Tier, Color32>()
+    {
+        {Tier.Iron4, new Color32(178, 178, 178, 255)},
+        {Tier.Iron3, new Color32(229, 229, 229, 255)},
+        {Tier.Iron2, new Color32(253, 253, 180, 255)},
+        {Tier.Iron1, new Color32(148, 253, 127, 255)},
+        {Tier.Bronze4, new Color32(247, 245, 103, 255)},
+        {Tier.Bronze3, new Color32(213, 255, 127, 255)},
+        {Tier.Bronze2, new Color32(164, 255, 75, 255)},
+        {Tier.Bronze1, new Color32(138, 255, 26, 255)},
+        {Tier.Silver4, new Color32(178, 223, 255, 255)},
+        {Tier.Silver3, new Color32(100, 191, 254, 255)},
+        {Tier.Silver2, new Color32(229, 229, 229, 255)},
+        {Tier.Silver1, new Color32(50, 170, 255, 255)},
+        {Tier.Gold4, new Color32(199, 178, 255, 255)},
+        {Tier.Gold3, new Color32(178, 151, 254, 255)},
+        {Tier.Gold2, new Color32(140, 101, 254, 255)},
+        {Tier.Gold1, new Color32(254, 218, 124, 255)},
+        {Tier.Platinum4, new Color32(255, 211, 102, 255)},
+        {Tier.Platinum3, new Color32(255, 204, 76, 255)},
+        {Tier.Platinum2, new Color32(154, 196, 50, 255)},
+        {Tier.Platinum1, new Color32(255, 181, 0, 255)},
+        {Tier.Emerald4, new Color32(255, 161, 100, 255)},
+        {Tier.Emerald3, new Color32(255, 144, 75, 255)},
+        {Tier.Emerald2, new Color32(222, 125, 10, 255)},
+        {Tier.Emerald1, new Color32(255, 153, 164, 255)},
+        {Tier.Diamond4, new Color32(255, 127, 140, 255)},
+        {Tier.Diamond3, new Color32(254, 101, 120, 255)},
+        {Tier.Diamond2, new Color32(255, 50, 73, 255)},
+        {Tier.Diamond1, new Color32(159, 44, 56, 255)},
+        {Tier.Master4, new Color32(255, 50, 73, 255)},
+        {Tier.Master3, new Color32(254, 24, 53, 255)},
+        {Tier.Master2, new Color32(255, 25, 53, 255)},
+        {Tier.Master1, new Color32(255, 25, 53, 255)},
+        {Tier.GrandMaster, new Color32(255, 25, 53, 255)},
+        {Tier.Challenger, new Color32(228, 22, 219, 255)}
+    };
+
     public enum GameMode
     {
         None,

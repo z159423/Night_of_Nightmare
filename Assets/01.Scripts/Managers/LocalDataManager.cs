@@ -31,4 +31,10 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("PlayerWinCount", 0);
         set { PlayerPrefs.SetInt("PlayerWinCount", value); IsSave = true; }
     }
+
+    public int PlayerRankingPoint
+    {
+        get => PlayerPrefs.GetInt("PlayerRankingPoint", 0);
+        set { PlayerPrefs.SetInt("PlayerRankingPoint", value); IsSave = true; }
+    }
 }
