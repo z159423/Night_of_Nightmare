@@ -55,14 +55,14 @@ public class StructureSlot : UI_Base
         });
     }
 
-    public void Setting(StructureData data, Action onPurcahse, bool upgrade = false)
+    public void Setting(StructureData data, Action onPurcahse, bool upgrade = false, Structure selectedStructure = null)
     {
         _data = data;
 
         if (upgrade)
         {
-            var currentStructure = Managers.Game.playerData.GetStructure(data.structureType);
-            level = currentStructure != null ? currentStructure.level : 0;
+            var currentStructure = selectedStructure;
+            level = currentStructure != null ? currentStructure.level + 1 : 0;
         }
         else
             level = 0;
@@ -93,7 +93,7 @@ public class StructureSlot : UI_Base
         if (_data.upgradeCoin.Length > 0 && _data.upgradeCoin[level] > 0)
         {
             GetImage(Images.CoinSlot).gameObject.SetActive(true);
-            GetTextMesh(Texts.CoinText).text = _data.upgradeCoin[0].ToString();
+            GetTextMesh(Texts.CoinText).text =_data.upgradeCoin[level].ToString();
         }
         else
             GetImage(Images.CoinSlot).gameObject.SetActive(false);

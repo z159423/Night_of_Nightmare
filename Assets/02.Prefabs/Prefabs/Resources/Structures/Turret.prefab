@@ -630,7 +630,7 @@ MonoBehaviour:
   playerStructure: 0
   destroyed: 0
   type: 0
-  level: 1
+  level: 0
   target: {fileID: 0}
   attackRange: 5
   attackCooldown: 1

@@ -74,10 +74,10 @@ public class Upgrade_Popup : UI_Popup
         upgradeSlot.Init();
         upgradeSlot.Setting(data, () =>
         {
-            Managers.Game.playerData.UseResource(data.upgradeCoin[0], data.upgradeEnergy[0]);
+            Managers.Game.playerData.UseResource(data.upgradeCoin[structure.level + 1], data.upgradeEnergy[structure.level + 1]);
             selectedStructure.Upgrade();
             Exit();
-        }, true);
+        }, true, structure);
     }
 
     public override void Reset()
