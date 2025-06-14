@@ -3,12 +3,18 @@ using UnityEngine.UI;
 using System;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class StructureSlot : UI_Base
 {
     enum Images
     {
-        Icon,
+        DefaultIcon,
+        BedIcon1,
+        BedIcon2,
+        BedIcon3,
+        TurretIcon1,
+        TurretIcon2,
         CoinSlot,
         EnergySlot
     }
@@ -26,6 +32,8 @@ public class StructureSlot : UI_Base
     {
         Button
     }
+
+    Transform BedIcons, TurretIcons;
 
     bool _init = false;
 
@@ -67,11 +75,10 @@ public class StructureSlot : UI_Base
         else
             level = 0;
 
-        GetImage(Images.Icon).sprite = data.icon;
-        GetImage(Images.Icon).SetNativeSize();
+        GetTextMesh(Texts.NameText).text = GetName();
+        GetTextMesh(Texts.DescText).text = GetDesc();
+        SetIcon();
 
-        GetTextMesh(Texts.NameText).text = $"[{Managers.Localize.GetText(data.nameKey)}]";
-        GetTextMesh(Texts.DescText).text = Managers.Localize.GetText(data.descriptionKey);
         GetTextMesh(Texts.CoinText).text = data.upgradeCoin.Length > 0 ? data.upgradeCoin[level].ToString() : Managers.Localize.GetText("global.str_free");
 
         this.onPurcahse = onPurcahse;
@@ -93,7 +100,7 @@ public class StructureSlot : UI_Base
         if (_data.upgradeCoin.Length > 0 && _data.upgradeCoin[level] > 0)
         {
             GetImage(Images.CoinSlot).gameObject.SetActive(true);
-            GetTextMesh(Texts.CoinText).text =_data.upgradeCoin[level].ToString();
+            GetTextMesh(Texts.CoinText).text = _data.upgradeCoin[level].ToString();
         }
         else
             GetImage(Images.CoinSlot).gameObject.SetActive(false);
@@ -128,11 +135,73 @@ public class StructureSlot : UI_Base
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
+
+        BedIcons = gameObject.FindRecursive("BedIcons").transform;
+        TurretIcons = gameObject.FindRecursive("TurretIcon").transform;
     }
 
     void OnDisable()
     {
         this.RemoveListener(GameObserverType.Game.OnChangeCoinCount);
         this.RemoveListener(GameObserverType.Game.OnChangeEnergyCount);
+    }
+
+    public string GetName()
+    {
+        if (_data.structureType == Define.StructureType.Turret || _data.structureType == Define.StructureType.Bed || _data.structureType == Define.StructureType.Door)
+            return Managers.Localize.GetText(_data.nameKey + "_" + (level + 1));
+        else
+            return Managers.Localize.GetText(_data.nameKey);
+    }
+
+    public string GetDesc()
+    {
+        switch (_data.structureType)
+        {
+            case Define.StructureType.Turret:
+            case Define.StructureType.Bed:
+            case Define.StructureType.Door:
+            case Define.StructureType.Generator:
+                return Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString());
+            default:
+                return Managers.Localize.GetText(_data.descriptionKey);
+        }
+    }
+
+    public void SetIcon()
+    {
+        GetImage(Images.DefaultIcon).gameObject.SetActive(false);
+        BedIcons.gameObject.SetActive(false);
+        TurretIcons.gameObject.SetActive(false);
+
+        if (_data.structureType == Define.StructureType.Turret)
+        {
+            TurretIcons.gameObject.SetActive(true);
+            GetImage(Images.TurretIcon1).sprite = _data.sprite1[level];
+            GetImage(Images.TurretIcon2).sprite = _data.sprite2[level];
+        }
+        else if (_data.structureType == Define.StructureType.Bed)
+        {
+            BedIcons.gameObject.SetActive(true);
+            GetImage(Images.BedIcon1).sprite = _data.sprite2[level];
+            GetImage(Images.BedIcon2).sprite = Managers.Resource.GetCharactorImage((int)Managers.Game.playerCharactor.charactorType + 1);
+            GetImage(Images.BedIcon3).sprite = _data.sprite1[level];
+        }
+        else if (_data.structureType == Define.StructureType.Door)
+        {
+            GetImage(Images.DefaultIcon).gameObject.SetActive(true);
+            GetImage(Images.DefaultIcon).sprite = _data.sprite1[level];
+            GetImage(Images.DefaultIcon).SetNativeSize();
+
+            GetImage(Images.DefaultIcon).transform.localScale = Vector3.one * 1.35f;
+        }
+        else
+        {
+            GetImage(Images.DefaultIcon).gameObject.SetActive(true);
+            GetImage(Images.DefaultIcon).sprite = _data.icon;
+            GetImage(Images.DefaultIcon).SetNativeSize();
+
+            GetImage(Images.DefaultIcon).transform.localScale = Vector3.one * 1.8f;
+        }
     }
 }

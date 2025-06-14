@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using VHierarchy.Libs;
 
 public abstract class Structure : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public abstract class Structure : MonoBehaviour
     public Define.StructureType type;
     public int level = 0;
 
+    public StructureData _data;
+
 
     protected virtual void Start()
     {
@@ -28,7 +31,11 @@ public abstract class Structure : MonoBehaviour
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+        _data = Managers.Resource.GetStructureData(type);
+
         upgradeIcon = gameObject.FindRecursive("UpgradeIcon");
+
+        upgradeIcon?.SetActive(false);
 
         if (gameObject.FindRecursive("HpBar") != null)
             hpBar = gameObject.FindRecursive("HpBar").transform;
@@ -38,6 +45,19 @@ public abstract class Structure : MonoBehaviour
 
         if (gameObject.FindRecursive("Fill") != null)
             hpBarFill = gameObject.FindRecursive("Fill").transform;
+
+        this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
+        {
+            if(Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
+                return;
+
+            //만약 업그레이드 가능한 상태라면
+            if ((_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level + 1]) : true)
+         && (_data.upgradeEnergy.Length > 0 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level + 1]) : true))
+                upgradeIcon.gameObject.SetActive(true);
+            else
+                upgradeIcon.gameObject.SetActive(false);
+        });
     }
 
     public virtual void Upgrade()

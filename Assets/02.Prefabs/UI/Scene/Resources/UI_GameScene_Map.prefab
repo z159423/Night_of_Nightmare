@@ -1108,7 +1108,7 @@ MonoBehaviour:
   m_text: "\uBB38 \uC218\uB9AC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1187,7 +1187,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 0.1
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &5356971183218966891
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,12 +6,12 @@ public class Define
 {
     public enum CharactorType
     {
-        Farmer,
-        Miner,
-        LampGirl,
-        ReapireMan,
-        Scientist,
-        Chef
+        Farmer = 0,
+        Miner = 1,
+        LampGirl = 2,
+        ReapireMan = 3,
+        Scientist = 4,
+        Chef = 5
     }
 
     public enum Tier
@@ -218,4 +218,57 @@ public class Define
         SatelliteAntenna,
         TurretBooster
     }
+
+    public static float turretRange = 12f;
+
+    public static int[] enemyHp = new int[]
+    {
+        350,
+        500,
+        800,
+        1600,
+        4000,
+        8000,
+        12000,
+        21600,
+        43200,
+        85400,
+        172800,
+        344000,
+        7500000
+    };
+
+    public static int[] enemyDamage = new int[]
+    {
+        2,
+        3,
+        5,
+        10,
+        22,
+        40,
+        60,
+        150,
+        320,
+        600,
+        1200,
+        1800,
+        10000
+    };
+
+    public static int[] enemyExp = new int[]
+    {
+        25,
+        30,
+        45,
+        60,
+        75,
+        85,
+        100,
+        100,
+        100,
+        125,
+        130,
+        140,
+        9999999
+    };
 }

@@ -212,13 +212,23 @@ public class GameManager : MonoBehaviour
 
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
 
+        Managers.LocalData.PlayerRankingPoint -= 100;
+
         result.Init();
-        result.Setting();
+        result.Setting(false, -100);
     }
 
+    [Button("GameWin")]
     public void GameWin()
     {
+        GoHome();
 
+        var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
+
+        Managers.LocalData.PlayerRankingPoint += 100;
+
+        result.Init();
+        result.Setting(true, 100);
     }
 
     public IEnumerator GetResources()

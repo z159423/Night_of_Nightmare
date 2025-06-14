@@ -1,50 +1,82 @@
 using UnityEngine;
 using TMPro;
 
+[ExecuteAlways]
 public class TextOutliner : MonoBehaviour
 {
-    [SerializeField] private Color underlayColor = Color.black;
-    [SerializeField] private float underlayDilate = 0.2f;
+    [SerializeField] private Color outlineColor = Color.black;
+    [SerializeField] private float outlineThickness = 0.2f;
+    [SerializeField] private float faceDilate = 0.2f;
     private TextMeshProUGUI tmp;
     private TextMeshPro textMeshPro;
     private Material instanceMaterial;
 
+    void Awake()
+    {
+        ApplyOutline();
+    }
+
     void Start()
+    {
+        ApplyOutline();
+    }
+
+    void OnValidate()
+    {
+            ApplyOutline();
+    }
+
+    private void ApplyOutline()
     {
         tmp = GetComponent<TextMeshProUGUI>();
         textMeshPro = GetComponent<TextMeshPro>();
 
         // 텍스트마다 개별 머티리얼 생성
-        if (tmp != null)
+        if (tmp != null && tmp.fontSharedMaterial != null)
         {
-            instanceMaterial = new Material(tmp.fontSharedMaterial);
-            tmp.fontMaterial = instanceMaterial;
+            if (instanceMaterial == null || tmp.fontMaterial != instanceMaterial)
+            {
+                instanceMaterial = new Material(tmp.fontSharedMaterial);
+                tmp.fontMaterial = instanceMaterial;
+            }
         }
 
-        if (textMeshPro != null)
+        if (textMeshPro != null && textMeshPro.fontSharedMaterial != null)
         {
-            instanceMaterial = new Material(textMeshPro.fontSharedMaterial);
-            textMeshPro.fontMaterial = instanceMaterial;
+            if (instanceMaterial == null || textMeshPro.fontMaterial != instanceMaterial)
+            {
+                instanceMaterial = new Material(textMeshPro.fontSharedMaterial);
+                textMeshPro.fontMaterial = instanceMaterial;
+            }
         }
 
-        instanceMaterial.EnableKeyword("UNDERLAY_ON");
-
-        // Underlay 효과 적용
-        if (instanceMaterial.HasProperty("_UnderlayColor"))
-            instanceMaterial.SetColor("_UnderlayColor", underlayColor);
-        if (instanceMaterial.HasProperty("_UnderlayDilate"))
-            instanceMaterial.SetFloat("_UnderlayDilate", underlayDilate);
+        // Outline 효과 적용
+        if (instanceMaterial != null)
+        {
+            if (instanceMaterial.HasProperty("_OutlineColor"))
+                instanceMaterial.SetColor("_OutlineColor", outlineColor);
+            if (instanceMaterial.HasProperty("_OutlineWidth"))
+                instanceMaterial.SetFloat("_OutlineWidth", outlineThickness);
+            if (instanceMaterial.HasProperty("_FaceDilate"))
+                instanceMaterial.SetFloat("_FaceDilate", faceDilate);
+        }
     }
 
-    public void SetUnderlayDilate(float dilate)
+    public void SetOutlineColor(Color color)
     {
-        if (instanceMaterial != null && instanceMaterial.HasProperty("_UnderlayDilate"))
-            instanceMaterial.SetFloat("_UnderlayDilate", dilate);
+        outlineColor = color;
+        ApplyOutline();
     }
 
-    public void SetUnderlayColor(Color color)
+    public void SetOutlineThickness(float thickness)
     {
-        if (instanceMaterial != null && instanceMaterial.HasProperty("_UnderlayColor"))
-            instanceMaterial.SetColor("_UnderlayColor", color);
+        outlineThickness = thickness;
+        ApplyOutline();
+    }
+
+    public void SetFaceDilate(float dilate)
+    {
+        faceDilate = dilate;
+        ApplyOutline();
     }
 }

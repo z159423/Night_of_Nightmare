@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using DG.Tweening;
 
 public class MatchResult_Popup : UI_Popup
 {
@@ -15,7 +16,8 @@ public class MatchResult_Popup : UI_Popup
 
     enum Images
     {
-        RankImage
+        RankImage,
+        Shine
     }
 
     enum Texts
@@ -23,10 +25,14 @@ public class MatchResult_Popup : UI_Popup
         ResultTitle,
         GemCountText,
         RankingPointDiffText,
-        RankingPointText,
         GemText,
-        TicketCount
+        TicketCount,
+        RankingTierText,
+        RankingPointText
+
     }
+
+    [SerializeField] private Color[] colors;
 
 
     public override void Init()
@@ -54,11 +60,31 @@ public class MatchResult_Popup : UI_Popup
         });
     }
 
-    public void Setting()
+    public void Setting(bool isWin, int point)
     {
+        if (isWin)
+        {
+            GetImage(Images.Shine).gameObject.SetActive(true);
+            GetImage(Images.RankImage).transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack).OnStart(() =>
+            {
+                GetImage(Images.RankImage).transform.localScale = Vector3.one;
+            });
+
+            GetTextMesh(Texts.RankingPointDiffText).color = colors[0];
+        }
+        else
+            GetTextMesh(Texts.RankingPointDiffText).color = colors[1];
+
+            GetTextMesh(Texts.RankingPointDiffText).text = point.ToString();
+
+        GetTextMesh(Texts.RankingPointText).text = (Managers.LocalData.PlayerRankingPoint - point).ToString();
+        GetTextMesh(Texts.RankingTierText).text = Define.TierToScore.FirstOrDefault(n => n.Value == Managers.LocalData.PlayerRankingPoint).Key.ToString();
+
+        TextUtils.UINumberTween(GetTextMesh(Texts.RankingPointText), (Managers.LocalData.PlayerRankingPoint - point), Managers.LocalData.PlayerRankingPoint, 3);
+
         IEnumerator wait()
         {
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(5f);
             GetButton(Buttons.ContinueBtn).gameObject.SetActive(true);
         }
 

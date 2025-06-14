@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -185,8 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.2
+  faceDilate: 0.2
 --- !u!1 &1921741308345101699
 GameObject:
   m_ObjectHideFlags: 0

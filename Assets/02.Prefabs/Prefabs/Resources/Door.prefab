@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 5439407979813225449}
   - component: {fileID: 5439407979813225450}
   - component: {fileID: 5439407979813225451}
+  - component: {fileID: 2719389994001739007}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -338,8 +339,35 @@ MonoBehaviour:
   destroyed: 0
   type: 101
   level: 0
+  _data: {fileID: 0}
   closeType: 0
   isClose: 0
+--- !u!61 &2719389994001739007
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439407979813224983}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.2, y: 1.4}
+    newSize: {x: 1.2, y: 1.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 1.4}
+  m_EdgeRadius: 0
 --- !u!1 &5439407981671576161
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +395,7 @@ Transform:
   m_GameObject: {fileID: 5439407981671576161}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.181, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5439407979813225448}
@@ -471,7 +499,7 @@ MonoBehaviour:
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
   delay: 0
-  duration: 0.65
+  duration: 0.6
   easeType: 1
   easeCurve:
     serializedVersion: 2
@@ -514,7 +542,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0.2, z: 0}
+  endValueV3: {x: 0, y: 0.08, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 

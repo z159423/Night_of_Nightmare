@@ -21,11 +21,7 @@ public class Bed : Structure
     protected override void Start()
     {
         base.Start();
-        this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
-        {
-            //만약 업그레이드 가능한 상태라면
-
-        });
+        
 
         if (bed == null)
         {
@@ -44,11 +40,8 @@ public class Bed : Structure
             blanketAnimation = blanket.GetComponent<DOTweenAnimation>();
         }
 
-        upgradeIcon = gameObject.FindRecursive("UpgradeIcon");
-
         bed.enabled = false;
         player.enabled = false;
-        upgradeIcon.SetActive(false);
 
         Managers.Game.beds.Add(this);
     }

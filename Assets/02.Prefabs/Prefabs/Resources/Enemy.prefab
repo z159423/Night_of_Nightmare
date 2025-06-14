@@ -650,7 +650,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_text: enemy name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -777,7 +777,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 0.2
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!1 &5953232891219691468
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,8 +831,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e5652a7b2df7a4c8542a5d0364fb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 0}
+  MaxHp: 100
   hp: 100
-  level: 1
+  level: 0
+  damage: 0
   currentTarget: {fileID: 0}
   currentTargetStructure: {fileID: 0}
   targetIndex: 0

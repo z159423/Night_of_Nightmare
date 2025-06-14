@@ -70,7 +70,7 @@ MonoBehaviour:
   m_text: 10000$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -148,8 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &136457725167627949
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +221,7 @@ MonoBehaviour:
   m_text: 10000$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -298,8 +299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &363390511090726935
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +804,7 @@ MonoBehaviour:
   m_text: "\uC82C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -880,8 +882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0.3679245, g: 0.30184227, b: 0.2724724, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0.17254902, g: 0.14117648, b: 0.1254902, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!1 &1166231611492303257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,7 +1226,7 @@ MonoBehaviour:
   m_text: x11000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1301,8 +1304,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.25
+  faceDilate: 0.2
 --- !u!1 &1486568394445671824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,14 +1377,14 @@ MonoBehaviour:
   m_text: "\uC0C1\uC810"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4281216596
+  m_fontColor: {r: 0.3301887, g: 0.18222678, b: 0.18222678, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1451,8 +1455,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!1 &1567812069304868983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,7 +1756,7 @@ MonoBehaviour:
   m_text: "\uBD80\uC2A4\uD2B8 \uD329"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1829,8 +1834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0.3679245, g: 0.30184227, b: 0.2724724, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0.17254902, g: 0.14117648, b: 0.1254902, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!1 &2137858878174649223
 GameObject:
   m_ObjectHideFlags: 0
@@ -3210,7 +3216,7 @@ MonoBehaviour:
   m_text: x5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3288,8 +3294,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.25
+  faceDilate: 0.2
 --- !u!1 &3839294355062911649
 GameObject:
   m_ObjectHideFlags: 0
@@ -3420,7 +3427,7 @@ MonoBehaviour:
   m_text: x5000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3498,8 +3505,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.25
+  faceDilate: 0.2
 --- !u!1 &4242362256375218213
 GameObject:
   m_ObjectHideFlags: 0
@@ -3646,7 +3654,7 @@ MonoBehaviour:
   m_text: x100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3724,8 +3732,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.25
+  faceDilate: 0.2
 --- !u!1 &4658308619049282920
 GameObject:
   m_ObjectHideFlags: 0
@@ -4195,7 +4204,7 @@ MonoBehaviour:
   m_text: 10000$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4273,8 +4282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &5396042926258552810
 GameObject:
   m_ObjectHideFlags: 0
@@ -5825,7 +5835,7 @@ MonoBehaviour:
   m_text: 10000$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5903,8 +5913,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &7744747848338364828
 GameObject:
   m_ObjectHideFlags: 0
@@ -6177,7 +6188,7 @@ MonoBehaviour:
   m_text: 10000$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6255,8 +6266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &7987859069183827184
 GameObject:
   m_ObjectHideFlags: 0
@@ -6403,7 +6415,7 @@ MonoBehaviour:
   m_text: 1,500
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6481,8 +6493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &8187327188366379273
 GameObject:
   m_ObjectHideFlags: 0
@@ -6629,7 +6642,7 @@ MonoBehaviour:
   m_text: x1500
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6707,8 +6720,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.25
+  faceDilate: 0.2
 --- !u!1 &8315399873621706126
 GameObject:
   m_ObjectHideFlags: 0
@@ -6862,7 +6876,7 @@ MonoBehaviour:
   m_text: 10000$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6940,8 +6954,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &8628070088587326370
 GameObject:
   m_ObjectHideFlags: 0
@@ -7012,7 +7027,7 @@ MonoBehaviour:
   m_text: x30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7090,8 +7105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.25
+  faceDilate: 0.2
 --- !u!1 &8949441985038327307
 GameObject:
   m_ObjectHideFlags: 0
@@ -7162,7 +7178,7 @@ MonoBehaviour:
   m_text: "\uAD11\uACE0 \uC81C\uAC70 \uD2F0\uCF13"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7240,5 +7256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0.3679245, g: 0.30184227, b: 0.2724724, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0.17254902, g: 0.14117648, b: 0.1254902, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4

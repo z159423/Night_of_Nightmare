@@ -5,6 +5,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.UI;
+using VInspector;
 
 public class Enemy : Charactor
 {
@@ -14,9 +16,10 @@ public class Enemy : Charactor
         Heal
     }
 
-    public const float MaxHp = 100;
+    public float MaxHp = 100;
     public float hp = 100;
-    public int level = 1;
+    public int level = 0;
+    public int damage = 0;
 
     public PlayerableCharactor currentTarget;
     public Structure currentTargetStructure;
@@ -47,6 +50,8 @@ public class Enemy : Charactor
         if (hp <= 0)
         {
             // Handle enemy death
+
+            Managers.Game.GameWin();
         }
 
         // Show HP bar
@@ -72,6 +77,10 @@ public class Enemy : Charactor
         nameText = gameObject.FindRecursive("NameText").GetComponent<TextMeshPro>();
 
         SetNameText(Managers.Game.enemyName);
+
+        MaxHp = Define.enemyHp[level];
+        hp = MaxHp;
+        damage = Define.enemyDamage[level];
     }
 
     public void SetNameText(string name)
@@ -215,6 +224,14 @@ public class Enemy : Charactor
         }
     }
 
+    [Button("Force Target Player")]
+    public void ForceTargetPlayer()
+    {
+        targetIndex = Managers.Game.charactors.IndexOf(Managers.Game.playerCharactor);
+        currentTarget = Managers.Game.playerCharactor;
+        currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
+    }
+
     public void FindHealSpot()
     {
         List<HealZone> healZones = Managers.Game.currentMap.healZones.ToList();
@@ -260,6 +277,8 @@ public class Enemy : Charactor
     {
         level++;
         levelText.text = "Lv." + level;
+
+        MaxHp = Define.enemyHp[level];
     }
 
 }

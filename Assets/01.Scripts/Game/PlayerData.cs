@@ -60,6 +60,9 @@ public class PlayerData
     {
         this.coin -= coin;
         this.energy -= energy;
+
+        GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+        GameObserver.Call(GameObserverType.Game.OnChangeEnergyCount);
     }
 
     public Structure GetStructure(Define.StructureType type)

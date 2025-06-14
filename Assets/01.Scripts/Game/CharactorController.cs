@@ -145,7 +145,7 @@ public class CharactorController : MonoBehaviour
                         Managers.Game.selectedTile = tiles.transform.GetComponent<Tile>();
                     }
 
-                    if (structures != default(RaycastHit2D))
+                    if (structures != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {
                         var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
                         popup.Init();

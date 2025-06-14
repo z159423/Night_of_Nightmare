@@ -19,8 +19,7 @@ public class Door : Structure
     protected override void Start()
     {
         base.Start();
-        upgradeIcon.SetActive(false);
-
+        
         switch (closeType)
         {
             case CloseType.RightToLeft:

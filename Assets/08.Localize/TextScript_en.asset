@@ -251,23 +251,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177078
-    m_Localized: 'Production: {0} gold/s'
+    m_Localized: 'Production: @1 gold/s'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177079
-    m_Localized: 'Production: {0} energy/s'
+    m_Localized: 'Production: @1 energy/s'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177080
-    m_Localized: 'Attack: {0}'
+    m_Localized: 'Attack: @1'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177081
-    m_Localized: 'Range: {0}'
+    m_Localized: 'Range: @1'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177082
-    m_Localized: 'HP: {0}'
+    m_Localized: 'HP: @1'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177083
@@ -279,7 +279,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177085
-    m_Localized: 'Required: {0}'
+    m_Localized: 'Required: @1'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177086
@@ -299,11 +299,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177090
-    m_Localized: Upgrade to {0}
+    m_Localized: Upgrade to @1
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177091
-    m_Localized: Build {0}
+    m_Localized: Build @1
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177092
@@ -404,11 +404,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177116
-    m_Localized: Golden\nFrog {0}
+    m_Localized: Golden\nFrog @1
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177117
-    m_Localized: Gain {0} gold each time a fly is eaten
+    m_Localized: Gain @1 gold each time a fly is eaten
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177118
@@ -420,7 +420,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177120
-    m_Localized: "Throws an axe dealing {1}% max HP if enemy HP \u2264 {0}%\\n(Infinite
+    m_Localized: "Throws an axe dealing @2% max HP if enemy HP \u2264 @1%\\n(Infinite
       range)"
     m_Metadata:
       m_Items: []
@@ -433,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177123
-    m_Localized: Deals {0}% max HP damage per sec\n(Infinite range)
+    m_Localized: Deals @1% max HP damage per sec\n(Infinite range)
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177124
@@ -445,7 +445,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177126
-    m_Localized: Gain {0} gold whenever the door is attacked
+    m_Localized: Gain @1 gold whenever the door is attacked
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177127
@@ -545,7 +545,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177151
-    m_Localized: Buy {0}/2 Turrets
+    m_Localized: Buy @1/2 Turrets
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177152
@@ -553,7 +553,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177153
-    m_Localized: Buy {0}/2 Dynamo
+    m_Localized: Buy @1/2 Dynamo
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177154
@@ -661,7 +661,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177180
-    m_Localized: Claim x{0}
+    m_Localized: Claim x@1
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177181
@@ -681,7 +681,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177185
-    m_Localized: 'Owned: {0}'
+    m_Localized: 'Owned: @1'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177186
@@ -713,7 +713,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177193
-    m_Localized: Stuns the enemy for\n{0} seconds and deals {1}% \nof max HP as damage
+    m_Localized: Stuns the enemy for\n@1 seconds and deals @2% \nof max HP as damage
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177194
@@ -721,7 +721,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177195
-    m_Localized: Makes the door invincible\nfor {0} seconds
+    m_Localized: Makes the door invincible\nfor @1 seconds
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177196
@@ -729,15 +729,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177197
-    m_Localized: Turret attack speed is\ndoubled for {0} seconds
+    m_Localized: Turret attack speed is\ndoubled for @1 seconds
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177198
-    m_Localized: Night {0}
+    m_Localized: Night @1
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177199
-    m_Localized: Top {0}%
+    m_Localized: Top @1%
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177200
@@ -774,6 +774,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9781154177208
     m_Localized: Unlocks after 1 win in Rank Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9823531126251520
+    m_Localized: Dynamo
     m_Metadata:
       m_Items: []
   references:

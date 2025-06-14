@@ -146,7 +146,7 @@ MonoBehaviour:
   m_text: "\uB9E4\uCE6D \uC911 0.9\uCD08"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -224,8 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 0.2
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!1 &3042215580186934587
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +298,7 @@ MonoBehaviour:
   m_text: "\uC21C\uC704\uD45C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -375,8 +376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 1, g: 1, b: 1, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!114 &407603604650992451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,7 +831,7 @@ MonoBehaviour:
   m_text: "\uD50C\uB808\uC774\uC5B4 \uCC3E\uB294\uC911..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -907,8 +909,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 0.2
+  outlineColor: {r: 0.2924528, g: 0.111739054, b: 0.111739054, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &4888970707154479235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,7 +1308,7 @@ MonoBehaviour:
   m_text: "\uB7AD\uD06C \uBAA8\uB4DC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1383,8 +1386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0, g: 0, b: 0, a: 1}
-  underlayDilate: 0.2
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.2
+  faceDilate: 0.2
 --- !u!1 &6234950377679278788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1888,7 +1892,7 @@ MonoBehaviour:
     136'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1966,8 +1970,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0.20754719, g: 0.18296924, b: 0.15566039, a: 1}
-  underlayDilate: 1.5
+  outlineColor: {r: 0.21698111, g: 0.19031636, b: 0.16068885, a: 1}
+  outlineThickness: 0.4
+  faceDilate: 0.4
 --- !u!1 &7529728131342545080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2060,7 @@ GameObject:
   - component: {fileID: 4770160909182954177}
   - component: {fileID: 941832652553869809}
   - component: {fileID: 8043368314530577421}
+  - component: {fileID: 4341462096717547954}
   m_Layer: 0
   m_Name: NameText
   m_TagString: Untagged
@@ -2113,7 +2119,7 @@ MonoBehaviour:
   m_text: twist angel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2179,6 +2185,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4341462096717547954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8459216790707309478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineColor: {r: 0.2924528, g: 0.10622106, b: 0.10622106, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!1 &8464438201471835409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2466,7 +2487,7 @@ MonoBehaviour:
   m_text: "\uB9E4\uCE6D\uD558\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2544,8 +2565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9753420e31422734187f851928076d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underlayColor: {r: 0.8207547, g: 0.51660943, b: 0.15098791, a: 1}
-  underlayDilate: 1
+  outlineColor: {r: 0.8113208, g: 0.5231411, b: 0.17986828, a: 1}
+  outlineThickness: 0.3
+  faceDilate: 0.3
 --- !u!114 &6606283682598294709
 MonoBehaviour:
   m_ObjectHideFlags: 0
