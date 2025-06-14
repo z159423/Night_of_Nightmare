@@ -503,7 +503,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 112}
+  m_AnchoredPosition: {x: 0, y: 53}
   m_SizeDelta: {x: 745, y: 499}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5245020185071877251
@@ -1829,7 +1829,7 @@ GameObject:
   - component: {fileID: 6442177777272640721}
   - component: {fileID: 9148038111132139202}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: RankingPointText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1852,8 +1852,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9, y: -351}
-  m_SizeDelta: {x: 500, y: 300}
+  m_AnchoredPosition: {x: 9, y: -410}
+  m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8524273463507779083
 CanvasRenderer:
@@ -1912,12 +1912,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
+  m_fontSize: 100
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 90
+  m_fontSizeMax: 100
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1967,7 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underlayColor: {r: 0.20754719, g: 0.18296924, b: 0.15566039, a: 1}
-  underlayDilate: 1
+  underlayDilate: 1.5
 --- !u!1 &7529728131342545080
 GameObject:
   m_ObjectHideFlags: 0

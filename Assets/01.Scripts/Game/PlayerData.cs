@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Define;
@@ -20,6 +21,7 @@ public class PlayerData
         this.type = type;
 
         bedData = Managers.Resource.GetStructureData(Define.StructureType.Bed);
+
     }
 
     public void BuildStructure(Structure structure)
@@ -40,13 +42,18 @@ public class PlayerData
 
     public void GetResources()
     {
-        if(bedData == null)
+        if (bedData == null)
         {
             bedData = Managers.Resource.GetStructureData(Define.StructureType.Bed);
         }
 
-        coin += room == null ? (int)bedData.argment1[0] : (int)bedData.argment1[room.bed.level];
+        int coinValue = room == null ? (int)bedData.argment1[0] : (int)bedData.argment1[room.bed.level];
+
+        if (room != null && room.bed != null)
+            room.bed.ResourceGetParticle(coinValue);
+
         energy += structures.Where(s => s.type == Define.StructureType.Generator).Count();
+        coin += coinValue;
     }
 
     public void UseResource(int coin, int energy)

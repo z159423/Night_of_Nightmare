@@ -16,6 +16,8 @@ public class Bed : Structure
     public bool active = false;
     bool playerActive = false;
 
+    float delay = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -78,8 +80,9 @@ public class Bed : Structure
         playerAnimation.DORestart();
         blanketAnimation.DORestart();
 
-
         gameObject.GetComponentInParent<Room>().OnActive(isPlayer);
+
+        delay = charactor is PlayerCharactor ? 0 : UnityEngine.Random.Range(0, 1f);
 
         return gameObject.GetComponentInParent<Room>();
     }
@@ -99,5 +102,16 @@ public class Bed : Structure
         currentCharactor.Die();
 
         base.DestroyStructure();
+    }
+
+    public void ResourceGetParticle(int value)
+    {
+        var particle = Managers.Resource.Instantiate("ResourceGetParticle", transform);
+        particle.transform.localPosition = Vector3.zero;
+        particle.GetComponent<ResourceGetParticle>().Setting(
+            "coin",
+            value,
+            delay
+        );
     }
 }

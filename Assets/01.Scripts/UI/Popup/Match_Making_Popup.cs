@@ -17,13 +17,15 @@ public class Match_Making_Popup : UI_Popup
 
     enum Images
     {
-        TouchGuard
+        TouchGuard,
+        RankImage
     }
 
     enum Texts
     {
         MatchingText,
-        MatchingTimeText
+        MatchingTimeText,
+        RankingPointText
     }
 
     GameObject matching;
@@ -41,6 +43,12 @@ public class Match_Making_Popup : UI_Popup
     public override void Init()
     {
         base.Init();
+
+        Managers.LocalData.PlayerRankingPoint = 200;
+
+        GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.TierToScore.FirstOrDefault(n => n.Value == Managers.LocalData.PlayerRankingPoint).Key.ToString()}");
+        GetImage(Images.RankImage).SetNativeSize();
+        GetTextMesh(Texts.RankingPointText).text = Define.TierToScore.FirstOrDefault(n => n.Value == Managers.LocalData.PlayerRankingPoint).Key.ToString() + "<br>" +Managers.LocalData.PlayerRankingPoint.ToString();
     }
 
     void Update()

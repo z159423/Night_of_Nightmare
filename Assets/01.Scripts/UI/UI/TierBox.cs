@@ -39,7 +39,7 @@ public class TierBox : UI_Base
         Bind<TextMeshProUGUI>(typeof(Texts));
     }
 
-    public void Setting(Define.Tier tier)
+    public TierBox Setting(Define.Tier tier)
     {
         GetImage(Images.Icon).sprite = Managers.Resource.Load<Sprite>($"Tier/{tier.ToString()}");
         GetImage(Images.Icon).SetNativeSize();
@@ -69,5 +69,9 @@ public class TierBox : UI_Base
                         Managers.LocalData.PlayerRankingPoint >= Define.TierToScore[tier];
 
         GetImage(Images.BackYellow).gameObject.SetActive(isInTier);
+
+        if (isInTier || (Managers.LocalData.PlayerRankingPoint < 0 && tier == Define.Tier.Iron4)) return this;
+        else
+            return null;
     }
 }
