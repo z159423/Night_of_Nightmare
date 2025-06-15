@@ -106,7 +106,7 @@ public class UI_GameScene_Home : UI_Scene
         {
             var lowerbtn = GetButton(Buttons.ShopBtn).GetComponent<LowerBtn>();
 
-            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
+            SelectLowerBtn(LowerBtnTypes.ShopBtn, lowerbtn);
 
             iapShopPopup = Managers.UI.ShowPopupUI<IapShop_Popup>();
         });
@@ -122,7 +122,7 @@ public class UI_GameScene_Home : UI_Scene
         {
             var lowerbtn = GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>();
 
-            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
+            SelectLowerBtn(LowerBtnTypes.HomeBtn, lowerbtn);
 
             GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
 
@@ -132,7 +132,7 @@ public class UI_GameScene_Home : UI_Scene
         {
             var lowerbtn = GetButton(Buttons.BoostBtn).GetComponent<LowerBtn>();
 
-            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
+            SelectLowerBtn(LowerBtnTypes.BoostBtn, lowerbtn);
 
             boostShopPopup = Managers.UI.ShowPopupUI<BoostShop_Popup>();
         });
@@ -234,6 +234,10 @@ public class UI_GameScene_Home : UI_Scene
 
                 GetImage(Images.TouchGuard).gameObject.SetActive(false);
             }
+        }
+        else
+        {
+            GetImage(Images.TouchGuard).gameObject.SetActive(false);
         }
 
         selectedLowerBtnType = type;
