@@ -19,7 +19,7 @@ public class Door : Structure
     protected override void Start()
     {
         base.Start();
-        
+
         switch (closeType)
         {
             case CloseType.RightToLeft:
@@ -30,7 +30,7 @@ public class Door : Structure
                 break;
         }
 
-        MaxHp = 100;
+        MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
         Hp = MaxHp;
     }
 
@@ -71,20 +71,15 @@ public class Door : Structure
     {
         base.Upgrade();
 
-        var data = Managers.Resource.GetStructureData(type);
-
-        MaxHp = (int)data.argment1[level];
+        MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
         Hp = MaxHp;
 
-        GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
+        GetComponent<SpriteRenderer>().sprite = Managers.Game.GetStructureData(Define.StructureType.Door).sprite1[level];
+
+        ShowHpBar();
     }
 
     public void RepaireDoor()
-    {
-
-    }
-
-    public void DestroyDoor()
     {
 
     }

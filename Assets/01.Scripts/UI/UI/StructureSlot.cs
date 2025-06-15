@@ -85,7 +85,7 @@ public class StructureSlot : UI_Base
 
         GetButton(Buttons.Button).AddButtonEvent(() =>
         {
-            if (_data.upgradeCoin[level] <= Managers.Game.playerData.coin && _data.upgradeEnergy[level] <= Managers.Game.playerData.energy)
+            if (CheckIsReqired() && _data.upgradeCoin[level] <= Managers.Game.playerData.coin && _data.upgradeEnergy[level] <= Managers.Game.playerData.energy)
             {
                 onPurcahse?.Invoke();
                 return;
@@ -114,7 +114,7 @@ public class StructureSlot : UI_Base
         else
             GetImage(Images.EnergySlot).gameObject.SetActive(false);
 
-        if ((_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level]) : true)
+        if (CheckIsReqired() && (_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level]) : true)
          && (_data.upgradeEnergy.Length > 0 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level]) : true))
         {
             GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[0]; // 활성화된 버튼 이미지
@@ -156,16 +156,31 @@ public class StructureSlot : UI_Base
 
     public string GetDesc()
     {
+        string desc = "";
         switch (_data.structureType)
         {
             case Define.StructureType.Turret:
             case Define.StructureType.Bed:
             case Define.StructureType.Door:
             case Define.StructureType.Generator:
-                return Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString());
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString());
+                break;
             default:
-                return Managers.Localize.GetText(_data.descriptionKey);
+                desc = Managers.Localize.GetText(_data.descriptionKey);
+                break;
         }
+
+        if (_data.requireStructures != null &&_data.requireStructures.Length > 0 && _data.requireStructures.Length >= level
+          && _data.requireStructures[level].type != _data.structureType)
+        {
+            var require = Managers.Game.GetStructureData(_data.requireStructures[level].type);
+            var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level].type);
+
+            bool isMet = currentRequire != null && currentRequire.level >= _data.requireStructures[level].level;
+
+            desc += "\n" + (isMet ? "<color=green>" : "<color=red>") + Managers.Localize.GetDynamicText("global.str_desc_need_object", Managers.Localize.GetText(require.nameKey + "_" + (_data.requireStructures[level].level + 1))) + "</color>";
+        }
+        return desc;
     }
 
     public void SetIcon()
@@ -195,6 +210,14 @@ public class StructureSlot : UI_Base
 
             GetImage(Images.DefaultIcon).transform.localScale = Vector3.one * 1.35f;
         }
+        else if (_data.structureType == Define.StructureType.Generator)
+        {
+            GetImage(Images.DefaultIcon).gameObject.SetActive(true);
+            GetImage(Images.DefaultIcon).sprite = _data.sprite1[level];
+            GetImage(Images.DefaultIcon).SetNativeSize();
+
+            GetImage(Images.DefaultIcon).transform.localScale = Vector3.one * 1.8f;
+        }
         else
         {
             GetImage(Images.DefaultIcon).gameObject.SetActive(true);
@@ -203,5 +226,19 @@ public class StructureSlot : UI_Base
 
             GetImage(Images.DefaultIcon).transform.localScale = Vector3.one * 1.8f;
         }
+    }
+
+    public bool CheckIsReqired()
+    {
+        bool isMet = true;
+        if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level
+          && _data.requireStructures[level].type != _data.structureType)
+        {
+            var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level].type);
+
+            isMet = currentRequire != null && currentRequire.level >= _data.requireStructures[level].level;
+        }
+
+        return isMet;
     }
 }

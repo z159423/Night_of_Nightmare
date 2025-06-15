@@ -21,8 +21,7 @@ public abstract class Structure : MonoBehaviour
     public Define.StructureType type;
     public int level = 0;
 
-    public StructureData _data;
-
+    public PlayerData playerData;
 
     protected virtual void Start()
     {
@@ -30,8 +29,6 @@ public abstract class Structure : MonoBehaviour
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
-
-        _data = Managers.Resource.GetStructureData(type);
 
         upgradeIcon = gameObject.FindRecursive("UpgradeIcon");
 
@@ -46,17 +43,21 @@ public abstract class Structure : MonoBehaviour
         if (gameObject.FindRecursive("Fill") != null)
             hpBarFill = gameObject.FindRecursive("Fill").transform;
 
+        CheckUpgrade();
+
         this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
         {
-            if(Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
-                return;
+            CheckUpgrade();
+        });
 
-            //만약 업그레이드 가능한 상태라면
-            if ((_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level + 1]) : true)
-         && (_data.upgradeEnergy.Length > 0 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level + 1]) : true))
-                upgradeIcon.gameObject.SetActive(true);
-            else
-                upgradeIcon.gameObject.SetActive(false);
+        this.SetListener(GameObserverType.Game.OnChangeEnergyCount, () =>
+        {
+            CheckUpgrade();
+        });
+
+        this.SetListener(GameObserverType.Game.OnChangeStructure, () =>
+        {
+            CheckUpgrade();
         });
     }
 
@@ -94,11 +95,48 @@ public abstract class Structure : MonoBehaviour
 
     public int GetSellValue()
     {
-        var data = Managers.Resource.GetStructureData(type);
-        if (data == null)
-            return 0;
-
-        int sellValue = data.upgradeCoin[level] / 4; // 판매가는 업그레이드 비용의 1/4
+        int sellValue = Managers.Game.GetStructureData(type).upgradeCoin[level] / 4; // 판매가는 업그레이드 비용의 1/4
         return sellValue;
+    }
+
+    public void SetPlayerData(PlayerData playerData)
+    {
+        this.playerData = playerData;
+    }
+
+    public void CheckUpgrade()
+    {
+        if (Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
+            return;
+
+        var _data = Managers.Game.GetStructureData(type);
+
+        // 업그레이드가 가능한 상태가 아니면
+        if (_data.upgradeCoin.Length < 2 && _data.upgradeEnergy.Length < 2)
+        {
+            upgradeIcon.gameObject.SetActive(false);
+        }
+        //만약 업그레이드 가능한 상태라면
+        else if (CheckIsReqired() && (_data.upgradeCoin.Length > 1 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level + 1]) : true)
+     && (_data.upgradeEnergy.Length > 1 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level + 1]) : true))
+            upgradeIcon.gameObject.SetActive(true);
+        else
+            upgradeIcon.gameObject.SetActive(false);
+    }
+
+    public bool CheckIsReqired()
+    {
+        var _data = Managers.Game.GetStructureData(type);
+
+        bool isMet = true;
+        if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level+1
+          && _data.requireStructures[level+1].type != _data.structureType)
+        {
+            var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level+1].type);
+
+            isMet = currentRequire != null && currentRequire.level >= _data.requireStructures[level+1].level;
+        }
+
+        return isMet;
     }
 }

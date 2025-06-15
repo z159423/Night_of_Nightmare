@@ -2000,7 +2000,7 @@ GameObject:
   - component: {fileID: 2701046060137033507}
   - component: {fileID: 9054998529824070412}
   m_Layer: 5
-  m_Name: EnemyCount
+  m_Name: EnergyCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

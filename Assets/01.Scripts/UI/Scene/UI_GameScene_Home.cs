@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEditor;
+using DG.Tweening;
+using Unity.VisualScripting;
 
 public class UI_GameScene_Home : UI_Scene
 {
@@ -16,13 +18,19 @@ public class UI_GameScene_Home : UI_Scene
         BoostBtn,
         QeustBtn,
         RankModeBtn,
-        ChallengeModeBtn
+        ChallengeModeBtn,
+        CenterCharactorBtn
     }
 
     enum Texts
     {
         GemText,
         TicketCount
+    }
+
+    enum Images
+    {
+        TouchGuard
     }
 
     public enum LowerBtnTypes
@@ -34,8 +42,11 @@ public class UI_GameScene_Home : UI_Scene
         QeustBtn
     }
 
+
+
     bool _init = false;
 
+    private GameObject lowerMenu;
     public LowerBtn selectedLowerBtn;
     public LowerBtnTypes selectedLowerBtnType;
 
@@ -81,6 +92,9 @@ public class UI_GameScene_Home : UI_Scene
 
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
+        Bind<Image>(typeof(Images));
+
+        lowerMenu = gameObject.FindRecursive("LowerMenu");
 
         GetButton(Buttons.ShopBtn).GetComponent<LowerBtn>().Init();
         GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>().Init();
@@ -92,51 +106,23 @@ public class UI_GameScene_Home : UI_Scene
         {
             var lowerbtn = GetButton(Buttons.ShopBtn).GetComponent<LowerBtn>();
 
-            if (selectedLowerBtn == lowerbtn)
-                return;
-
-            lowerbtn.Select();
-
-            selectedLowerBtn.UnSelect();
-            selectedLowerBtn = lowerbtn;
+            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
 
             iapShopPopup = Managers.UI.ShowPopupUI<IapShop_Popup>();
-            selectedLowerBtnType = LowerBtnTypes.ShopBtn;
-
-            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
         });
 
         GetButton(Buttons.CharacterBtn).onClick.AddListener(() =>
         {
             var lowerbtn = GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>();
 
-            if (selectedLowerBtn == lowerbtn)
-                return;
-
-            lowerbtn.Select();
-
-            selectedLowerBtn.UnSelect();
-            selectedLowerBtn = lowerbtn;
-
-            selectedLowerBtnType = LowerBtnTypes.CharacterBtn;
-
-            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
-
+            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
         });
 
         GetButton(Buttons.HomeBtn).AddButtonEvent(() =>
         {
             var lowerbtn = GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>();
 
-            if (selectedLowerBtn == lowerbtn)
-                return;
-
-            lowerbtn.Select();
-
-            selectedLowerBtn.UnSelect();
-            selectedLowerBtn = lowerbtn;
-
-            selectedLowerBtnType = LowerBtnTypes.HomeBtn;
+            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
 
             GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
 
@@ -146,17 +132,7 @@ public class UI_GameScene_Home : UI_Scene
         {
             var lowerbtn = GetButton(Buttons.BoostBtn).GetComponent<LowerBtn>();
 
-            if (selectedLowerBtn == lowerbtn)
-                return;
-
-            lowerbtn.Select();
-
-            selectedLowerBtn.UnSelect();
-            selectedLowerBtn = lowerbtn;
-
-            selectedLowerBtnType = LowerBtnTypes.BoostBtn;
-
-            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
+            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
 
             boostShopPopup = Managers.UI.ShowPopupUI<BoostShop_Popup>();
         });
@@ -170,12 +146,19 @@ public class UI_GameScene_Home : UI_Scene
         {
             var popup = Managers.UI.ShowPopupUI<Match_Making_Popup>();
 
-            
+
         });
 
         GetButton(Buttons.ChallengeModeBtn).onClick.AddListener(() =>
         {
             Managers.UI.ShowPopupUI<ChallengeMode_Popup>();
+        });
+
+        GetButton(Buttons.CenterCharactorBtn).onClick.AddListener(() =>
+        {
+            var lowerbtn = GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>();
+
+            SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
         });
 
         this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
@@ -199,8 +182,62 @@ public class UI_GameScene_Home : UI_Scene
         gameObject.SetActive(false);
     }
 
-    public void SelectLowerBtn()
+    public void SelectLowerBtn(LowerBtnTypes type, LowerBtn btn)
     {
+        if (selectedLowerBtn == btn)
+            return;
 
+        btn.Select();
+
+        selectedLowerBtn.UnSelect();
+        selectedLowerBtn = btn;
+
+        GetImage(Images.TouchGuard).gameObject.SetActive(true);
+
+        if (selectedLowerBtnType == LowerBtnTypes.CharacterBtn)
+        {
+            GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.RankModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
+            {
+                GetButton(Buttons.RankModeBtn).transform.DOScale(1, 0.3f);
+            });
+            GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.ChallengeModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
+            {
+                GetButton(Buttons.ChallengeModeBtn).transform.DOScale(1, 0.3f);
+            });
+
+            lowerMenu.transform.DOLocalMoveY(400, 0.7f).SetRelative().OnComplete(() =>
+            {
+                GetImage(Images.TouchGuard).gameObject.SetActive(false);
+            });
+
+            Managers.Camera.ChangeCameraLensOrthoSize(7, 0.7f);
+        }
+        else if (type == LowerBtnTypes.CharacterBtn)
+        {
+            GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(1500f, 0.7f).SetEase(Ease.InCubic);
+            GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(1500f, 0.7f).SetEase(Ease.InCubic);
+
+            lowerMenu.transform.DOLocalMoveY(-400, 0.7f).SetRelative();
+
+            Managers.Camera.ChangeCameraLensOrthoSize(5, 0.7f);
+
+            StartCoroutine(wait());
+
+            IEnumerator wait()
+            {
+                yield return new WaitForSeconds(0.7f);
+                var popup = Managers.UI.ShowPopupUI<CharactorSelect_Popup>();
+                popup.onExit = () =>
+                {
+                    SelectLowerBtn(LowerBtnTypes.HomeBtn, GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>());
+                };
+
+                GetImage(Images.TouchGuard).gameObject.SetActive(false);
+            }
+        }
+
+        selectedLowerBtnType = type;
+
+        GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
     }
 }

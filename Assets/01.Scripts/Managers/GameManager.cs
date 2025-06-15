@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public PlayerCharactor playerCharactor;
     private CharactorController charactorController;
 
-    public CharactorType selectedPlayerCharactorType = CharactorType.Farmer;
+    public CharactorType currentPlayerCharacterType = CharactorType.Farmer;
 
     public int gem = 0;
     public int ticket = 0;
@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public Coroutine spawnEnemyCoroutine;
 
     public Tile selectedTile;
+
+    public Dictionary<StructureType, StructureData> structuredatas = new Dictionary<StructureType, StructureData>();
 
     Coroutine getReourcesCoroutine;
 
@@ -72,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = true;
 
-        playerData = new PlayerData(selectedPlayerCharactorType);
+        playerData = new PlayerData(currentPlayerCharacterType);
 
         currentMap = Managers.Resource.Instantiate("Maps/Map1").GetComponent<Map>();
         currentMap.Setting();
@@ -243,6 +245,7 @@ public class GameManager : MonoBehaviour
             }
 
             GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+            GameObserver.Call(GameObserverType.Game.OnChangeEnergyCount);
         }
     }
 
@@ -251,5 +254,15 @@ public class GameManager : MonoBehaviour
     {
         playerData.coin += 1000;
         GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+    }
+
+    public StructureData GetStructureData(StructureType type)
+    {
+        if (structuredatas.ContainsKey(type))
+            return structuredatas[type];
+
+        StructureData data = Managers.Resource.GetStructureData(type);
+        structuredatas.Add(type, data);
+        return data;
     }
 }

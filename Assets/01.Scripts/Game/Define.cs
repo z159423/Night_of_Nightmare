@@ -271,4 +271,21 @@ public class Define
         140,
         9999999
     };
+
+    public enum CharactorPurchaseType
+    {
+        Basic,
+        Gem,
+        Iap
+    }
+
+    public static Dictionary<CharactorType, CharactorPurchaseType> CharactorPurchaseData = new Dictionary<CharactorType, CharactorPurchaseType>()
+    {
+        { CharactorType.Farmer, CharactorPurchaseType.Basic },
+        { CharactorType.ReapireMan, CharactorPurchaseType.Gem },
+        { CharactorType.LampGirl, CharactorPurchaseType.Iap },
+        { CharactorType.Miner, CharactorPurchaseType.Gem },
+        { CharactorType.Scientist, CharactorPurchaseType.Iap },
+        { CharactorType.Chef, CharactorPurchaseType.Gem}
+    };
 }

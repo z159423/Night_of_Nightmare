@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class Turret : Structure
 {
@@ -13,8 +14,6 @@ public class Turret : Structure
     GameObject body;
     GameObject head;
 
-    StructureData turretData;
-
     float headOffset = -90;
 
     protected override void Start()
@@ -24,8 +23,6 @@ public class Turret : Structure
 
         body = gameObject.FindRecursive("Body");
         head = gameObject.FindRecursive("Head");
-
-        turretData = Managers.Resource.GetStructureData(type);
     }
 
     private void Update()
@@ -65,6 +62,14 @@ public class Turret : Structure
 
         float bulletSpeed = 10f;
         StartCoroutine(BulletFollowTarget(bullet, target, bulletSpeed));
+
+        var coin = playerData.structures.Where(n => n.type == Define.StructureType.GoldenChest);
+
+        if (coin.Count() > 0)
+        {
+            playerData.AddCoin(coin.Count());
+            ResourceGetParticle(coin.Count());
+        }
     }
 
     private IEnumerator BulletFollowTarget(GameObject bullet, Enemy target, float speed)
@@ -80,7 +85,7 @@ public class Turret : Structure
             {
                 bullet.transform.position = target.transform.position;
                 Managers.Resource.Destroy(bullet);
-                target.Hit((int)turretData.argment1[level]);
+                target.Hit((int)Managers.Game.GetStructureData(type).argment1[level]);
                 yield break;
             }
             else
@@ -102,5 +107,16 @@ public class Turret : Structure
 
         body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
         head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];
+    }
+
+    public void ResourceGetParticle(int value)
+    {
+        var particle = Managers.Resource.Instantiate("ResourceGetParticle", transform);
+        particle.transform.localPosition = Vector3.zero;
+        particle.GetComponent<ResourceGetParticle>().Setting(
+            "coin",
+            value,
+            0
+        );
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using Cinemachine;
 using System.Linq;
+using UnityEditor;
 
 public class CharactorController : MonoBehaviour
 {
@@ -125,7 +126,7 @@ public class CharactorController : MonoBehaviour
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
                     var tiles = hits.Where(w => w.transform.GetComponent<Tile>() != null).FirstOrDefault();
-                    var structures = hits.Where(w => w.transform.GetComponent<Structure>() != null).FirstOrDefault();
+                    var structures = hits.Where(w => w.transform.GetComponent<Structure>() != null && w.transform.GetComponent<Structure>().playerData == Managers.Game.playerData).FirstOrDefault();
 
                     if (tiles != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {

@@ -14,14 +14,9 @@ public class PlayerData
     public Room room;
     public List<Structure> structures = new List<Structure>();
 
-    private StructureData bedData;
-
     public PlayerData(CharactorType type)
     {
         this.type = type;
-
-        bedData = Managers.Resource.GetStructureData(Define.StructureType.Bed);
-
     }
 
     public void BuildStructure(Structure structure)
@@ -30,6 +25,7 @@ public class PlayerData
             return;
 
         structures.Add(structure);
+        structure.playerData = this;
     }
 
     public void UpgradeStructure(Structure structure)
@@ -42,18 +38,21 @@ public class PlayerData
 
     public void GetResources()
     {
-        if (bedData == null)
-        {
-            bedData = Managers.Resource.GetStructureData(Define.StructureType.Bed);
-        }
-
-        int coinValue = room == null ? (int)bedData.argment1[0] : (int)bedData.argment1[room.bed.level];
+        int coinValue = room == null ? (int)Managers.Game.GetStructureData(Define.StructureType.Bed).argment1[0] : (int)Managers.Game.GetStructureData(Define.StructureType.Bed).argment1[room.bed.level];
 
         if (room != null && room.bed != null)
             room.bed.ResourceGetParticle(coinValue);
 
-        energy += structures.Where(s => s.type == Define.StructureType.Generator).Count();
-        coin += coinValue;
+        foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))
+        {
+            generator.GetComponent<Generator>().ResourceGetParticle((int)Managers.Game.GetStructureData(Define.StructureType.Generator).argment1[generator.level]);
+        }
+
+        var energy = structures.Where(s => s.type == Define.StructureType.Generator).Count();
+        var coin = coinValue;
+
+        AddCoin(coin);
+        AddEnergy(energy);
     }
 
     public void UseResource(int coin, int energy)
@@ -62,6 +61,20 @@ public class PlayerData
         this.energy -= energy;
 
         GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+        GameObserver.Call(GameObserverType.Game.OnChangeEnergyCount);
+    }
+
+    public void AddCoin(int coin)
+    {
+        this.coin += coin;
+
+        GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+    }
+
+    public void AddEnergy(int energy)
+    {
+        this.energy += energy;
+
         GameObserver.Call(GameObserverType.Game.OnChangeEnergyCount);
     }
 
@@ -75,6 +88,7 @@ public class PlayerData
         if (!structures.Contains(structure))
             return;
 
+        structure.GetComponentInParent<Tile>().currentStructure = null;
         structure.DestroyStructure();
         structures.Remove(structure);
         coin += structure.GetSellValue();

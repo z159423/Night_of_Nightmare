@@ -15,7 +15,7 @@ public abstract class PlayerableCharactor : Charactor
 
     public bool die = false;
 
-    
+
 
     public override void SetBodySkin()
     {
@@ -38,7 +38,9 @@ public abstract class PlayerableCharactor : Charactor
                 playerData.room = currentActiveRoom;
 
                 playerData.structures.Add(currentActiveRoom.bed);
+                currentActiveRoom.bed.playerData = playerData;
                 playerData.structures.Add(currentActiveRoom.door);
+                currentActiveRoom.door.playerData = playerData;
             }
         }
     }

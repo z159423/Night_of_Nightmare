@@ -62,4 +62,25 @@ public class CameraManager : MonoBehaviour
             Managers.Camera.cameras[GameMode.Map].Follow = null;
         }
     }
+
+    public void ChangeCameraLensOrthoSize(float size, float duration = 1.5f)
+    {
+        if (cameras.TryGetValue(Managers.Game.currentGameMode, out var camera))
+        {
+            StartCoroutine(LerpOrthoSize(camera, size, duration));
+        }
+    }
+
+    private IEnumerator LerpOrthoSize(CinemachineVirtualCamera camera, float targetSize, float duration)
+    {
+        float startSize = camera.m_Lens.OrthographicSize;
+        float time = 0f;
+        while (time < duration)
+        {
+            camera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        camera.m_Lens.OrthographicSize = targetSize;
+    }
 }

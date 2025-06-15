@@ -15,6 +15,9 @@ public partial struct GameObserverType
         OnChangeTicketCount,
         OnChangeGemCount,
         OnMatchedPlayerCharactor,
+        OnChangeStructure,
+        OnChangeCharactor,
+        OnChangeSelectedCharactorType
     }
 
     public enum Data

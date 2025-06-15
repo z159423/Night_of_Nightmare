@@ -60,7 +60,9 @@ public class PlayerCharactor : PlayerableCharactor
                 playerData.room = currentActiveRoom;
 
                 playerData.structures.Add(currentActiveRoom.bed);
+                currentActiveRoom.bed.playerData = playerData;
                 playerData.structures.Add(currentActiveRoom.door);
+                currentActiveRoom.door.playerData = playerData;
             }
         }
     }

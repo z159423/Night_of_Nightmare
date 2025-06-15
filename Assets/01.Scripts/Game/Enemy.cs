@@ -109,6 +109,11 @@ public class Enemy : Charactor
                 targetHealZone = null; // Stop healing when at max HP
                 enemyState = EnemyState.Chase; // Switch back to chasing state
             }
+
+            if (hpBarPivot != null)
+            {
+                hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+            }
         }
         else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
         {
@@ -260,7 +265,7 @@ public class Enemy : Charactor
             // 몸통박치기 애니메이션 (DoTween)
             yield return body.DOLocalMove(dashPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
 
-            currentTargetStructure.Hit(10); // Example damage value'
+            currentTargetStructure.Hit(damage);
 
             if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
                 gameScene_Map.AttackedAnimation(targetIndex);
@@ -268,7 +273,7 @@ public class Enemy : Charactor
             yield return body.DOLocalMove(originalPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
         }
 
-        yield return new WaitForSeconds(1.2f); // Attack delay
+        yield return new WaitForSeconds(1.2f);
 
         canAttack = true;
     }

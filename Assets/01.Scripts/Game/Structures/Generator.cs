@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Generator : Structure
+{
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    public override void Upgrade()
+    {
+        base.Upgrade();
+
+        GetComponentInChildren<SpriteRenderer>().sprite = Managers.Game.GetStructureData(Define.StructureType.Generator).sprite1[level];
+    }
+
+    public void ResourceGetParticle(int value)
+    {
+        var particle = Managers.Resource.Instantiate("ResourceGetParticle", transform);
+        particle.transform.localPosition = Vector3.zero;
+        particle.GetComponent<ResourceGetParticle>().Setting(
+            "energy",
+            value,
+            0
+        );
+    }
+}

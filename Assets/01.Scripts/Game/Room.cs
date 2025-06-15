@@ -15,7 +15,9 @@ public class Room : MonoBehaviour
         if (bed == null)
             bed = gameObject.GetComponentInChildren<Bed>();
         if (door == null)
+        {
             door = gameObject.GetComponentInChildren<Door>();
+        }
 
         foreach (Tile tile in tiles)
         {

@@ -35,25 +35,27 @@ MonoBehaviour:
   - 512
   argment2: []
   requireStructures:
-  - type: 101
+  - type: 100
+    level: 0
+  - type: 100
     level: 0
   - type: 101
-    level: 2
-  - type: 101
+    level: 1
+  - type: 100
     level: 0
   - type: 101
-    level: 5
-  - type: 101
+    level: 4
+  - type: 100
     level: 0
   - type: 101
-    level: 8
+    level: 7
+  - type: 101
+    level: 9
   - type: 101
     level: 10
   - type: 101
     level: 11
-  - type: 101
-    level: 12
-  - type: 101
+  - type: 100
     level: 0
   sprite1:
   - {fileID: 21300000, guid: dd12205146bcad546831d06a59fc658a, type: 3}

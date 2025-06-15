@@ -8,6 +8,49 @@ public class LocalDataManager
 {
     public bool IsSave = false;
 
+    // 캐릭터 소유 정보 (비트 플래그)
+    public int OwnedCharactorFlags
+    {
+        get => PlayerPrefs.GetInt("OwnedCharactorFlags", 0);
+        set { PlayerPrefs.SetInt("OwnedCharactorFlags", value); IsSave = true; }
+    }
+
+    // 특정 캐릭터를 소유하고 있는지 확인
+    public bool HasCharactor(Define.CharactorType type)
+    {
+        int flags = OwnedCharactorFlags;
+        int bit = 1 << (int)type;
+        return (flags & bit) != 0;
+    }
+
+    // 특정 캐릭터를 소유 상태로 변경
+    public void SetCharactorOwned(Define.CharactorType type, bool owned)
+    {
+        int flags = OwnedCharactorFlags;
+        int bit = 1 << (int)type;
+        if (owned)
+            flags |= bit;
+        else
+            flags &= ~bit;
+        OwnedCharactorFlags = flags;
+    }
+
+    // 소유한 캐릭터 개수 반환
+    public int OwnedCharactorCount
+    {
+        get
+        {
+            int count = 0;
+            int flags = OwnedCharactorFlags;
+            for (int i = 0; i < System.Enum.GetValues(typeof(Define.CharactorType)).Length; i++)
+            {
+                if ((flags & (1 << i)) != 0)
+                    count++;
+            }
+            return count;
+        }
+    }
+
     public bool UseHaptic
     {
         get => PlayerPrefs.GetInt("UseHaptic", 0) == 0;

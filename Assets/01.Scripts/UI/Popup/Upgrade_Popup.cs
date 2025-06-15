@@ -52,7 +52,7 @@ public class Upgrade_Popup : UI_Popup
     {
         selectedStructure = structure;
 
-        var data = Managers.Resource.GetStructureData(structure.type);
+        var data = Managers.Game.GetStructureData(structure.type);
         var currentStructure = Managers.Game.playerData.GetStructure(structure.type);
 
         if (data.baseStructure)
@@ -71,13 +71,24 @@ public class Upgrade_Popup : UI_Popup
         }
 
         var upgradeSlot = GetComponentInChildren<StructureSlot>();
-        upgradeSlot.Init();
-        upgradeSlot.Setting(data, () =>
+
+        if (data.upgradeCoin.Length < 2 && data.upgradeEnergy.Length < 2)
         {
-            Managers.Game.playerData.UseResource(data.upgradeCoin[structure.level + 1], data.upgradeEnergy[structure.level + 1]);
-            selectedStructure.Upgrade();
-            Exit();
-        }, true, structure);
+            upgradeSlot.gameObject.SetActive(false);
+        }
+        else
+        {
+            upgradeSlot.Init();
+            upgradeSlot.Setting(data, () =>
+            {
+                Managers.Game.playerData.UseResource(data.upgradeCoin[structure.level + 1], data.upgradeEnergy[structure.level + 1]);
+                selectedStructure.Upgrade();
+
+                GameObserver.Call(GameObserverType.Game.OnChangeStructure);
+
+                Exit();
+            }, true, structure);
+        }
     }
 
     public override void Reset()

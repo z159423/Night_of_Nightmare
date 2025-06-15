@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2683062034753421474}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.11, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.075, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3954043351465015419}
-  m_RootOrder: 0
+  m_Father: {fileID: 5336002712590289875}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &7889126412188747313
 SpriteRenderer:
@@ -160,7 +160,7 @@ MonoBehaviour:
   loopType: 1
   loops: -1
   id: 
-  isRelative: 0
+  isRelative: 1
   isFrom: 0
   isIndependentUpdate: 0
   autoKill: 1
@@ -174,7 +174,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 1
-  endValueV3: {x: 0.85, y: 1, z: 1}
+  endValueV3: {x: -0.07, y: 0.07, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -222,8 +222,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.035, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2195464369032545464}
+  m_Children: []
   m_Father: {fileID: 5336002712590289875}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -354,7 +353,7 @@ MonoBehaviour:
   loopType: 1
   loops: -1
   id: 
-  isRelative: 0
+  isRelative: 1
   isFrom: 0
   isIndependentUpdate: 0
   autoKill: 1
@@ -368,7 +367,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 1
-  endValueV3: {x: 0.85, y: 1, z: 1}
+  endValueV3: {x: -0.07, y: 0.07, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -418,7 +417,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5336002712590289875}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7689988603689556496
 SpriteRenderer:
@@ -610,6 +609,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3954043351465015419}
+  - {fileID: 2195464369032545464}
   - {fileID: 3785882561558403881}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -631,6 +631,12 @@ MonoBehaviour:
   destroyed: 0
   type: 0
   level: 0
+  playerData:
+    type: 0
+    coin: 0
+    energy: 0
+    room: {fileID: 0}
+    structures: []
   target: {fileID: 0}
   attackRange: 5
   attackCooldown: 1

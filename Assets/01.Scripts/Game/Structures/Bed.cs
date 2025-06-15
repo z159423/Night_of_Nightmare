@@ -21,7 +21,6 @@ public class Bed : Structure
     protected override void Start()
     {
         base.Start();
-        
 
         if (bed == null)
         {
@@ -84,10 +83,8 @@ public class Bed : Structure
     {
         base.Upgrade();
 
-        var data = Managers.Resource.GetStructureData(type);
-
-        blanket.sprite = data.sprite1[level];
-        bed.sprite = data.sprite2[level];
+        blanket.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite1[level];
+        bed.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite2[level];
     }
 
     public override void DestroyStructure()

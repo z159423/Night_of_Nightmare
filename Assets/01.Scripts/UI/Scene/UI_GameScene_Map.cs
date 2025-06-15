@@ -20,7 +20,7 @@ public class UI_GameScene_Map : UI_Scene
     enum Texts
     {
         GoldText,
-        EnemyCount,
+        EnergyCount,
         TicketCount
     }
 
@@ -45,7 +45,7 @@ public class UI_GameScene_Map : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeEnergyCount, () =>
         {
-            GetTextMesh(Texts.EnemyCount).text = Managers.Game.playerData.energy.ToString();
+            GetTextMesh(Texts.EnergyCount).text = Managers.Game.playerData.energy.ToString();
         });
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
@@ -54,7 +54,7 @@ public class UI_GameScene_Map : UI_Scene
         });
 
         GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
-        GetTextMesh(Texts.EnemyCount).text = Managers.Game.playerData.energy.ToString();
+        GetTextMesh(Texts.EnergyCount).text = Managers.Game.playerData.energy.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
     }
 
