@@ -22,6 +22,8 @@ public class BoostShop_Popup : UI_Popup
     public override void Init()
     {
         base.Init();
+
+        OpenAnimation();
     }
 
     public override void FirstSetting()

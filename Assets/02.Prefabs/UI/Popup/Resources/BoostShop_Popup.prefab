@@ -978,7 +978,7 @@ RectTransform:
   - {fileID: 5277259358358451450}
   - {fileID: 8367345398776303746}
   m_Father: {fileID: 7043702911981428004}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1515,6 +1515,7 @@ GameObject:
   - component: {fileID: 6806555285827614074}
   - component: {fileID: 6147881317749113439}
   - component: {fileID: 2209999438098423872}
+  - component: {fileID: 6218509947543892742}
   m_Layer: 5
   m_Name: PurchaseBtn
   m_TagString: Untagged
@@ -1625,6 +1626,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6218509947543892742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2746324283709371448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &3202068748752042708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,6 +1894,7 @@ GameObject:
   - component: {fileID: 1385901877893445540}
   - component: {fileID: 6017961112640004731}
   - component: {fileID: 1856545274723077404}
+  - component: {fileID: 1933861301533038146}
   m_Layer: 5
   m_Name: BoostBox (1)
   m_TagString: Untagged
@@ -1948,6 +1964,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1933861301533038146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3456267452295498382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &3839294355062911649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,6 +2010,7 @@ RectTransform:
   m_Children:
   - {fileID: 2219102485076719161}
   - {fileID: 7043702911981428004}
+  - {fileID: 3292902514349853506}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2008,6 +2039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e85679c56fe524fbe869e72ad3d6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uIAnimationTargets: []
 --- !u!1 &3916082281641487146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,6 +2474,7 @@ GameObject:
   - component: {fileID: 8963446794538042870}
   - component: {fileID: 6537657562271718949}
   - component: {fileID: 7970379370635703199}
+  - component: {fileID: 5358049314282008267}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2508,6 +2541,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5358049314282008267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932324770128825853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &5160769207865441730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,6 +2566,7 @@ GameObject:
   - component: {fileID: 7064493666466310643}
   - component: {fileID: 4717071425160801145}
   - component: {fileID: 2746764809509779979}
+  - component: {fileID: 5258356801690869936}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2585,6 +2633,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5258356801690869936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160769207865441730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &5209638529606444912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,6 +2659,7 @@ GameObject:
   - component: {fileID: 7885633624533620282}
   - component: {fileID: 4909636467803033822}
   - component: {fileID: 529535674394708778}
+  - component: {fileID: 2457400798877356871}
   m_Layer: 5
   m_Name: PurchaseBtn
   m_TagString: Untagged
@@ -2707,6 +2770,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2457400798877356871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209638529606444912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &5396042926258552810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,6 +2795,7 @@ GameObject:
   - component: {fileID: 3874549379384691911}
   - component: {fileID: 4633795236905134}
   - component: {fileID: 1983385163575036047}
+  - component: {fileID: 79891899438817983}
   m_Layer: 5
   m_Name: BoostBox
   m_TagString: Untagged
@@ -2787,6 +2865,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &79891899438817983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396042926258552810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &5524933177509768030
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,18 +2904,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5524933177509768030}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2587579755708290328}
-  m_Father: {fileID: 7043702911981428004}
-  m_RootOrder: 0
+  m_Father: {fileID: 4071902639472402044}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -2}
+  m_AnchoredPosition: {x: 0, y: -762.49976}
   m_SizeDelta: {x: 572, y: 141}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5719547144114670844
@@ -3042,6 +3134,7 @@ GameObject:
   - component: {fileID: 5277259358358451450}
   - component: {fileID: 7502637412417231718}
   - component: {fileID: 8648381613579856607}
+  - component: {fileID: 5561436041938066717}
   m_Layer: 5
   m_Name: BoostBox (2)
   m_TagString: Untagged
@@ -3111,6 +3204,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5561436041938066717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801580808688567022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &6044017627765297217
 GameObject:
   m_ObjectHideFlags: 0
@@ -3366,6 +3473,7 @@ GameObject:
   - component: {fileID: 94865446881826662}
   - component: {fileID: 7417075717886049144}
   - component: {fileID: 3245825324462118500}
+  - component: {fileID: 3375981737524010753}
   m_Layer: 5
   m_Name: PurchaseBtn
   m_TagString: Untagged
@@ -3476,6 +3584,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3375981737524010753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774875667759441748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &6873829715890334113
 GameObject:
   m_ObjectHideFlags: 0
@@ -3488,6 +3610,7 @@ GameObject:
   - component: {fileID: 3501957855202243662}
   - component: {fileID: 8645994147603592482}
   - component: {fileID: 8431061257090002423}
+  - component: {fileID: 1029258727017808164}
   m_Layer: 5
   m_Name: PurchaseBtn
   m_TagString: Untagged
@@ -3598,6 +3721,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1029258727017808164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873829715890334113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &7088739339582241993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4005,6 +4142,7 @@ GameObject:
   - component: {fileID: 6538055167577262136}
   - component: {fileID: 1630929718530182166}
   - component: {fileID: 1879433552557790697}
+  - component: {fileID: 1281880388669442882}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4071,6 +4209,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1281880388669442882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7782907126995557153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &7987859069183827184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4082,6 +4234,7 @@ GameObject:
   - component: {fileID: 4464902565830746789}
   - component: {fileID: 8930285754191367685}
   - component: {fileID: 2348698965757462719}
+  - component: {fileID: 4357419716334859346}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4148,6 +4301,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4357419716334859346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987859069183827184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
 --- !u!1 &8127229204934468705
 GameObject:
   m_ObjectHideFlags: 0
@@ -4463,6 +4630,7 @@ GameObject:
   - component: {fileID: 7043702911981428004}
   - component: {fileID: 8560270563939597147}
   - component: {fileID: 2551978208420571996}
+  - component: {fileID: 4510596427786728307}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -4482,7 +4650,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3292902514349853506}
   - {fileID: 5340719082111915630}
   m_Father: {fileID: 4071902639472402044}
   m_RootOrder: 1
@@ -4530,6 +4697,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4510596427786728307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315399873621706126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &8452879836373487141
 GameObject:
   m_ObjectHideFlags: 0
@@ -4708,6 +4889,7 @@ GameObject:
   - component: {fileID: 8367345398776303746}
   - component: {fileID: 5604711836088406608}
   - component: {fileID: 5198561250028355055}
+  - component: {fileID: 6998042082757321237}
   m_Layer: 5
   m_Name: BoostBox (3)
   m_TagString: Untagged
@@ -4777,3 +4959,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6998042082757321237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857761216291585566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1

@@ -1,11 +1,16 @@
 using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 public class UI_Popup : UI_Base
 {
     protected CanvasGroup _canvasGroup;
     protected bool _isSetting = false;
+
+    public List<UIAnimationTarget> uIAnimationTargets = new List<UIAnimationTarget>();
 
     public override void Init()
     {
@@ -62,6 +67,46 @@ public class UI_Popup : UI_Base
             action?.Invoke();
         };
     }
+
+    public void OpenAnimation(Action OnComplete = null)
+    {
+        uIAnimationTargets = GetComponentsInChildren<UIAnimationTarget>(true).ToList();
+
+        StartCoroutine(Animation());
+
+        IEnumerator Animation()
+        {
+            foreach (var target in uIAnimationTargets)
+            {
+                target.ScaleZero();
+            }
+
+            foreach (var target in uIAnimationTargets.Where(n => n.phase == UIAnimationTargetPhase.Phase1))
+            {
+                target.DoAnimation();
+            }
+
+            yield return new WaitForSeconds(0.3f);
+
+            foreach (var target in uIAnimationTargets.Where(n => n.phase == UIAnimationTargetPhase.Phase2))
+            {
+                target.DoAnimation();
+            }
+
+            yield return new WaitForSeconds(0.3f);
+
+            foreach (var target in uIAnimationTargets.Where(n => n.phase == UIAnimationTargetPhase.Phase3))
+            {
+                target.DoAnimation();
+            }
+
+            yield return new WaitForSeconds(0.3f);
+
+            OnComplete?.Invoke();
+        }
+
+    }
+
     protected void ClosePop(Transform tr, Action action = null, bool isForced = false, bool fade = true)
     {
         if (!isForced && _isTransition) return;
