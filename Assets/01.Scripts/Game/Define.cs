@@ -288,4 +288,12 @@ public class Define
         { CharactorType.Scientist, CharactorPurchaseType.Iap },
         { CharactorType.Chef, CharactorPurchaseType.Gem}
     };
+
+    public enum BoostType
+    {
+        Lamp,
+        HammerThrow,
+        HolyProtection,
+        Overheat
+    }
 }

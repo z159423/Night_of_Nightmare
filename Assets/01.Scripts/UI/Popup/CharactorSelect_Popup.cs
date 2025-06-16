@@ -35,6 +35,8 @@ public class CharactorSelect_Popup : UI_Popup
     {
         base.Init();
 
+        OpenAnimation();
+
         selectedCharactorType = Managers.Game.currentPlayerCharacterType;
     }
 

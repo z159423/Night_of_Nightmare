@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Linq;
+
 public class BoostShop_Popup : UI_Popup
 {
     enum Buttons
@@ -19,16 +22,31 @@ public class BoostShop_Popup : UI_Popup
 
     }
 
+    private Transform layout;
+
+
     public override void Init()
     {
         base.Init();
-
-        OpenAnimation();
     }
 
     public override void FirstSetting()
     {
         base.FirstSetting();
+
+        layout = gameObject.FindRecursive("Layout").transform;
+
+        foreach (var data in Managers.Resource.LoadAll<BoostData>("BoostData/").OrderBy(n => n.type))
+        {
+            var boostBox = Managers.Resource.Instantiate("BoostBoxUI", layout);
+            boostBox.GetComponent<BoostBoxUI>().Init();
+            boostBox.GetComponent<BoostBoxUI>().Setting(() =>
+            {
+
+            }, data);
+        }
+
+        OpenAnimation();
     }
 
     public override void Reset()
@@ -36,7 +54,7 @@ public class BoostShop_Popup : UI_Popup
 
     }
 
-    private void Exit()
+    public void Exit()
     {
         ClosePopupUI();
     }

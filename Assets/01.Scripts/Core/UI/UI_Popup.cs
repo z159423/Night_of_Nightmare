@@ -12,6 +12,8 @@ public class UI_Popup : UI_Base
 
     public List<UIAnimationTarget> uIAnimationTargets = new List<UIAnimationTarget>();
 
+    public Action onExit = null;
+
     public override void Init()
     {
         if (_isSetting)

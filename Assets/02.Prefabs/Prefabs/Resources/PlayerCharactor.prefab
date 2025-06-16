@@ -287,11 +287,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896ede5df8325b143bf9f1f94873ffc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 0
-  energy: 0
+  icon: {fileID: 0}
   currentFindBed: {fileID: 0}
   currentActiveRoom: {fileID: 0}
   charactorType: 0
+  playerData:
+    type: 0
+    coin: 0
+    energy: 0
+    room: {fileID: 0}
+    structures: []
   die: 0
 --- !u!61 &7307304266846746539
 BoxCollider2D:
@@ -496,7 +501,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7307304267144804835}
   - component: {fileID: 7307304267144804833}
-  - component: {fileID: 7307304267144804832}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -576,15 +580,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7307304267144804832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7307304267144804834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9cc0335f7684554ba4f96a48e0aa3ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

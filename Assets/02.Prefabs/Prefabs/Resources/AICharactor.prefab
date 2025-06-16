@@ -336,11 +336,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1ec9c9a7a590b4eac527aa48f1e0cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 0
-  energy: 0
+  icon: {fileID: 0}
   currentFindBed: {fileID: 0}
   currentActiveRoom: {fileID: 0}
   charactorType: 0
+  playerData:
+    type: 0
+    coin: 0
+    energy: 0
+    room: {fileID: 0}
+    structures: []
   die: 0
 --- !u!1 &3719488980640251734
 GameObject:
@@ -352,7 +357,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4624191932922815919}
   - component: {fileID: 6806253674482650928}
-  - component: {fileID: 4991080313336483331}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -432,18 +436,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4991080313336483331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3719488980640251734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9cc0335f7684554ba4f96a48e0aa3ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8014363102176811087
 GameObject:
   m_ObjectHideFlags: 0
