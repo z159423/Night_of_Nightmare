@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 7769938138922347626}
   - component: {fileID: 4506455347916900432}
   - component: {fileID: 706771678450029303}
+  - component: {fileID: 941020506569157967}
   m_Layer: 5
   m_Name: BedIcon1
   m_TagString: Untagged
@@ -115,6 +116,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &941020506569157967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389099857652382115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &673406324891870996
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,6 +700,7 @@ GameObject:
   - component: {fileID: 1534108533569990749}
   - component: {fileID: 1020065578970414968}
   - component: {fileID: 1643906493380352481}
+  - component: {fileID: 1059076519801926010}
   m_Layer: 5
   m_Name: CoinSlot
   m_TagString: Untagged
@@ -752,6 +768,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1059076519801926010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854424745591662760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &3640149613363322355
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,6 +930,7 @@ GameObject:
   - component: {fileID: 4562128485275587020}
   - component: {fileID: 1977533057680978212}
   - component: {fileID: 7698904976371919215}
+  - component: {fileID: 1354239115909164741}
   m_Layer: 5
   m_Name: DefaultIcon
   m_TagString: Untagged
@@ -965,6 +996,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1354239115909164741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3814820584361343967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &4254446163431550756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,6 +1097,7 @@ GameObject:
   - component: {fileID: 7998038786968013321}
   - component: {fileID: 2166983930166739477}
   - component: {fileID: 2601701299556866308}
+  - component: {fileID: 219120017200905372}
   m_Layer: 5
   m_Name: EnergySlot
   m_TagString: Untagged
@@ -1119,6 +1165,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &219120017200905372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288278455568267071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &5111441213733154078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1269,7 @@ GameObject:
   - component: {fileID: 1022692278661740675}
   - component: {fileID: 6269113467292162998}
   - component: {fileID: 365120814650129267}
+  - component: {fileID: 4472910207105146866}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1361,6 +1422,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4472910207105146866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065762980658150750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &6946202642245509868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1447,7 @@ GameObject:
   - component: {fileID: 1053227059459159669}
   - component: {fileID: 7222432909813598494}
   - component: {fileID: 4898073202026607220}
+  - component: {fileID: 4698505315212697433}
   m_Layer: 5
   m_Name: TurretIcon1
   m_TagString: Untagged
@@ -1437,6 +1513,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4698505315212697433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6946202642245509868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &7444556379030487167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,6 +1711,7 @@ GameObject:
   - component: {fileID: 7132652450858479588}
   - component: {fileID: 8476881705270228840}
   - component: {fileID: 2158308257898108857}
+  - component: {fileID: 8168702641685036170}
   m_Layer: 5
   m_Name: TurretIcon2
   m_TagString: Untagged
@@ -1686,6 +1777,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8168702641685036170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629644364602167052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &8783415242779542181
 GameObject:
   m_ObjectHideFlags: 0

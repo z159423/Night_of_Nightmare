@@ -133,13 +133,11 @@ public class CharactorController : MonoBehaviour
                         if (tiles.transform.GetComponent<Tile>().currentStructure != null)
                         {
                             var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
-                            popup.Init();
                             popup.Setting(tiles.transform.GetComponent<Tile>().currentStructure);
                         }
                         else
                         {
                             var popup = Managers.UI.ShowPopupUI<Structure_Popup>();
-                            popup.Init();
                             popup.Setting(tiles.transform.GetComponent<Tile>());
                         }
 
@@ -149,7 +147,6 @@ public class CharactorController : MonoBehaviour
                     if (structures != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {
                         var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
-                        popup.Init();
                         popup.Setting(structures.transform.GetComponent<Structure>());
                         //구조물 클릭시 업그레이드 팝업
                     }

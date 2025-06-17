@@ -56,6 +56,8 @@ public class Structure_Popup : UI_Popup
         base.Init();
 
         SelectTap(TapTypes.Basic);
+
+        OpenAnimation();
     }
 
     public override void FirstSetting()

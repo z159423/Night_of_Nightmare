@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6118961f6e10dc046807ff27a874b322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uIAnimationTargets: []
 --- !u!1 &1583912944375993605
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,6 +435,7 @@ GameObject:
   - component: {fileID: 5488996378419694182}
   - component: {fileID: 6878327801953405467}
   - component: {fileID: 1176282790351883229}
+  - component: {fileID: 8807524134683801355}
   m_Layer: 5
   m_Name: EnergyText
   m_TagString: Untagged
@@ -560,6 +562,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8807524134683801355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583912944375993605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &2687578147318072324
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +664,7 @@ GameObject:
   - component: {fileID: 8240996832982120472}
   - component: {fileID: 194208342910136324}
   - component: {fileID: 4087089910085888789}
+  - component: {fileID: 323101220765402822}
   m_Layer: 5
   m_Name: EnergySlot
   m_TagString: Untagged
@@ -715,6 +732,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &323101220765402822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819356285929620782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &2857972861365034293
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +757,7 @@ GameObject:
   - component: {fileID: 7748381899396920389}
   - component: {fileID: 6699535385418095756}
   - component: {fileID: 8308331070744290138}
+  - component: {fileID: 2200488597427652177}
   m_Layer: 5
   m_Name: EnergyIcon
   m_TagString: Untagged
@@ -791,6 +823,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2200488597427652177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857972861365034293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &3325683866563850210
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +848,7 @@ GameObject:
   - component: {fileID: 9036920625084573660}
   - component: {fileID: 64032829884966585}
   - component: {fileID: 1224563042402020705}
+  - component: {fileID: 5497032256274482102}
   m_Layer: 5
   m_Name: SellCoinCount
   m_TagString: Untagged
@@ -928,6 +975,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5497032256274482102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3325683866563850210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &4269323646202387129
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,6 +1000,7 @@ GameObject:
   - component: {fileID: 714212547071787596}
   - component: {fileID: 1336261972238306665}
   - component: {fileID: 752962247338634224}
+  - component: {fileID: 3198241798273099121}
   m_Layer: 5
   m_Name: CoinSlot
   m_TagString: Untagged
@@ -1006,6 +1068,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3198241798273099121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269323646202387129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &5228310115028111183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1096,7 @@ GameObject:
   - component: {fileID: 1338147603239930514}
   - component: {fileID: 5450207026360871335}
   - component: {fileID: 1851665954645248354}
+  - component: {fileID: 9149131352568713801}
   m_Layer: 5
   m_Name: SellBtn
   m_TagString: Untagged
@@ -1172,6 +1249,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9149131352568713801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5228310115028111183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
 --- !u!1 &5707372076113300194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,6 +1441,7 @@ GameObject:
   - component: {fileID: 701993018816968879}
   - component: {fileID: 933927750525534109}
   - component: {fileID: 9197694443880643898}
+  - component: {fileID: 1769243199718777354}
   m_Layer: 5
   m_Name: CoinIcon
   m_TagString: Untagged
@@ -1415,6 +1507,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1769243199718777354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6506619136483385103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 1
 --- !u!1 &6623380540131254509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,7 +1753,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4455201378194116609}
+  - {fileID: 8833535865875456300}
   - {fileID: 9205833596966294148}
   m_Father: {fileID: 7802708866549232822}
   m_RootOrder: 1
@@ -2018,6 +2124,7 @@ GameObject:
   - component: {fileID: 2218184239289034949}
   - component: {fileID: 2552449897730089184}
   - component: {fileID: 2963019767815392714}
+  - component: {fileID: 1960647694802645574}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2083,7 +2190,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1001 &6824895172910641300
+--- !u!114 &1960647694802645574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165641379963910150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
+--- !u!1001 &1870662778929758649
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2105,10 +2226,6 @@ PrefabInstance:
     - target: {fileID: 1534108533569990749, guid: ceb4355fcdd196a4d8990fd6aa046153, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6290735960241731699, guid: ceb4355fcdd196a4d8990fd6aa046153, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7161545788605767829, guid: ceb4355fcdd196a4d8990fd6aa046153, type: 3}
       propertyPath: m_Pivot.x
@@ -2216,8 +2333,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceb4355fcdd196a4d8990fd6aa046153, type: 3}
---- !u!224 &4455201378194116609 stripped
+--- !u!224 &8833535865875456300 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7161545788605767829, guid: ceb4355fcdd196a4d8990fd6aa046153, type: 3}
-  m_PrefabInstance: {fileID: 6824895172910641300}
+  m_PrefabInstance: {fileID: 1870662778929758649}
   m_PrefabAsset: {fileID: 0}

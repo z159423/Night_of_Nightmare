@@ -80,26 +80,30 @@ public class UI_Popup : UI_Base
         {
             foreach (var target in uIAnimationTargets)
             {
-                target.ScaleZero();
+                if (target != null)
+                    target.ScaleZero();
             }
 
             foreach (var target in uIAnimationTargets.Where(n => n.phase == UIAnimationTargetPhase.Phase1))
             {
-                target.DoAnimation();
+                if (target != null)
+                    target.DoAnimation();
             }
 
             yield return new WaitForSeconds(0.3f);
 
             foreach (var target in uIAnimationTargets.Where(n => n.phase == UIAnimationTargetPhase.Phase2))
             {
-                target.DoAnimation();
+                if (target != null)
+                    target.DoAnimation();
             }
 
             yield return new WaitForSeconds(0.3f);
 
             foreach (var target in uIAnimationTargets.Where(n => n.phase == UIAnimationTargetPhase.Phase3))
             {
-                target.DoAnimation();
+                if (target != null)
+                    target.DoAnimation();
             }
 
             yield return new WaitForSeconds(0.3f);
