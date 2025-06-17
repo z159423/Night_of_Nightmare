@@ -40,7 +40,7 @@ public class Enemy : Charactor
     TextMeshPro levelText;
     TextMeshPro nameText;
 
-
+    bool isHitColorEffectRunning = false;
 
     // Implementation of the abstract Hit() method from Charactor
     public override void Hit(int damage)
@@ -58,6 +58,28 @@ public class Enemy : Charactor
         if (hpBarPivot != null)
         {
             hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+        }
+
+
+        // Change sprite color to red and smoothly transition back to white using DOTween
+        if (bodySpriteRenderer != null && !isHitColorEffectRunning)
+        {
+            isHitColorEffectRunning = true;
+            bodySpriteRenderer.color = Color.red;
+            bodySpriteRenderer.DOColor(Color.white, 0.5f).OnComplete(() => isHitColorEffectRunning = false);
+        }
+
+        StartCoroutine(Particle());
+
+        IEnumerator Particle()
+        {
+            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
+
+            particle.transform.position = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), -1);
+
+            yield return new WaitForSeconds(1f);
+
+            Managers.Resource.Destroy(particle);
         }
     }
 
