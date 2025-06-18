@@ -73,7 +73,7 @@ public class Enemy : Charactor
 
         IEnumerator Particle()
         {
-            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
+            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle2");
 
             particle.transform.position = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), -1);
 

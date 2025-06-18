@@ -51,6 +51,37 @@ public class PlayerData
         var energy = structures.Where(s => s.type == Define.StructureType.Generator).Count();
         var coin = coinValue;
 
+        var ores = structures.Where(s =>
+            s.type == Define.StructureType.CopperOre ||
+            s.type == Define.StructureType.SilverOre ||
+            s.type == Define.StructureType.GoldOre ||
+            s.type == Define.StructureType.DiamondOre
+        ).ToList();
+
+        foreach (var ore in ores)
+        {
+            if (ore.type == Define.StructureType.CopperOre)
+            {
+                coin += (int)Managers.Game.GetStructureData(Define.StructureType.CopperOre).argment1[ore.level];
+            }
+            else if (ore.type == Define.StructureType.SilverOre)
+            {
+                coin += (int)Managers.Game.GetStructureData(Define.StructureType.SilverOre).argment1[ore.level];
+
+            }
+            else if (ore.type == Define.StructureType.GoldOre)
+            {
+                coin += (int)Managers.Game.GetStructureData(Define.StructureType.GoldOre).argment1[ore.level];
+
+            }
+            else if (ore.type == Define.StructureType.DiamondOre)
+            {
+                coin += (int)Managers.Game.GetStructureData(Define.StructureType.DiamondOre).argment1[ore.level];
+            }
+
+            ore.GetComponent<Ore>().ResourceGetParticle((int)Managers.Game.GetStructureData(ore.type).argment1[ore.level]);
+        }
+
         AddCoin(coin);
         AddEnergy(energy);
     }
@@ -80,7 +111,7 @@ public class PlayerData
 
     public Structure GetStructure(Define.StructureType type)
     {
-        return structures.First(s => s.type == type);
+        return structures.FirstOrDefault(s => s.type == type);
     }
 
     public void SellStructure(Structure structure)

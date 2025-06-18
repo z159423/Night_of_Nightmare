@@ -114,8 +114,20 @@ public class Structure_Popup : UI_Popup
 
                 var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == data.structureType);
                 var structure = Instantiate(find, Managers.Game.selectedTile.transform).GetComponentInChildren<Structure>();
-                Managers.Game.playerData.BuildStructure(structure);
 
+                var particle = Managers.Resource.Instantiate("Particles/StructureProductParticle");
+
+                particle.transform.position = Managers.Game.selectedTile.transform.position;
+
+                StartCoroutine(destroy());
+
+                IEnumerator destroy()
+                {
+                    yield return new WaitForSeconds(1.2f);
+                    Managers.Resource.Destroy(particle);
+                }
+
+                Managers.Game.playerData.BuildStructure(structure);
                 Managers.Game.selectedTile.currentStructure = structure;
 
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);

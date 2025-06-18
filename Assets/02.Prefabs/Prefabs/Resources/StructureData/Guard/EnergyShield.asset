@@ -15,10 +15,16 @@ MonoBehaviour:
   category: 0
   structureType: 9
   icon: {fileID: 21300000, guid: 984a1fcec353b8e43beb8d4e56407bfe, type: 3}
+  baseStructure: 0
+  sellable: 1
+  onlyOnePurcahse: 0
   nameKey: global.str_energy_shield_name
   descriptionKey: global.str_energy_shield_desc
-  upgradeCoin: 40000000
-  upgradeEnergy: 00000000
+  upgradeCoin: 00000000
+  upgradeEnergy: 40000000
   purcahseLimit: 1
   argment1: []
   argment2: []
+  requireStructures: []
+  sprite1: []
+  sprite2: []

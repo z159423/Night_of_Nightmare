@@ -14,7 +14,7 @@ public class StructureData : ScriptableObject
     public Sprite icon;
     public bool baseStructure = false;
     public bool sellable = true;
-
+    public bool onlyOnePurcahse = false;
 
     public string nameKey;
     public string descriptionKey;

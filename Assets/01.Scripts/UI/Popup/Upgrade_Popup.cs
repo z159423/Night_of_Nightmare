@@ -72,7 +72,13 @@ public class Upgrade_Popup : UI_Popup
 
         var upgradeSlot = GetComponentInChildren<StructureSlot>();
 
-        if (data.upgradeCoin.Length < 2 && data.upgradeEnergy.Length < 2)
+        // 업그레이드가 가능한지 확인: 현재 레벨 + 1이 배열 범위 내에 있는지 체크
+        bool canUpgrade =
+            data.upgradeCoin != null && data.upgradeEnergy != null &&
+            (structure.level + 1) < data.upgradeCoin.Length &&
+            (structure.level + 1) < data.upgradeEnergy.Length;
+
+        if (!canUpgrade)
         {
             upgradeSlot.gameObject.SetActive(false);
         }

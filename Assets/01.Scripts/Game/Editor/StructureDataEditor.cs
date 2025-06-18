@@ -40,6 +40,7 @@ public class StructureDataEditor : Editor
         EditorGUILayout.PropertyField(so.FindProperty("upgradeCoin"), true);
         EditorGUILayout.PropertyField(so.FindProperty("upgradeEnergy"), true);
         EditorGUILayout.PropertyField(so.FindProperty("sellable"));
+        EditorGUILayout.PropertyField(so.FindProperty("onlyOnePurcahse"));
         EditorGUILayout.PropertyField(so.FindProperty("purcahseLimit"));
         EditorGUILayout.PropertyField(so.FindProperty("argment1"), true);
         EditorGUILayout.PropertyField(so.FindProperty("argment2"), true);

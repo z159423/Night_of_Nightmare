@@ -256,6 +256,13 @@ public class GameManager : MonoBehaviour
         GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
     }
 
+    [Button("AddEnergy")]
+    public void AddEnergy()
+    {
+        playerData.energy += 1000;
+        GameObserver.Call(GameObserverType.Game.OnChangeEnergyCount);
+    }
+
     public StructureData GetStructureData(StructureType type)
     {
         if (structuredatas.ContainsKey(type))

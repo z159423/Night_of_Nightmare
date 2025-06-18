@@ -25,7 +25,8 @@ public class StructureSlot : UI_Base
         DescText,
         FreeText,
         CoinText,
-        EnergyText
+        EnergyText,
+        MaxText
     }
 
     enum Buttons
@@ -79,24 +80,42 @@ public class StructureSlot : UI_Base
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();
 
-        GetTextMesh(Texts.CoinText).text = data.upgradeCoin.Length > 0 ? data.upgradeCoin[level].ToString() : Managers.Localize.GetText("global.str_free");
-
-        this.onPurcahse = onPurcahse;
-
-        GetButton(Buttons.Button).AddButtonEvent(() =>
+        if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
         {
-            if (CheckIsReqired() && _data.upgradeCoin[level] <= Managers.Game.playerData.coin && _data.upgradeEnergy[level] <= Managers.Game.playerData.energy)
+
+        }
+        else
+        {
+            GetTextMesh(Texts.CoinText).text = data.upgradeCoin.Length > 0 ? data.upgradeCoin[level].ToString() : Managers.Localize.GetText("global.str_free");
+
+            this.onPurcahse = onPurcahse;
+
+            GetButton(Buttons.Button).AddButtonEvent(() =>
             {
-                onPurcahse?.Invoke();
-                return;
-            }
-        });
+                if (CheckIsReqired() && _data.upgradeCoin[level] <= Managers.Game.playerData.coin && _data.upgradeEnergy[level] <= Managers.Game.playerData.energy)
+                {
+                    onPurcahse?.Invoke();
+                    return;
+                }
+            });
+        }
 
         UpdateUI();
     }
 
     void UpdateUI()
     {
+        if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
+        {
+            this.onPurcahse = null;
+            GetTextMesh(Texts.MaxText).gameObject.SetActive(true);
+            GetTextMesh(Texts.CoinText).gameObject.SetActive(false);
+            GetTextMesh(Texts.EnergyText).gameObject.SetActive(false);
+            GetTextMesh(Texts.FreeText).gameObject.SetActive(false);
+
+            return;
+        }
+
         if (_data.upgradeCoin.Length > 0 && _data.upgradeCoin[level] > 0)
         {
             GetImage(Images.CoinSlot).gameObject.SetActive(true);
@@ -150,6 +169,28 @@ public class StructureSlot : UI_Base
     {
         if (_data.structureType == Define.StructureType.Turret || _data.structureType == Define.StructureType.Bed || _data.structureType == Define.StructureType.Door)
             return Managers.Localize.GetText(_data.nameKey + "_" + (level + 1));
+        else if (_data.structureType == Define.StructureType.CopperOre || _data.structureType == Define.StructureType.SilverOre || _data.structureType == Define.StructureType.GoldOre || _data.structureType == Define.StructureType.DiamondOre)
+        {
+            var name = _data.nameKey;
+            int index = 1;
+
+            switch (_data.structureType)
+            {
+                case Define.StructureType.SilverOre:
+                    index += 1;
+                    break;
+
+                case Define.StructureType.GoldOre:
+                    index += 2;
+                    break;
+
+                case Define.StructureType.DiamondOre:
+                    index += 2;
+                    break;
+            }
+
+            return Managers.Localize.GetText(name + "_" + (level + index));
+        }
         else
             return Managers.Localize.GetText(_data.nameKey);
     }
@@ -163,6 +204,10 @@ public class StructureSlot : UI_Base
             case Define.StructureType.Bed:
             case Define.StructureType.Door:
             case Define.StructureType.Generator:
+            case Define.StructureType.CopperOre:
+            case Define.StructureType.SilverOre:
+            case Define.StructureType.GoldOre:
+            case Define.StructureType.DiamondOre:
                 desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString());
                 break;
             default:
@@ -170,7 +215,7 @@ public class StructureSlot : UI_Base
                 break;
         }
 
-        if (_data.requireStructures != null &&_data.requireStructures.Length > 0 && _data.requireStructures.Length >= level
+        if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level
           && _data.requireStructures[level].type != _data.structureType)
         {
             var require = Managers.Game.GetStructureData(_data.requireStructures[level].type);
@@ -217,6 +262,11 @@ public class StructureSlot : UI_Base
             GetImage(Images.DefaultIcon).SetNativeSize();
 
             GetImage(Images.DefaultIcon).transform.localScale = Vector3.one * 1.8f;
+        }
+        else if (_data.structureType == Define.StructureType.Generator || _data.structureType == Define.StructureType.CopperOre || _data.structureType == Define.StructureType.SilverOre || _data.structureType == Define.StructureType.GoldOre)
+        {
+            GetImage(Images.DefaultIcon).gameObject.SetActive(true);
+            GetImage(Images.DefaultIcon).sprite = _data.sprite1[level];
         }
         else
         {

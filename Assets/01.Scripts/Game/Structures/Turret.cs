@@ -7,8 +7,8 @@ using System.Linq;
 public class Turret : Structure
 {
     public Enemy target;
-    public float attackRange = 5f;
-    public float attackCooldown = 1f;
+    public readonly float attackRange = 4f;
+    public readonly float attackCooldown = 1f;
     private float lastAttackTime;
 
     GameObject body;
@@ -37,9 +37,9 @@ public class Turret : Structure
             }
         }
 
-        if (target != null && Vector3.Distance(transform.position, target.transform.position) <= attackRange)
+        if (target != null && Vector3.Distance(transform.position, target.transform.position) <= GetAttackRange())
         {
-            if (Time.time >= lastAttackTime + attackCooldown)
+            if (Time.time >= lastAttackTime + GetAttackSpeed())
             {
                 Attack();
                 lastAttackTime = Time.time;
@@ -118,5 +118,40 @@ public class Turret : Structure
             value,
             0
         );
+    }
+
+    public float GetAttackRange()
+    {
+        float range = attackRange;
+
+        range = (playerData.structures.Find(n => n.type == Define.StructureType.Telescope) != null) ? (range * 1.2f) : range;
+
+        return range;
+    }
+
+    public float GetAttackSpeed()
+    {
+        float coolDown = attackCooldown;
+
+        // TurretBooster가 있을 때만 거리 기반 쿨다운 보정
+        if (playerData.structures.Find(n => n.type == Define.StructureType.TurretBooster) != null && target != null)
+        {
+            float distance = Vector3.Distance(transform.position, target.transform.position);
+            float range = GetAttackRange();
+
+            // 거리가 가까울수록 쿨다운 감소 (최소 0.25배까지)
+            float ratio = Mathf.Clamp01(distance / range);
+            float minRate = 0.25f;
+            float rate = Mathf.Lerp(minRate, 1f, ratio); // 가까울수록 minRate, 멀수록 1
+            coolDown *= rate;
+        }
+
+        // SatelliteAntenna가 있으면 쿨다운 절반
+        if (playerData.structures.Find(n => n.type == Define.StructureType.SatelliteAntenna) != null)
+        {
+            coolDown *= 0.5f;
+        }
+
+        return coolDown;
     }
 }

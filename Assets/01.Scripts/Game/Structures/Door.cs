@@ -15,6 +15,8 @@ public class Door : Structure
 
     public bool isClose = false;
 
+    private Transform repair;
+
 
     protected override void Start()
     {
@@ -32,6 +34,38 @@ public class Door : Structure
 
         MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
         Hp = MaxHp;
+
+        repair = gameObject.FindRecursive("Repair").transform;
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(AutoRepairCheck());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private IEnumerator AutoRepairCheck()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (Hp >= MaxHp)
+                continue;
+
+            if (playerData != null && playerData.structures != null)
+            {
+                bool hasRepairStation = playerData.structures.Exists(s => s.type == Define.StructureType.RepairStation);
+                if (hasRepairStation)
+                {
+                    RepaireDoor(0.02f);
+                }
+            }
+        }
     }
 
     public void CloseDoor()
@@ -82,5 +116,24 @@ public class Door : Structure
     public void RepaireDoor()
     {
 
+    }
+
+    public void RepaireDoor(float percent)
+    {
+        if (percent < 0f) percent = 0f;
+        if (percent > 1f) percent = 1f;
+
+        Hp = Mathf.Clamp(Hp + Mathf.RoundToInt(MaxHp * percent), 0, MaxHp);
+        ShowHpBar();
+
+        repair.gameObject.SetActive(true);
+        StartCoroutine(DisableRepairAfterDelay());
+
+    }
+
+    private IEnumerator DisableRepairAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        repair.gameObject.SetActive(false);
     }
 }

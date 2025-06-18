@@ -13,12 +13,21 @@ MonoBehaviour:
   m_Name: GoldOre
   m_EditorClassIdentifier: 
   category: 0
-  structureType: 7
+  structureType: 6
   icon: {fileID: 21300000, guid: 173488037e7d4414280700aabd8ea543, type: 3}
-  nameKey: global.str_mineral_name_3
+  baseStructure: 0
+  sellable: 1
+  nameKey: global.str_mineral_name
   descriptionKey: global.str_desc_produce_gold
-  upgradeCoin: 00000000
-  upgradeEnergy: 00080000
+  upgradeCoin: 0000000000000000
+  upgradeEnergy: 0008000000100000
   purcahseLimit: -1
-  argment1: []
+  argment1:
+  - 128
+  - 512
   argment2: []
+  requireStructures: []
+  sprite1:
+  - {fileID: 21300000, guid: 173488037e7d4414280700aabd8ea543, type: 3}
+  - {fileID: 21300000, guid: 973e21dc025bf1e4ea6c8a9279427076, type: 3}
+  sprite2: []

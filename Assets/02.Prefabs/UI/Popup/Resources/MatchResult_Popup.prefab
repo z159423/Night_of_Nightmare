@@ -932,7 +932,6 @@ RectTransform:
   - {fileID: 3445530015117507753}
   - {fileID: 4809921655646951099}
   - {fileID: 6619453697667799499}
-  - {fileID: 9092629378248149524}
   m_Father: {fileID: 5560884359130955710}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1087,6 +1086,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7006663601093885945}
+  - {fileID: 9092629378248149524}
   m_Father: {fileID: 3847895410036785348}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1273,6 +1273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5df2f8f9d83674ab338d6e3aead439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uIAnimationTargets: []
   colors:
   - {r: 0, g: 1, b: 0.15451717, a: 1}
   - {r: 1, g: 0.2392157, b: 0.2392157, a: 1}
@@ -1495,7 +1496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB9E4\uCE6D\uD558\uAE30"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
   m_sharedMaterial: {fileID: 0}
@@ -1522,7 +1523,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1620,17 +1621,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5902287732612992554}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3847895410036785348}
-  m_RootOrder: 3
+  m_Father: {fileID: 6619453697667799499}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 274, y: -508}
+  m_AnchoredPosition: {x: 274, y: 316}
   m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4335162813469893741
@@ -2045,8 +2046,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  loopType: 0
-  loops: 1
+  loopType: 2
+  loops: -1
   id: 
   isRelative: 0
   isFrom: 0
@@ -2555,7 +2556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1435629304204480354
 RectTransform:
   m_ObjectHideFlags: 0

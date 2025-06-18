@@ -59,6 +59,8 @@ public abstract class Structure : MonoBehaviour
         {
             CheckUpgrade();
         });
+
+        
     }
 
     public virtual void Upgrade()
@@ -116,9 +118,12 @@ public abstract class Structure : MonoBehaviour
         {
             upgradeIcon.gameObject.SetActive(false);
         }
-        //만약 업그레이드 가능한 상태라면
-        else if (CheckIsReqired() && (_data.upgradeCoin.Length > 1 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level + 1]) : true)
-     && (_data.upgradeEnergy.Length > 1 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level + 1]) : true))
+        // 업그레이드 가능한 상태라면
+        else if (
+            CheckIsReqired() &&
+            (_data.upgradeCoin.Length > level + 1 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level + 1]) : false) &&
+            (_data.upgradeEnergy.Length > level + 1 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level + 1]) : false)
+        )
             upgradeIcon.gameObject.SetActive(true);
         else
             upgradeIcon.gameObject.SetActive(false);
@@ -129,12 +134,12 @@ public abstract class Structure : MonoBehaviour
         var _data = Managers.Game.GetStructureData(type);
 
         bool isMet = true;
-        if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level+1
-          && _data.requireStructures[level+1].type != _data.structureType)
+        if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level + 1
+          && _data.requireStructures[level + 1].type != _data.structureType)
         {
-            var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level+1].type);
+            var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level + 1].type);
 
-            isMet = currentRequire != null && currentRequire.level >= _data.requireStructures[level+1].level;
+            isMet = currentRequire != null && currentRequire.level >= _data.requireStructures[level + 1].level;
         }
 
         return isMet;

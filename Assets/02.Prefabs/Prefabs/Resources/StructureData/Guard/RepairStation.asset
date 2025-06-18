@@ -15,10 +15,16 @@ MonoBehaviour:
   category: 0
   structureType: 10
   icon: {fileID: 21300000, guid: 4a1a41c5b45189c40a33cfa5a6c24976, type: 3}
+  baseStructure: 0
+  sellable: 1
+  onlyOnePurcahse: 1
   nameKey: global.str_repair_building_name
   descriptionKey: global.str_repair_building_desc
-  upgradeCoin: 40000000
-  upgradeEnergy: 00000000
+  upgradeCoin: 00000000
+  upgradeEnergy: 40000000
   purcahseLimit: 1
   argment1: []
   argment2: []
+  requireStructures: []
+  sprite1: []
+  sprite2: []
