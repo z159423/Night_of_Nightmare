@@ -59,5 +59,41 @@ class QScene : EditorWindow
     [MenuItem("QTool/Scene/Game", priority = 1)]
     public static void ToGame() => QScene.OpenScene("Assets/00.Scenes/Game.unity");
     // End
+
+    [MenuItem("QTool/Select/Enemy", priority = 1)]
+    public static void SelectEnemy()
+    {
+        // 씬에 있는 모든 BoxCollider를 찾는다
+        if (Managers.Game != null && Managers.Game.enemy != null)
+        {
+            // 해당 오브젝트를 선택 상태로 설정
+            Selection.activeGameObject = Managers.Game.enemy.GetComponentInChildren<Enemy>().gameObject;
+
+            // 만약 컴포넌트 자체를 선택하고 싶으면 아래처럼 사용
+            EditorGUIUtility.PingObject(Managers.Game.enemy.GetComponentInChildren<Enemy>()); // Inspector에 컴포넌트 강조
+        }
+        else
+        {
+            Debug.LogWarning("씬에 적이 없습니다");
+        }
+    }
+
+    [MenuItem("QTool/Select/Player", priority = 1)]
+    public static void SelectPlayer()
+    {
+        // 씬에 있는 모든 BoxCollider를 찾는다
+        if (Managers.Game != null && Managers.Game.playerCharactor != null)
+        {
+            // 해당 오브젝트를 선택 상태로 설정
+            Selection.activeGameObject = Managers.Game.enemy.GetComponentInChildren<Enemy>().gameObject;
+
+            // 만약 컴포넌트 자체를 선택하고 싶으면 아래처럼 사용
+            EditorGUIUtility.PingObject(Managers.Game.playerCharactor.GetComponentInChildren<PlayerCharactor>()); // Inspector에 컴포넌트 강조
+        }
+        else
+        {
+            Debug.LogWarning("씬에 유저 캐릭터가 없습니다");
+        }
+    }
 }
 #endif

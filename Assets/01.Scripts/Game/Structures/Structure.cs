@@ -59,8 +59,6 @@ public abstract class Structure : MonoBehaviour
         {
             CheckUpgrade();
         });
-
-        
     }
 
     public virtual void Upgrade()

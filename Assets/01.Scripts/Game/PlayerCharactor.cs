@@ -71,6 +71,8 @@ public class PlayerCharactor : PlayerableCharactor
     {
         // AI 캐릭터는 Hit 메서드를 구현하지 않음
         // 필요시 AI 캐릭터의 행동을 정의할 수 있음
+
+        Die();
     }
 
     public override void Die()

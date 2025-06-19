@@ -8,7 +8,7 @@ public class PlayerData
 {
     public CharactorType type;
 
-    public int coin;
+    public int coin = 10;
     public int energy;
 
     public Room room;

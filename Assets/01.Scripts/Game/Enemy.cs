@@ -19,6 +19,7 @@ public class Enemy : Charactor
     public float MaxHp = 100;
     public float hp = 100;
     public int level = 0;
+    public int currentExp = 0;
     public int damage = 0;
 
     public PlayerableCharactor currentTarget;
@@ -59,7 +60,6 @@ public class Enemy : Charactor
         {
             hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
         }
-
 
         // Change sprite color to red and smoothly transition back to white using DOTween
         if (bodySpriteRenderer != null && !isHitColorEffectRunning)
@@ -121,7 +121,7 @@ public class Enemy : Charactor
 
         if (enemyState == EnemyState.Heal && targetHealZone != null && Vector2.Distance(targetHealZone.transform.position, transform.position) < 1.5f)
         {
-            hp += MaxHp * 0.0014f; // Heal 0.14% of MaxHp per frame
+            hp += MaxHp * 0.00014f; // Heal 0.14% of MaxHp per frame
 
             hp = Mathf.Clamp(hp, 0, MaxHp); // Ensure hp does not exceed MaxHp
 
@@ -136,6 +136,11 @@ public class Enemy : Charactor
             {
                 hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
             }
+        }
+        else if (currentTarget != null && currentTarget.playerData.room == null && enemyState == EnemyState.Chase)
+        {
+            if (agent != null && agent.isOnNavMesh)
+                agent.SetDestination(currentTarget.transform.position);
         }
         else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
         {
@@ -184,7 +189,27 @@ public class Enemy : Charactor
                         enemyState = EnemyState.Heal;
                     }
                 }
-                else if (currentTarget != null && changeStateTime > currentChangeStateTime)
+                else if (currentTarget != null && currentTarget.playerData.room == null)
+                {
+                    float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
+
+                    if (canAttack && distanceToTarget < 1f) // Example attack range
+                    {
+                        StartCoroutine(Attack());
+                    }
+
+                    if (currentCheckHpTime > checkHpTime)
+                        checkHpTime = Random.Range(0.5f, 4f);
+                }
+                else if (Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null).Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f)
+            .ToList().Count > 0)
+                {
+                    currentTarget = Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null)
+                        .Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f).ToList().First();
+
+                    currentTargetStructure = null;
+                }
+                else if (currentTarget != null && currentTarget.playerData.room != null && changeStateTime > currentChangeStateTime)
                 {
                     if (currentTargetStructure == null || currentTargetStructure.destroyed)
                     {
@@ -232,9 +257,26 @@ public class Enemy : Charactor
     public void FindTarget()
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
+        // List<PlayerableCharactor> noBedPlayers = new List<PlayerableCharactor>();
 
+        // noBedPlayers.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null));
         players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null));
 
+        // noBedPlayers 중에서 transform과의 거리가 150px 이하인 것만 필터링
+        // var closeNoBedPlayers = noBedPlayers
+        //     .Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f)
+        //     .ToList();
+
+        // if (closeNoBedPlayers.Count > 0)
+        // {
+        //     int randomIndex = Random.Range(0, closeNoBedPlayers.Count);
+        //     currentTarget = closeNoBedPlayers[randomIndex];
+
+        //     targetIndex = Managers.Game.charactors.IndexOf(currentTarget);
+
+        //     currentTargetStructure = null; // 침대가 없으므로 구조물 없음
+        // }
+        // else
         if (players.Count > 0)
         {
             int randomIndex = Random.Range(0, players.Count);
@@ -277,20 +319,49 @@ public class Enemy : Charactor
     public IEnumerator Attack()
     {
         canAttack = false;
+        currentExp++;
 
-        if (currentTargetStructure != null)
+        Vector3 originalPosition = body.localPosition;
+        Vector3 targetPosition = Vector3.zero;
+        System.Action hitAction = null;
+
+        if (currentTarget != null && currentTarget.playerData.room == null)
         {
-            Vector3 originalPosition = body.localPosition;
-            Vector3 targetDirection = (currentTargetStructure.transform.position - body.position).normalized;
+            targetPosition = currentTarget.transform.position;
+            hitAction = () =>
+            {
+                currentTarget.Hit(damage);
+
+                if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
+                    gameScene_Map.AttackedAnimation(targetIndex);
+            };
+        }
+        else if (currentTargetStructure != null)
+        {
+            targetPosition = currentTargetStructure.transform.position;
+            hitAction = () =>
+            {
+                currentTargetStructure.Hit(damage);
+
+                if (currentExp >= Define.enemyExp[level])
+                {
+                    currentExp = 0;
+                    LevelUp();
+                }
+
+                if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
+                    gameScene_Map.AttackedAnimation(targetIndex);
+            };
+        }
+
+        if (hitAction != null)
+        {
+            Vector3 targetDirection = (targetPosition - body.position).normalized;
             Vector3 dashPosition = body.localPosition + targetDirection * 1.75f;
 
-            // 몸통박치기 애니메이션 (DoTween)
             yield return body.DOLocalMove(dashPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
 
-            currentTargetStructure.Hit(damage);
-
-            if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
-                gameScene_Map.AttackedAnimation(targetIndex);
+            hitAction.Invoke();
 
             yield return body.DOLocalMove(originalPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
         }
@@ -303,9 +374,19 @@ public class Enemy : Charactor
     public void LevelUp()
     {
         level++;
-        levelText.text = "Lv." + level;
+        levelText.text = "Lv." + (level + 1);
 
+        float prevMaxHp = MaxHp;
         MaxHp = Define.enemyHp[level];
-    }
+        hp += MaxHp - prevMaxHp;
+        hp = Mathf.Clamp(hp, 0, MaxHp);
 
+        damage = Define.enemyDamage[level];
+
+        hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+
+        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
+        popup.GetComponent<Notification_Popup>().Init();
+        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_level_up"));
+    }
 }
