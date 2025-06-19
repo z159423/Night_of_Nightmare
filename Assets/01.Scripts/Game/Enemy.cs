@@ -16,6 +16,16 @@ public class Enemy : Charactor
         Heal
     }
 
+    public enum EnemySkillType
+    {
+        AttackDamageIncrease,
+        AttackSpeedIncrease,
+        Sickle,
+        pierrot,
+        MossMan,
+        SlanderMan
+    }
+
     public float MaxHp = 100;
     public float hp = 100;
     public int level = 0;
@@ -27,6 +37,8 @@ public class Enemy : Charactor
     public int targetIndex;
     public HealZone targetHealZone;
     EnemyState enemyState = EnemyState.Chase;
+
+    public Define.EnemyType enemyType;
 
     public bool canAttack = true;
 
@@ -42,6 +54,21 @@ public class Enemy : Charactor
     TextMeshPro nameText;
 
     bool isHitColorEffectRunning = false;
+
+    // Enemy.cs 내부에 추가
+    private bool isSkillActive = false;
+    private float skillCooldownTimer = 0f;
+    private float skillDurationTimer = 0f;
+    private EnemySkillType? currentSkill = null;
+
+    [SerializeField] public float skillAttackSpeedMultiplier = 1f; // 공격 속도 배수
+    [SerializeField] public float skillMoveSpeedMultiplier = 1f; // 이동 속도 배수 
+    [SerializeField] public float skillAttackDamageMultiplier = 1f; // 공격력 배수
+
+    public float baseMoveSpeed = 4f;
+
+    // 임시 난이도 값
+    private int difficultyValue = 0; // 원하는 값으로 조정
 
     // Implementation of the abstract Hit() method from Charactor
     public override void Hit(int damage)
@@ -103,6 +130,33 @@ public class Enemy : Charactor
         MaxHp = Define.enemyHp[level];
         hp = MaxHp;
         damage = Define.enemyDamage[level];
+
+        // agent.speed = baseMoveSpeed;
+
+        skills.Add(new AttackSpeedSkill());
+        skills.Add(new AttackDamageSkill()); // 등등
+
+        // switch (Managers.Game.enemyType)
+        // {
+        //     case Define.EnemyType.Sickle:
+        //         enemyType = Define.EnemyType.Sickle;
+        //         skills.Add(new SickleSkill());
+        //         break;
+        //     case Define.EnemyType.Pierrot:
+        //         enemyType = Define.EnemyType.Pierrot;
+        //         skills.Add(new PierrotSkill());
+        //         break;
+        //     case Define.EnemyType.MossMan:
+        //         enemyType = Define.EnemyType.MossMan;
+        //         skills.Add(new MossManSkill());
+        //         break;
+        //     case Define.EnemyType.SlanderMan:
+        //         enemyType = Define.EnemyType.SlanderMan;
+        //         skills.Add(new SlanderManSkill());
+        //         break;
+        // }
+
+        CheckUseSkill();
     }
 
     public void SetNameText(string name)
@@ -330,7 +384,7 @@ public class Enemy : Charactor
             targetPosition = currentTarget.transform.position;
             hitAction = () =>
             {
-                currentTarget.Hit(damage);
+                currentTarget.Hit(Mathf.RoundToInt(damage * skillAttackDamageMultiplier));
 
                 if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
                     gameScene_Map.AttackedAnimation(targetIndex);
@@ -341,7 +395,7 @@ public class Enemy : Charactor
             targetPosition = currentTargetStructure.transform.position;
             hitAction = () =>
             {
-                currentTargetStructure.Hit(damage);
+                currentTargetStructure.Hit(Mathf.RoundToInt(damage * skillAttackDamageMultiplier));
 
                 if (currentExp >= Define.enemyExp[level])
                 {
@@ -359,14 +413,14 @@ public class Enemy : Charactor
             Vector3 targetDirection = (targetPosition - body.position).normalized;
             Vector3 dashPosition = body.localPosition + targetDirection * 1.75f;
 
-            yield return body.DOLocalMove(dashPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
+            yield return body.DOLocalMove(dashPosition, 0.1f / skillAttackSpeedMultiplier).SetEase(Ease.Linear).WaitForCompletion();
 
             hitAction.Invoke();
 
-            yield return body.DOLocalMove(originalPosition, 0.1f).SetEase(Ease.Linear).WaitForCompletion();
+            yield return body.DOLocalMove(originalPosition, 0.1f / skillAttackSpeedMultiplier).SetEase(Ease.Linear).WaitForCompletion();
         }
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.2f / skillAttackSpeedMultiplier);
 
         canAttack = true;
     }
@@ -388,5 +442,130 @@ public class Enemy : Charactor
         var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
         popup.GetComponent<Notification_Popup>().Init();
         popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_level_up"));
+    }
+
+    public List<EnemySkill> skills = new List<EnemySkill>();
+
+    private Coroutine _checkSkillCoroutine;
+
+    public void CheckUseSkill()
+    {
+        // 1초마다 체크하도록 코루틴 시작 (Start 등에서 호출)
+        if (_checkSkillCoroutine == null)
+            _checkSkillCoroutine = StartCoroutine(CheckSkillRoutine());
+    }
+
+    private IEnumerator CheckSkillRoutine()
+    {
+        while (true)
+        {
+            // 하나라도 스킬이 사용 중이면 아무것도 하지 않음
+            if (skills.Any(skill => skill.IsActive))
+            {
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
+
+            foreach (var skill in skills)
+            {
+                if (skill.CanUse(this))
+                {
+                    skill.Activate(this);
+                    StartCoroutine(SkillDurationRoutine(skill));
+                    break; // 한 번에 하나만 사용
+                }
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private IEnumerator SkillDurationRoutine(EnemySkill skill)
+    {
+        yield return new WaitForSeconds(skill.Duration);
+        skill.Deactivate(this);
+    }
+}
+
+public abstract class EnemySkill
+{
+    public string Name;
+    public int MinLevel;
+    public float Cooldown;
+    public float Duration;
+    public float LastUseTime = -999f;
+    public bool IsActive { get; protected set; }
+
+    public abstract bool CanUse(Enemy enemy);
+    public abstract void Activate(Enemy enemy);
+    public abstract void Deactivate(Enemy enemy);
+}
+
+public class AttackSpeedSkill : EnemySkill
+{
+    public AttackSpeedSkill()
+    {
+        Name = "AttackSpeed";
+        MinLevel = 3;
+        Cooldown = 15f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
+        Duration = 4f;
+    }
+
+    public override bool CanUse(Enemy enemy)
+    {
+        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= Cooldown;
+    }
+
+    public override void Activate(Enemy enemy)
+    {
+        IsActive = true;
+        LastUseTime = Time.time;
+        enemy.skillAttackSpeedMultiplier = 2.4f;
+        enemy.skillMoveSpeedMultiplier = 2f;
+        // 기타 효과
+
+        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
+        popup.GetComponent<Notification_Popup>().Init();
+        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_spd_skill"));
+    }
+
+    public override void Deactivate(Enemy enemy)
+    {
+        IsActive = false;
+        enemy.skillAttackSpeedMultiplier = 1f;
+        enemy.skillMoveSpeedMultiplier = 1f;
+    }
+}
+
+public class AttackDamageSkill : EnemySkill
+{
+    public AttackDamageSkill()
+    {
+        Name = "AttackDamage";
+        MinLevel = 5;
+        Cooldown = 20f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
+        Duration = 7f;
+    }
+
+    public override bool CanUse(Enemy enemy)
+    {
+        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= Cooldown;
+    }
+
+    public override void Activate(Enemy enemy)
+    {
+        IsActive = true;
+        LastUseTime = Time.time;
+        enemy.skillAttackDamageMultiplier = 1.3f;
+        // 타격 사운드 변경 등 추가 효과는 필요시 구현
+
+        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
+        popup.GetComponent<Notification_Popup>().Init();
+        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_dmg_skill"));
+    }
+
+    public override void Deactivate(Enemy enemy)
+    {
+        IsActive = false;
+        enemy.skillAttackDamageMultiplier = 1f;
     }
 }
