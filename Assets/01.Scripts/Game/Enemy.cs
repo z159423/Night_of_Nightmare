@@ -55,26 +55,30 @@ public class Enemy : Charactor
 
     bool isHitColorEffectRunning = false;
 
-    // Enemy.cs 내부에 추가
-    private bool isSkillActive = false;
-    private float skillCooldownTimer = 0f;
-    private float skillDurationTimer = 0f;
-    private EnemySkillType? currentSkill = null;
+    public List<EnemySkill> skills = new List<EnemySkill>();
 
-    [SerializeField] public float skillAttackSpeedMultiplier = 1f; // 공격 속도 배수
-    [SerializeField] public float skillMoveSpeedMultiplier = 1f; // 이동 속도 배수 
-    [SerializeField] public float skillAttackDamageMultiplier = 1f; // 공격력 배수
+    private Coroutine _checkSkillCoroutine;
+
+    // 능력치 객체화
+    [SerializeField] public StatMultiplier attackSpeed = new StatMultiplier();
+    [SerializeField] public StatMultiplier attackPower = new StatMultiplier();
+    [SerializeField] public StatMultiplier moveSpeed = new StatMultiplier();
+
+    public List<EnemyEffect> activeEffects = new List<EnemyEffect>();
 
     public float baseMoveSpeed = 4f;
 
-    // 임시 난이도 값
-    private int difficultyValue = 0; // 원하는 값으로 조정
+    public Transform bleedParticle;
 
     // Implementation of the abstract Hit() method from Charactor
+
     public override void Hit(int damage)
     {
-        // Provide your logic here, for example:
-        hp -= damage; // Default damage
+
+    }
+    public void Hit(int damage, bool particle = true)
+    {
+        hp -= damage;
         if (hp <= 0)
         {
             // Handle enemy death
@@ -96,7 +100,8 @@ public class Enemy : Charactor
             bodySpriteRenderer.DOColor(Color.white, 0.5f).OnComplete(() => isHitColorEffectRunning = false);
         }
 
-        StartCoroutine(Particle());
+        if (particle)
+            StartCoroutine(Particle());
 
         IEnumerator Particle()
         {
@@ -125,13 +130,18 @@ public class Enemy : Charactor
         levelText = gameObject.FindRecursive("LevelText").GetComponent<TextMeshPro>();
         nameText = gameObject.FindRecursive("NameText").GetComponent<TextMeshPro>();
 
+        bleedParticle = gameObject.FindRecursive("BleedParticle").transform;
+
         SetNameText(Managers.Game.enemyName);
 
         MaxHp = Define.enemyHp[level];
         hp = MaxHp;
         damage = Define.enemyDamage[level];
 
-        // agent.speed = baseMoveSpeed;
+        // 능력치 초기화
+        attackSpeed.BaseValue = 1f;
+        attackPower.BaseValue = damage;
+        moveSpeed.BaseValue = baseMoveSpeed;
 
         skills.Add(new AttackSpeedSkill());
         skills.Add(new AttackDamageSkill()); // 등등
@@ -170,6 +180,7 @@ public class Enemy : Charactor
     protected override void Update()
     {
         base.Update();
+        UpdateEffects();
         if (gameObject == null)
             return;
 
@@ -384,7 +395,7 @@ public class Enemy : Charactor
             targetPosition = currentTarget.transform.position;
             hitAction = () =>
             {
-                currentTarget.Hit(Mathf.RoundToInt(damage * skillAttackDamageMultiplier));
+                currentTarget.Hit(Mathf.RoundToInt(attackPower.Value));
 
                 if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
                     gameScene_Map.AttackedAnimation(targetIndex);
@@ -395,13 +406,23 @@ public class Enemy : Charactor
             targetPosition = currentTargetStructure.transform.position;
             hitAction = () =>
             {
-                currentTargetStructure.Hit(Mathf.RoundToInt(damage * skillAttackDamageMultiplier));
+                currentTargetStructure.Hit(Mathf.RoundToInt(attackPower.Value));
 
                 if (currentExp >= Define.enemyExp[level])
                 {
                     currentExp = 0;
                     LevelUp();
                 }
+
+                if (currentTargetStructure is Door door)
+                {
+                    if (door.playerData.structures.Any(n => n.type == Define.StructureType.Cooler && !n.destroyed))
+                        AddEffect(new FreezeEffect(3f));
+
+                    if (door.playerData.structures.Any(n => n.type == Define.StructureType.ThornBush && !n.destroyed))
+                        AddEffect(new BleedEffect(3f));
+                }
+
 
                 if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
                     gameScene_Map.AttackedAnimation(targetIndex);
@@ -413,14 +434,14 @@ public class Enemy : Charactor
             Vector3 targetDirection = (targetPosition - body.position).normalized;
             Vector3 dashPosition = body.localPosition + targetDirection * 1.75f;
 
-            yield return body.DOLocalMove(dashPosition, 0.1f / skillAttackSpeedMultiplier).SetEase(Ease.Linear).WaitForCompletion();
+            yield return body.DOLocalMove(dashPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
 
             hitAction.Invoke();
 
-            yield return body.DOLocalMove(originalPosition, 0.1f / skillAttackSpeedMultiplier).SetEase(Ease.Linear).WaitForCompletion();
+            yield return body.DOLocalMove(originalPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
         }
 
-        yield return new WaitForSeconds(1.2f / skillAttackSpeedMultiplier);
+        yield return new WaitForSeconds(1.2f / attackSpeed.Value);
 
         canAttack = true;
     }
@@ -444,9 +465,7 @@ public class Enemy : Charactor
         popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_level_up"));
     }
 
-    public List<EnemySkill> skills = new List<EnemySkill>();
 
-    private Coroutine _checkSkillCoroutine;
 
     public void CheckUseSkill()
     {
@@ -512,8 +531,40 @@ public class Enemy : Charactor
         }
         skill.Deactivate(this);
     }
+
+
+    public void AddEffect(EnemyEffect newEffect)
+    {
+        // 이미 같은 효과가 있으면 지속시간만 초기화
+        var exist = activeEffects.FirstOrDefault(e => e.GetType() == newEffect.GetType());
+        if (exist != null)
+        {
+            exist.Duration = newEffect.Duration;
+            exist.elapsedTime = 0f;
+            // 기존 효과가 비활성화 상태라면 다시 활성화
+            if (!exist.IsActive)
+                exist.Apply(this);
+        }
+        else
+        {
+            newEffect.Apply(this);
+            activeEffects.Add(newEffect);
+        }
+    }
+
+    // Enemy.Update() 등에서 호출
+    private void UpdateEffects()
+    {
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            activeEffects[i].Tick(this, Time.deltaTime);
+            if (!activeEffects[i].IsActive)
+                activeEffects.RemoveAt(i);
+        }
+    }
 }
 
+[System.Serializable]
 public abstract class EnemySkill
 {
     public string Name;
@@ -530,6 +581,9 @@ public abstract class EnemySkill
 
 public class AttackSpeedSkill : EnemySkill
 {
+    private float speedMultiplier = 2.4f;
+    private float moveMultiplier = 2f;
+
     public AttackSpeedSkill()
     {
         Name = "AttackSpeed";
@@ -547,8 +601,8 @@ public class AttackSpeedSkill : EnemySkill
     {
         IsActive = true;
         LastUseTime = Time.time;
-        enemy.skillAttackSpeedMultiplier = 2.4f;
-        enemy.skillMoveSpeedMultiplier = 2f;
+        enemy.attackSpeed.AddMultiplier(speedMultiplier);
+        enemy.moveSpeed.AddMultiplier(moveMultiplier);
         // 기타 효과
 
         var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
@@ -574,13 +628,15 @@ public class AttackSpeedSkill : EnemySkill
     public override void Deactivate(Enemy enemy)
     {
         IsActive = false;
-        enemy.skillAttackSpeedMultiplier = 1f;
-        enemy.skillMoveSpeedMultiplier = 1f;
+        enemy.attackSpeed.RemoveMultiplier(speedMultiplier);
+        enemy.moveSpeed.RemoveMultiplier(moveMultiplier);
     }
 }
 
 public class AttackDamageSkill : EnemySkill
 {
+    private float damageMultiplier = 1.3f;
+
     public AttackDamageSkill()
     {
         Name = "AttackDamage";
@@ -598,7 +654,7 @@ public class AttackDamageSkill : EnemySkill
     {
         IsActive = true;
         LastUseTime = Time.time;
-        enemy.skillAttackDamageMultiplier = 1.3f;
+        enemy.attackPower.AddMultiplier(damageMultiplier);
         // 타격 사운드 변경 등 추가 효과는 필요시 구현
 
         var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
@@ -609,6 +665,182 @@ public class AttackDamageSkill : EnemySkill
     public override void Deactivate(Enemy enemy)
     {
         IsActive = false;
-        enemy.skillAttackDamageMultiplier = 1f;
+        enemy.attackPower.RemoveMultiplier(damageMultiplier);
+    }
+}
+
+[System.Serializable]
+public abstract class EnemyEffect
+{
+    public string Name;
+    public float Duration;
+    public float elapsedTime = 0f;
+
+    public bool IsActive { get; private set; }
+
+    public void Apply(Enemy enemy)
+    {
+        IsActive = true;
+        elapsedTime = 0f;
+        OnApply(enemy);
+    }
+
+    public void Tick(Enemy enemy, float deltaTime)
+    {
+        if (!IsActive) return;
+        elapsedTime += deltaTime;
+        OnTick(enemy, deltaTime);
+
+        if (elapsedTime >= Duration)
+        {
+            Remove(enemy);
+        }
+    }
+
+    public void Remove(Enemy enemy)
+    {
+        if (!IsActive) return;
+        IsActive = false;
+        OnRemove(enemy);
+    }
+
+    // 효과별 세부 구현
+    protected abstract void OnApply(Enemy enemy);
+    protected abstract void OnTick(Enemy enemy, float deltaTime);
+    protected abstract void OnRemove(Enemy enemy);
+}
+
+public class BleedEffect : EnemyEffect
+{
+    private float tickTimer = 0f;
+
+    public BleedEffect(float duration)
+    {
+        Name = "Bleed";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Enemy enemy)
+    {
+        tickTimer = 0f;
+        // 출혈 이펙트 등 필요시 추가
+
+        enemy.bleedParticle.GetComponent<ParticleSystem>().Play();
+    }
+
+    protected override void OnTick(Enemy enemy, float deltaTime)
+    {
+        tickTimer += deltaTime;
+        // 0.5초마다 최대 체력의 0.5% 데미지
+        while (tickTimer >= 0.5f)
+        {
+            tickTimer -= 0.5f;
+            int bleedDamage = Mathf.Max(1, Mathf.RoundToInt(enemy.MaxHp * 0.005f));
+            enemy.Hit(bleedDamage, false);
+        }
+    }
+
+    protected override void OnRemove(Enemy enemy)
+    {
+        // 출혈 종료 이펙트 등 필요시 추가
+
+        enemy.bleedParticle.GetComponent<ParticleSystem>().Stop();
+    }
+}
+
+public class FreezeEffect : EnemyEffect
+{
+    private float attackSpeedMultiplier = 0.8f;
+
+    public FreezeEffect(float duration)
+    {
+        Name = "Freeze";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Enemy enemy)
+    {
+        enemy.attackSpeed.AddMultiplier(attackSpeedMultiplier);
+    }
+
+    protected override void OnTick(Enemy enemy, float deltaTime)
+    {
+        // 별도 지속 효과 없음
+    }
+
+    protected override void OnRemove(Enemy enemy)
+    {
+        enemy.attackSpeed.RemoveMultiplier(attackSpeedMultiplier);
+    }
+}
+
+public class StunEffect : EnemyEffect
+{
+    public StunEffect(float duration)
+    {
+        Name = "Stun";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Enemy enemy)
+    {
+        // 기절 시작 시 효과 (예: 행동 불가)
+        // enemy.canAttack = false;
+        // enemy.skillMoveSpeedMultiplier = 0f;
+    }
+
+    protected override void OnTick(Enemy enemy, float deltaTime)
+    {
+        // 필요시 지속 효과
+    }
+
+    protected override void OnRemove(Enemy enemy)
+    {
+        // 기절 종료 시 효과 (예: 행동 가능)
+        // enemy.canAttack = true;
+        // enemy.skillMoveSpeedMultiplier = 1f;
+    }
+}
+
+// 출혈 5초 효과 부여
+// AddEffect(new BleedEffect(5f));
+
+// // 동상 3초 효과 부여
+
+
+// // 기절 2초 효과 부여
+// AddEffect(new StunEffect(2f));
+
+[System.Serializable]
+public class StatMultiplier
+{
+    private List<float> multipliers = new List<float>();
+
+    public float BaseValue { get; set; } = 1f;
+
+    public float Value
+    {
+        get
+        {
+            float result = BaseValue;
+            foreach (var m in multipliers)
+                result *= m;
+            return result;
+        }
+    }
+
+    public void AddMultiplier(float multiplier)
+    {
+        multipliers.Add(multiplier);
+    }
+
+    public void RemoveMultiplier(float multiplier)
+    {
+        multipliers.Remove(multiplier);
+    }
+
+    public void ClearMultipliers()
+    {
+        multipliers.Clear();
     }
 }

@@ -20,6 +20,9 @@ public class Door : Structure
 
     private Transform repair;
     private Transform energyShieldObj;
+    private Transform thornBush;
+    private Transform coolerParticle;
+
 
     private float energyShieldDuration = 4f;
     private float energyShieldCooldown = 120f;
@@ -45,6 +48,9 @@ public class Door : Structure
         repair = gameObject.FindRecursive("Repair").transform;
         energyShieldObj = gameObject.FindRecursive("EnergyShield").transform;
         energyShieldObj.gameObject.SetActive(false);
+
+        thornBush = gameObject.FindRecursive("ThornBush").transform;
+        coolerParticle = gameObject.FindRecursive("CoolerParticle").transform;
     }
 
     private void OnEnable()
@@ -179,5 +185,29 @@ public class Door : Structure
     {
         yield return new WaitForSeconds(1f);
         repair.gameObject.SetActive(false);
+    }
+
+    public void ActiveThornBush()
+    {
+        thornBush.gameObject.SetActive(true);
+    }
+
+    public void DeactiveThornBush()
+    {
+        thornBush.gameObject.SetActive(false);
+    }
+
+    public void ActiveCooler()
+    {
+        spriteRenderer.color = new Color32(61, 67, 255, 255);
+
+        coolerParticle.gameObject.SetActive(true);
+    }
+
+    public void DeactiveCooler()
+    {
+        spriteRenderer.color = Color.white;
+
+        coolerParticle.gameObject.SetActive(false);
     }
 }

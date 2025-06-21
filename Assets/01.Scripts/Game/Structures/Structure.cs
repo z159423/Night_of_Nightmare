@@ -99,11 +99,6 @@ public abstract class Structure : MonoBehaviour
         return sellValue;
     }
 
-    public void SetPlayerData(PlayerData playerData)
-    {
-        this.playerData = playerData;
-    }
-
     public void CheckUpgrade()
     {
         if (Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
