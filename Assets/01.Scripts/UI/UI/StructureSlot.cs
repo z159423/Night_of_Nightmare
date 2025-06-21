@@ -77,6 +77,8 @@ public class StructureSlot : UI_Base
         // else
         //     level = 0;
 
+        this.level = level;
+
         GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();

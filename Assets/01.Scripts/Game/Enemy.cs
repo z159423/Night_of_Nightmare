@@ -70,6 +70,7 @@ public class Enemy : Charactor
 
     public Transform bleedParticle;
     public Transform stunParticle;
+    public Transform poisonParticle;
 
 
     // Implementation of the abstract Hit() method from Charactor
@@ -134,6 +135,7 @@ public class Enemy : Charactor
 
         bleedParticle = gameObject.FindRecursive("BleedParticle").transform;
         stunParticle = gameObject.FindRecursive("StunParticle").transform;
+        poisonParticle = gameObject.FindRecursive("PoisonParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 
@@ -833,6 +835,41 @@ public class StunEffect : EnemyEffect
     {
         enemy.Agent.isStopped = false;
         enemy.stunParticle.gameObject.SetActive(false);
+    }
+}
+
+public class PoisonEffect : EnemyEffect
+{
+    private float tickTimer = 0f;
+
+    public PoisonEffect(float duration = 3f)
+    {
+        Name = "Poison";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Enemy enemy)
+    {
+        tickTimer = 0f;
+        // 필요시 이펙트 추가 (예: enemy.poisonParticle.Play();)
+        enemy.poisonParticle.GetComponent<ParticleSystem>().Play();
+    }
+
+    protected override void OnTick(Enemy enemy, float deltaTime)
+    {
+        tickTimer += deltaTime;
+        // 0.5초마다 2의 데미지
+        while (tickTimer >= 0.5f)
+        {
+            tickTimer -= 0.5f;
+            enemy.Hit(2, false);
+        }
+    }
+
+    protected override void OnRemove(Enemy enemy)
+    {
+        // 필요시 이펙트 종료 (예: enemy.poisonParticle.Stop();)
+        enemy.poisonParticle.GetComponent<ParticleSystem>().Stop();
     }
 }
 

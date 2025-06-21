@@ -132,7 +132,9 @@ public class Structure_Popup : UI_Popup
                 }
 
                 Managers.Game.playerData.BuildStructure(structure);
-                Managers.Game.selectedTile.currentStructure = structure;
+
+                if (data.structureType != Define.StructureType.MovingFrog)
+                    Managers.Game.selectedTile.currentStructure = structure;
 
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
                 Exit();

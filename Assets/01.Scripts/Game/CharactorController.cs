@@ -147,15 +147,13 @@ public class CharactorController : MonoBehaviour
 
                     if (structures != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {
-                        var structure = tiles.transform.GetComponent<Tile>().currentStructure;
-
-                        Upgrade_Popup(structure);
+                        Upgrade_Popup(structures.transform.GetComponent<Structure>());
                         //구조물 클릭시 업그레이드 팝업
                     }
 
                     void Upgrade_Popup(Structure structure)
                     {
-                        if (structure.type == Define.StructureType.Grave)
+                        if (structure.type == Define.StructureType.Grave || structure.type == Define.StructureType.Frog || structure.type == Define.StructureType.PoisonFrog)
                         {
                             var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
                             popup.GetComponent<Notification_Popup>().Init();

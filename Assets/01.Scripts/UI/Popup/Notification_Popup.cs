@@ -43,15 +43,15 @@ public class Notification_Popup : UI_Base
         image.rectTransform.anchoredPosition = Vector2.zero;
 
         // 알파값 0 -> 1 (1초)
-        canvasGroup.DOFade(1f, 0.7f).OnComplete(() =>
+        canvasGroup.DOFade(1f, 0.4f).OnComplete(() =>
         {
             // 3초 대기 후
-            DOVirtual.DelayedCall(3f, () =>
+            DOVirtual.DelayedCall(2.5f, () =>
             {
                 // y좌표 70만큼 1.5초 동안 이동 + 알파값 0으로
                 var seq = DOTween.Sequence();
-                seq.Join(image.rectTransform.DOAnchorPosY(100f, 1.2f));
-                seq.Join(canvasGroup.DOFade(0f, 1.2f));
+                seq.Join(image.rectTransform.DOAnchorPosY(100f, 0.6f));
+                seq.Join(canvasGroup.DOFade(0f, 0.6f));
                 seq.OnComplete(() => Exit());
             });
         });
