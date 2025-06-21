@@ -15,10 +15,16 @@ MonoBehaviour:
   category: 0
   structureType: 14
   icon: {fileID: 21300000, guid: 085f97b6ec8d24f448fd138df8e0a238, type: 3}
+  baseStructure: 0
+  sellable: 1
+  onlyOnePurcahse: 1
   nameKey: global.str_guillotine_name
   descriptionKey: global.str_guillotine_desc
   upgradeCoin: 00080000
-  upgradeEnergy: 
+  upgradeEnergy: 00000000
   purcahseLimit: -1
   argment1: []
   argment2: []
+  requireStructures: []
+  sprite1: []
+  sprite2: []

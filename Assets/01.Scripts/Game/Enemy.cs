@@ -186,9 +186,17 @@ public class Enemy : Charactor
         if (gameObject == null)
             return;
 
-        // Stun 상태면 아무것도 하지 않음
+        // Stun 상태면 이동 및 행동 금지
         if (IsStunned)
+        {
+            // NavMeshAgent 즉시 멈춤
+            if (agent != null)
+            {
+                agent.isStopped = true;
+                agent.velocity = Vector3.zero;
+            }
             return;
+        }
 
         if (enemyState == EnemyState.Heal && targetHealZone != null && Vector2.Distance(targetHealZone.transform.position, transform.position) < 1.5f)
         {
@@ -211,7 +219,9 @@ public class Enemy : Charactor
         else if (currentTarget != null && currentTarget.playerData.room == null && enemyState == EnemyState.Chase)
         {
             if (agent != null && agent.isOnNavMesh)
+            {
                 agent.SetDestination(currentTarget.transform.position);
+            }
         }
         else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
         {
@@ -249,6 +259,9 @@ public class Enemy : Charactor
         {
             if (IsStunned)
             {
+                // NavMeshAgent 즉시 멈춤
+                agent.isStopped = true;
+                agent.velocity = Vector3.zero;
                 yield return new WaitForSeconds(0.2f);
                 continue;
             }
@@ -809,27 +822,16 @@ public class StunEffect : EnemyEffect
 
     protected override void OnApply(Enemy enemy)
     {
-        // 이동 즉시 멈춤
-        if (enemy.TryGetComponent<NavMeshAgent>(out var agent))
-        {
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-        }
+        enemy.Agent.isStopped = true;
+        enemy.Agent.velocity = Vector3.zero;
         enemy.stunParticle.gameObject.SetActive(true);
     }
 
-    protected override void OnTick(Enemy enemy, float deltaTime)
-    {
-        // 필요시 지속 효과
-    }
+    protected override void OnTick(Enemy enemy, float deltaTime) { }
 
     protected override void OnRemove(Enemy enemy)
     {
-        // 이동 재개
-        if (enemy.TryGetComponent<NavMeshAgent>(out var agent))
-        {
-            agent.isStopped = false;
-        }
+        enemy.Agent.isStopped = false;
         enemy.stunParticle.gameObject.SetActive(false);
     }
 }

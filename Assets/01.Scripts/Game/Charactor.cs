@@ -13,6 +13,7 @@ public abstract class Charactor : MonoBehaviour
     protected SpriteRenderer bodySpriteRenderer;
 
     protected NavMeshAgent agent;
+    public NavMeshAgent Agent => agent;
 
     protected virtual void Start()
     {
