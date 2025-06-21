@@ -20,7 +20,6 @@ public class SpellBlocker : Structure
         base.Start();
 
         blockerDeco = gameObject.FindRecursive("Blocker");
-
     }
 
     /// <summary>

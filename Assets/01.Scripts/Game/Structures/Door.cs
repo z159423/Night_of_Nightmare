@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -15,8 +16,14 @@ public class Door : Structure
 
     public bool isClose = false;
 
-    private Transform repair;
+    public bool energyShield = false;
 
+    private Transform repair;
+    private Transform energyShieldObj;
+
+    private float energyShieldDuration = 4f;
+    private float energyShieldCooldown = 120f;
+    private float lastEnergyShieldTime = -999f;
 
     protected override void Start()
     {
@@ -36,6 +43,8 @@ public class Door : Structure
         Hp = MaxHp;
 
         repair = gameObject.FindRecursive("Repair").transform;
+        energyShieldObj = gameObject.FindRecursive("EnergyShield").transform;
+        energyShieldObj.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -68,6 +77,25 @@ public class Door : Structure
         }
     }
 
+    private void ActivateEnergyShield()
+    {
+        energyShield = true;
+        lastEnergyShieldTime = Time.time;
+        if (energyShieldObj != null)
+            energyShieldObj.gameObject.SetActive(true);
+
+        energyShieldObj.GetComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
+        StartCoroutine(EnergyShieldDurationRoutine());
+    }
+
+    private IEnumerator EnergyShieldDurationRoutine()
+    {
+        yield return new WaitForSeconds(energyShieldDuration);
+        energyShield = false;
+        if (energyShieldObj != null)
+            energyShieldObj.gameObject.SetActive(false);
+    }
+
     public void CloseDoor()
     {
         isClose = true;
@@ -87,6 +115,22 @@ public class Door : Structure
 
     public override void Hit(int damage)
     {
+        // 에너지 쉴드가 활성화 중이면 데미지 무시
+        if (energyShield)
+        {
+            ShowHpBar();
+            return;
+        }
+
+        // 에너지 쉴드 발동 조건 체크
+        if (!energyShield && Time.time - lastEnergyShieldTime >= energyShieldCooldown && playerData.structures.Any(n => n.type == Define.StructureType.EnergyShield))
+        {
+            if ((float)Hp / MaxHp <= 0.3f)
+            {
+                ActivateEnergyShield();
+            }
+        }
+
         base.Hit(damage);
 
         ShowHpBar();
