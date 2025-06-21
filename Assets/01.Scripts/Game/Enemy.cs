@@ -69,6 +69,8 @@ public class Enemy : Charactor
     public float baseMoveSpeed = 4f;
 
     public Transform bleedParticle;
+    public Transform stunParticle;
+
 
     // Implementation of the abstract Hit() method from Charactor
 
@@ -131,6 +133,7 @@ public class Enemy : Charactor
         nameText = gameObject.FindRecursive("NameText").GetComponent<TextMeshPro>();
 
         bleedParticle = gameObject.FindRecursive("BleedParticle").transform;
+        stunParticle = gameObject.FindRecursive("StunParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 
@@ -163,7 +166,6 @@ public class Enemy : Charactor
         //     case Define.EnemyType.SlanderMan:
         //         enemyType = Define.EnemyType.SlanderMan;
         //         skills.Add(new SlanderManSkill());
-        //         break;
         // }
 
         CheckUseSkill();
@@ -182,6 +184,10 @@ public class Enemy : Charactor
         base.Update();
         UpdateEffects();
         if (gameObject == null)
+            return;
+
+        // Stun 상태면 아무것도 하지 않음
+        if (IsStunned)
             return;
 
         if (enemyState == EnemyState.Heal && targetHealZone != null && Vector2.Distance(targetHealZone.transform.position, transform.position) < 1.5f)
@@ -241,6 +247,12 @@ public class Enemy : Charactor
 
         while (true)
         {
+            if (IsStunned)
+            {
+                yield return new WaitForSeconds(0.2f);
+                continue;
+            }
+
             if (enemyState != EnemyState.Heal)
                 if (hp < MaxHp * 0.2f && currentCheckHpTime > checkHpTime)
                 {
@@ -383,6 +395,9 @@ public class Enemy : Charactor
 
     public IEnumerator Attack()
     {
+        if (IsStunned)
+            yield break;
+
         canAttack = false;
         currentExp++;
 
@@ -478,6 +493,13 @@ public class Enemy : Charactor
     {
         while (true)
         {
+            // Stun 상태면 스킬 사용 불가
+            if (IsStunned)
+            {
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
+
             // 하나라도 스킬이 사용 중이면 아무것도 하지 않음
             if (skills.Any(skill => skill.IsActive))
             {
@@ -562,6 +584,9 @@ public class Enemy : Charactor
                 activeEffects.RemoveAt(i);
         }
     }
+
+    // Stun 상태 확인용 프로퍼티 추가
+    public bool IsStunned => activeEffects.Any(e => e is StunEffect && e.IsActive);
 }
 
 [System.Serializable]
@@ -587,7 +612,7 @@ public class AttackSpeedSkill : EnemySkill
     public AttackSpeedSkill()
     {
         Name = "AttackSpeed";
-        MinLevel = 3;
+        MinLevel = 2;
         Cooldown = 15f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
         Duration = 4f;
     }
@@ -640,7 +665,7 @@ public class AttackDamageSkill : EnemySkill
     public AttackDamageSkill()
     {
         Name = "AttackDamage";
-        MinLevel = 5;
+        MinLevel = 4;
         Cooldown = 20f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
         Duration = 7f;
     }
@@ -784,9 +809,13 @@ public class StunEffect : EnemyEffect
 
     protected override void OnApply(Enemy enemy)
     {
-        // 기절 시작 시 효과 (예: 행동 불가)
-        // enemy.canAttack = false;
-        // enemy.skillMoveSpeedMultiplier = 0f;
+        // 이동 즉시 멈춤
+        if (enemy.TryGetComponent<NavMeshAgent>(out var agent))
+        {
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+        }
+        enemy.stunParticle.gameObject.SetActive(true);
     }
 
     protected override void OnTick(Enemy enemy, float deltaTime)
@@ -796,9 +825,12 @@ public class StunEffect : EnemyEffect
 
     protected override void OnRemove(Enemy enemy)
     {
-        // 기절 종료 시 효과 (예: 행동 가능)
-        // enemy.canAttack = true;
-        // enemy.skillMoveSpeedMultiplier = 1f;
+        // 이동 재개
+        if (enemy.TryGetComponent<NavMeshAgent>(out var agent))
+        {
+            agent.isStopped = false;
+        }
+        enemy.stunParticle.gameObject.SetActive(false);
     }
 }
 

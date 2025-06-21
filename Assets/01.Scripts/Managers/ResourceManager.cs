@@ -134,7 +134,7 @@ public class ResourceManager : MonoBehaviour
 
     public Sprite GetEnemyImage(int id)
     {
-        return Resources.Load<Sprite>($"Enemy/spr_enemy_{id}");
+        return Resources.Load<Sprite>($"Enemy/resized_spr_enemy_{id}");
     }
 
     public StructureData GetStructureData(Define.StructureType type)
