@@ -151,7 +151,8 @@ public class Define
         Ore,
         Guard,
         Trap,
-        Buff
+        Buff,
+        Lamp
     }
 
     public enum StructureType
@@ -174,6 +175,23 @@ public class Define
         Telescope,
         SatelliteAntenna,
         TurretBooster,
+
+        Sheep,
+        GraveYard,
+        Frog,
+        MovingFrog,
+        PoisonFrog,
+        GoldenFrog,
+        SilverMirror,
+        GoldenMirror,
+        Axe,
+        GoldenAxe,
+        MoneyBag,
+        Battery,
+        FlowerPot,
+        LushFlowerPot,
+        AutoTurret,
+        GoldenTurret,
 
         Bed = 100,
         Door = 101
