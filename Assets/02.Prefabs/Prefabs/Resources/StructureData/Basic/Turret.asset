@@ -15,8 +15,10 @@ MonoBehaviour:
   category: 0
   structureType: 0
   icon: {fileID: 21300000, guid: 27b1e5a85559a2940a51d285f693829a, type: 3}
+  lampProp: 7
   baseStructure: 0
   sellable: 1
+  onlyOnePurcahse: 0
   nameKey: global.str_tower_name
   descriptionKey: global.str_desc_atk_dmg
   upgradeCoin: 08000000100000002b00000056000000ac000000c201000084030000920900002e1300005c2600009853000010a400003498010000000000

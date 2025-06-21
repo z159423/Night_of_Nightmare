@@ -132,8 +132,9 @@ public class CharactorController : MonoBehaviour
                     {
                         if (tiles.transform.GetComponent<Tile>().currentStructure != null)
                         {
-                            var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
-                            popup.Setting(tiles.transform.GetComponent<Tile>().currentStructure);
+                            var structure = tiles.transform.GetComponent<Tile>().currentStructure;
+
+                            Upgrade_Popup(structure);
                         }
                         else
                         {
@@ -146,9 +147,25 @@ public class CharactorController : MonoBehaviour
 
                     if (structures != default(RaycastHit2D) && Managers.UI._currentPopup == null)
                     {
-                        var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
-                        popup.Setting(structures.transform.GetComponent<Structure>());
+                        var structure = tiles.transform.GetComponent<Tile>().currentStructure;
+
+                        Upgrade_Popup(structure);
                         //구조물 클릭시 업그레이드 팝업
+                    }
+
+                    void Upgrade_Popup(Structure structure)
+                    {
+                        if (structure.type == Define.StructureType.Grave)
+                        {
+                            var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
+                            popup.GetComponent<Notification_Popup>().Init();
+                            popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_build_max_toast"));
+                        }
+                        else
+                        {
+                            var popup = Managers.UI.ShowPopupUI<Upgrade_Popup>();
+                            popup.Setting(structure.transform.GetComponent<Structure>());
+                        }
                     }
                 }
                 isDragging = false;

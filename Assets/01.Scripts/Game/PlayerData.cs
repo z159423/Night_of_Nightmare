@@ -90,6 +90,12 @@ public class PlayerData
             coin += (int)Managers.Game.GetStructureData(StructureType.Sheep).argment1[deadPlayerCount];
         }
 
+        foreach (var sheep in structures.Where(n => n.type == Define.StructureType.Grave).ToList())
+        {
+            sheep.GetComponent<Grave>().ResourceGetParticle((int)Managers.Game.GetStructureData(StructureType.Grave).argment1[0]);
+            coin += (int)Managers.Game.GetStructureData(StructureType.Grave).argment1[0];
+        }
+
         AddCoin(coin);
         AddEnergy(energy);
     }

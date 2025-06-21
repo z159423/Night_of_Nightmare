@@ -271,7 +271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177083
-    m_Localized: Upgrades the door.\nCan only be used once!
+    m_Localized: Upgrades the door.<br>Can only be used once!
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177084
@@ -327,7 +327,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177097
-    m_Localized: '30% chance to cancel enemy skill\nCooldown: 30 sec'
+    m_Localized: '30% chance to cancel enemy skill<br>Cooldown: 30 sec'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177098
@@ -335,8 +335,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177099
-    m_Localized: 'Grants invincibility for 3 sec when door HP is low\nCooldown: 120
-      sec'
+    m_Localized: 'Grants invincibility for 3 sec when door HP is low<br>Cooldown:
+      120 sec'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177100
@@ -360,7 +360,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177105
-    m_Localized: 'Snares enemy for 2 sec if HP is 20% or less\nCooldown: 120 sec'
+    m_Localized: 'Snares enemy for 2 sec if HP is 20% or less<br>Cooldown: 120 sec'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177106
@@ -376,7 +376,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177109
-    m_Localized: 'Deals 10% max HP\nif HP is 20% or less Cooldown: 120 sec'
+    m_Localized: 'Deals 10% max HP<br>if HP is 20% or less Cooldown: 120 sec'
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177110
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177116
-    m_Localized: Golden\nFrog @1
+    m_Localized: Golden<br>Frog
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177117
@@ -420,7 +420,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177120
-    m_Localized: "Throws an axe dealing @2% max HP if enemy HP \u2264 @1%\\n(Infinite
+    m_Localized: "Throws an axe dealing @2% max HP if enemy HP \u2264 @1%<br>(Infinite
       range)"
     m_Metadata:
       m_Items: []
@@ -433,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177123
-    m_Localized: Deals @1% max HP damage per sec\n(Infinite range)
+    m_Localized: Deals @1% max HP damage per sec<br>(Infinite range)
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177124
@@ -465,7 +465,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177131
-    m_Localized: Generates gold every second.\nMore gold when allies die
+    m_Localized: Generates gold every second.<br>More gold when allies die
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177132
@@ -609,23 +609,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177167
-    m_Localized: Install 2 turrets\nfor free
+    m_Localized: Install 2 turrets<br>for free
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177168
-    m_Localized: Install 1 repair station\nfor free
+    m_Localized: Install 1 repair station<br>for free
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177169
-    m_Localized: Install 1 lamp\nfor free
+    m_Localized: Install 1 lamp<br>for free
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177170
-    m_Localized: 10% discount on\nall minerals
+    m_Localized: 10% discount on<br>all minerals
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177171
-    m_Localized: 10% discount on all generators\nStart with 10 energy
+    m_Localized: 10% discount on all generators<br>Start with 10 energy
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177172
@@ -657,7 +657,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177179
-    m_Localized: Do you want to give up\nand leave the game?
+    m_Localized: Do you want to give up<br>and leave the game?
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177180
@@ -713,7 +713,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177193
-    m_Localized: Stuns the enemy for\n@1 seconds and deals @2% \nof max HP as damage
+    m_Localized: Stuns the enemy for<br>@1 seconds and deals @2% <br>of max HP as
+      damage
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177194
@@ -721,7 +722,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177195
-    m_Localized: Makes the door invincible\nfor @1 seconds
+    m_Localized: Makes the door invincible<br>for @1 seconds
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177196
@@ -729,7 +730,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177197
-    m_Localized: Turret attack speed is\ndoubled for @1 seconds
+    m_Localized: Turret attack speed is<br>doubled for @1 seconds
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177198

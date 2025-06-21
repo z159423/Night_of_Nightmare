@@ -177,7 +177,7 @@ public class Define
         TurretBooster,
 
         Sheep,
-        GraveYard,
+        Grave,
         Frog,
         MovingFrog,
         PoisonFrog,

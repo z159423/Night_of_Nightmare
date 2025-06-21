@@ -80,7 +80,10 @@ public class Upgrade_Popup : UI_Popup
 
         if (!canUpgrade)
         {
-            upgradeSlot.gameObject.SetActive(false);
+            // upgradeSlot.gameObject.SetActive(false);
+
+            upgradeSlot.Init();
+            upgradeSlot.Setting(data, null, structure.level, structure);
         }
         else
         {
@@ -93,7 +96,7 @@ public class Upgrade_Popup : UI_Popup
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
 
                 Exit();
-            }, true, structure);
+            }, structure.level + 1, structure);
         }
 
         OpenAnimation();

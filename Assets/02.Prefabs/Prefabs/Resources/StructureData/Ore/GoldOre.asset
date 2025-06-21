@@ -15,8 +15,10 @@ MonoBehaviour:
   category: 0
   structureType: 6
   icon: {fileID: 21300000, guid: 173488037e7d4414280700aabd8ea543, type: 3}
+  lampProp: 4
   baseStructure: 0
   sellable: 1
+  onlyOnePurcahse: 0
   nameKey: global.str_mineral_name
   descriptionKey: global.str_desc_produce_gold
   upgradeCoin: 0000000000000000

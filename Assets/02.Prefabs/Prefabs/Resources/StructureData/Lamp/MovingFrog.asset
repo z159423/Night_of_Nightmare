@@ -15,6 +15,7 @@ MonoBehaviour:
   category: 5
   structureType: 21
   icon: {fileID: 21300000, guid: a6487536338e4ab4993f5ca8700561f7, type: 3}
+  lampProp: 4
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0

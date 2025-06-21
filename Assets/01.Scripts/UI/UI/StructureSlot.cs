@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using System.Linq;
 using UnityEditor.Localization.Plugins.XLIFF.V20;
+using DG.Tweening.Core.Easing;
 
 public class StructureSlot : UI_Base
 {
@@ -64,23 +65,27 @@ public class StructureSlot : UI_Base
         });
     }
 
-    public void Setting(StructureData data, Action onPurcahse, bool upgrade = false, Structure selectedStructure = null)
+    public void Setting(StructureData data, Action onPurcahse, int level, Structure selectedStructure = null)
     {
         _data = data;
 
-        if (upgrade)
-        {
-            var currentStructure = selectedStructure;
-            level = currentStructure != null ? currentStructure.level + 1 : 0;
-        }
-        else
-            level = 0;
+        // if (upgrade)
+        // {
+        //     var currentStructure = selectedStructure;
+        //     level = currentStructure != null ? currentStructure.level + 1 : 0;
+        // }
+        // else
+        //     level = 0;
 
-        GetTextMesh(Texts.NameText).text = GetName();
+        GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();
 
-        if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
+        if (onPurcahse == null)
+        {
+            GetButton(Buttons.Button).gameObject.SetActive(false);
+        }
+        else if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
         {
 
         }
