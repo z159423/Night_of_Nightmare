@@ -175,7 +175,7 @@ public class Enemy : Charactor
 
         if (enemyState == EnemyState.Heal && targetHealZone != null && Vector2.Distance(targetHealZone.transform.position, transform.position) < 1.5f)
         {
-            hp += MaxHp * 0.00014f; // Heal 0.14% of MaxHp per frame
+            hp += MaxHp * 0.00030f; // Heal 0.14% of MaxHp per frame
 
             hp = Mathf.Clamp(hp, 0, MaxHp); // Ensure hp does not exceed MaxHp
 
@@ -466,6 +466,27 @@ public class Enemy : Charactor
                 continue;
             }
 
+            // Attack이 가능할 정도로 가까울 때만 스킬 사용 (currentTarget 기준)
+            bool canAttackRange = false;
+            if (currentTarget != null && currentTarget.playerData.room == null)
+            {
+                float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
+                if (distanceToTarget < 1f) // 기존 공격 가능 거리와 동일하게
+                    canAttackRange = true;
+            }
+            else if (currentTargetStructure != null)
+            {
+                float distanceToTarget = Vector2.Distance(transform.position, currentTargetStructure.transform.position);
+                if (distanceToTarget < 1f)
+                    canAttackRange = true;
+            }
+
+            if (!canAttackRange)
+            {
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
+
             foreach (var skill in skills)
             {
                 if (skill.CanUse(this))
@@ -481,7 +502,14 @@ public class Enemy : Charactor
 
     private IEnumerator SkillDurationRoutine(EnemySkill skill)
     {
-        yield return new WaitForSeconds(skill.Duration);
+        float timer = 0f;
+        while (timer < skill.Duration)
+        {
+            if (!skill.IsActive) // 중간에 꺼졌으면 즉시 종료
+                yield break;
+            timer += Time.deltaTime;
+            yield return null;
+        }
         skill.Deactivate(this);
     }
 }
@@ -526,6 +554,21 @@ public class AttackSpeedSkill : EnemySkill
         var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
         popup.GetComponent<Notification_Popup>().Init();
         popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_spd_skill"));
+
+        //근처에 spellBlocker가 있는지 확인
+
+        Managers.Game.charactors
+            .Where(n => n.currentActiveRoom != null && n.playerData != null)
+            .ToList()
+            .ForEach(n =>
+            {
+                var spellBlocker = n.playerData.structures
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
+                {
+                    sb.TryCastSpellBlock(enemy, () => Deactivate(enemy));
+                }
+            });
     }
 
     public override void Deactivate(Enemy enemy)
