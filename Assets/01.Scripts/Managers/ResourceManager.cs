@@ -145,7 +145,8 @@ public class ResourceManager : MonoBehaviour
             Define.StructureCategory.Buff,
             Define.StructureCategory.Guard,
             Define.StructureCategory.Ore,
-            Define.StructureCategory.Trap
+            Define.StructureCategory.Trap,
+            Define.StructureCategory.Lamp
         };
 
         foreach (var category in categories)

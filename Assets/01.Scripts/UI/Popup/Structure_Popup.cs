@@ -14,7 +14,8 @@ public class Structure_Popup : UI_Popup
         Ore,
         Guard,
         Trap,
-        Buff
+        Buff,
+        Lamp
     }
 
     enum Buttons
@@ -24,7 +25,8 @@ public class Structure_Popup : UI_Popup
         GuardBtn,
         TrapBtn,
         BuffBtn,
-        ExitBtn
+        ExitBtn,
+        LampBtn
     }
 
     enum Images
@@ -38,7 +40,8 @@ public class Structure_Popup : UI_Popup
         OreText,
         GuardText,
         TrapText,
-        BuffText
+        BuffText,
+        LampText
     }
 
     private VerticalLayoutGroup layout;
@@ -75,6 +78,7 @@ public class Structure_Popup : UI_Popup
         GetButton(Buttons.GuardBtn).AddButtonEvent(() => SelectTap(TapTypes.Guard));
         GetButton(Buttons.TrapBtn).AddButtonEvent(() => SelectTap(TapTypes.Trap));
         GetButton(Buttons.BuffBtn).AddButtonEvent(() => SelectTap(TapTypes.Buff));
+        GetButton(Buttons.LampBtn).AddButtonEvent(() => SelectTap(TapTypes.Lamp));
 
         GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
     }

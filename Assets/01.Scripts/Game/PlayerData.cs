@@ -82,6 +82,14 @@ public class PlayerData
             ore.GetComponent<Ore>().ResourceGetParticle((int)Managers.Game.GetStructureData(ore.type).argment1[ore.level]);
         }
 
+        var deadPlayerCount = Managers.Game.charactors.Count(n => n.die);
+
+        foreach (var sheep in structures.Where(n => n.type == Define.StructureType.Sheep).ToList())
+        {
+            sheep.GetComponent<Sheep>().ResourceGetParticle((int)Managers.Game.GetStructureData(StructureType.Sheep).argment1[deadPlayerCount]);
+            coin += (int)Managers.Game.GetStructureData(StructureType.Sheep).argment1[deadPlayerCount];
+        }
+
         AddCoin(coin);
         AddEnergy(energy);
     }

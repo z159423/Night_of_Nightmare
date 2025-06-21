@@ -36,6 +36,7 @@ public class StructureDataEditor : Editor
 
         EditorGUILayout.PropertyField(so.FindProperty("nameKey"));
         EditorGUILayout.PropertyField(so.FindProperty("descriptionKey"));
+        EditorGUILayout.PropertyField(so.FindProperty("lampProp"), true);
         EditorGUILayout.PropertyField(so.FindProperty("baseStructure"));
         EditorGUILayout.PropertyField(so.FindProperty("upgradeCoin"), true);
         EditorGUILayout.PropertyField(so.FindProperty("upgradeEnergy"), true);

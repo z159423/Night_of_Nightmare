@@ -12,6 +12,8 @@ public class StructureData : ScriptableObject
     public StructureType structureType;
 
     public Sprite icon;
+
+    public float lampProp;
     public bool baseStructure = false;
     public bool sellable = true;
     public bool onlyOnePurcahse = false;

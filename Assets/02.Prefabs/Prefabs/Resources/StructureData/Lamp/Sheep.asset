@@ -30,6 +30,8 @@ MonoBehaviour:
   - 8
   - 16
   - 32
+  - 32
+  - 32
   argment2: []
   requireStructures: []
   sprite1:
