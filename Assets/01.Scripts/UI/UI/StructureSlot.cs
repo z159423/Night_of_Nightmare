@@ -16,6 +16,8 @@ public class StructureSlot : UI_Base
         BedIcon3,
         TurretIcon1,
         TurretIcon2,
+        AutoTurretIcon1,
+        AutoTurretIcon2,
         CoinSlot,
         EnergySlot
     }
@@ -35,7 +37,7 @@ public class StructureSlot : UI_Base
         Button
     }
 
-    Transform BedIcons, TurretIcons;
+    Transform BedIcons, TurretIcons, AutoTurretIcon;
 
     bool _init = false;
 
@@ -164,6 +166,7 @@ public class StructureSlot : UI_Base
 
         BedIcons = gameObject.FindRecursive("BedIcons").transform;
         TurretIcons = gameObject.FindRecursive("TurretIcon").transform;
+        AutoTurretIcon = gameObject.FindRecursive("AutoTurretIcon").transform;
     }
 
     void OnDisable()
@@ -229,6 +232,11 @@ public class StructureSlot : UI_Base
                 desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString(), _data.argment2[level].ToString());
                 break;
 
+            case Define.StructureType.AutoTurret:
+            case Define.StructureType.GoldenTurret:
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString()) + "<br>" + Managers.Localize.GetDynamicText("global.str_desc_atk_range", "10.5");
+                break;
+
             default:
                 desc = Managers.Localize.GetText(_data.descriptionKey);
                 break;
@@ -252,12 +260,19 @@ public class StructureSlot : UI_Base
         GetImage(Images.DefaultIcon).gameObject.SetActive(false);
         BedIcons.gameObject.SetActive(false);
         TurretIcons.gameObject.SetActive(false);
+        AutoTurretIcon.gameObject.SetActive(false);
 
         if (_data.structureType == Define.StructureType.Turret)
         {
             TurretIcons.gameObject.SetActive(true);
             GetImage(Images.TurretIcon1).sprite = _data.sprite1[level];
             GetImage(Images.TurretIcon2).sprite = _data.sprite2[level];
+        }
+        else if (_data.structureType == Define.StructureType.AutoTurret || _data.structureType == Define.StructureType.GoldenTurret)
+        {
+            AutoTurretIcon.gameObject.SetActive(true);
+            GetImage(Images.AutoTurretIcon1).sprite = _data.sprite1[0];
+            GetImage(Images.AutoTurretIcon2).sprite = _data.sprite2[0];
         }
         else if (_data.structureType == Define.StructureType.Bed)
         {

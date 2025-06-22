@@ -8,7 +8,7 @@ public class Turret : Structure
 {
     public Enemy target;
     public readonly float attackRange = 4f;
-    public readonly float attackCooldown = 1f;
+    protected float attackCooldown = 1f;
     private float lastAttackTime;
 
     GameObject body;
@@ -47,7 +47,7 @@ public class Turret : Structure
         }
     }
 
-    private void Attack()
+    protected virtual void Attack()
     {
         if (target == null) return;
 
@@ -63,12 +63,21 @@ public class Turret : Structure
         float bulletSpeed = 10f;
         StartCoroutine(BulletFollowTarget(bullet, target, bulletSpeed));
 
-        var coin = playerData.structures.Where(n => n.type == Define.StructureType.GoldenChest);
+        var goldenChest = playerData.structures.Where(n => n.type == Define.StructureType.GoldenChest);
 
-        if (coin.Count() > 0)
+        int coinValue = 0;
+
+        if (this is GoldenTurret)
         {
-            playerData.AddCoin(coin.Count());
-            ResourceGetParticle(coin.Count());
+            coinValue += (int)Managers.Game.GetStructureData(Define.StructureType.GoldenTurret).argment2[level];
+        }
+
+        coinValue += goldenChest.Count();
+
+        if (coinValue > 0)
+        {
+            playerData.AddCoin(coinValue);
+            ResourceGetParticle(coinValue);
         }
     }
 
@@ -105,8 +114,11 @@ public class Turret : Structure
         base.Upgrade();
         var data = Managers.Resource.GetStructureData(type);
 
-        body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
-        head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];
+        if (this is not AutoTurret || this is not GoldenTurret)
+        {
+            body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
+            head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];
+        }
     }
 
     public void ResourceGetParticle(int value)
@@ -129,7 +141,7 @@ public class Turret : Structure
         return range;
     }
 
-    public float GetAttackSpeed()
+    public virtual float GetAttackSpeed()
     {
         float coolDown = attackCooldown;
 
