@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using VHierarchy.Libs;
+using System.Linq;
 
 public abstract class Structure : MonoBehaviour
 {
+    public List<StructureEffect> activeEffects = new List<StructureEffect>();
+
     [SerializeField] protected SpriteRenderer spriteRenderer;
     protected GameObject upgradeIcon;
     protected Transform hpBar;
@@ -59,6 +62,11 @@ public abstract class Structure : MonoBehaviour
         {
             CheckUpgrade();
         });
+    }
+
+    protected virtual void Update()
+    {
+        UpdateEffects();
     }
 
     public virtual void Upgrade()
@@ -144,6 +152,112 @@ public abstract class Structure : MonoBehaviour
         {
             playerData.structures.Remove(this);
             GetComponentInParent<Tile>().currentStructure = null;
+        }
+    }
+
+    public void AddEffect(StructureEffect newEffect)
+    {
+        // 이미 같은 효과가 있으면 지속시간만 초기화
+        var exist = activeEffects.FirstOrDefault(e => e.GetType() == newEffect.GetType());
+        if (exist != null)
+        {
+            exist.Duration = newEffect.Duration;
+            exist.elapsedTime = 0f;
+            // 기존 효과가 비활성화 상태라면 다시 활성화
+            if (!exist.IsActive)
+                exist.Apply(this);
+        }
+        else
+        {
+            newEffect.Apply(this);
+            activeEffects.Add(newEffect);
+        }
+    }
+
+    // Enemy.Update() 등에서 호출
+    private void UpdateEffects()
+    {
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            activeEffects[i].Tick(this, Time.deltaTime);
+            if (!activeEffects[i].IsActive)
+                activeEffects.RemoveAt(i);
+        }
+    }
+}
+
+[System.Serializable]
+public abstract class StructureEffect
+{
+    public string Name;
+    public float Duration;
+    public float elapsedTime = 0f;
+
+    public bool IsActive { get; private set; }
+
+    public void Apply(Structure enemy)
+    {
+        IsActive = true;
+        elapsedTime = 0f;
+        OnApply(enemy);
+    }
+
+    public void Tick(Structure enemy, float deltaTime)
+    {
+        if (!IsActive) return;
+        elapsedTime += deltaTime;
+        OnTick(enemy, deltaTime);
+
+        if (elapsedTime >= Duration)
+        {
+            Remove(enemy);
+        }
+    }
+
+    public void Remove(Structure enemy)
+    {
+        if (!IsActive) return;
+        IsActive = false;
+        OnRemove(enemy);
+    }
+
+    // 효과별 세부 구현
+    protected abstract void OnApply(Structure enemy);
+    protected abstract void OnTick(Structure enemy, float deltaTime);
+    protected abstract void OnRemove(Structure enemy);
+}
+
+public class CreepylaughterEffect : StructureEffect
+{
+    private float tickTimer = 0f;
+
+    private GameObject effectObj;
+
+    public CreepylaughterEffect(float duration)
+    {
+        Name = "CreepylaughterEffect";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Structure structure)
+    {
+        tickTimer = 0f;
+
+        effectObj = Managers.Resource.Instantiate("CreepylaughterEffect", structure.transform);
+        effectObj.transform.localPosition = new Vector3(0, 0.1f, 0);
+    }
+
+    protected override void OnTick(Structure structure, float deltaTime)
+    {
+        tickTimer += deltaTime;
+    }
+
+    protected override void OnRemove(Structure structure)
+    {
+        if (effectObj != null)
+        {
+            Managers.Resource.Destroy(effectObj);
+            effectObj = null;
         }
     }
 }

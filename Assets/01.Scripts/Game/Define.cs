@@ -404,6 +404,19 @@ public class Define
         7500000
     };
 
+    public static int GetEnemyMaxHp(EnemyType type, int level)
+    {
+        switch (type)
+        {
+            case EnemyType.TungTungTung:
+                return Mathf.RoundToInt(enemyHp[level] * 0.8f);
+            case EnemyType.Tralalero:
+                return Mathf.RoundToInt(enemyHp[level] * 0.9f);
+            default:
+                return enemyHp[level];
+        }
+    }
+
     public static int[] enemyDamage = new int[]
     {
         2,
@@ -420,6 +433,19 @@ public class Define
         1800,
         10000
     };
+
+    public static int GetEnemyDamage(EnemyType type, int level)
+    {
+        switch (type)
+        {
+            case EnemyType.TungTungTung:
+                return Mathf.RoundToInt(enemyDamage[level] * 1.2f);
+            case EnemyType.Tralalero:
+                return Mathf.RoundToInt(enemyDamage[level] * 1.1f);
+            default:
+                return enemyDamage[level];
+        }
+    }
 
     public static int[] enemyExp = new int[]
     {

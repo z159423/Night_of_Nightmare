@@ -32,8 +32,9 @@ public class GoldenFrog : Structure
         flyRoutine = StartCoroutine(SpawnFliesRoutine());
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (lineRenderer != null && mouth != null && tongue != null)
         {
             lineRenderer.SetPosition(0, mouth.position);

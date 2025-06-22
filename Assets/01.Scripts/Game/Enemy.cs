@@ -7,6 +7,8 @@ using UnityEngine.AI;
 using TMPro;
 using UnityEngine.UI;
 using VInspector;
+using static EnemySkill;
+using static EnemyEffect;
 
 public class Enemy : Charactor
 {
@@ -30,7 +32,6 @@ public class Enemy : Charactor
     public float hp = 100;
     public int level = 0;
     public int currentExp = 0;
-    public int damage = 0;
 
     public PlayerableCharactor currentTarget;
     public Structure currentTargetStructure;
@@ -72,8 +73,11 @@ public class Enemy : Charactor
     public Transform stunParticle;
     public Transform poisonParticle;
     public Transform mirrorParticle;
+    public Transform creepylaughterParticle;
 
 
+    public Transform sickle;
+    public bool activeSickle = false;
 
     // Implementation of the abstract Hit() method from Charactor
 
@@ -120,8 +124,10 @@ public class Enemy : Charactor
         }
     }
 
-    public void Setting()
+    public void Setting(Define.EnemyType type)
     {
+        enemyType = type;
+        
         SetBodySkin();
 
         transform.localPosition = Vector3.zero;
@@ -139,20 +145,24 @@ public class Enemy : Charactor
         stunParticle = gameObject.FindRecursive("StunParticle").transform;
         poisonParticle = gameObject.FindRecursive("PoisonParticle").transform;
         mirrorParticle = gameObject.FindRecursive("MirrorParticle").transform;
+        creepylaughterParticle = gameObject.FindRecursive("CreepylaughterParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 
-        MaxHp = Define.enemyHp[level];
+        MaxHp = Define.GetEnemyMaxHp(enemyType, level);
         hp = MaxHp;
-        damage = Define.enemyDamage[level];
 
         // 능력치 초기화
         attackSpeed.BaseValue = 1f;
-        attackPower.BaseValue = damage;
+        attackPower.BaseValue = Define.GetEnemyDamage(enemyType, level);
         moveSpeed.BaseValue = baseMoveSpeed;
 
         skills.Add(new AttackSpeedSkill());
         skills.Add(new AttackDamageSkill()); // 등등
+        skills.Add(new Creepylaughter()); // 등등
+
+
+        sickle = gameObject.FindRecursive("Sickle").transform;
 
         // switch (Managers.Game.enemyType)
         // {
@@ -282,6 +292,11 @@ public class Enemy : Charactor
                         // Move towards the heal zone
                         agent.SetDestination(targetHealZone.transform.position);
                         enemyState = EnemyState.Heal;
+
+                        if (enemyType == Define.EnemyType.ScareCrow && activeSickle)
+                        {
+                            DeactiveSicle();
+                        }
                     }
                 }
                 else if (currentTarget != null && currentTarget.playerData.room == null)
@@ -479,26 +494,30 @@ public class Enemy : Charactor
         canAttack = true;
     }
 
+    [Button("Level Up")]
     public void LevelUp()
     {
         level++;
         levelText.text = "Lv." + (level + 1);
 
         float prevMaxHp = MaxHp;
-        MaxHp = Define.enemyHp[level];
+        MaxHp = Define.GetEnemyMaxHp(enemyType, level);
         hp += MaxHp - prevMaxHp;
         hp = Mathf.Clamp(hp, 0, MaxHp);
 
-        damage = Define.enemyDamage[level];
+        attackPower.BaseValue = Define.GetEnemyDamage(enemyType, level);
 
         hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
 
         var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
         popup.GetComponent<Notification_Popup>().Init();
         popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_level_up"));
+
+        if (enemyType == Define.EnemyType.ScareCrow && level > 4)
+        {
+            ActiveSicle();
+        }
     }
-
-
 
     public void CheckUseSkill()
     {
@@ -605,290 +624,31 @@ public class Enemy : Charactor
 
     // Stun 상태 확인용 프로퍼티 추가
     public bool IsStunned => activeEffects.Any(e => e is StunEffect && e.IsActive);
-}
 
-[System.Serializable]
-public abstract class EnemySkill
-{
-    public string Name;
-    public int MinLevel;
-    public float Cooldown;
-    public float Duration;
-    public float LastUseTime = -999f;
-    public bool IsActive { get; protected set; }
-
-    public abstract bool CanUse(Enemy enemy);
-    public abstract void Activate(Enemy enemy);
-    public abstract void Deactivate(Enemy enemy);
-
-    public float GetModifiedCooldown()
+    public void ActiveSicle()
     {
-        return Cooldown - (Define.TierDiffValue[Define.GetPlayerCurrentTier()] * 0.05f);
-    }
-}
+        activeSickle = true;
 
-public class AttackSpeedSkill : EnemySkill
-{
-    private float speedMultiplier = 2.4f;
-    private float moveMultiplier = 2f;
-
-    public AttackSpeedSkill()
-    {
-        Name = "AttackSpeed";
-        MinLevel = 2;
-        Cooldown = 15f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
-        Duration = 4f;
-    }
-
-    public override bool CanUse(Enemy enemy)
-    {
-        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= GetModifiedCooldown();
-    }
-
-    public override void Activate(Enemy enemy)
-    {
-        IsActive = true;
-        LastUseTime = Time.time;
-        enemy.attackSpeed.AddMultiplier(speedMultiplier);
-        enemy.moveSpeed.AddMultiplier(moveMultiplier);
-        // 기타 효과
-
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_spd_skill"));
-
-        //근처에 spellBlocker가 있는지 확인
-
-        Managers.Game.charactors
-            .Where(n => n.currentActiveRoom != null && n.playerData != null)
-            .ToList()
-            .ForEach(n =>
-            {
-                var spellBlocker = n.playerData.structures
-                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
-                if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
-                {
-                    sb.TryCastSpellBlock(enemy, () => Deactivate(enemy));
-                }
-            });
-    }
-
-    public override void Deactivate(Enemy enemy)
-    {
-        IsActive = false;
-        enemy.attackSpeed.RemoveMultiplier(speedMultiplier);
-        enemy.moveSpeed.RemoveMultiplier(moveMultiplier);
-    }
-}
-
-public class AttackDamageSkill : EnemySkill
-{
-    private float damageMultiplier = 1.3f;
-
-    public AttackDamageSkill()
-    {
-        Name = "AttackDamage";
-        MinLevel = 4;
-        Cooldown = 20f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
-        Duration = 7f;
-    }
-
-    public override bool CanUse(Enemy enemy)
-    {
-        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= GetModifiedCooldown();
-    }
-
-    public override void Activate(Enemy enemy)
-    {
-        IsActive = true;
-        LastUseTime = Time.time;
-        enemy.attackPower.AddMultiplier(damageMultiplier);
-        // 타격 사운드 변경 등 추가 효과는 필요시 구현
-
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_dmg_skill"));
-    }
-
-    public override void Deactivate(Enemy enemy)
-    {
-        IsActive = false;
-        enemy.attackPower.RemoveMultiplier(damageMultiplier);
-    }
-}
-
-[System.Serializable]
-public abstract class EnemyEffect
-{
-    public string Name;
-    public float Duration;
-    public float elapsedTime = 0f;
-
-    public bool IsActive { get; private set; }
-
-    public void Apply(Enemy enemy)
-    {
-        IsActive = true;
-        elapsedTime = 0f;
-        OnApply(enemy);
-    }
-
-    public void Tick(Enemy enemy, float deltaTime)
-    {
-        if (!IsActive) return;
-        elapsedTime += deltaTime;
-        OnTick(enemy, deltaTime);
-
-        if (elapsedTime >= Duration)
+        if (sickle != null)
         {
-            Remove(enemy);
+            sickle.gameObject.SetActive(true);
         }
+
+        attackPower.AddMultiplier(1.5f);
     }
 
-    public void Remove(Enemy enemy)
+    public void DeactiveSicle()
     {
-        if (!IsActive) return;
-        IsActive = false;
-        OnRemove(enemy);
-    }
+        activeSickle = false;
 
-    // 효과별 세부 구현
-    protected abstract void OnApply(Enemy enemy);
-    protected abstract void OnTick(Enemy enemy, float deltaTime);
-    protected abstract void OnRemove(Enemy enemy);
-}
-
-public class BleedEffect : EnemyEffect
-{
-    private float tickTimer = 0f;
-
-    public BleedEffect(float duration)
-    {
-        Name = "Bleed";
-        Duration = duration;
-    }
-
-    protected override void OnApply(Enemy enemy)
-    {
-        tickTimer = 0f;
-        // 출혈 이펙트 등 필요시 추가
-
-        enemy.bleedParticle.GetComponent<ParticleSystem>().Play();
-    }
-
-    protected override void OnTick(Enemy enemy, float deltaTime)
-    {
-        tickTimer += deltaTime;
-        // 0.5초마다 최대 체력의 0.5% 데미지
-        while (tickTimer >= 0.5f)
+        if (sickle != null)
         {
-            tickTimer -= 0.5f;
-            int bleedDamage = Mathf.Max(1, Mathf.RoundToInt(enemy.MaxHp * 0.005f));
-            enemy.Hit(bleedDamage, false);
+            sickle.gameObject.SetActive(false);
         }
-    }
 
-    protected override void OnRemove(Enemy enemy)
-    {
-        // 출혈 종료 이펙트 등 필요시 추가
-
-        enemy.bleedParticle.GetComponent<ParticleSystem>().Stop();
+        attackPower.RemoveMultiplier(1.5f);
     }
 }
-
-public class FreezeEffect : EnemyEffect
-{
-    private float attackSpeedMultiplier = 0.8f;
-
-    public FreezeEffect(float duration)
-    {
-        Name = "Freeze";
-        Duration = duration;
-    }
-
-    protected override void OnApply(Enemy enemy)
-    {
-        enemy.attackSpeed.AddMultiplier(attackSpeedMultiplier);
-    }
-
-    protected override void OnTick(Enemy enemy, float deltaTime)
-    {
-        // 별도 지속 효과 없음
-    }
-
-    protected override void OnRemove(Enemy enemy)
-    {
-        enemy.attackSpeed.RemoveMultiplier(attackSpeedMultiplier);
-    }
-}
-
-public class StunEffect : EnemyEffect
-{
-    public StunEffect(float duration)
-    {
-        Name = "Stun";
-        Duration = duration;
-    }
-
-    protected override void OnApply(Enemy enemy)
-    {
-        enemy.Agent.isStopped = true;
-        enemy.Agent.velocity = Vector3.zero;
-        enemy.stunParticle.gameObject.SetActive(true);
-    }
-
-    protected override void OnTick(Enemy enemy, float deltaTime) { }
-
-    protected override void OnRemove(Enemy enemy)
-    {
-        enemy.Agent.isStopped = false;
-        enemy.stunParticle.gameObject.SetActive(false);
-    }
-}
-
-public class PoisonEffect : EnemyEffect
-{
-    private float tickTimer = 0f;
-
-    public PoisonEffect(float duration = 3f)
-    {
-        Name = "Poison";
-        Duration = duration;
-    }
-
-    protected override void OnApply(Enemy enemy)
-    {
-        tickTimer = 0f;
-        // 필요시 이펙트 추가 (예: enemy.poisonParticle.Play();)
-        enemy.poisonParticle.GetComponent<ParticleSystem>().Play();
-    }
-
-    protected override void OnTick(Enemy enemy, float deltaTime)
-    {
-        tickTimer += deltaTime;
-        // 0.5초마다 2의 데미지
-        while (tickTimer >= 0.5f)
-        {
-            tickTimer -= 0.5f;
-            enemy.Hit(2, false);
-        }
-    }
-
-    protected override void OnRemove(Enemy enemy)
-    {
-        // 필요시 이펙트 종료 (예: enemy.poisonParticle.Stop();)
-        enemy.poisonParticle.GetComponent<ParticleSystem>().Stop();
-    }
-}
-
-// 출혈 5초 효과 부여
-// AddEffect(new BleedEffect(5f));
-
-// // 동상 3초 효과 부여
-
-
-// // 기절 2초 효과 부여
-// AddEffect(new StunEffect(2f));
 
 [System.Serializable]
 public class StatMultiplier

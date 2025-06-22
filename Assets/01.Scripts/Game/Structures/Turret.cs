@@ -25,8 +25,9 @@ public class Turret : Structure
         head = gameObject.FindRecursive("Head");
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (target == null && Managers.Game.enemy != null)
         {
             // 타겟이 없으면 120px(=1.2f) 범위 내의 enemy를 찾음

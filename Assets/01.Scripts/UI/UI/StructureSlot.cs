@@ -266,7 +266,9 @@ public class StructureSlot : UI_Base
         {
             TurretIcons.gameObject.SetActive(true);
             GetImage(Images.TurretIcon1).sprite = _data.sprite1[level];
+            GetImage(Images.TurretIcon1).SetNativeSize();
             GetImage(Images.TurretIcon2).sprite = _data.sprite2[level];
+            GetImage(Images.TurretIcon2).SetNativeSize();
         }
         else if (_data.structureType == Define.StructureType.AutoTurret || _data.structureType == Define.StructureType.GoldenTurret)
         {

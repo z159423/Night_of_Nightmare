@@ -25,8 +25,9 @@ public class GoldenMirror : Structure
         damageRoutine = StartCoroutine(DamageEnemyRoutine());
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         target = Managers.Game.enemy;
         if (lineRenderer != null && target != null)
         {

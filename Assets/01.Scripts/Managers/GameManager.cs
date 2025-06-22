@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
 
                     SetPos(_enemy.transform);
 
-                    _enemy.GetComponentInChildren<Enemy>().Setting();
+                    _enemy.GetComponentInChildren<Enemy>().Setting(enemyType);
                     enemy = _enemy.GetComponentInChildren<Enemy>();
                 }
             }
