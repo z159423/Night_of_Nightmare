@@ -50,12 +50,12 @@ public class UI_GameScene_Map : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
         {
-            GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
+            GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
         });
 
         GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
         GetTextMesh(Texts.EnergyCount).text = Managers.Game.playerData.energy.ToString();
-        GetTextMesh(Texts.TicketCount).text = Managers.Game.ticket.ToString();
+        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
     }
 
     public void FirstSetting()

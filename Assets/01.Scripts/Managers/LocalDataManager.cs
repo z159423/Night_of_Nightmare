@@ -80,4 +80,16 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("PlayerRankingPoint", 0);
         set { PlayerPrefs.SetInt("PlayerRankingPoint", value); IsSave = true; }
     }
+
+    public int PlayerGemCount
+    {
+        get => PlayerPrefs.GetInt("PlayerGemCount", 0);
+        set { PlayerPrefs.SetInt("PlayerGemCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeGemCount); }
+    }
+
+    public int PlayerTicketCount
+    {
+        get => PlayerPrefs.GetInt("PlayerTicketCount", 0);
+        set { PlayerPrefs.SetInt("PlayerTicketCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
+    }
 }

@@ -264,6 +264,18 @@ public class Define
         {Tier.Challenger, new Color32(228, 22, 219, 255)}
     };
 
+    public static int GetResultGemCount(bool isWin)
+    {
+        if (isWin)
+        {
+            return (int)(Random.Range(3, 8) + (TierDiffValue[GetPlayerCurrentTier()] * 0.015f));
+        }
+        else
+        {
+            return (int)(Random.Range(2, 5) + (TierDiffValue[GetPlayerCurrentTier()] * 0.015f));
+        }
+    }
+
     public enum GameMode
     {
         None,

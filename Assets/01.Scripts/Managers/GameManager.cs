@@ -12,11 +12,7 @@ public class GameManager : MonoBehaviour
     public GameMode currentGameMode = GameMode.Home;
     public PlayerCharactor playerCharactor;
     private CharactorController charactorController;
-
     public CharactorType currentPlayerCharacterType = CharactorType.Farmer;
-
-    public int gem = 0;
-    public int ticket = 0;
 
     public Map currentMap;
     public List<Bed> beds = new List<Bed>();
