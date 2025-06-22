@@ -153,7 +153,11 @@ public class CharactorController : MonoBehaviour
 
                     void Upgrade_Popup(Structure structure)
                     {
-                        if (structure.type == Define.StructureType.Grave || structure.type == Define.StructureType.Frog || structure.type == Define.StructureType.PoisonFrog)
+                        if (structure.type == Define.StructureType.MoneySack || structure.type == Define.StructureType.Battery)
+                        {
+                            return;
+                        }
+                        else if (structure.type == Define.StructureType.Grave || structure.type == Define.StructureType.Frog || structure.type == Define.StructureType.PoisonFrog)
                         {
                             var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
                             popup.GetComponent<Notification_Popup>().Init();

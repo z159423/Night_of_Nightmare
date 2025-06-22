@@ -186,7 +186,7 @@ public class Define
         GoldenMirror,
         Axe,
         GoldenAxe,
-        MoneyBag,
+        MoneySack,
         Battery,
         FlowerPot,
         LushFlowerPot,

@@ -12,7 +12,7 @@ public class ResourceGetParticle : MonoBehaviour
 
     [SerializeField] Sprite[] icons;
 
-    public void Setting(string icon, int value, float delay)
+    public void Setting(string icon, int value, float delay, float moveY = 1.125f, float moveX = 0, float duration = 0.8f)
     {
         this.icon = GetComponentInChildren<SpriteRenderer>();
         this.text = GetComponentInChildren<TextMeshPro>();
@@ -32,7 +32,7 @@ public class ResourceGetParticle : MonoBehaviour
             this.icon.gameObject.SetActive(true);
             this.text.gameObject.SetActive(true);
         });
-        seq.Append(transform.DOLocalMoveY(1.125f, 0.8f).SetEase(Ease.Linear));
+        seq.Append(transform.DOLocalMove(new Vector3(moveX, moveY, 0), duration).SetEase(Ease.Linear).SetRelative());
         seq.AppendInterval(0.2f);
         seq.OnComplete(() =>
         {

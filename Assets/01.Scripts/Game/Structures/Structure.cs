@@ -137,4 +137,13 @@ public abstract class Structure : MonoBehaviour
 
         return isMet;
     }
+
+    protected void RemoveThisStructrue()
+    {
+        if (playerData.structures.Contains(this))
+        {
+            playerData.structures.Remove(this);
+            GetComponentInParent<Tile>().currentStructure = null;
+        }
+    }
 }
