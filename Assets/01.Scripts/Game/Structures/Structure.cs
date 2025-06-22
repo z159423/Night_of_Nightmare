@@ -80,6 +80,7 @@ public abstract class Structure : MonoBehaviour
         if (Hp <= 0)
         {
             DestroyStructure();
+            RemoveThisStructrue();
         }
 
         // DOTween을 사용하여 펀치 효과 애니메이션 추가
@@ -151,7 +152,8 @@ public abstract class Structure : MonoBehaviour
         if (playerData.structures.Contains(this))
         {
             playerData.structures.Remove(this);
-            GetComponentInParent<Tile>().currentStructure = null;
+            if (GetComponentInParent<Tile>() != null)
+                GetComponentInParent<Tile>().currentStructure = null;
         }
     }
 
@@ -244,6 +246,41 @@ public class CreepylaughterEffect : StructureEffect
         tickTimer = 0f;
 
         effectObj = Managers.Resource.Instantiate("CreepylaughterEffect", structure.transform);
+        effectObj.transform.localPosition = new Vector3(0, 0.1f, 0);
+    }
+
+    protected override void OnTick(Structure structure, float deltaTime)
+    {
+        tickTimer += deltaTime;
+    }
+
+    protected override void OnRemove(Structure structure)
+    {
+        if (effectObj != null)
+        {
+            Managers.Resource.Destroy(effectObj);
+            effectObj = null;
+        }
+    }
+}
+
+public class MothPowderStun : StructureEffect
+{
+    private float tickTimer = 0f;
+
+    private GameObject effectObj;
+
+    public MothPowderStun(float duration)
+    {
+        Name = "MothPowderStun";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Structure structure)
+    {
+        tickTimer = 0f;
+
+        effectObj = Managers.Resource.Instantiate("MothPowderStunParticle", structure.transform);
         effectObj.transform.localPosition = new Vector3(0, 0.1f, 0);
     }
 

@@ -166,3 +166,53 @@ public class Creepylaughter : EnemySkill
         IsActive = false;
     }
 }
+
+public class MothPowder : EnemySkill
+{
+    public MothPowder()
+    {
+        Name = "MothPowder";
+        MinLevel = 3;
+        MinCooldown = 40f; // 기본값, 실제 쿨타임은 난이도에 따라 계산
+        MaxCooldown = 80f;
+        Duration = 4f;
+    }
+
+    public override bool CanUse(Enemy enemy)
+    {
+        return enemy.enemyType == Define.EnemyType.MossMan && enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= GetCoolDown();
+    }
+
+    public override void Activate(Enemy enemy)
+    {
+        IsActive = true;
+        LastUseTime = Time.time;
+        // 타격 사운드 변경 등 추가 효과는 필요시 구현
+
+        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
+        popup.GetComponent<Notification_Popup>().Init();
+        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_moth_skill_toast"));
+
+        enemy.creepylaughterParticle.GetComponent<ParticleSystem>().Play();
+        enemy.mossManSkillParticle.GetComponent<ParticleSystem>().Play();
+
+        foreach (var charactor in Managers.Game.charactors)
+        {
+            if (!charactor.die)
+            {
+                foreach (var structure in charactor.playerData.structures.Where(n => n is Turret))
+                {
+                    if (!structure.destroyed && Vector2.Distance(structure.transform.position, enemy.transform.position) < 5f)
+                    {
+                        structure.AddEffect(new MothPowderStun(Duration));
+                    }
+                }
+            }
+        }
+    }
+
+    public override void Deactivate(Enemy enemy)
+    {
+        IsActive = false;
+    }
+}

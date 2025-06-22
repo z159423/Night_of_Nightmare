@@ -50,7 +50,7 @@ public class Turret : Structure
 
     protected virtual void Attack()
     {
-        if (target == null) return;
+        if (target == null || activeEffects.Any(a => a is MothPowderStun)) return;
 
         // 헤드가 타겟을 바라보도록 회전 (2D 기준)
         Vector3 dir = target.transform.position - head.transform.position;

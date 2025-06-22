@@ -74,6 +74,7 @@ public class Enemy : Charactor
     public Transform poisonParticle;
     public Transform mirrorParticle;
     public Transform creepylaughterParticle;
+    public Transform mossManSkillParticle;
 
     public Transform sickle;
     public Transform slanderManKnife;
@@ -159,6 +160,7 @@ public class Enemy : Charactor
         poisonParticle = gameObject.FindRecursive("PoisonParticle").transform;
         mirrorParticle = gameObject.FindRecursive("MirrorParticle").transform;
         creepylaughterParticle = gameObject.FindRecursive("CreepylaughterParticle").transform;
+        mossManSkillParticle = gameObject.FindRecursive("MossManSkillParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 
@@ -171,8 +173,9 @@ public class Enemy : Charactor
         moveSpeed.BaseValue = baseMoveSpeed;
 
         skills.Add(new AttackSpeedSkill());
-        skills.Add(new AttackDamageSkill()); // 등등
-        skills.Add(new Creepylaughter()); // 등등
+        skills.Add(new AttackDamageSkill());
+        skills.Add(new Creepylaughter()); 
+        skills.Add(new MothPowder());
 
         sickle = gameObject.FindRecursive("Sickle").transform;
         slanderManKnife = gameObject.FindRecursive("SlanderManKnife").transform;
