@@ -12,6 +12,9 @@ public class MovingFrog : Frog
 
     DOTweenAnimation dOTweenAnimation;
 
+    [SerializeField]
+    protected Transform body;
+
     protected override void Start()
     {
         base.Start();
@@ -35,7 +38,19 @@ public class MovingFrog : Frog
                 {
                     // 공격 범위 밖이면 target을 따라 이동
                     if (agent != null && agent.isOnNavMesh)
+                    {
                         agent.SetDestination(target.transform.position);
+
+                        // 이동 방향을 바라보게
+                        if (body != null)
+                        {
+                            float dir = agent.desiredVelocity.x;
+                            float rotY = dir < 0 ? 180f : 0f;
+                            Vector3 euler = body.eulerAngles;
+                            euler.y = rotY;
+                            body.eulerAngles = euler;
+                        }
+                    }
                 }
                 else
                 {

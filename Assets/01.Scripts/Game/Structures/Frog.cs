@@ -7,7 +7,7 @@ public class Frog : Structure
 {
     private Transform mouth;
     private Transform tongue;
-    private Transform body;
+    protected Transform body;
     private LineRenderer lineRenderer;
 
     private Vector3 tongueOriginPos;
