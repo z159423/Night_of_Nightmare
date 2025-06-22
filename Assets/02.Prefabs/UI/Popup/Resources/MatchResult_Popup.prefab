@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 636656616923184012}
   - component: {fileID: 1227913144678130924}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: ClaimText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1298,7 +1298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -914}
+  m_AnchoredPosition: {x: 0, y: -904}
   m_SizeDelta: {x: 500, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9182362142412086598
@@ -2141,7 +2141,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 150
+  m_fontSize: 135
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

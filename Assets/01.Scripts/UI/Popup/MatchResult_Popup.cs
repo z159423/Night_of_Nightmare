@@ -34,7 +34,8 @@ public class MatchResult_Popup : UI_Popup
         RankingTierText,
         RankingPointText,
         ContinueText,
-        NoThanksGemCountText
+        NoThanksGemCountText,
+        ClaimText
     }
 
     [SerializeField] private Color[] colors;
@@ -127,58 +128,60 @@ public class MatchResult_Popup : UI_Popup
 
     public void Setting(bool isWin, int point)
     {
-        this.iswin = isWin;
-
+        iswin = isWin;
         GemCount = Define.GetResultGemCount(isWin);
+
+        // 공통 텍스트
+        GetTextMesh(Texts.RankingTierText).text = Define.GetPlayerCurrentTier().ToString();
+        GetTextMesh(Texts.RankingPointDiffText).text = (isWin ? "+" : "-") + point.ToString();
 
         if (isWin)
         {
+            // 승리 시 UI 설정
             GetImage(Images.Shine).gameObject.SetActive(true);
             GetImage(Images.ResultShine).gameObject.SetActive(true);
-            GetImage(Images.ResultShine).gameObject.SetActive(true);
-
-
             GetTextMesh(Texts.RankingPointDiffText).color = colors[0];
-
-            GetTextMesh(Texts.NoThanksGemCountText).text = ("x " + GemCount).ToString();
-            GetTextMesh(Texts.GemCountText).text = "x " + (GemCount * 4).ToString();
-
-
+            GetTextMesh(Texts.NoThanksGemCountText).text = $"x {GemCount}";
+            GetTextMesh(Texts.GemCountText).text = $"x {GemCount * 4}";
             GetImage(Images.RVIcon).gameObject.SetActive(true);
-
             GetTextMesh(Texts.ResultTitle).text = Managers.Localize.GetText("global.str_win_reward");
+            GetTextMesh(Texts.ClaimText).text = Managers.Localize.GetDynamicText("global.str_claim_reward", 4.ToString());
 
-            // GetTextMesh(Texts.RankingPointText).text = (Managers.LocalData.PlayerRankingPoint - point).ToString();
-            GetTextMesh(Texts.RankingTierText).text = Define.GetPlayerCurrentTier().ToString();
-
-            TextUtils.UINumberTween(GetTextMesh(Texts.RankingPointText), Managers.LocalData.PlayerRankingPoint - point, Managers.LocalData.PlayerRankingPoint, 3);
+            TextUtils.UINumberTween(
+                GetTextMesh(Texts.RankingPointText),
+                Managers.LocalData.PlayerRankingPoint - point,
+                Managers.LocalData.PlayerRankingPoint,
+                3
+            );
         }
         else
         {
+            // 패배 시 UI 설정
             GetImage(Images.Shine).gameObject.SetActive(false);
             GetImage(Images.ResultShine).gameObject.SetActive(false);
-
             GetTextMesh(Texts.RankingPointDiffText).color = colors[1];
             GetImage(Images.RVIcon).gameObject.SetActive(false);
-
-            GetTextMesh(Texts.GemCountText).text = ("x " + GemCount).ToString();
+            GetTextMesh(Texts.GemCountText).text = $"x {GemCount}";
             GetTextMesh(Texts.ResultTitle).text = Managers.Localize.GetText("global.str_lose");
+            GetTextMesh(Texts.ClaimText).text = Managers.Localize.GetText("global.str_claim");
 
-            TextUtils.UINumberTween(GetTextMesh(Texts.RankingPointText), Managers.LocalData.PlayerRankingPoint + point, Managers.LocalData.PlayerRankingPoint, 3);
-
+            TextUtils.UINumberTween(
+                GetTextMesh(Texts.RankingPointText),
+                Managers.LocalData.PlayerRankingPoint + point,
+                Managers.LocalData.PlayerRankingPoint,
+                3
+            );
         }
 
-        GetTextMesh(Texts.RankingPointDiffText).text = (isWin ? "+" : "-") + point.ToString();
+        StartCoroutine(ShowContinueButton());
 
-        StartCoroutine(wait());
-
-        IEnumerator wait()
+        IEnumerator ShowContinueButton()
         {
             yield return new WaitForSeconds(5f);
-
-            GetButton(Buttons.ContinueBtn).transform.localScale = Vector3.zero;
-            GetButton(Buttons.ContinueBtn).gameObject.SetActive(true);
-            GetButton(Buttons.ContinueBtn).transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+            var continueBtn = GetButton(Buttons.ContinueBtn);
+            continueBtn.transform.localScale = Vector3.zero;
+            continueBtn.gameObject.SetActive(true);
+            continueBtn.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
         }
     }
 
