@@ -215,8 +215,20 @@ public class StructureSlot : UI_Base
             case Define.StructureType.SilverOre:
             case Define.StructureType.GoldOre:
             case Define.StructureType.DiamondOre:
+            case Define.StructureType.FlowerPot:
+            case Define.StructureType.LushFlowerPot:
+            case Define.StructureType.Sheep:
+            case Define.StructureType.GoldenFrog:
+            case Define.StructureType.SilverMirror:
+            case Define.StructureType.GoldenMirror:
                 desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString());
                 break;
+
+            case Define.StructureType.Axe:
+            case Define.StructureType.GoldenAxe:
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString(), _data.argment2[level].ToString());
+                break;
+
             default:
                 desc = Managers.Localize.GetText(_data.descriptionKey);
                 break;

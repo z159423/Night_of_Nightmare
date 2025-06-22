@@ -24,8 +24,10 @@ MonoBehaviour:
   upgradeCoin: c8000000
   upgradeEnergy: 00000000
   purcahseLimit: -1
-  argment1: []
-  argment2: []
+  argment1:
+  - 15
+  argment2:
+  - 15
   requireStructures: []
   sprite1: []
   sprite2: []
