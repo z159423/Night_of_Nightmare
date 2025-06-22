@@ -620,6 +620,11 @@ public abstract class EnemySkill
     public abstract bool CanUse(Enemy enemy);
     public abstract void Activate(Enemy enemy);
     public abstract void Deactivate(Enemy enemy);
+
+    public float GetModifiedCooldown()
+    {
+        return Cooldown - (Define.TierDiffValue[Define.GetPlayerCurrentTier()] * 0.05f);
+    }
 }
 
 public class AttackSpeedSkill : EnemySkill
@@ -637,7 +642,7 @@ public class AttackSpeedSkill : EnemySkill
 
     public override bool CanUse(Enemy enemy)
     {
-        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= Cooldown;
+        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= GetModifiedCooldown();
     }
 
     public override void Activate(Enemy enemy)
@@ -690,7 +695,7 @@ public class AttackDamageSkill : EnemySkill
 
     public override bool CanUse(Enemy enemy)
     {
-        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= Cooldown;
+        return enemy.level >= MinLevel && !IsActive && Time.time - LastUseTime >= GetModifiedCooldown();
     }
 
     public override void Activate(Enemy enemy)

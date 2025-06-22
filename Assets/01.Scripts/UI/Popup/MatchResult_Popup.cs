@@ -78,7 +78,7 @@ public class MatchResult_Popup : UI_Popup
             GetTextMesh(Texts.RankingPointDiffText).text = point.ToString();
 
         GetTextMesh(Texts.RankingPointText).text = (Managers.LocalData.PlayerRankingPoint - point).ToString();
-        GetTextMesh(Texts.RankingTierText).text = Define.TierToScore.FirstOrDefault(n => n.Value == Managers.LocalData.PlayerRankingPoint).Key.ToString();
+        GetTextMesh(Texts.RankingTierText).text = Define.GetPlayerCurrentTier().ToString();
 
         TextUtils.UINumberTween(GetTextMesh(Texts.RankingPointText), (Managers.LocalData.PlayerRankingPoint - point), Managers.LocalData.PlayerRankingPoint, 3);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Define
 {
@@ -88,6 +89,141 @@ public class Define
         {Tier.Master1, 3400},
         {Tier.GrandMaster, 3800},
         {Tier.Challenger, 4200}
+    };
+
+    public static Tier GetPlayerCurrentTier()
+    {
+        return GetTierByScore(Managers.LocalData.PlayerRankingPoint);
+    }
+
+    public static Tier GetTierByScore(int score)
+    {
+        // TierToScore를 점수 오름차순으로 정렬
+        var ordered = TierToScore.OrderBy(kv => kv.Value).ToList();
+
+        Tier result = ordered[0].Key; // 기본값은 가장 낮은 Tier
+
+        for (int i = 0; i < ordered.Count; i++)
+        {
+            if (score < ordered[i].Value)
+                break;
+            result = ordered[i].Key;
+        }
+        return result;
+    }
+
+    public static Dictionary<Tier, int> TierDiffValue = new Dictionary<Tier, int>()
+    {
+        {Tier.Iron4, -30},
+        {Tier.Iron3, -20},
+        {Tier.Iron2, -15},
+        {Tier.Iron1, -10},
+        {Tier.Bronze4, -5},
+        {Tier.Bronze3, 0},
+        {Tier.Bronze2, 5},
+        {Tier.Bronze1, 8},
+        {Tier.Silver4, 11},
+        {Tier.Silver3, 14},
+        {Tier.Silver2, 17},
+        {Tier.Silver1, 20},
+        {Tier.Gold4, 24},
+        {Tier.Gold3, 28},
+        {Tier.Gold2, 32},
+        {Tier.Gold1, 36},
+        {Tier.Platinum4, 40},
+        {Tier.Platinum3, 44},
+        {Tier.Platinum2, 48},
+        {Tier.Platinum1, 52},
+        {Tier.Emerald4, 56},
+        {Tier.Emerald3, 60},
+        {Tier.Emerald2, 65},
+        {Tier.Emerald1, 70},
+        {Tier.Diamond4, 75},
+        {Tier.Diamond3, 80},
+        {Tier.Diamond2, 85},
+        {Tier.Diamond1, 90},
+        {Tier.Master4, 100},
+        {Tier.Master3, 110},
+        {Tier.Master2, 120},
+        {Tier.Master1, 130},
+        {Tier.GrandMaster, 150},
+        {Tier.Challenger, 170}
+    };
+
+    public static Dictionary<Tier, (int, int)> TierWinGetPoint = new Dictionary<Tier, (int, int)>()
+    {
+        {Tier.Iron4, (200, 250)},
+        {Tier.Iron3, (175, 225)},
+        {Tier.Iron2, (150, 200)},
+        {Tier.Iron1, (125, 175)},
+        {Tier.Bronze4, (100, 150)},
+        {Tier.Bronze3, (75, 125)},
+        {Tier.Bronze2, (70, 120)},
+        {Tier.Bronze1, (65, 115)},
+        {Tier.Silver4, (60, 110)},
+        {Tier.Silver3, (55, 110)},
+        {Tier.Silver2, (50, 110)},
+        {Tier.Silver1, (50, 110)},
+        {Tier.Gold4, (50, 110)},
+        {Tier.Gold3, (50, 110)},
+        {Tier.Gold2, (50, 110)},
+        {Tier.Gold1, (50, 110)},
+        {Tier.Platinum4, (50, 110)},
+        {Tier.Platinum3, (50, 110)},
+        {Tier.Platinum2, (50, 110)},
+        {Tier.Platinum1, (50, 110)},
+        {Tier.Emerald4, (50, 110)},
+        {Tier.Emerald3, (50, 110)},
+        {Tier.Emerald2, (50, 110)},
+        {Tier.Emerald1, (50, 110)},
+        {Tier.Diamond4, (50, 100)},
+        {Tier.Diamond3, (50, 90)},
+        {Tier.Diamond2, (50, 80)},
+        {Tier.Diamond1, (50, 70)},
+        {Tier.Master4, (30, 60)},
+        {Tier.Master3, (30, 60)},
+        {Tier.Master2, (30, 60)},
+        {Tier.Master1, (30, 60)},
+        {Tier.GrandMaster, (25, 55)},
+        {Tier.Challenger, (25, 51)}
+    };
+
+    public static Dictionary<Tier, float> TierLossRatio = new Dictionary<Tier, float>()
+    {
+        {Tier.Iron4, 0.25f},
+        {Tier.Iron3, 0.25f},
+        {Tier.Iron2, 0.3f},
+        {Tier.Iron1, 0.3f},
+        {Tier.Bronze4, 0.3f},
+        {Tier.Bronze3, 0.4f},
+        {Tier.Bronze2, 0.5f},
+        {Tier.Bronze1, 0.5f},
+        {Tier.Silver4, 0.5f},
+        {Tier.Silver3, 0.5f},
+        {Tier.Silver2, 0.5f},
+        {Tier.Silver1, 0.5f},
+        {Tier.Gold4, 0.6f},
+        {Tier.Gold3, 0.6f},
+        {Tier.Gold2, 0.6f},
+        {Tier.Gold1, 0.6f},
+        {Tier.Platinum4, 0.7f},
+        {Tier.Platinum3, 0.7f},
+        {Tier.Platinum2, 0.7f},
+        {Tier.Platinum1, 0.7f},
+        {Tier.Emerald4, 0.8f},
+        {Tier.Emerald3, 0.8f},
+        {Tier.Emerald2, 0.8f},
+        {Tier.Emerald1, 0.8f},
+        {Tier.Diamond4, 0.8f},
+        {Tier.Diamond3, 0.85f},
+        {Tier.Diamond2, 0.9f},
+        {Tier.Diamond1, 0.95f},
+        {Tier.Master4, 1.0f},
+        {Tier.Master3, 1.1f},
+        {Tier.Master2, 1.2f},
+        {Tier.Master1, 1.3f},
+        {Tier.GrandMaster, 1.4f},
+        {Tier.Challenger, 1.5f}
     };
 
     public static Dictionary<Tier, Color32> TierColor = new Dictionary<Tier, Color32>()

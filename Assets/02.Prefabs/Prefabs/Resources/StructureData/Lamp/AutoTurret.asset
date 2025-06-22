@@ -20,7 +20,7 @@ MonoBehaviour:
   sellable: 1
   onlyOnePurcahse: 0
   nameKey: global.str_auto_tower_name_1
-  descriptionKey: global.str_flower_desc
+  descriptionKey: global.str_desc_atk_dmg
   upgradeCoin: 200000002000000040000000800000000001000000020000000400000008000000100000401f0000803e0000
   upgradeEnergy: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   purcahseLimit: -1

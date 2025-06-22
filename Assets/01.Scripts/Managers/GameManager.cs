@@ -214,10 +214,13 @@ public class GameManager : MonoBehaviour
 
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
 
-        Managers.LocalData.PlayerRankingPoint -= 100;
+        var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
+        var point = Random.Range(pointRange.Item1, pointRange.Item2) * TierLossRatio[GetPlayerCurrentTier()];
+
+        Managers.LocalData.PlayerRankingPoint -= (int)point;
 
         result.Init();
-        result.Setting(false, -100);
+        result.Setting(false, (int)point);
     }
 
     [Button("GameWin")]
@@ -227,10 +230,13 @@ public class GameManager : MonoBehaviour
 
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
 
-        Managers.LocalData.PlayerRankingPoint += 100;
+        var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
+        var point = Random.Range(pointRange.Item1, pointRange.Item2);
+
+        Managers.LocalData.PlayerRankingPoint += point;
 
         result.Init();
-        result.Setting(true, 100);
+        result.Setting(true, point);
     }
 
     public IEnumerator GetResources()
