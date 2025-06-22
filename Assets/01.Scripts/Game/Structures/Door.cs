@@ -137,6 +137,21 @@ public class Door : Structure
             }
         }
 
+        if (playerData.structures.Any(n => n.type == Define.StructureType.FlowerPot || n.type == Define.StructureType.LushFlowerPot))
+        {
+            foreach (var flowerPot in playerData.structures.Where(n => n.type == Define.StructureType.FlowerPot))
+            {
+                playerData.AddCoin((int)Managers.Game.GetStructureData(Define.StructureType.FlowerPot).argment1[flowerPot.level]);
+                flowerPot.GetComponent<FlowerPot>().ResourceGetParticle((int)Managers.Game.GetStructureData(Define.StructureType.FlowerPot).argment1[flowerPot.level]);
+            }
+
+            foreach (var flowerPot in playerData.structures.Where(n => n.type == Define.StructureType.LushFlowerPot))
+            {
+                playerData.AddCoin((int)Managers.Game.GetStructureData(Define.StructureType.LushFlowerPot).argment1[flowerPot.level]);
+                flowerPot.GetComponent<LushFlowerPot>().ResourceGetParticle((int)Managers.Game.GetStructureData(Define.StructureType.LushFlowerPot).argment1[flowerPot.level]);
+            }
+        }
+
         base.Hit(damage);
 
         ShowHpBar();
