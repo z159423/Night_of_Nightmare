@@ -101,7 +101,7 @@ public class GoldenFrog : Structure
                 // z축 90도 오프셋 적용
                 float duration = (2 * Mathf.PI) / flyCircleSpeed;
                 Tweener tw = fly.transform.DOLocalRotate(
-                    new Vector3(0, 0, 360f + 90f), // 90도 오프셋
+                    new Vector3(0, 0, 360f), // 90도 오프셋
                     duration,
                     RotateMode.FastBeyond360
                 )

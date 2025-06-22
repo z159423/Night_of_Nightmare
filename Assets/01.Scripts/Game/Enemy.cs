@@ -71,6 +71,8 @@ public class Enemy : Charactor
     public Transform bleedParticle;
     public Transform stunParticle;
     public Transform poisonParticle;
+    public Transform mirrorParticle;
+
 
 
     // Implementation of the abstract Hit() method from Charactor
@@ -136,6 +138,7 @@ public class Enemy : Charactor
         bleedParticle = gameObject.FindRecursive("BleedParticle").transform;
         stunParticle = gameObject.FindRecursive("StunParticle").transform;
         poisonParticle = gameObject.FindRecursive("PoisonParticle").transform;
+        mirrorParticle = gameObject.FindRecursive("MirrorParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 

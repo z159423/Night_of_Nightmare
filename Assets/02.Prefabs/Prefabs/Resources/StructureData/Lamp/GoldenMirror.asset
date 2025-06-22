@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
-  m_Name: GolenAxe
+  m_Name: GoldenMirror
   m_EditorClassIdentifier: 
   category: 5
-  structureType: 27
-  icon: {fileID: 21300000, guid: d1b5f4ed48020104fa20ebd7251eaec7, type: 3}
+  structureType: 25
+  icon: {fileID: 21300000, guid: 8cf0fe3c3e81bce42a5ef856bdc50495, type: 3}
   lampProp: 3
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
-  nameKey: global.str_axe_name_2
-  descriptionKey: global.str_axe_desc
+  nameKey: global.str_mirror_name_2
+  descriptionKey: global.str_mirror_desc
   upgradeCoin: c8000000
   upgradeEnergy: 00000000
   purcahseLimit: -1
