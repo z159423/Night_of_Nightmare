@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
   m_Name: EnergyShield
   m_EditorClassIdentifier: 
-  category: 0
+  category: 2
   structureType: 9
   icon: {fileID: 21300000, guid: 984a1fcec353b8e43beb8d4e56407bfe, type: 3}
   lampProp: 3

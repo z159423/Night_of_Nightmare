@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
   m_Name: SpellBlocker
   m_EditorClassIdentifier: 
-  category: 0
+  category: 2
   structureType: 8
   icon: {fileID: 21300000, guid: 83de11215cc7a8b49b62dbfa2305d07b, type: 3}
   lampProp: 3

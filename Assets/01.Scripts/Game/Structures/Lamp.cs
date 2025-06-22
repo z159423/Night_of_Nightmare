@@ -16,7 +16,9 @@ public class Lamp : Structure
     {
         yield return new WaitForSeconds(1f);
 
-        var finds = Managers.Resource.LoadAll<StructureData>($"StructureData/Lamp");
+        // StructureData 폴더 전체에서 Lamp 타입만 필터링
+        var allData = Managers.Resource.LoadAll<StructureData>("StructureData");
+        var finds = allData.Where(sd => sd.lampProp > 0).ToList();
 
         // LampProp(확률 비중)으로 랜덤 선택
         float totalWeight = finds.Sum(sd => sd.lampProp);

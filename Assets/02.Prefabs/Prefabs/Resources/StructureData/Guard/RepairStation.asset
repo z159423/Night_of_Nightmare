@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbd43a400626fb4989a0c3227f99672, type: 3}
   m_Name: RepairStation
   m_EditorClassIdentifier: 
-  category: 0
+  category: 2
   structureType: 10
   icon: {fileID: 21300000, guid: 4a1a41c5b45189c40a33cfa5a6c24976, type: 3}
   lampProp: 3
