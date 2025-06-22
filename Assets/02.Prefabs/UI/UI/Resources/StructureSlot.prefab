@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &673406324891870996
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 104.25875, y: -42.188103}
+  m_AnchoredPosition: {x: 104.25875, y: -50}
   m_SizeDelta: {x: 188.5175, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1020065578970414968
@@ -798,6 +799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &3461823723309117324
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,6 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &3640149613363322355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &4254446163431550756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &4507132077429653012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,6 +1647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &6065762980658150750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,6 +1830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &6946202642245509868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,6 +1922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &7444556379030487167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,6 +2187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &8783415242779542181
 GameObject:
   m_ObjectHideFlags: 0

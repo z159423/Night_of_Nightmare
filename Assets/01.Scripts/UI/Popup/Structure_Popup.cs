@@ -114,7 +114,12 @@ public class Structure_Popup : UI_Popup
             slot.Init();
             slot.Setting(data, () =>
             {
-                Managers.Game.playerData.UseResource(data.upgradeCoin[0], data.upgradeEnergy[0]);
+                if (Define.IsFreeStructure(Managers.Game.playerData, data.structureType))
+                {
+                    Managers.Game.playerData.AddFreeCount(data.structureType);
+                }
+                else
+                    Managers.Game.playerData.UseResource(data.GetPurchaseCoin(0, Managers.Game.playerData.type), data.GetPurchaseEnergy(0, Managers.Game.playerData.type));
 
                 var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == data.structureType);
                 var structure = Instantiate(find, Managers.Game.selectedTile.transform).GetComponentInChildren<Structure>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class Turret : Structure
 {
@@ -145,6 +146,11 @@ public class Turret : Structure
     public virtual float GetAttackSpeed()
     {
         float coolDown = attackCooldown;
+
+        if (playerData.type == Define.CharactorType.Chef)
+        {
+            coolDown *= 0.85f;
+        }
 
         // TurretBooster가 있을 때만 거리 기반 쿨다운 보정
         if (playerData.structures.Find(n => n.type == Define.StructureType.TurretBooster) != null && target != null)

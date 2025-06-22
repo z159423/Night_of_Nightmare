@@ -9,6 +9,8 @@ public class PlayerCharactor : PlayerableCharactor
 {
     public void Setting()
     {
+        charactorType = Managers.Game.currentPlayerCharacterType;
+
         Managers.Game.playerCharactor = this;
 
         if (Managers.UI._currentScene is UI_GameScene_Map)
@@ -17,7 +19,20 @@ public class PlayerCharactor : PlayerableCharactor
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
 
         Managers.Game.charactors.Add(this);
+
+        playerData = new PlayerData(charactorType);
         Managers.Game.playerData = playerData;
+
+        SetBodySkin();
+    }
+
+    public override void SetBodySkin()
+    {
+        if (bodySpriteRenderer == null)
+        {
+            bodySpriteRenderer = gameObject.FindRecursive("Icon").GetComponent<SpriteRenderer>();
+        }
+        bodySpriteRenderer.sprite = Managers.Resource.GetCharactorImage((int)charactorType + 1);
     }
 
     protected override void Start()
@@ -46,6 +61,7 @@ public class PlayerCharactor : PlayerableCharactor
             }
         }
     }
+
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

@@ -117,7 +117,7 @@ public class Enemy : Charactor
 
         IEnumerator Particle()
         {
-            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle2");
+            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
 
             particle.transform.position = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), -1);
 
@@ -702,39 +702,5 @@ public class Enemy : Charactor
         }
 
         attackPower.RemoveMultiplier(1.1f);
-    }
-}
-
-[System.Serializable]
-public class StatMultiplier
-{
-    private List<float> multipliers = new List<float>();
-
-    public float BaseValue { get; set; } = 1f;
-
-    public float Value
-    {
-        get
-        {
-            float result = BaseValue;
-            foreach (var m in multipliers)
-                result *= m;
-            return result;
-        }
-    }
-
-    public void AddMultiplier(float multiplier)
-    {
-        multipliers.Add(multiplier);
-    }
-
-    public void RemoveMultiplier(float multiplier)
-    {
-        multipliers.Remove(multiplier);
-    }
-
-    public void ClearMultipliers()
-    {
-        multipliers.Clear();
     }
 }

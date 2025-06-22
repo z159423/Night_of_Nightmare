@@ -95,13 +95,11 @@ public class StructureSlot : UI_Base
         }
         else
         {
-            GetTextMesh(Texts.CoinText).text = data.upgradeCoin.Length > 0 ? data.upgradeCoin[level].ToString() : Managers.Localize.GetText("global.str_free");
-
             this.onPurcahse = onPurcahse;
 
             GetButton(Buttons.Button).AddButtonEvent(() =>
             {
-                if (CheckIsReqired() && _data.upgradeCoin[level] <= Managers.Game.playerData.coin && _data.upgradeEnergy[level] <= Managers.Game.playerData.energy)
+                if (Define.IsFreeStructure(Managers.Game.playerData, _data.structureType) || (CheckIsReqired() && _data.GetPurchaseCoin(level, Managers.Game.playerData.type) <= Managers.Game.playerData.coin && _data.GetPurchaseEnergy(level, Managers.Game.playerData.type) <= Managers.Game.playerData.energy))
                 {
                     onPurcahse?.Invoke();
                     return;
@@ -125,31 +123,38 @@ public class StructureSlot : UI_Base
             return;
         }
 
-        if (_data.upgradeCoin.Length > 0 && _data.upgradeCoin[level] > 0)
+        if (_data.upgradeCoin.Length > 0 && _data.GetPurchaseCoin(level, Managers.Game.playerData.type) > 0)
         {
             GetImage(Images.CoinSlot).gameObject.SetActive(true);
-            GetTextMesh(Texts.CoinText).text = _data.upgradeCoin[level].ToString();
+            GetTextMesh(Texts.CoinText).text = _data.GetPurchaseCoin(level, Managers.Game.playerData.type).ToString();
         }
         else
             GetImage(Images.CoinSlot).gameObject.SetActive(false);
 
 
-        if (_data.upgradeEnergy.Length > 0 && _data.upgradeEnergy[level] > 0)
+        if (_data.upgradeEnergy.Length > 0 && _data.GetPurchaseEnergy(level, Managers.Game.playerData.type) > 0)
         {
             GetImage(Images.EnergySlot).gameObject.SetActive(true);
-            GetTextMesh(Texts.EnergyText).text = _data.upgradeEnergy[level].ToString();
+            GetTextMesh(Texts.EnergyText).text = _data.GetPurchaseEnergy(level, Managers.Game.playerData.type).ToString();
         }
         else
             GetImage(Images.EnergySlot).gameObject.SetActive(false);
 
-        if (CheckIsReqired() && (_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level]) : true)
-         && (_data.upgradeEnergy.Length > 0 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level]) : true))
+        if (Define.IsFreeStructure(Managers.Game.playerData, _data.structureType) || (CheckIsReqired() && (_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.GetPurchaseCoin(level, Managers.Game.playerData.type)) : true)
+         && (_data.upgradeEnergy.Length > 0 ? (Managers.Game.playerData.energy >= _data.GetPurchaseEnergy(level, Managers.Game.playerData.type)) : true)))
         {
             GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[0]; // 활성화된 버튼 이미지
         }
         else
         {
             GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[1]; // 비활성화된 버튼 이미지
+        }
+
+        if (Define.IsFreeStructure(Managers.Game.playerData, _data.structureType))
+        {
+            GetTextMesh(Texts.FreeText).gameObject.SetActive(true);
+            GetImage(Images.CoinSlot).gameObject.SetActive(false);
+            GetImage(Images.EnergySlot).gameObject.SetActive(false);
         }
 
         // if (Managers.Game.coin <= _data.upgradeCoin)

@@ -32,6 +32,47 @@ public class StructureData : ScriptableObject
 
     public Sprite[] sprite1;
     public Sprite[] sprite2;
+
+    public int GetPurchaseCoin(int level, CharactorType charactorType)
+    {
+        if (charactorType == CharactorType.Miner && category == StructureCategory.Ore)
+        {
+            // 광부 캐릭터가 오레 구조물을 구매할 때는 코인을 10% 할인
+            return Mathf.RoundToInt(upgradeCoin[level] * 0.9f);
+        }
+        else if (charactorType == CharactorType.Scientist && structureType == StructureType.Generator)
+        {
+            return Mathf.RoundToInt(upgradeCoin[level] * 0.9f);
+        }
+
+
+        return upgradeCoin[level];
+    }
+
+    public int GetPurchaseEnergy(int level, CharactorType charactorType)
+    {
+        if (charactorType == CharactorType.Miner && category == StructureCategory.Ore)
+        {
+            // 광부 캐릭터가 오레 구조물을 구매할 때는 에너지를 10% 할인
+            return Mathf.RoundToInt(upgradeEnergy[level] * 0.9f);
+        }
+        else if (charactorType == CharactorType.Scientist && structureType == StructureType.Generator)
+        {
+            return Mathf.RoundToInt(upgradeEnergy[level] * 0.9f);
+        }
+
+        return upgradeEnergy[level];
+    }
+
+    public int GetSellCoin(int level)
+    {
+        return upgradeCoin[level] / 4;
+    }
+
+    public int GetSellEnergy(int level)
+    {
+        return upgradeEnergy[level] / 4;
+    }
 }
 
 [System.Serializable]

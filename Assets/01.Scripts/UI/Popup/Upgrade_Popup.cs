@@ -19,12 +19,15 @@ public class Upgrade_Popup : UI_Popup
     enum Images
     {
         SellSlot,
-        TouchGuard
+        TouchGuard,
+        CoinSlot,
+        EnergySlot
     }
 
     enum Texts
     {
-        SellCoinCount
+        SellCoinCount,
+        SellEnergyText
     }
 
     private VerticalLayoutGroup layout;
@@ -65,8 +68,15 @@ public class Upgrade_Popup : UI_Popup
             GetButton(Buttons.SellBtn).gameObject.SetActive(true);
             GetImage(Images.SellSlot).gameObject.SetActive(true);
 
-            int sellCoin = data.upgradeCoin[currentStructure.level] / 4;
+            int sellCoin = data.GetSellCoin(currentStructure.level);
+            GetImage(Images.CoinSlot).gameObject.SetActive(sellCoin > 0);
+
+            int sellEnergy = data.GetSellEnergy(currentStructure.level);
+            GetImage(Images.EnergySlot).gameObject.SetActive(sellEnergy > 0);
+
             GetTextMesh(Texts.SellCoinCount).text = sellCoin.ToString();
+            GetTextMesh(Texts.SellEnergyText).text = sellEnergy.ToString();
+
             GetButton(Buttons.SellBtn).AddButtonEvent(() => { Managers.Game.playerData.SellStructure(structure); Exit(); });
         }
 

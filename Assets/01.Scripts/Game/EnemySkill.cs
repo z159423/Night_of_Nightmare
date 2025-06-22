@@ -109,6 +109,19 @@ public class AttackDamageSkill : EnemySkill
         var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
         popup.GetComponent<Notification_Popup>().Init();
         popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_dmg_skill"));
+
+        Managers.Game.charactors
+            .Where(n => n.currentActiveRoom != null && n.playerData != null)
+            .ToList()
+            .ForEach(n =>
+            {
+                var spellBlocker = n.playerData.structures
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
+                {
+                    sb.TryCastSpellBlock(enemy, () => Deactivate(enemy));
+                }
+            });
     }
 
     public override void Deactivate(Enemy enemy)

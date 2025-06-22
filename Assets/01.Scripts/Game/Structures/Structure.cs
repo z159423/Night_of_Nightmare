@@ -102,12 +102,6 @@ public abstract class Structure : MonoBehaviour
         destroyed = true;
     }
 
-    public int GetSellValue()
-    {
-        int sellValue = Managers.Game.GetStructureData(type).upgradeCoin[level] / 4; // 판매가는 업그레이드 비용의 1/4
-        return sellValue;
-    }
-
     public void CheckUpgrade()
     {
         if (Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
@@ -123,8 +117,8 @@ public abstract class Structure : MonoBehaviour
         // 업그레이드 가능한 상태라면
         else if (
             CheckIsReqired() &&
-            (_data.upgradeCoin.Length > level + 1 ? (Managers.Game.playerData.coin >= _data.upgradeCoin[level + 1]) : false) &&
-            (_data.upgradeEnergy.Length > level + 1 ? (Managers.Game.playerData.energy >= _data.upgradeEnergy[level + 1]) : false)
+            (_data.upgradeCoin.Length > level + 1 ? (Managers.Game.playerData.coin >= _data.GetPurchaseCoin(level + 1, playerData.type)) : false) &&
+            (_data.upgradeEnergy.Length > level + 1 ? (Managers.Game.playerData.energy >= _data.GetPurchaseEnergy(level + 1, playerData.type)) : false)
         )
             upgradeIcon.gameObject.SetActive(true);
         else
@@ -197,36 +191,36 @@ public abstract class StructureEffect
 
     public bool IsActive { get; private set; }
 
-    public void Apply(Structure enemy)
+    public void Apply(Structure structure)
     {
         IsActive = true;
         elapsedTime = 0f;
-        OnApply(enemy);
+        OnApply(structure);
     }
 
-    public void Tick(Structure enemy, float deltaTime)
+    public void Tick(Structure structure, float deltaTime)
     {
         if (!IsActive) return;
         elapsedTime += deltaTime;
-        OnTick(enemy, deltaTime);
+        OnTick(structure, deltaTime);
 
         if (elapsedTime >= Duration)
         {
-            Remove(enemy);
+            Remove(structure);
         }
     }
 
-    public void Remove(Structure enemy)
+    public void Remove(Structure structure)
     {
         if (!IsActive) return;
         IsActive = false;
-        OnRemove(enemy);
+        OnRemove(structure);
     }
 
     // 효과별 세부 구현
-    protected abstract void OnApply(Structure enemy);
-    protected abstract void OnTick(Structure enemy, float deltaTime);
-    protected abstract void OnRemove(Structure enemy);
+    protected abstract void OnApply(Structure structure);
+    protected abstract void OnTick(Structure structure, float deltaTime);
+    protected abstract void OnRemove(Structure structure);
 }
 
 public class CreepylaughterEffect : StructureEffect

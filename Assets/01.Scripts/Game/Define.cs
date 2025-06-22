@@ -513,4 +513,22 @@ public class Define
         HolyProtection,
         Overheat
     }
+
+    public static bool IsFreeStructure(PlayerData playerData, StructureType structureType)
+    {
+        if (playerData.type == CharactorType.Farmer && structureType == StructureType.Turret && playerData.freeTurretCount < 2)
+        {
+            return true;
+        }
+        else if (playerData.type == CharactorType.ReapireMan && structureType == StructureType.RepairStation && playerData.freeRepaireStationCount < 1)
+        {
+            return true;
+        }
+        else if (playerData.type == CharactorType.LampGirl && structureType == StructureType.Lamp && playerData.freeLampCount < 1)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
 }

@@ -14,6 +14,10 @@ public class PlayerData
     public Room room;
     public List<Structure> structures = new List<Structure>();
 
+    public int freeTurretCount = 0;
+    public int freeRepaireStationCount = 0;
+    public int freeLampCount = 0;
+
     public PlayerData(CharactorType type)
     {
         this.type = type;
@@ -136,6 +140,23 @@ public class PlayerData
         structure.GetComponentInParent<Tile>().currentStructure = null;
         structure.DestroyStructure();
         structures.Remove(structure);
-        coin += structure.GetSellValue();
+        coin += Managers.Game.GetStructureData(structure.type).GetSellCoin(structure.level);
+        energy += Managers.Game.GetStructureData(structure.type).GetSellEnergy(structure.level);
+    }
+
+    public void AddFreeCount(StructureType type)
+    {
+        switch (type)
+        {
+            case StructureType.Turret:
+                freeTurretCount++;
+                break;
+            case StructureType.RepairStation:
+                freeRepaireStationCount++;
+                break;
+            case StructureType.Lamp:
+                freeLampCount++;
+                break;
+        }
     }
 }
