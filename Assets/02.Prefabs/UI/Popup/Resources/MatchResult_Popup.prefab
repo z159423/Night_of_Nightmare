@@ -675,6 +675,7 @@ GameObject:
   - component: {fileID: 2655371869961533126}
   - component: {fileID: 5741845540302815018}
   - component: {fileID: 211353057401884641}
+  - component: {fileID: 7907096700807285076}
   m_Layer: 0
   m_Name: RankImage
   m_TagString: Untagged
@@ -740,6 +741,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7907096700807285076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692791708017994995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
+  staticSize: 1
 --- !u!1 &3075215399348940238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,6 +1305,7 @@ GameObject:
   - component: {fileID: 1599133603240317798}
   - component: {fileID: 1641154797121828415}
   - component: {fileID: 2589252429512930533}
+  - component: {fileID: 3200406656237824020}
   m_Layer: 0
   m_Name: RankingTierText
   m_TagString: Untagged
@@ -1428,6 +1445,21 @@ MonoBehaviour:
   outlineColor: {r: 0.20754719, g: 0.17907496, b: 0.16740835, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
+--- !u!114 &3200406656237824020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843226834606656489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
+  staticSize: 1
 --- !u!1 &5137392690642355237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,7 +1474,7 @@ GameObject:
   - component: {fileID: 4337955316276861653}
   - component: {fileID: 8491649430966728405}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: ContinueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1496,7 +1528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uACC4\uC18D\uD558\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
   m_sharedMaterial: {fileID: 0}
@@ -1523,7 +1555,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

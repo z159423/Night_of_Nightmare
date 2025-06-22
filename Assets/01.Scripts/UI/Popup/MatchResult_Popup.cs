@@ -28,8 +28,8 @@ public class MatchResult_Popup : UI_Popup
         GemText,
         TicketCount,
         RankingTierText,
-        RankingPointText
-
+        RankingPointText,
+        ContinueText
     }
 
     [SerializeField] private Color[] colors;
@@ -38,6 +38,13 @@ public class MatchResult_Popup : UI_Popup
     public override void Init()
     {
         base.Init();
+
+        GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
+        GetImage(Images.RankImage).SetNativeSize();
+
+        GetTextMesh(Texts.ContinueText).text = Managers.Localize.GetText("global.str_continue");
+
+        OpenAnimation();
     }
 
     public override void FirstSetting()
@@ -65,17 +72,13 @@ public class MatchResult_Popup : UI_Popup
         if (isWin)
         {
             GetImage(Images.Shine).gameObject.SetActive(true);
-            GetImage(Images.RankImage).transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack).OnStart(() =>
-            {
-                GetImage(Images.RankImage).transform.localScale = Vector3.one;
-            });
 
             GetTextMesh(Texts.RankingPointDiffText).color = colors[0];
         }
         else
             GetTextMesh(Texts.RankingPointDiffText).color = colors[1];
 
-            GetTextMesh(Texts.RankingPointDiffText).text = point.ToString();
+        GetTextMesh(Texts.RankingPointDiffText).text = (isWin ? "+" : "-") + point.ToString();
 
         GetTextMesh(Texts.RankingPointText).text = (Managers.LocalData.PlayerRankingPoint - point).ToString();
         GetTextMesh(Texts.RankingTierText).text = Define.GetPlayerCurrentTier().ToString();

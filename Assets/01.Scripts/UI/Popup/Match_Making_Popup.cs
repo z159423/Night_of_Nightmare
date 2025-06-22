@@ -44,11 +44,11 @@ public class Match_Making_Popup : UI_Popup
     {
         base.Init();
 
-        Managers.LocalData.PlayerRankingPoint = 200;
-
         GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
         GetImage(Images.RankImage).SetNativeSize();
-        GetTextMesh(Texts.RankingPointText).text = Define.GetPlayerCurrentTier().ToString() + "<br>" +Managers.LocalData.PlayerRankingPoint.ToString();
+        GetTextMesh(Texts.RankingPointText).text = Define.GetPlayerCurrentTier().ToString() + "<br>" + Managers.LocalData.PlayerRankingPoint.ToString();
+
+        OpenAnimation();
     }
 
     void Update()
@@ -158,6 +158,8 @@ public class Match_Making_Popup : UI_Popup
         var name = NameGenerator.GetRandomName();
         enemyBox.EnemySetting(enemyType, name);
         Managers.Game.enemyName = name;
+
+        OpenAnimation();
     }
 
     void OnDisable()

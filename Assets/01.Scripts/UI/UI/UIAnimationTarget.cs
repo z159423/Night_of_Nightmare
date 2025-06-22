@@ -23,6 +23,8 @@ public class UIAnimationTarget : MonoBehaviour
 
     private Vector3 originalScale;
 
+    public bool staticSize = false;
+
     public void ScaleZero()
     {
         originalScale = transform.localScale;
@@ -34,10 +36,17 @@ public class UIAnimationTarget : MonoBehaviour
         switch (animationType)
         {
             case UIAnimationType.Pop:
-                transform.DOScale(originalScale, 0.3f).SetEase(Ease.OutQuad);
+
+                if (staticSize)
+                    transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+                else
+                    transform.DOScale(originalScale, 0.3f).SetEase(Ease.OutBack);
                 break;
             case UIAnimationType.Appear:
-                transform.localScale = originalScale;
+                if (staticSize)
+                    transform.localScale = Vector3.one;
+                else
+                    transform.localScale = originalScale;
                 break;
         }
     }

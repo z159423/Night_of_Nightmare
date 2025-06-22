@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 4167001669083294642}
   - component: {fileID: 5245020185071877251}
   - component: {fileID: 3671941697197101203}
+  - component: {fileID: 9161526429654973389}
   m_Layer: 0
   m_Name: RankImage
   m_TagString: Untagged
@@ -546,6 +547,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9161526429654973389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3372012247465575870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
+  staticSize: 1
 --- !u!1 &4187528838691540494
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409b659e93e6a374bb33a53c4eebd65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uIAnimationTargets: []
 --- !u!1 &4733367676088517686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,6 +1494,7 @@ GameObject:
   - component: {fileID: 1029482223614356298}
   - component: {fileID: 7977946692514941832}
   - component: {fileID: 2754253379801467933}
+  - component: {fileID: 1296329217901540513}
   m_Layer: 0
   m_Name: MatchingBtn
   m_TagString: Untagged
@@ -1587,6 +1605,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1296329217901540513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6379718716476308519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
+  staticSize: 0
 --- !u!1 &6530538086543909425
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,6 +2245,7 @@ GameObject:
   - component: {fileID: 4450918367792256272}
   - component: {fileID: 3390372540833638767}
   - component: {fileID: 8343608123221349469}
+  - component: {fileID: 8706913309198555650}
   m_Layer: 0
   m_Name: MatchBtn
   m_TagString: Untagged
@@ -2322,6 +2356,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8706913309198555650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464438201471835409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  animationType: 0
+  staticSize: 0
 --- !u!1 &8649353489754301963
 GameObject:
   m_ObjectHideFlags: 0
