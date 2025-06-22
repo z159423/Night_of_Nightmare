@@ -75,9 +75,11 @@ public class Enemy : Charactor
     public Transform mirrorParticle;
     public Transform creepylaughterParticle;
 
-
     public Transform sickle;
+    public Transform slanderManKnife;
+
     public bool activeSickle = false;
+    public bool activeSlanderManKnife = false;
 
     // Implementation of the abstract Hit() method from Charactor
 
@@ -124,10 +126,21 @@ public class Enemy : Charactor
         }
     }
 
+    void Heal(int amount)
+    {
+        hp += amount;
+        hp = Mathf.Clamp(hp, 0, MaxHp);
+
+        if (hpBarPivot != null)
+        {
+            hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+        }
+    }
+
     public void Setting(Define.EnemyType type)
     {
         enemyType = type;
-        
+
         SetBodySkin();
 
         transform.localPosition = Vector3.zero;
@@ -153,7 +166,7 @@ public class Enemy : Charactor
         hp = MaxHp;
 
         // 능력치 초기화
-        attackSpeed.BaseValue = 1f;
+        attackSpeed.BaseValue = Define.GetEnemyAttackSpeed(enemyType);
         attackPower.BaseValue = Define.GetEnemyDamage(enemyType, level);
         moveSpeed.BaseValue = baseMoveSpeed;
 
@@ -161,8 +174,8 @@ public class Enemy : Charactor
         skills.Add(new AttackDamageSkill()); // 등등
         skills.Add(new Creepylaughter()); // 등등
 
-
         sickle = gameObject.FindRecursive("Sickle").transform;
+        slanderManKnife = gameObject.FindRecursive("SlanderManKnife").transform;
 
         // switch (Managers.Game.enemyType)
         // {
@@ -296,6 +309,11 @@ public class Enemy : Charactor
                         if (enemyType == Define.EnemyType.ScareCrow && activeSickle)
                         {
                             DeactiveSicle();
+                        }
+
+                        if (enemyType == Define.EnemyType.SlanderMan && activeSlanderManKnife)
+                        {
+                            DeactiveSlanderManKnife();
                         }
                     }
                 }
@@ -456,7 +474,7 @@ public class Enemy : Charactor
             {
                 currentTargetStructure.Hit(Mathf.RoundToInt(attackPower.Value));
 
-                if (currentExp >= Define.enemyExp[level])
+                if (currentExp >= Define.GetEnemyExp(enemyType, level))
                 {
                     currentExp = 0;
                     LevelUp();
@@ -474,6 +492,11 @@ public class Enemy : Charactor
 
                 if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
                     gameScene_Map.AttackedAnimation(targetIndex);
+
+                if (activeSlanderManKnife)
+                {
+                    Heal(Mathf.RoundToInt(MaxHp * (0.005f + (level * 0.0005f))));
+                }
             };
         }
 
@@ -516,6 +539,11 @@ public class Enemy : Charactor
         if (enemyType == Define.EnemyType.ScareCrow && level > 4)
         {
             ActiveSicle();
+        }
+
+        if (enemyType == Define.EnemyType.SlanderMan && level > 5)
+        {
+            ActiveSlanderManKnife();
         }
     }
 
@@ -647,6 +675,30 @@ public class Enemy : Charactor
         }
 
         attackPower.RemoveMultiplier(1.5f);
+    }
+
+    public void ActiveSlanderManKnife()
+    {
+        activeSlanderManKnife = true;
+
+        if (slanderManKnife != null)
+        {
+            slanderManKnife.gameObject.SetActive(true);
+        }
+
+        attackPower.AddMultiplier(1.1f);
+    }
+
+    public void DeactiveSlanderManKnife()
+    {
+        activeSlanderManKnife = false;
+
+        if (slanderManKnife != null)
+        {
+            slanderManKnife.gameObject.SetActive(false);
+        }
+
+        attackPower.RemoveMultiplier(1.1f);
     }
 }
 

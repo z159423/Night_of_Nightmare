@@ -438,12 +438,25 @@ public class Define
     {
         switch (type)
         {
+            case EnemyType.SlanderMan:
+                return Mathf.RoundToInt(enemyDamage[level] * 0.6f);
             case EnemyType.TungTungTung:
                 return Mathf.RoundToInt(enemyDamage[level] * 1.2f);
             case EnemyType.Tralalero:
                 return Mathf.RoundToInt(enemyDamage[level] * 1.1f);
             default:
                 return enemyDamage[level];
+        }
+    }
+
+    public static float GetEnemyAttackSpeed(EnemyType type)
+    {
+        switch (type)
+        {
+            case EnemyType.SlanderMan:
+                return 1.5f;
+            default:
+                return 1f;
         }
     }
 
@@ -463,6 +476,18 @@ public class Define
         140,
         9999999
     };
+
+    public static int GetEnemyExp(EnemyType type, int level)
+    {
+        switch (type)
+        {
+            case EnemyType.SlanderMan:
+                return Mathf.RoundToInt(enemyExp[level] * 1.5f);
+
+            default:
+                return enemyExp[level];
+        }
+    }
 
     public enum CharactorPurchaseType
     {
