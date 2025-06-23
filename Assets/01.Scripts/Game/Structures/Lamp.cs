@@ -14,6 +14,8 @@ public class Lamp : Structure
 
     public IEnumerator LampEffect()
     {
+        playerData.buyLampCount++;
+
         yield return new WaitForSeconds(1f);
 
         // StructureData 폴더 전체에서 Lamp 타입만 필터링

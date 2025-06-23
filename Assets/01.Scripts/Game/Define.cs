@@ -531,27 +531,4 @@ public class Define
         else
             return false;
     }
-
-    public static bool IsPossiblePurchaseStructure(PlayerData playerData, StructureData structureData, int level, bool upgrade)
-    {
-        if (structureData.structureType == StructureType.Lamp && Managers.LocalData.PlayerLampCount <= 0)
-            return false;
-
-        return (upgrade ? false : IsFreeStructure(playerData, structureData.structureType))
-                     || (CheckIsReqired(structureData, level) && structureData.GetPurchaseCoin(level, playerData.type) <= playerData.coin && structureData.GetPurchaseEnergy(level, playerData.type) <= playerData.energy);
-    }
-
-    public static bool CheckIsReqired(StructureData data, int level)
-    {
-        bool isMet = true;
-        if (data.requireStructures != null && data.requireStructures.Length > 0 && data.requireStructures.Length >= level
-          && data.requireStructures[level].type != data.structureType)
-        {
-            var currentRequire = Managers.Game.playerData.GetStructure(data.requireStructures[level].type);
-
-            isMet = currentRequire != null && currentRequire.level >= data.requireStructures[level].level;
-        }
-
-        return isMet;
-    }
 }

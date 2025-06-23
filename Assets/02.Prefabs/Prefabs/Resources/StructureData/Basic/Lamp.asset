@@ -21,8 +21,8 @@ MonoBehaviour:
   onlyOnePurcahse: 0
   nameKey: global.str_lamp_name
   descriptionKey: global.str_lamp_desc
-  upgradeCoin: 0a0000000a0000000a0000000a000000
-  upgradeEnergy: 00000000000000000000000000000000
+  upgradeCoin: 0a00000028000000a0000000f000000000000000
+  upgradeEnergy: 000000000a0000000a0000001e00000000000000
   purcahseLimit: 4
   argment1: []
   argment2: []

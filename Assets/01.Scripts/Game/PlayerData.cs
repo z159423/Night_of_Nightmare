@@ -18,6 +18,8 @@ public class PlayerData
     public int freeRepaireStationCount = 0;
     public int freeLampCount = 0;
 
+    public int buyLampCount = 0;
+
     public PlayerData(CharactorType type)
     {
         this.type = type;

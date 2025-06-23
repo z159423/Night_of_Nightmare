@@ -156,7 +156,7 @@ public class CharactorController : MonoBehaviour
                         if (structure.activeEffects.Any(a => a is CreepylaughterEffect))
                             return;
 
-                        if (structure.type == Define.StructureType.MoneySack || structure.type == Define.StructureType.Battery)
+                        if (structure.type == Define.StructureType.MoneySack || structure.type == Define.StructureType.Battery || structure.type == Define.StructureType.Lamp)
                         {
                             return;
                         }

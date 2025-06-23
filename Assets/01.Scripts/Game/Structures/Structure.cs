@@ -109,17 +109,13 @@ public abstract class Structure : MonoBehaviour
 
         var _data = Managers.Game.GetStructureData(type);
 
-        // 업그레이드가 가능한 상태가 아니면
-        if (_data.upgradeCoin.Length < 2 && _data.upgradeEnergy.Length < 2)
-        {
-            upgradeIcon.gameObject.SetActive(false);
-        }
-        // 업그레이드 가능한 상태라면
-        else if (
-            CheckIsReqired() &&
-            (_data.upgradeCoin.Length > level + 1 ? (Managers.Game.playerData.coin >= _data.GetPurchaseCoin(level + 1, playerData.type)) : false) &&
-            (_data.upgradeEnergy.Length > level + 1 ? (Managers.Game.playerData.energy >= _data.GetPurchaseEnergy(level + 1, playerData.type)) : false)
-        )
+        // // 업그레이드가 가능한 상태가 아니면
+        // if (_data.upgradeCoin.Length < 2 && _data.upgradeEnergy.Length < 2)
+        // {
+        //     upgradeIcon.gameObject.SetActive(false);
+        // }
+        // // 업그레이드 가능한 상태라면
+        if (Managers.Game.GetStructureData(type).CanUpgrade(playerData, level + 1))
             upgradeIcon.gameObject.SetActive(true);
         else
             upgradeIcon.gameObject.SetActive(false);

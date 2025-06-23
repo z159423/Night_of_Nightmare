@@ -120,19 +120,29 @@ public class StructureSlot : UI_Base
             return;
         }
 
-        if (_data.upgradeCoin.Length > 0 && _data.GetPurchaseCoin(level, Managers.Game.playerData.type) > 0)
+        if (_data.structureType == Define.StructureType.Lamp && Managers.Game.playerData.buyLampCount >= 4)
+        {
+            this.onPurcahse = null;
+            GetTextMesh(Texts.MaxText).gameObject.SetActive(true);
+            GetTextMesh(Texts.CoinText).gameObject.SetActive(false);
+            GetTextMesh(Texts.EnergyText).gameObject.SetActive(false);
+            GetTextMesh(Texts.FreeText).gameObject.SetActive(false);
+            return;
+        }
+
+        if (_data.upgradeCoin.Length > 0 && _data.GetPurchaseCoin(level, Managers.Game.playerData) > 0)
         {
             GetImage(Images.CoinSlot).gameObject.SetActive(true);
-            GetTextMesh(Texts.CoinText).text = _data.GetPurchaseCoin(level, Managers.Game.playerData.type).ToString();
+            GetTextMesh(Texts.CoinText).text = _data.GetPurchaseCoin(level, Managers.Game.playerData).ToString();
         }
         else
             GetImage(Images.CoinSlot).gameObject.SetActive(false);
 
 
-        if (_data.upgradeEnergy.Length > 0 && _data.GetPurchaseEnergy(level, Managers.Game.playerData.type) > 0)
+        if (_data.upgradeEnergy.Length > 0 && _data.GetPurchaseEnergy(level, Managers.Game.playerData) > 0)
         {
             GetImage(Images.EnergySlot).gameObject.SetActive(true);
-            GetTextMesh(Texts.EnergyText).text = _data.GetPurchaseEnergy(level, Managers.Game.playerData.type).ToString();
+            GetTextMesh(Texts.EnergyText).text = _data.GetPurchaseEnergy(level, Managers.Game.playerData).ToString();
         }
         else
             GetImage(Images.EnergySlot).gameObject.SetActive(false);

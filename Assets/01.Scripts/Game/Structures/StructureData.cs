@@ -33,14 +33,19 @@ public class StructureData : ScriptableObject
     public Sprite[] sprite1;
     public Sprite[] sprite2;
 
-    public int GetPurchaseCoin(int level, CharactorType charactorType)
+    public int GetPurchaseCoin(int level, PlayerData playerData)
     {
-        if (charactorType == CharactorType.Miner && category == StructureCategory.Ore)
+        if (structureType == StructureType.Lamp)
+        {
+            return upgradeCoin[playerData.buyLampCount];
+        }
+
+        if (playerData.type == CharactorType.Miner && category == StructureCategory.Ore)
         {
             // 광부 캐릭터가 오레 구조물을 구매할 때는 코인을 10% 할인
             return Mathf.RoundToInt(upgradeCoin[level] * 0.9f);
         }
-        else if (charactorType == CharactorType.Scientist && structureType == StructureType.Generator)
+        else if (playerData.type == CharactorType.Scientist && structureType == StructureType.Generator)
         {
             return Mathf.RoundToInt(upgradeCoin[level] * 0.9f);
         }
@@ -49,14 +54,19 @@ public class StructureData : ScriptableObject
         return upgradeCoin[level];
     }
 
-    public int GetPurchaseEnergy(int level, CharactorType charactorType)
+    public int GetPurchaseEnergy(int level, PlayerData playerData)
     {
-        if (charactorType == CharactorType.Miner && category == StructureCategory.Ore)
+        if (structureType == StructureType.Lamp)
+        {
+            return upgradeEnergy[playerData.buyLampCount];
+        }
+
+        if (playerData.type == CharactorType.Miner && category == StructureCategory.Ore)
         {
             // 광부 캐릭터가 오레 구조물을 구매할 때는 에너지를 10% 할인
             return Mathf.RoundToInt(upgradeEnergy[level] * 0.9f);
         }
-        else if (charactorType == CharactorType.Scientist && structureType == StructureType.Generator)
+        else if (playerData.type == CharactorType.Scientist && structureType == StructureType.Generator)
         {
             return Mathf.RoundToInt(upgradeEnergy[level] * 0.9f);
         }
@@ -76,6 +86,9 @@ public class StructureData : ScriptableObject
 
     public bool CanPurchase(PlayerData playerData, int level, bool upgrade = false)
     {
+        if (structureType == StructureType.Lamp && playerData.buyLampCount >= 4)
+            return false;
+
         // 무료 구조물은 항상 구매 가능
         if (!upgrade && IsFreeStructure(playerData, structureType))
             return true;
@@ -94,10 +107,10 @@ public class StructureData : ScriptableObject
         }
 
         // 자원 조건 체크
-        bool coinOk = upgrade ? (upgradeCoin.Length > level && playerData.coin >= GetPurchaseCoin(level, playerData.type))
-                              : (upgradeCoin.Length > level && playerData.coin >= GetPurchaseCoin(level, playerData.type));
-        bool energyOk = upgrade ? (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData.type))
-                                : (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData.type));
+        bool coinOk = upgrade ? (upgradeCoin.Length > level && playerData.coin >= GetPurchaseCoin(level, playerData))
+                              : (upgradeCoin.Length > level && playerData.coin >= GetPurchaseCoin(level, playerData));
+        bool energyOk = upgrade ? (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData))
+                                : (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData));
 
         if (structureType == StructureType.Lamp && Managers.LocalData.PlayerLampCount <= 0)
             return false;
@@ -108,8 +121,9 @@ public class StructureData : ScriptableObject
     public bool CanUpgrade(PlayerData playerData, int level)
     {
         // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
-        if (upgradeCoin == null || upgradeEnergy == null)
+        if (upgradeCoin == null || upgradeEnergy == null || structureType == StructureType.Lamp)
             return false;
+            
         if ((level) >= upgradeCoin.Length || (level) >= upgradeEnergy.Length)
             return false;
 
@@ -123,8 +137,8 @@ public class StructureData : ScriptableObject
         }
 
         // 자원 조건 체크
-        bool coinOk = playerData.coin >= GetPurchaseCoin(level, playerData.type);
-        bool energyOk = playerData.energy >= GetPurchaseEnergy(level, playerData.type);
+        bool coinOk = playerData.coin >= GetPurchaseCoin(level, playerData);
+        bool energyOk = playerData.energy >= GetPurchaseEnergy(level, playerData);
 
         return coinOk && energyOk;
     }
