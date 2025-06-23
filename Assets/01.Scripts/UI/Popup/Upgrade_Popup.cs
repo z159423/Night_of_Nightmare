@@ -80,33 +80,27 @@ public class Upgrade_Popup : UI_Popup
             GetButton(Buttons.SellBtn).AddButtonEvent(() => { Managers.Game.playerData.SellStructure(structure); Exit(); });
         }
 
+        int level = structure.level + 1;
+
         var upgradeSlot = GetComponentInChildren<StructureSlot>();
 
-        // 업그레이드가 가능한지 확인: 현재 레벨 + 1이 배열 범위 내에 있는지 체크
-        bool canUpgrade =
-            data.upgradeCoin != null && data.upgradeEnergy != null &&
-            (structure.level + 1) < data.upgradeCoin.Length &&
-            (structure.level + 1) < data.upgradeEnergy.Length;
-
-        if (!canUpgrade)
+        if (!data.CanUpgrade(Managers.Game.playerData, level))
         {
-            // upgradeSlot.gameObject.SetActive(false);
-
             upgradeSlot.Init();
-            upgradeSlot.Setting(data, null, structure.level, true);
+            upgradeSlot.Setting(data, null, level, true);
         }
         else
         {
             upgradeSlot.Init();
             upgradeSlot.Setting(data, () =>
             {
-                Managers.Game.playerData.UseResource(data.upgradeCoin[structure.level + 1], data.upgradeEnergy[structure.level + 1]);
+                Managers.Game.playerData.UseResource(data.upgradeCoin[level], data.upgradeEnergy[level]);
                 selectedStructure.Upgrade();
 
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
 
                 Exit();
-            }, structure.level + 1, true);
+            }, level, true);
         }
 
         OpenAnimation();

@@ -17,7 +17,11 @@ public partial struct GameObserverType
         OnMatchedPlayerCharactor,
         OnChangeStructure,
         OnChangeCharactor,
-        OnChangeSelectedCharactorType
+        OnChangeSelectedCharactorType,
+        OnChangeLampCount,
+        OnChangeHammerCount,
+        OnChangeHolyShieldCount,
+        OnChangeOverHeatCount
     }
 
     public enum Data

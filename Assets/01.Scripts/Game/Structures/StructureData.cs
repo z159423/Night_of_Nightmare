@@ -73,6 +73,61 @@ public class StructureData : ScriptableObject
     {
         return upgradeEnergy[level] / 4;
     }
+
+    public bool CanPurchase(PlayerData playerData, int level, bool upgrade = false)
+    {
+        // 무료 구조물은 항상 구매 가능
+        if (!upgrade && IsFreeStructure(playerData, structureType))
+            return true;
+
+        // 이미 하나만 구매 가능한 구조물이고 이미 소유 중이면 구매 불가
+        if (onlyOnePurcahse && playerData.GetStructure(structureType) != null)
+            return false;
+
+        // 요구 구조물 조건 체크
+        if (requireStructures != null && requireStructures.Length > 0 && requireStructures.Length > level
+            && requireStructures[level].type != structureType)
+        {
+            var currentRequire = playerData.GetStructure(requireStructures[level].type);
+            if (currentRequire == null || currentRequire.level < requireStructures[level].level)
+                return false;
+        }
+
+        // 자원 조건 체크
+        bool coinOk = upgrade ? (upgradeCoin.Length > level && playerData.coin >= GetPurchaseCoin(level, playerData.type))
+                              : (upgradeCoin.Length > level && playerData.coin >= GetPurchaseCoin(level, playerData.type));
+        bool energyOk = upgrade ? (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData.type))
+                                : (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData.type));
+
+        if (structureType == StructureType.Lamp && Managers.LocalData.PlayerLampCount <= 0)
+            return false;
+
+        return coinOk && energyOk;
+    }
+
+    public bool CanUpgrade(PlayerData playerData, int level)
+    {
+        // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
+        if (upgradeCoin == null || upgradeEnergy == null)
+            return false;
+        if ((level) >= upgradeCoin.Length || (level) >= upgradeEnergy.Length)
+            return false;
+
+        // 요구 구조물 조건 체크
+        if (requireStructures != null && requireStructures.Length > 0 && requireStructures.Length > level
+            && requireStructures[level].type != structureType)
+        {
+            var currentRequire = playerData.GetStructure(requireStructures[level].type);
+            if (currentRequire == null || currentRequire.level < requireStructures[level].level)
+                return false;
+        }
+
+        // 자원 조건 체크
+        bool coinOk = playerData.coin >= GetPurchaseCoin(level, playerData.type);
+        bool energyOk = playerData.energy >= GetPurchaseEnergy(level, playerData.type);
+
+        return coinOk && energyOk;
+    }
 }
 
 [System.Serializable]
