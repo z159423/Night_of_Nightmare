@@ -84,15 +84,10 @@ public class Upgrade_Popup : UI_Popup
 
         var upgradeSlot = GetComponentInChildren<StructureSlot>();
 
-        if (!data.CanUpgrade(Managers.Game.playerData, level))
+        upgradeSlot.Init();
+        upgradeSlot.Setting(data, () =>
         {
-            upgradeSlot.Init();
-            upgradeSlot.Setting(data, null, level, true);
-        }
-        else
-        {
-            upgradeSlot.Init();
-            upgradeSlot.Setting(data, () =>
+            if (data.CanUpgrade(Managers.Game.playerData, level))
             {
                 Managers.Game.playerData.UseResource(data.upgradeCoin[level], data.upgradeEnergy[level]);
                 selectedStructure.Upgrade();
@@ -100,8 +95,8 @@ public class Upgrade_Popup : UI_Popup
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
 
                 Exit();
-            }, level, true);
-        }
+            }
+        }, level, true);
 
         OpenAnimation();
     }

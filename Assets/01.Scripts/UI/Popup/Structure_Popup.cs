@@ -114,35 +114,38 @@ public class Structure_Popup : UI_Popup
             slot.Init();
             slot.Setting(data, () =>
             {
-                if (Define.IsFreeStructure(Managers.Game.playerData, data.structureType))
+                if (data.CanPurchase(Managers.Game.playerData, 0))
                 {
-                    Managers.Game.playerData.AddFreeCount(data.structureType);
+                    if (Define.IsFreeStructure(Managers.Game.playerData, data.structureType))
+                    {
+                        Managers.Game.playerData.AddFreeCount(data.structureType);
+                    }
+                    else
+                        Managers.Game.playerData.UseResource(data.GetPurchaseCoin(0, Managers.Game.playerData), data.GetPurchaseEnergy(0, Managers.Game.playerData));
+
+                    var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == data.structureType);
+                    var structure = Instantiate(find, Managers.Game.selectedTile.transform).GetComponentInChildren<Structure>();
+
+                    var particle = Managers.Resource.Instantiate("Particles/StructureProductParticle");
+
+                    particle.transform.position = Managers.Game.selectedTile.transform.position;
+
+                    StartCoroutine(destroy());
+
+                    IEnumerator destroy()
+                    {
+                        yield return new WaitForSeconds(1.2f);
+                        Managers.Resource.Destroy(particle);
+                    }
+
+                    Managers.Game.playerData.BuildStructure(structure);
+
+                    if (data.structureType != Define.StructureType.MovingFrog)
+                        Managers.Game.selectedTile.currentStructure = structure;
+
+                    GameObserver.Call(GameObserverType.Game.OnChangeStructure);
+                    Exit();
                 }
-                else
-                    Managers.Game.playerData.UseResource(data.GetPurchaseCoin(0, Managers.Game.playerData), data.GetPurchaseEnergy(0, Managers.Game.playerData));
-
-                var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == data.structureType);
-                var structure = Instantiate(find, Managers.Game.selectedTile.transform).GetComponentInChildren<Structure>();
-
-                var particle = Managers.Resource.Instantiate("Particles/StructureProductParticle");
-
-                particle.transform.position = Managers.Game.selectedTile.transform.position;
-
-                StartCoroutine(destroy());
-
-                IEnumerator destroy()
-                {
-                    yield return new WaitForSeconds(1.2f);
-                    Managers.Resource.Destroy(particle);
-                }
-
-                Managers.Game.playerData.BuildStructure(structure);
-
-                if (data.structureType != Define.StructureType.MovingFrog)
-                    Managers.Game.selectedTile.currentStructure = structure;
-
-                GameObserver.Call(GameObserverType.Game.OnChangeStructure);
-                Exit();
             }, 0, upgrade: false);
         }
     }

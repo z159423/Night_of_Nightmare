@@ -43,8 +43,6 @@ public class StructureSlot : UI_Base
 
     private StructureData _data;
 
-    Action onPurcahse = null;
-
     [SerializeField] Sprite[] btnSprites;
 
     private int level = 0;
@@ -72,32 +70,18 @@ public class StructureSlot : UI_Base
     public void Setting(StructureData data, Action onPurcahse, int level, bool upgrade = false)
     {
         _data = data;
-
         this.upgrade = upgrade;
-
         this.level = level;
 
         GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();
 
-        if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
+        GetButton(Buttons.Button).AddButtonEvent(() =>
         {
-
-        }
-        else
-        {
-            this.onPurcahse = onPurcahse;
-
-            GetButton(Buttons.Button).AddButtonEvent(() =>
-            {
-                if (_data.CanPurchase(Managers.Game.playerData, level, upgrade))
-                {
-                    onPurcahse?.Invoke();
-                    return;
-                }
-            });
-        }
+            onPurcahse?.Invoke();
+            return;
+        });
 
         UpdateUI();
     }
@@ -112,7 +96,6 @@ public class StructureSlot : UI_Base
 
         if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
         {
-            this.onPurcahse = null;
             GetTextMesh(Texts.MaxText).gameObject.SetActive(true);
             GetTextMesh(Texts.CoinText).gameObject.SetActive(false);
             GetTextMesh(Texts.EnergyText).gameObject.SetActive(false);
@@ -122,7 +105,6 @@ public class StructureSlot : UI_Base
 
         if (_data.structureType == Define.StructureType.Lamp && Managers.Game.playerData.buyLampCount >= 4)
         {
-            this.onPurcahse = null;
             GetTextMesh(Texts.MaxText).gameObject.SetActive(true);
             GetTextMesh(Texts.CoinText).gameObject.SetActive(false);
             GetTextMesh(Texts.EnergyText).gameObject.SetActive(false);
