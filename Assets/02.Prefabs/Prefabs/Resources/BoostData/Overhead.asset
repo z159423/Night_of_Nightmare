@@ -17,3 +17,5 @@ MonoBehaviour:
   descriptionKey: global.str_boost_overheat_desc
   price: 50
   icon: {fileID: 21300000, guid: 8acf6f528b73dab428da7177873f1b6b, type: 3}
+  argment1:
+  - 15

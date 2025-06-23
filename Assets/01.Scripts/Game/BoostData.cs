@@ -15,5 +15,5 @@ public class BoostData : ScriptableObject
 
     public Sprite icon;
 
-    
+    public float[] argment1;
 }

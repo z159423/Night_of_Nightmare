@@ -16,6 +16,7 @@ public class BoostDataEditor : Editor
         EditorGUILayout.PropertyField(so.FindProperty("descriptionKey"));
         EditorGUILayout.PropertyField(so.FindProperty("price"));
         EditorGUILayout.PropertyField(so.FindProperty("icon"));
+        EditorGUILayout.PropertyField(so.FindProperty("argment1"), true);
 
         so.ApplyModifiedProperties();
     }

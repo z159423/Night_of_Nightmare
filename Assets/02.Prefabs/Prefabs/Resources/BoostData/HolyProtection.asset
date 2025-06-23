@@ -17,3 +17,5 @@ MonoBehaviour:
   descriptionKey: global.str_boost_protect_desc
   price: 50
   icon: {fileID: 21300000, guid: e4e2d0b97ade1714e91097cfa1fecf18, type: 3}
+  argment1:
+  - 15

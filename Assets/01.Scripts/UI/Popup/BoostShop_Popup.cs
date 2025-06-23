@@ -42,7 +42,8 @@ public class BoostShop_Popup : UI_Popup
             boostBox.GetComponent<BoostBoxUI>().Init();
             boostBox.GetComponent<BoostBoxUI>().Setting(() =>
             {
-
+                Managers.LocalData.AddBoostItem(data.type, 1);
+                Managers.LocalData.PlayerGemCount -= data.price;
             }, data);
         }
 

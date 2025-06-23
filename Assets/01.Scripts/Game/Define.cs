@@ -531,4 +531,9 @@ public class Define
         else
             return false;
     }
+
+    public static BoostData GetBoostData(BoostType type)
+    {
+        return Managers.Resource.LoadAll<BoostData>("BoostData/").First(n => n.type == type);
+    }
 }

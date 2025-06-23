@@ -110,10 +110,46 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("PlayerHolyShieldCount", 2);
         set { PlayerPrefs.SetInt("PlayerHolyShieldCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHolyShieldCount); }
     }
-    
+
     public int PlayerOverHeatCount
     {
         get => PlayerPrefs.GetInt("PlayerOverHeatCount", 2);
         set { PlayerPrefs.SetInt("PlayerOverHeatCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeOverHeatCount); }
+    }
+
+    public void AddBoostItem(Define.BoostType type, int count)
+    {
+        switch (type)
+        {
+            case Define.BoostType.Lamp:
+                PlayerLampCount += count;
+                break;
+            case Define.BoostType.HammerThrow:
+                playerHammerCount += count;
+                break;
+            case Define.BoostType.HolyProtection:
+                PlayerHolyShieldCount += count;
+                break;
+            case Define.BoostType.Overheat:
+                PlayerOverHeatCount += count;
+                break;
+            default:
+                Debug.LogWarning($"Unknown boost type: {type}");
+                break;
+        }
+
+        GameObserver.Call(GameObserverType.Game.OnChangeBoostItemCount);
+    }
+
+    public int GetBoostItemCount(Define.BoostType type)
+    {
+        return type switch
+        {
+            Define.BoostType.Lamp => PlayerLampCount,
+            Define.BoostType.HammerThrow => playerHammerCount,
+            Define.BoostType.HolyProtection => PlayerHolyShieldCount,
+            Define.BoostType.Overheat => PlayerOverHeatCount,
+            _ => 0
+        };
     }
 }

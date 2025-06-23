@@ -17,3 +17,4 @@ MonoBehaviour:
   descriptionKey: global.str_boost_lamp_desc
   price: 50
   icon: {fileID: 21300000, guid: 7c1149ae862ec48438c0d5cd1364602e, type: 3}
+  argment1: []

@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &4578552913666950661
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &5292520900023305284
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!114 &2885042811881388906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +645,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0617ae0e8b0902443a7154fac2d5839c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnSprites:
+  - {fileID: 21300000, guid: afc73c30eddd9204c8f35bedccb743d1, type: 3}
+  - {fileID: 21300000, guid: e75bb73c24dee3941a94623694731f62, type: 3}
 --- !u!1 &7387834720515141403
 GameObject:
   m_ObjectHideFlags: 0

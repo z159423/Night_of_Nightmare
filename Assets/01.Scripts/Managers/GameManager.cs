@@ -44,6 +44,16 @@ public class GameManager : MonoBehaviour
         });
     }
 
+#if UNITY_EDITOR
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Managers.LocalData.PlayerGemCount += 100;
+        }
+    }
+#endif
+
     public void ChangeGameMode(GameMode mode)
     {
         if (currentGameMode == mode)
@@ -273,5 +283,19 @@ public class GameManager : MonoBehaviour
         StructureData data = Managers.Resource.GetStructureData(type);
         structuredatas.Add(type, data);
         return data;
+    }
+
+    public void OnPurchaseBoostItem(BoostType type)
+    {
+        if (GetBoostData(type).price <= Managers.LocalData.PlayerGemCount)
+        {
+            Managers.LocalData.PlayerGemCount -= GetBoostData(type).price;
+            Managers.LocalData.AddBoostItem(type, 1);
+        }
+    }
+
+    public void OnUserBoostItem(BoostType type)
+    {
+        Managers.LocalData.AddBoostItem(type, -1);
     }
 }

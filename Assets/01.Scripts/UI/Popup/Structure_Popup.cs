@@ -121,7 +121,12 @@ public class Structure_Popup : UI_Popup
                         Managers.Game.playerData.AddFreeCount(data.structureType);
                     }
                     else
+                    {
                         Managers.Game.playerData.UseResource(data.GetPurchaseCoin(0, Managers.Game.playerData), data.GetPurchaseEnergy(0, Managers.Game.playerData));
+
+                        if (data.structureType == Define.StructureType.Lamp)
+                            Managers.LocalData.PlayerLampCount--;
+                    }
 
                     var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == data.structureType);
                     var structure = Instantiate(find, Managers.Game.selectedTile.transform).GetComponentInChildren<Structure>();

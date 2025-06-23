@@ -21,7 +21,8 @@ public partial struct GameObserverType
         OnChangeLampCount,
         OnChangeHammerCount,
         OnChangeHolyShieldCount,
-        OnChangeOverHeatCount
+        OnChangeOverHeatCount,
+        OnChangeBoostItemCount
     }
 
     public enum Data
