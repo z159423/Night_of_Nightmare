@@ -116,7 +116,13 @@ public class Turret : Structure
         base.Upgrade();
         var data = Managers.Resource.GetStructureData(type);
 
-        if (this is not AutoTurret || this is not GoldenTurret)
+        if (body == null || head == null)
+        {
+            body = gameObject.FindRecursive("Body");
+            head = gameObject.FindRecursive("Head");
+        }
+
+        if (type != Define.StructureType.AutoTurret && type != Define.StructureType.GoldenTurret)
         {
             body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
             head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];

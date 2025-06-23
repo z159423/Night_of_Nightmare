@@ -20,8 +20,8 @@ public class Upgrade_Popup : UI_Popup
     {
         SellSlot,
         TouchGuard,
-        CoinSlot,
-        EnergySlot
+        SellCoinSlot,
+        SellEnergySlot
     }
 
     enum Texts
@@ -69,10 +69,10 @@ public class Upgrade_Popup : UI_Popup
             GetImage(Images.SellSlot).gameObject.SetActive(true);
 
             int sellCoin = data.GetSellCoin(currentStructure.level);
-            GetImage(Images.CoinSlot).gameObject.SetActive(sellCoin > 0);
+            GetImage(Images.SellCoinSlot).gameObject.SetActive(sellCoin > 0);
 
             int sellEnergy = data.GetSellEnergy(currentStructure.level);
-            GetImage(Images.EnergySlot).gameObject.SetActive(sellEnergy > 0);
+            GetImage(Images.SellEnergySlot).gameObject.SetActive(sellEnergy > 0);
 
             GetTextMesh(Texts.SellCoinCount).text = sellCoin.ToString();
             GetTextMesh(Texts.SellEnergyText).text = sellEnergy.ToString();
@@ -93,7 +93,7 @@ public class Upgrade_Popup : UI_Popup
             // upgradeSlot.gameObject.SetActive(false);
 
             upgradeSlot.Init();
-            upgradeSlot.Setting(data, null, structure.level, structure);
+            upgradeSlot.Setting(data, null, structure.level, true);
         }
         else
         {
@@ -106,7 +106,7 @@ public class Upgrade_Popup : UI_Popup
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
 
                 Exit();
-            }, structure.level + 1, structure);
+            }, structure.level + 1, true);
         }
 
         OpenAnimation();

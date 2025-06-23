@@ -92,4 +92,28 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("PlayerTicketCount", 0);
         set { PlayerPrefs.SetInt("PlayerTicketCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
     }
+
+    public int PlayerLampCount
+    {
+        get => PlayerPrefs.GetInt("PlayerLampCount", 4);
+        set { PlayerPrefs.SetInt("PlayerLampCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeLampCount); }
+    }
+
+    public int playerHammerCount
+    {
+        get => PlayerPrefs.GetInt("PlayerHammerCount", 2);
+        set { PlayerPrefs.SetInt("PlayerHammerCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHammerCount); }
+    }
+
+    public int PlayerHolyShieldCount
+    {
+        get => PlayerPrefs.GetInt("PlayerHolyShieldCount", 2);
+        set { PlayerPrefs.SetInt("PlayerHolyShieldCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHolyShieldCount); }
+    }
+    
+    public int PlayerOverHeatCount
+    {
+        get => PlayerPrefs.GetInt("PlayerOverHeatCount", 2);
+        set { PlayerPrefs.SetInt("PlayerOverHeatCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeOverHeatCount); }
+    }
 }

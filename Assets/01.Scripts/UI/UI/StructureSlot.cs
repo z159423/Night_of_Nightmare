@@ -49,6 +49,8 @@ public class StructureSlot : UI_Base
 
     private int level = 0;
 
+    bool upgrade = false;
+
     public override void Init()
     {
         if (!_init)
@@ -67,17 +69,11 @@ public class StructureSlot : UI_Base
         });
     }
 
-    public void Setting(StructureData data, Action onPurcahse, int level, Structure selectedStructure = null)
+    public void Setting(StructureData data, Action onPurcahse, int level, bool upgrade = false)
     {
         _data = data;
 
-        // if (upgrade)
-        // {
-        //     var currentStructure = selectedStructure;
-        //     level = currentStructure != null ? currentStructure.level + 1 : 0;
-        // }
-        // else
-        //     level = 0;
+        this.upgrade = upgrade;
 
         this.level = level;
 
@@ -99,7 +95,8 @@ public class StructureSlot : UI_Base
 
             GetButton(Buttons.Button).AddButtonEvent(() =>
             {
-                if (Define.IsFreeStructure(Managers.Game.playerData, _data.structureType) || (CheckIsReqired() && _data.GetPurchaseCoin(level, Managers.Game.playerData.type) <= Managers.Game.playerData.coin && _data.GetPurchaseEnergy(level, Managers.Game.playerData.type) <= Managers.Game.playerData.energy))
+                if ((upgrade ? false : Define.IsFreeStructure(Managers.Game.playerData, _data.structureType))
+                 || (CheckIsReqired() && _data.GetPurchaseCoin(level, Managers.Game.playerData.type) <= Managers.Game.playerData.coin && _data.GetPurchaseEnergy(level, Managers.Game.playerData.type) <= Managers.Game.playerData.energy))
                 {
                     onPurcahse?.Invoke();
                     return;
@@ -140,7 +137,8 @@ public class StructureSlot : UI_Base
         else
             GetImage(Images.EnergySlot).gameObject.SetActive(false);
 
-        if (Define.IsFreeStructure(Managers.Game.playerData, _data.structureType) || (CheckIsReqired() && (_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.GetPurchaseCoin(level, Managers.Game.playerData.type)) : true)
+        if ((upgrade ? false : Define.IsFreeStructure(Managers.Game.playerData, _data.structureType))
+             || (CheckIsReqired() && (_data.upgradeCoin.Length > 0 ? (Managers.Game.playerData.coin >= _data.GetPurchaseCoin(level, Managers.Game.playerData.type)) : true)
          && (_data.upgradeEnergy.Length > 0 ? (Managers.Game.playerData.energy >= _data.GetPurchaseEnergy(level, Managers.Game.playerData.type)) : true)))
         {
             GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[0]; // 활성화된 버튼 이미지
@@ -150,7 +148,7 @@ public class StructureSlot : UI_Base
             GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[1]; // 비활성화된 버튼 이미지
         }
 
-        if (Define.IsFreeStructure(Managers.Game.playerData, _data.structureType))
+        if (upgrade ? false : Define.IsFreeStructure(Managers.Game.playerData, _data.structureType))
         {
             GetTextMesh(Texts.FreeText).gameObject.SetActive(true);
             GetImage(Images.CoinSlot).gameObject.SetActive(false);
@@ -242,6 +240,10 @@ public class StructureSlot : UI_Base
                 desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString()) + "<br>" + Managers.Localize.GetDynamicText("global.str_desc_atk_range", "10.5");
                 break;
 
+            case Define.StructureType.Lamp:
+                desc = Managers.Localize.GetText(_data.descriptionKey) + "<br>" + Managers.Localize.GetDynamicText("global.str_owned", Managers.LocalData.PlayerLampCount.ToString());
+                break;
+                
             default:
                 desc = Managers.Localize.GetText(_data.descriptionKey);
                 break;

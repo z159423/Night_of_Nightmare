@@ -665,9 +665,8 @@ GameObject:
   - component: {fileID: 8240996832982120472}
   - component: {fileID: 194208342910136324}
   - component: {fileID: 4087089910085888789}
-  - component: {fileID: 323101220765402822}
   m_Layer: 5
-  m_Name: EnergySlot
+  m_Name: SellEnergySlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,21 +732,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &323101220765402822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819356285929620782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phase: 0
-  animationType: 0
-  staticSize: 0
 --- !u!1 &2857972861365034293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,9 +988,8 @@ GameObject:
   - component: {fileID: 714212547071787596}
   - component: {fileID: 1336261972238306665}
   - component: {fileID: 752962247338634224}
-  - component: {fileID: 3198241798273099121}
   m_Layer: 5
-  m_Name: CoinSlot
+  m_Name: SellCoinSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1072,21 +1055,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3198241798273099121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4269323646202387129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phase: 0
-  animationType: 0
-  staticSize: 0
 --- !u!1 &5228310115028111183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,7 +1735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 0}
   m_SizeDelta: {x: 1050, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3621097962597522154

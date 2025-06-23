@@ -143,7 +143,7 @@ public class Structure_Popup : UI_Popup
 
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
                 Exit();
-            }, 0);
+            }, 0, upgrade: false);
         }
     }
 
