@@ -150,14 +150,9 @@ public class GameManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(20f); // 적 생성 딜레이
 
-                if (currentMap.transform != null)
+                if (enemy == null && currentMap.transform != null)
                 {
-                    var _enemy = Managers.Resource.Instantiate("Enemy", currentMap.transform);
-
-                    SetPos(_enemy.transform);
-
-                    _enemy.GetComponentInChildren<Enemy>().Setting(enemyType);
-                    enemy = _enemy.GetComponentInChildren<Enemy>();
+                    SpawnEnemy();
                 }
             }
         }
@@ -165,18 +160,29 @@ public class GameManager : MonoBehaviour
         Managers.Camera.cameras[GameMode.Map].Follow = Managers.Game.playerCharactor.transform;
 
         // 반지름 1.6유닛(160px) 원 안에 랜덤 스폰
-        void SetPos(Transform trans)
-        {
-            Vector3 center = currentMap.charactorSpawnPoint.position;
-            float radius = 2f; // 1.6유닛 = 160px (유닛:미터 기준)
-            float angle = Random.Range(0f, Mathf.PI * 2f);
-            float distance = Random.Range(0f, radius);
-            float x = Mathf.Cos(angle) * distance;
-            float z = Mathf.Sin(angle) * distance;
-            Vector3 spawnPos = center + new Vector3(x, z, 0);
+    }
+    void SetPos(Transform trans)
+    {
+        Vector3 center = currentMap.charactorSpawnPoint.position;
+        float radius = 2f; // 1.6유닛 = 160px (유닛:미터 기준)
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float distance = Random.Range(0f, radius);
+        float x = Mathf.Cos(angle) * distance;
+        float z = Mathf.Sin(angle) * distance;
+        Vector3 spawnPos = center + new Vector3(x, z, 0);
 
-            trans.position = spawnPos;
-        }
+        trans.position = spawnPos;
+    }
+
+    [Button("SpawnEnemy")]
+    void SpawnEnemy()
+    {
+        var _enemy = Managers.Resource.Instantiate("Enemy", currentMap.transform);
+
+        SetPos(_enemy.transform);
+
+        _enemy.GetComponentInChildren<Enemy>().Setting(enemyType);
+        enemy = _enemy.GetComponentInChildren<Enemy>();
     }
 
     public void GoHome()

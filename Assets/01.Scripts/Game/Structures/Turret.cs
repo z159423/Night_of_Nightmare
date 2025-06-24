@@ -177,6 +177,11 @@ public class Turret : Structure
             coolDown *= 0.5f;
         }
 
+        if (activeEffects.Any(a => a is OverHeat))
+        {
+            coolDown *= 0.5f;
+        }
+
         return coolDown;
     }
 }

@@ -18,8 +18,8 @@ public class Door : Structure
 
     public bool energyShield = false;
 
-    private Transform repair;
-    private Transform energyShieldObj;
+    public Transform repair;
+    public Transform energyShieldObj;
     private Transform thornBush;
     private Transform coolerParticle;
 
@@ -122,7 +122,7 @@ public class Door : Structure
     public override void Hit(int damage)
     {
         // 에너지 쉴드가 활성화 중이면 데미지 무시
-        if (energyShield)
+        if (energyShield || activeEffects.Any(e => e is HolyProtection))
         {
             ShowHpBar();
             return;

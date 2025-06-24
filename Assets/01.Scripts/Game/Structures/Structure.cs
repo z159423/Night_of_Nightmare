@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using VHierarchy.Libs;
 using System.Linq;
+using System.Text;
 
 public abstract class Structure : MonoBehaviour
 {
@@ -18,7 +19,9 @@ public abstract class Structure : MonoBehaviour
     public bool playerStructure = false;
 
     protected int MaxHp = 1;
+    public int GetMaxHp() => MaxHp;
     protected int Hp = 1;
+    public int GetHp() => Hp;
     public bool destroyed = false;
 
     public Define.StructureType type;
@@ -91,6 +94,19 @@ public abstract class Structure : MonoBehaviour
             // 상하좌우로 랜덤 방향으로 펀치 효과
             Vector2 randomDir = Random.insideUnitCircle.normalized * 0.1f;
             spriteRenderer.transform.DOPunchPosition((Vector3)randomDir, 0.2f, 10, 1);
+        }
+    }
+
+    public virtual void Heal(int healAmount)
+    {
+        Hp += healAmount;
+        if (Hp > MaxHp)
+            Hp = MaxHp;
+
+        // HP바 업데이트
+        if (hpBarBody != null)
+        {
+            hpBarBody.localScale = new Vector3((float)Hp / MaxHp, 1, 1);
         }
     }
 
@@ -285,6 +301,119 @@ public class MothPowderStun : StructureEffect
         {
             Managers.Resource.Destroy(effectObj);
             effectObj = null;
+        }
+    }
+}
+
+public class SelfDoorRepair : StructureEffect
+{
+    private float tickTimer = 0f;
+
+
+    public SelfDoorRepair(float duration)
+    {
+        Name = "SelfDoorRepair";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Structure structure)
+    {
+        if (structure is Door door)
+        {
+            tickTimer = 0f;
+
+            door.repair.gameObject.SetActive(true);
+        }
+    }
+
+    protected override void OnTick(Structure structure, float deltaTime)
+    {
+        if (structure is Door door)
+        {
+            while (tickTimer >= 1f)
+            {
+                tickTimer -= 1f;
+                door.Heal(Mathf.RoundToInt(door.GetMaxHp() * 0.05f));
+            }
+        }
+
+        tickTimer += deltaTime;
+    }
+
+    protected override void OnRemove(Structure structure)
+    {
+        if (structure is Door door)
+        {
+            door.repair.gameObject.SetActive(false);
+        }
+    }
+}
+
+public class OverHeat : StructureEffect
+{
+    private float tickTimer = 0f;
+
+    public OverHeat(float duration)
+    {
+        Name = "OverHeat";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Structure structure)
+    {
+        if (structure is Turret turret)
+        {
+            tickTimer = 0f;
+        }
+    }
+
+    protected override void OnTick(Structure structure, float deltaTime)
+    {
+
+
+        tickTimer += deltaTime;
+    }
+
+    protected override void OnRemove(Structure structure)
+    {
+        if (structure is Turret turret)
+        {
+
+        }
+    }
+}
+
+public class HolyProtection : StructureEffect
+{
+    private float tickTimer = 0f;
+
+    public HolyProtection(float duration)
+    {
+        Name = "HolyProtection";
+        Duration = duration;
+    }
+
+    protected override void OnApply(Structure structure)
+    {
+        if (structure is Door door)
+        {
+            tickTimer = 0f;
+
+            door.energyShieldObj.gameObject.SetActive(true);
+        }
+    }
+
+    protected override void OnTick(Structure structure, float deltaTime)
+    {
+
+        tickTimer += deltaTime;
+    }
+
+    protected override void OnRemove(Structure structure)
+    {
+        if (structure is Door door)
+        {
+            door.energyShieldObj.gameObject.SetActive(false);
         }
     }
 }

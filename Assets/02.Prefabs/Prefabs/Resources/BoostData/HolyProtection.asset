@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c0ed3f8c8e0d943a26daf3f385e87c, type: 3}
   m_Name: HolyProtection
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   nameKey: global.str_boost_protect_name
   descriptionKey: global.str_boost_protect_desc
   price: 50
