@@ -54,7 +54,21 @@ public class Lamp : Structure
 
         if (lampStructures is Turret)
         {
-            for (int i = 0; i < Random.Range(3, 7); i++)
+            // 3~6레벨 중 확률 분포에 따라 최대 업그레이드 레벨 결정
+            int maxLevel;
+            float rand2 = Random.value;
+            if (rand2 < 0.4f)
+                maxLevel = 1;
+            else if (rand2 < 0.8f)
+                maxLevel = 2;
+            else if (rand2 < 0.9f)
+                maxLevel = 3;
+            else
+                maxLevel = 4;
+
+            int upgradeCount = Mathf.Max(0, 3 + maxLevel);
+
+            for (int i = 0; i < upgradeCount; i++)
             {
                 lampStructures.Upgrade();
             }
@@ -62,7 +76,20 @@ public class Lamp : Structure
 
         if (lampStructures is Generator)
         {
-            for (int i = 0; i < Random.Range(1, 6); i++)
+            int maxLevel;
+            float rand2 = Random.value;
+            if (rand2 < 0.4f)
+                maxLevel = 1;
+            else if (rand2 < 0.8f)
+                maxLevel = 2;
+            else if (rand2 < 0.9f)
+                maxLevel = 3;
+            else if (rand2 < 0.95f)
+                maxLevel = 4;
+            else
+                maxLevel = 5;
+
+            for (int i = 0; i < Random.Range(0, maxLevel); i++)
             {
                 lampStructures.Upgrade();
             }
