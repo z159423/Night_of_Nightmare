@@ -117,29 +117,25 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.RepairBtn).onClick.AddListener(() =>
         {
-            if (canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
+            if (Managers.Game.playerData.canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
             {
                 StartCoroutine(RepairDoor());
                 IEnumerator RepairDoor()
                 {
-                    if (canDoorRepair)
+                    if (Managers.Game.playerData.canDoorRepair)
                     {
+                        Managers.Game.playerData.SelfRepairDoor();
 
                         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
-                        canDoorRepair = false;
                         repairStartTime = DateTime.Now;
-                        Managers.Game.playerData.room.door.AddEffect(new SelfDoorRepair(5));
                         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(true);
                         hpbar.gameObject.SetActive(true);
-                        // GetButton(Buttons.RepairBtn).interactable = false;
 
                         yield return new WaitForSeconds(20);
 
                         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
                         hpbar.gameObject.SetActive(false);
-                        canDoorRepair = true;
                         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
-                        // GetButton(Buttons.RepairBtn).interactable = true;
                     }
                 }
             }

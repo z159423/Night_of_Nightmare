@@ -7,6 +7,9 @@ public class Generator : Structure
     protected override void Start()
     {
         base.Start();
+
+        upgradePercent = 25f;
+
     }
 
     public override void Upgrade()

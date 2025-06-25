@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private Tile[] tiles;
+    [SerializeField] public Tile[] tiles;
     [SerializeField] public Bed bed;
     [SerializeField] public Door door;
 
@@ -29,13 +29,10 @@ public class Room : MonoBehaviour
     {
         door.CloseDoor();
 
-        if (!isPlayer)
-            return;
-
         foreach (Tile tile in tiles)
         {
             tile.gameObject.SetActive(true);
-            tile.OnActive();
+            tile.OnActive(isPlayer);
         }
     }
 

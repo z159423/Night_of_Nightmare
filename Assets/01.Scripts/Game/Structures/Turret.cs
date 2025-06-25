@@ -24,6 +24,8 @@ public class Turret : Structure
 
         body = gameObject.FindRecursive("Body");
         head = gameObject.FindRecursive("Head");
+
+        upgradePercent = 2.5f;
     }
 
     protected override void Update()

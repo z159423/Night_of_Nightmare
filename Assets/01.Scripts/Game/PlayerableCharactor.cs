@@ -32,17 +32,22 @@ public abstract class PlayerableCharactor : Charactor
         {
             if (!bed.active)
             {
-                currentActiveRoom = bed.OnActive(this);
-                gameObject.SetActive(false);
-
-                playerData.room = currentActiveRoom;
-
-                playerData.structures.Add(currentActiveRoom.bed);
-                currentActiveRoom.bed.playerData = playerData;
-                playerData.structures.Add(currentActiveRoom.door);
-                currentActiveRoom.door.playerData = playerData;
+                OnActiveRoom(bed);
             }
         }
+    }
+
+    protected virtual void OnActiveRoom(Bed bed)
+    {
+        currentActiveRoom = bed.OnActive(this);
+        gameObject.SetActive(false);
+
+        playerData.room = currentActiveRoom;
+
+        playerData.structures.Add(currentActiveRoom.bed);
+        currentActiveRoom.bed.playerData = playerData;
+        playerData.structures.Add(currentActiveRoom.door);
+        currentActiveRoom.door.playerData = playerData;
     }
 
     public abstract void Die();

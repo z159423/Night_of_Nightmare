@@ -29,6 +29,8 @@ public abstract class Structure : MonoBehaviour
 
     public PlayerData playerData;
 
+    protected float upgradePercent = 2.5f;
+
     protected virtual void Start()
     {
         if (spriteRenderer == null)
@@ -116,6 +118,8 @@ public abstract class Structure : MonoBehaviour
         gameObject.SetActive(false);
 
         destroyed = true;
+
+        StopAllCoroutines();
     }
 
     public void CheckUpgrade()
@@ -190,6 +194,27 @@ public abstract class Structure : MonoBehaviour
             activeEffects[i].Tick(this, Time.deltaTime);
             if (!activeEffects[i].IsActive)
                 activeEffects.RemoveAt(i);
+        }
+    }
+
+    public virtual void CheckPossibleUpgrade()
+    {
+        StartCoroutine(routine());
+
+        IEnumerator routine()
+        {
+            var _data = Managers.Game.GetStructureData(type);
+
+            while (true)
+            {
+                yield return new WaitForSeconds(1f); // 잠시 대기하여 UI 업데이트가 완료되도록 함
+
+                if (upgradePercent < Random.Range(0f, 100f) && _data.CanUpgrade(playerData, level + 1))
+                {
+                    playerData.UseResource(_data.upgradeCoin[level], _data.upgradeEnergy[level]);
+                    Upgrade();
+                }
+            }
         }
     }
 }
@@ -333,7 +358,7 @@ public class SelfDoorRepair : StructureEffect
             while (tickTimer >= 1f)
             {
                 tickTimer -= 1f;
-                door.Heal(Mathf.RoundToInt(door.GetMaxHp() * 0.05f));
+                door.Heal(Mathf.RoundToInt(door.GetMaxHp() * 0.07f));
             }
         }
 

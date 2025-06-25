@@ -9,13 +9,22 @@ public class Tile : MonoBehaviour
 
     public Structure currentStructure;
 
+    public bool playerTile = false;
+
     void Start()
     {
         animation = GetComponent<DOTweenAnimation>();
     }
 
-    public void OnActive()
+    public void OnActive(bool isPlayer)
     {
+        playerTile = isPlayer;
+
+        if (!isPlayer)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
+
         if (animation != null)
         {
             animation.DORestart();

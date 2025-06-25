@@ -304,4 +304,53 @@ public class GameManager : MonoBehaviour
     {
         Managers.LocalData.AddBoostItem(type, -1);
     }
+
+    public bool BuildStructure(PlayerData _playerData, StructureType type, Tile tile)
+    {
+        var structureData = GetStructureData(type);
+
+        if (structureData.CanPurchase(_playerData, 0))
+        {
+            if (IsFreeStructure(_playerData, type))
+            {
+                _playerData.AddFreeCount(type);
+            }
+            else
+            {
+                _playerData.UseResource(structureData.GetPurchaseCoin(0, _playerData), structureData.GetPurchaseEnergy(0, _playerData));
+
+                if (type == StructureType.Lamp)
+                    Managers.LocalData.PlayerLampCount--;
+            }
+
+            var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == structureData.structureType);
+            var structure = Instantiate(find, tile.transform).GetComponentInChildren<Structure>();
+
+            if (_playerData != this.playerData && (type == StructureType.Turret || type == StructureType.Generator))
+            {
+                structure.CheckPossibleUpgrade();
+            }
+
+            var particle = Managers.Resource.Instantiate("Particles/StructureProductParticle");
+
+            particle.transform.position = tile.transform.position;
+
+            StartCoroutine(destroy());
+
+            IEnumerator destroy()
+            {
+                yield return new WaitForSeconds(1.2f);
+                Managers.Resource.Destroy(particle);
+            }
+
+            _playerData.BuildStructure(structure);
+
+            if (type != StructureType.MovingFrog)
+                tile.currentStructure = structure;
+
+            return true;
+        }
+        else
+            return false;
+    }
 }

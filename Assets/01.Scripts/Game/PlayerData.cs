@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using static Define;
 
 [System.Serializable]
@@ -19,6 +21,8 @@ public class PlayerData
     public int freeLampCount = 0;
 
     public int buyLampCount = 0;
+
+    public bool canDoorRepair = true;
 
     public PlayerData(CharactorType type)
     {
@@ -159,6 +163,23 @@ public class PlayerData
             case StructureType.Lamp:
                 freeLampCount++;
                 break;
+        }
+    }
+
+    public void SelfRepairDoor()
+    {
+        Managers.Game.StartCoroutine(coolTime());
+
+        IEnumerator coolTime()
+        {
+            if (canDoorRepair)
+            {
+                canDoorRepair = false;
+                room.door.AddEffect(new SelfDoorRepair(5));
+
+                yield return new WaitForSeconds(20);
+                canDoorRepair = true;
+            }
         }
     }
 }
