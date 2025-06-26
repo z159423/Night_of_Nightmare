@@ -46,7 +46,7 @@ public class Notification_Popup : UI_Base
         canvasGroup.DOFade(1f, 0.4f).OnComplete(() =>
         {
             // 3초 대기 후
-            DOVirtual.DelayedCall(2.5f, () =>
+            DOVirtual.DelayedCall(1f, () =>
             {
                 // y좌표 70만큼 1.5초 동안 이동 + 알파값 0으로
                 var seq = DOTween.Sequence();
@@ -57,8 +57,22 @@ public class Notification_Popup : UI_Base
         });
     }
 
-    private void Exit()
+    public void Exit()
     {
+        // DOTween 트윈 모두 정지 및 원래 상태로 복구
+        var image = GetImage(Images.Image);
+        var canvasGroup = image.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            DOTween.Kill(canvasGroup);
+            canvasGroup.alpha = 1f;
+        }
+        if (image != null)
+        {
+            DOTween.Kill(image.rectTransform);
+            image.rectTransform.anchoredPosition = Vector2.zero;
+        }
+        
         Managers.Resource.Destroy(gameObject);
     }
 }

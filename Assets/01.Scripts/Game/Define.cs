@@ -96,6 +96,8 @@ public class Define
         return GetTierByScore(Managers.LocalData.PlayerRankingPoint);
     }
 
+
+
     public static Tier GetTierByScore(int score)
     {
         // TierToScore를 점수 오름차순으로 정렬
@@ -149,6 +151,18 @@ public class Define
         {Tier.GrandMaster, 150},
         {Tier.Challenger, 170}
     };
+
+    public static int GetCurrentStageDiffValue()
+    {
+        if (Managers.Game.isChallengeMode)
+        {
+            return ChallenModeDifficultyValue[Managers.Game.challengeLevel];
+        }
+        else
+        {
+            return TierDiffValue[GetPlayerCurrentTier()];
+        }
+    }
 
     public static Dictionary<Tier, (int, int)> TierWinGetPoint = new Dictionary<Tier, (int, int)>()
     {
@@ -268,11 +282,11 @@ public class Define
     {
         if (isWin)
         {
-            return (int)(Random.Range(3, 8) + (TierDiffValue[GetPlayerCurrentTier()] * 0.015f));
+            return (int)(Random.Range(3, 8) + (GetCurrentStageDiffValue() * 0.015f));
         }
         else
         {
-            return (int)(Random.Range(2, 5) + (TierDiffValue[GetPlayerCurrentTier()] * 0.015f));
+            return (int)(Random.Range(2, 5) + (GetCurrentStageDiffValue() * 0.015f));
         }
     }
 
@@ -536,4 +550,76 @@ public class Define
     {
         return Managers.Resource.LoadAll<BoostData>("BoostData/").First(n => n.type == type);
     }
+
+    public static Dictionary<int, float> ChallengeModeDiff = new Dictionary<int, float>()
+    {
+        { 1, 96.97f },
+        { 2, 94.41f },
+        { 3, 92.23f },
+        { 4, 86.87f },
+        { 5, 74.05f },
+        { 6, 73.85f },
+        { 7, 64.41f },
+        { 8, 53.13f },
+        { 9, 45.90f },
+        { 10, 38.15f },
+        { 11, 32.44f },
+        { 12, 26.65f },
+        { 13, 21.23f },
+        { 14, 17.82f },
+        { 15, 14.02f },
+        { 16, 11.51f },
+        { 17, 9.24f },
+        { 18, 7.88f },
+        { 19, 6.09f },
+        { 20, 5.65f },
+    };
+
+    public static Dictionary<int, Color32> ChallengeModeColor = new Dictionary<int, Color32>()
+    {
+    { 1,  new Color32(178, 178, 178, 255) }, // B2B2B2
+    { 2,  new Color32(229, 229, 229, 255) }, // E5E5E5
+    { 3,  new Color32(253, 255, 178, 255) }, // FDFFB2
+    { 4,  new Color32(148, 255, 127, 255) }, // 94FF7F
+    { 5,  new Color32(255, 255, 76, 255) },  // FFFF4C
+    { 6,  new Color32(212, 255, 127, 255) }, // D4FF7F
+    { 7,  new Color32(164, 255, 76, 255) },  // A4FF4C
+    { 8,  new Color32(138, 255, 25, 255) },  // 8AFF19
+    { 9,  new Color32(178, 223, 255, 255) }, // B2DFFF
+    { 10, new Color32(101, 191, 255, 255) }, // 65BFFF
+    { 11, new Color32(50, 170, 255, 255) },  // 32AAFF
+    { 12, new Color32(43, 94, 255, 255) },   // 2B5EFF
+    { 13, new Color32(198, 178, 255, 255) }, // C6B2FF
+    { 14, new Color32(179, 153, 255, 255) }, // B399FF
+    { 15, new Color32(140, 101, 255, 255) }, // 8C65FF
+    { 16, new Color32(255, 218, 124, 255) }, // FFDA7C
+    { 17, new Color32(255, 204, 76, 255) },  // FFCC4C
+    { 18, new Color32(255, 144, 75, 255) },  // FF904B
+    { 19, new Color32(255, 84, 75, 255) },   // FF544B
+    { 20, new Color32(255, 25, 52, 255) },   // FF1934
+    };
+
+    public static Dictionary<int, int> ChallenModeDifficultyValue = new Dictionary<int, int>()
+    {
+    { 1, 10 },
+    { 2, 20 },
+    { 3, 30 },
+    { 4, 40 },
+    { 5, 50 },
+    { 6, 60 },
+    { 7, 70 },
+    { 8, 80 },
+    { 9, 90 },
+    { 10, 100 },
+    { 11, 110 },
+    { 12, 120 },
+    { 13, 130 },
+    { 14, 140 },
+    { 15, 150 },
+    { 16, 160 },
+    { 17, 170 },
+    { 18, 180 },
+    { 19, 190 },
+    { 20, 200 },
+};
 }

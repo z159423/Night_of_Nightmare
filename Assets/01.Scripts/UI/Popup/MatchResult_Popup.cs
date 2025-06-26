@@ -35,7 +35,8 @@ public class MatchResult_Popup : UI_Popup
         RankingPointText,
         ContinueText,
         NoThanksGemCountText,
-        ClaimText
+        ClaimText,
+        Title
     }
 
     [SerializeField] private Color[] colors;
@@ -73,31 +74,7 @@ public class MatchResult_Popup : UI_Popup
 
         GetButton(Buttons.ContinueBtn).AddButtonEvent(() =>
         {
-            gameObject.FindRecursive("Ranking").gameObject.SetActive(false);
-            gameObject.FindRecursive("Result").gameObject.SetActive(true);
-
-            gameObject.FindRecursive("Result").transform.localScale = Vector3.zero;
-            gameObject.FindRecursive("Result").transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
-
-            StartCoroutine(wait());
-
-            IEnumerator wait()
-            {
-                GetButton(Buttons.ClaimBtn).transform.localScale = Vector3.zero;
-
-                yield return new WaitForSeconds(0.5f);
-
-                GetButton(Buttons.ClaimBtn).transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
-
-                if (iswin)
-                {
-                    yield return new WaitForSeconds(1.5f);
-
-                    GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().alpha = 0f;
-                    GetButton(Buttons.NoThanksBtn).gameObject.SetActive(true);
-                    GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().DOFade(1f, 2f);
-                }
-            }
+            ActiveResult();
         });
 
         GetButton(Buttons.ClaimBtn).AddButtonEvent(() =>
@@ -126,54 +103,78 @@ public class MatchResult_Popup : UI_Popup
         });
     }
 
-    public void Setting(bool isWin, int point)
+    void ActiveResult()
+    {
+        gameObject.FindRecursive("Ranking").gameObject.SetActive(false);
+        gameObject.FindRecursive("Result").gameObject.SetActive(true);
+
+        gameObject.FindRecursive("Result").transform.localScale = Vector3.zero;
+        gameObject.FindRecursive("Result").transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+
+        StartCoroutine(wait());
+
+        IEnumerator wait()
+        {
+            GetButton(Buttons.ClaimBtn).transform.localScale = Vector3.zero;
+
+            yield return new WaitForSeconds(0.5f);
+
+            GetButton(Buttons.ClaimBtn).transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+
+            if (iswin)
+            {
+                yield return new WaitForSeconds(1.5f);
+
+                GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().alpha = 0f;
+                GetButton(Buttons.NoThanksBtn).gameObject.SetActive(true);
+                GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().DOFade(1f, 2f);
+            }
+        }
+    }
+
+    public void Setting(bool isWin, int point, bool isChallengeMode = false)
     {
         iswin = isWin;
         GemCount = Define.GetResultGemCount(isWin);
+
+        GetTextMesh(Texts.Title).text = isChallengeMode ? Managers.Localize.GetText("global.str_challenge_mode") : Managers.Localize.GetText("global.str_rank_mode");
 
         // 공통 텍스트
         GetTextMesh(Texts.RankingTierText).text = Define.GetPlayerCurrentTier().ToString();
         GetTextMesh(Texts.RankingPointDiffText).text = (isWin ? "+" : "-") + point.ToString();
 
-        if (isWin)
-        {
-            // 승리 시 UI 설정
-            GetImage(Images.Shine).gameObject.SetActive(true);
-            GetImage(Images.ResultShine).gameObject.SetActive(true);
-            GetTextMesh(Texts.RankingPointDiffText).color = colors[0];
-            GetTextMesh(Texts.NoThanksGemCountText).text = $"x {GemCount}";
-            GetTextMesh(Texts.GemCountText).text = $"x {GemCount * 4}";
-            GetImage(Images.RVIcon).gameObject.SetActive(true);
-            GetTextMesh(Texts.ResultTitle).text = Managers.Localize.GetText("global.str_win_reward");
-            GetTextMesh(Texts.ClaimText).text = Managers.Localize.GetDynamicText("global.str_claim_reward", 4.ToString());
+        // 공통 GemCountText, NoThanksGemCountText, RVIcon, ResultTitle, ClaimText
+        int claimGem = isWin ? GemCount * 4 : GemCount;
+        GetTextMesh(Texts.GemCountText).text = $"x {claimGem}";
+        GetTextMesh(Texts.NoThanksGemCountText).text = $"x {GemCount}";
+        GetImage(Images.RVIcon).gameObject.SetActive(isWin);
+        GetTextMesh(Texts.ResultTitle).text = Managers.Localize.GetText(isWin ? "global.str_win_reward" : "global.str_lose");
+        GetTextMesh(Texts.ClaimText).text = isWin
+            ? Managers.Localize.GetDynamicText("global.str_claim_reward", 4.ToString())
+            : Managers.Localize.GetText("global.str_claim");
 
-            TextUtils.UINumberTween(
-                GetTextMesh(Texts.RankingPointText),
-                Managers.LocalData.PlayerRankingPoint - point,
-                Managers.LocalData.PlayerRankingPoint,
-                3
-            );
+        if (isChallengeMode)
+        {
+            ActiveResult();
         }
         else
         {
-            // 패배 시 UI 설정
-            GetImage(Images.Shine).gameObject.SetActive(false);
-            GetImage(Images.ResultShine).gameObject.SetActive(false);
-            GetTextMesh(Texts.RankingPointDiffText).color = colors[1];
-            GetImage(Images.RVIcon).gameObject.SetActive(false);
-            GetTextMesh(Texts.GemCountText).text = $"x {GemCount}";
-            GetTextMesh(Texts.ResultTitle).text = Managers.Localize.GetText("global.str_lose");
-            GetTextMesh(Texts.ClaimText).text = Managers.Localize.GetText("global.str_claim");
+            // 승패별 추가 UI
+            GetImage(Images.Shine).gameObject.SetActive(isWin);
+            GetImage(Images.ResultShine).gameObject.SetActive(isWin);
+            GetTextMesh(Texts.RankingPointDiffText).color = colors[isWin ? 0 : 1];
 
+            // 랭킹 포인트 Tween
+            int from = isWin ? Managers.LocalData.PlayerRankingPoint - point : Managers.LocalData.PlayerRankingPoint + point;
             TextUtils.UINumberTween(
                 GetTextMesh(Texts.RankingPointText),
-                Managers.LocalData.PlayerRankingPoint + point,
+                from,
                 Managers.LocalData.PlayerRankingPoint,
                 3
             );
-        }
 
-        StartCoroutine(ShowContinueButton());
+            StartCoroutine(ShowContinueButton());
+        }
 
         IEnumerator ShowContinueButton()
         {

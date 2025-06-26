@@ -535,9 +535,7 @@ public class Enemy : Charactor
 
         hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
 
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_level_up"));
+        Managers.UI.ShowNotificationPopup("global.str_toast_enemy_level_up");
 
         if (enemyType == Define.EnemyType.ScareCrow && level > 4)
         {

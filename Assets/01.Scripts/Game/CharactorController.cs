@@ -163,9 +163,7 @@ public class CharactorController : MonoBehaviour
                         }
                         else if (structure.type == Define.StructureType.Grave || structure.type == Define.StructureType.Frog || structure.type == Define.StructureType.PoisonFrog)
                         {
-                            var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-                            popup.GetComponent<Notification_Popup>().Init();
-                            popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_build_max_toast"));
+                            Managers.UI.ShowNotificationPopup("global.str_build_max_toast");
                         }
                         else
                         {

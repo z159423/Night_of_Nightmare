@@ -117,6 +117,12 @@ public class LocalDataManager
         set { PlayerPrefs.SetInt("PlayerOverHeatCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeOverHeatCount); }
     }
 
+    public int ChallengeModeLevel
+    {
+        get => PlayerPrefs.GetInt("ChallengeModeLevel", 1);
+        set { PlayerPrefs.SetInt("ChallengeModeLevel", value); IsSave = true; }
+    }
+
     public void AddBoostItem(Define.BoostType type, int count)
     {
         switch (type)

@@ -26,6 +26,8 @@ public class ChallengeMode_Popup : UI_Popup
     public override void Init()
     {
         base.Init();
+
+        Setting();
     }
 
     public override void FirstSetting()
@@ -39,6 +41,35 @@ public class ChallengeMode_Popup : UI_Popup
         layout = GetComponentInChildren<VerticalLayoutGroup>();
 
         GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
+    }
+
+    public void Setting()
+    {
+        for (int i = 1; i < Define.ChallengeModeDiff.Count + 1; i++)
+        {
+            var button = Managers.Resource.Instantiate("ChallengeModeBtn", layout.transform).GetComponent<ChallengeButtonUI>();
+            button.Init();
+            button.Setting(i, () => Exit());
+        }
+
+        // Layout, Fitter, ScrollRect 업데이트 후 스크롤 맨 위로 이동
+        StartCoroutine(RefreshLayoutAndScrollToTop());
+    }
+
+    private IEnumerator RefreshLayoutAndScrollToTop()
+    {
+        // 한 프레임 대기하여 레이아웃 갱신
+        yield return null;
+
+        // ContentSizeFitter, LayoutGroup 강제 갱신
+        LayoutRebuilder.ForceRebuildLayoutImmediate(layout.GetComponent<RectTransform>());
+
+        // ScrollRect를 찾아서 맨 위로 이동
+        var scrollRect = GetComponentInChildren<ScrollRect>();
+        if (scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 1f;
+        }
     }
 
     public override void Reset()

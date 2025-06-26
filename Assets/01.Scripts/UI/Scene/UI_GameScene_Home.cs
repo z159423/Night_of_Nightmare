@@ -19,7 +19,8 @@ public class UI_GameScene_Home : UI_Scene
         QeustBtn,
         RankModeBtn,
         ChallengeModeBtn,
-        CenterCharactorBtn
+        CenterCharactorBtn,
+        ChallengeLockBtn
     }
 
     enum Texts
@@ -30,7 +31,8 @@ public class UI_GameScene_Home : UI_Scene
 
     enum Images
     {
-        TouchGuard
+        TouchGuard,
+
     }
 
     public enum LowerBtnTypes
@@ -54,6 +56,8 @@ public class UI_GameScene_Home : UI_Scene
     private BoostShop_Popup boostShopPopup;
 
     private UI_Popup currentPopup;
+
+    private GameObject challengeLock;
 
 
     public override void Init()
@@ -86,6 +90,8 @@ public class UI_GameScene_Home : UI_Scene
 
         GetTextMesh(Texts.GemText).text = Managers.LocalData.PlayerGemCount.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+
+        challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 1);
     }
 
     public void FirstSetting()
@@ -103,6 +109,8 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>().Init();
         GetButton(Buttons.BoostBtn).GetComponent<LowerBtn>().Init();
         GetButton(Buttons.QeustBtn).GetComponent<LowerBtn>().Init();
+
+        challengeLock = gameObject.FindRecursive("ChallengeLock");
 
         GetButton(Buttons.ShopBtn).AddButtonEvent(() =>
         {
@@ -143,8 +151,7 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.RankModeBtn).onClick.AddListener(() =>
         {
             var popup = Managers.UI.ShowPopupUI<Match_Making_Popup>();
-
-
+            popup.Setting(false, 0);
         });
 
         GetButton(Buttons.ChallengeModeBtn).onClick.AddListener(() =>
@@ -157,6 +164,17 @@ public class UI_GameScene_Home : UI_Scene
             var lowerbtn = GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>();
 
             SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
+        });
+
+        GetButton(Buttons.ChallengeLockBtn).onClick.AddListener(() =>
+        {
+            var btn = GetButton(Buttons.ChallengeLockBtn);
+            btn.transform.DOScale(1.15f, 0.12f).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                btn.transform.DOScale(1f, 0.12f).SetEase(Ease.Linear);
+            });
+
+            Managers.UI.ShowNotificationPopup("global.str_not_enough_rank", 2);
         });
 
         this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
@@ -173,6 +191,11 @@ public class UI_GameScene_Home : UI_Scene
     public override void Show()
     {
         gameObject.SetActive(true);
+
+        if (challengeLock == null)
+            challengeLock = gameObject.FindRecursive("ChallengeLock");
+
+        challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 1);
     }
 
     public override void Hide()

@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
 
     public UI_Popup _currentPopup;
 
+    private GameObject notification;
+
 
     // Tribe //
 
@@ -503,4 +505,16 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
+
+    public void ShowNotificationPopup(string key, int index = 0)
+    {
+        if (notification != null)
+        {
+            notification.GetComponent<Notification_Popup>().Exit();
+        }
+
+        notification = Managers.Resource.Instantiate("Notification_Popup" + (index != 0 ? $"_{index}" : ""), Managers.UI.Root.transform).gameObject;
+        notification.GetComponent<Notification_Popup>().Init();
+        notification.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText(key));
+    }
 }

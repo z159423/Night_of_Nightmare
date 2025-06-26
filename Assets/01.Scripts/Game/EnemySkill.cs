@@ -22,7 +22,7 @@ public abstract class EnemySkill
     public int GetCoolDown()
     {
         // 난이도에 따라 쿨타임을 조정
-        return Mathf.RoundToInt(Random.Range(MinCooldown, MaxCooldown) - (Define.TierDiffValue[Define.GetPlayerCurrentTier()] * 0.05f));
+        return Mathf.RoundToInt(Random.Range(MinCooldown, MaxCooldown) - (Define.GetCurrentStageDiffValue() * 0.05f));
     }
 }
 
@@ -53,9 +53,7 @@ public class AttackSpeedSkill : EnemySkill
         enemy.moveSpeed.AddMultiplier(moveMultiplier);
         // 기타 효과
 
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_spd_skill"));
+        Managers.UI.ShowNotificationPopup("global.str_toast_enemy_spd_skill");
 
         //근처에 spellBlocker가 있는지 확인
 
@@ -106,9 +104,7 @@ public class AttackDamageSkill : EnemySkill
         enemy.attackPower.AddMultiplier(damageMultiplier);
         // 타격 사운드 변경 등 추가 효과는 필요시 구현
 
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_toast_enemy_dmg_skill"));
+        Managers.UI.ShowNotificationPopup("global.str_toast_enemy_dmg_skill");
 
         Managers.Game.charactors
             .Where(n => n.currentActiveRoom != null && n.playerData != null)
@@ -153,9 +149,7 @@ public class Creepylaughter : EnemySkill
         LastUseTime = Time.time;
         // 타격 사운드 변경 등 추가 효과는 필요시 구현
 
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_lol_toast"));
+        Managers.UI.ShowNotificationPopup("global.str_lol_toast");
 
         enemy.creepylaughterParticle.GetComponent<ParticleSystem>().Play();
 
@@ -202,9 +196,7 @@ public class MothPowder : EnemySkill
         LastUseTime = Time.time;
         // 타격 사운드 변경 등 추가 효과는 필요시 구현
 
-        var popup = Managers.Resource.Instantiate("Notification_Popup", Managers.UI.Root.transform);
-        popup.GetComponent<Notification_Popup>().Init();
-        popup.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText("global.str_moth_skill_toast"));
+        Managers.UI.ShowNotificationPopup("global.str_moth_skill_toast");
 
         enemy.creepylaughterParticle.GetComponent<ParticleSystem>().Play();
         enemy.mossManSkillParticle.GetComponent<ParticleSystem>().Play();

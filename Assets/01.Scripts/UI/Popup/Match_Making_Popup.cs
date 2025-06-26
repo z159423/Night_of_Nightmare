@@ -25,7 +25,8 @@ public class Match_Making_Popup : UI_Popup
     {
         MatchingText,
         MatchingTimeText,
-        RankingPointText
+        RankingPointText,
+        Title
     }
 
     GameObject matching;
@@ -38,6 +39,9 @@ public class Match_Making_Popup : UI_Popup
     private bool isMatching = false;
 
     private float matchingTime = 0f;
+
+    bool isChallengeMode = false;
+    int challengeStage = 0;
 
 
     public override void Init()
@@ -59,6 +63,15 @@ public class Match_Making_Popup : UI_Popup
             GetTextMesh(Texts.MatchingTimeText).text = Managers.Localize.GetDynamicText("global.str_matching", matchingTime.ToString("F1"));
         }
     }
+
+    public void Setting(bool isChallengeMode = false, int level = 0)
+    {
+        this.isChallengeMode = isChallengeMode;
+        this.challengeStage = level;
+
+        GetTextMesh(Texts.Title).text = isChallengeMode ? Managers.Localize.GetText("global.str_challenge_mode") : Managers.Localize.GetText("global.str_rank_mode");
+    }
+
     public override void FirstSetting()
     {
         base.FirstSetting();
@@ -71,7 +84,7 @@ public class Match_Making_Popup : UI_Popup
         ranking = gameObject.FindRecursive("Ranking");
 
         GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
-        GetButton(Buttons.MatchBtn).AddButtonEvent(StartMatching);
+        GetButton(Buttons.MatchBtn).AddButtonEvent(() => StartMatching(false));
         GetButton(Buttons.InfoBtn).AddButtonEvent(() =>
         {
             Managers.UI.ShowPopupUI<Tier_Popup>();
@@ -103,7 +116,7 @@ public class Match_Making_Popup : UI_Popup
                     GetButton(Buttons.MatchingBtn).AddButtonEvent(() =>
                     {
                         Exit();
-                        Managers.Game.OnRankGameStart();
+                        Managers.Game.OnRankGameStart(isChallengeMode, challengeStage);
                     });
 
                     yield return new WaitForSeconds(5f);
@@ -111,7 +124,7 @@ public class Match_Making_Popup : UI_Popup
                     if (!Managers.Game.isGameStart)
                     {
                         Exit();
-                        Managers.Game.OnRankGameStart();
+                        Managers.Game.OnRankGameStart(isChallengeMode, challengeStage);
                     }
                 }
             }
@@ -120,12 +133,17 @@ public class Match_Making_Popup : UI_Popup
         GetTextMesh(Texts.MatchingTimeText).text = Managers.Localize.GetDynamicText("global.str_matching", matchingTime.ToString("F1"));
     }
 
-    private void StartMatching()
+    public void StartMatching(bool challengeMode = false)
     {
         matching.SetActive(true);
         ranking.SetActive(false);
 
         isMatching = true;
+
+        if (challengeMode)
+        {
+            GetButton(Buttons.MatchingBtn).transform.localScale = Vector3.one;
+        }
 
         // Define.EnemyType 배열에서 랜덤으로 하나 선택
         var enemyTypes = System.Enum.GetValues(typeof(Define.EnemyType));

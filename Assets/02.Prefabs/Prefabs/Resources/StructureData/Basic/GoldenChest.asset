@@ -21,9 +21,9 @@ MonoBehaviour:
   onlyOnePurcahse: 0
   nameKey: global.str_ATM_name
   descriptionKey: global.str_ATM_desc
-  upgradeCoin: 20000000
-  upgradeEnergy: 00000000
-  purcahseLimit: -1
+  upgradeCoin: 00000000
+  upgradeEnergy: 20000000
+  purcahseLimit: 1
   argment1: []
   argment2: []
   requireStructures: []

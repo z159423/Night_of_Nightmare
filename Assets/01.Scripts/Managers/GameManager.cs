@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
 
     Coroutine getReourcesCoroutine;
 
+    public bool isChallengeMode = false;
+    public int challengeLevel = 0;
+
     void Start()
     {
         this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
@@ -76,9 +79,11 @@ public class GameManager : MonoBehaviour
     }
 
     [Button("OnRankGameStart")]
-    public void OnRankGameStart()
+    public void OnRankGameStart(bool challengeMode = false, int level = 0)
     {
         isGameStart = true;
+        isChallengeMode = challengeMode;
+        challengeLevel = level;
 
         playerData = new PlayerData(currentPlayerCharacterType);
 
@@ -224,31 +229,60 @@ public class GameManager : MonoBehaviour
     {
         GoHome();
 
+        float point = 0;
+
+        if (isChallengeMode)
+        {
+
+        }
+        else
+        {
+            var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
+            point = Random.Range(pointRange.Item1, pointRange.Item2) * TierLossRatio[GetPlayerCurrentTier()];
+
+            Managers.LocalData.PlayerRankingPoint -= (int)point;
+        }
+
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
 
-        var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
-        var point = Random.Range(pointRange.Item1, pointRange.Item2) * TierLossRatio[GetPlayerCurrentTier()];
-
-        Managers.LocalData.PlayerRankingPoint -= (int)point;
-
         result.Init();
-        result.Setting(false, (int)point);
+        result.Setting(false, (int)point, isChallengeMode);
+
+        isChallengeMode = false;
     }
 
     [Button("GameWin")]
     public void GameWin()
     {
+        Managers.LocalData.PlayerWinCount++;
+
+        int point = 0;
+
+        if (isChallengeMode)
+        {
+            if (challengeLevel == Managers.LocalData.ChallengeModeLevel)
+            {
+                Managers.LocalData.ChallengeModeLevel = challengeLevel + 1;
+            }
+        }
+        else
+        {
+
+            var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
+            point = Random.Range(pointRange.Item1, pointRange.Item2);
+
+            Managers.LocalData.PlayerRankingPoint += point;
+        }
+
         GoHome();
 
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
 
-        var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
-        var point = Random.Range(pointRange.Item1, pointRange.Item2);
-
-        Managers.LocalData.PlayerRankingPoint += point;
-
         result.Init();
-        result.Setting(true, point);
+        result.Setting(true, point, isChallengeMode);
+
+        isChallengeMode = false;
+
     }
 
     public IEnumerator GetResources()
