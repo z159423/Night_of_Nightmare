@@ -33,6 +33,8 @@ public class StructureData : ScriptableObject
     public Sprite[] sprite1;
     public Sprite[] sprite2;
 
+    public StructureType RVUpgradeTo = StructureType.None;
+
     public int GetPurchaseCoin(int level, PlayerData playerData)
     {
         if (structureType == StructureType.Lamp)
@@ -123,7 +125,7 @@ public class StructureData : ScriptableObject
         // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
         if (upgradeCoin == null || upgradeEnergy == null || structureType == StructureType.Lamp)
             return false;
-            
+
         if ((level) >= upgradeCoin.Length || (level) >= upgradeEnergy.Length)
             return false;
 

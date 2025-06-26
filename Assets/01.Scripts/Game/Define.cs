@@ -356,7 +356,9 @@ public class Define
         GoldenTurret,
 
         Bed = 100,
-        Door = 101
+        Door = 101,
+
+        None = 9999
     }
 
 

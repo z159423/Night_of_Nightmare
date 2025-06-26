@@ -21,13 +21,14 @@ MonoBehaviour:
   onlyOnePurcahse: 0
   nameKey: global.str_flower_name_1
   descriptionKey: global.str_flower_desc
-  upgradeCoin: c800000000000000
-  upgradeEnergy: 0000000000000000
+  upgradeCoin: c8000000
+  upgradeEnergy: 00000000
   purcahseLimit: -1
   argment1:
   - 4
-  - 8
+  - 4
   argment2: []
   requireStructures: []
   sprite1: []
   sprite2: []
+  RVUpgradeTo: 31

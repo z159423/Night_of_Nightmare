@@ -96,7 +96,7 @@ public class Upgrade_Popup : UI_Popup
 
                 Exit();
             }
-        }, level, true);
+        }, level, true, thisStructure: structure, Exit);
 
         OpenAnimation();
     }

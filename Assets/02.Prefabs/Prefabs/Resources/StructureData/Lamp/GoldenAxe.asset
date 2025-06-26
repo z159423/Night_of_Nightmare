@@ -26,8 +26,11 @@ MonoBehaviour:
   purcahseLimit: -1
   argment1:
   - 15
+  - 15
   argment2:
+  - 30
   - 30
   requireStructures: []
   sprite1: []
   sprite2: []
+  RVUpgradeTo: 9999

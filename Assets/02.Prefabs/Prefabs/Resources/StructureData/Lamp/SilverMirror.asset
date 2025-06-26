@@ -31,3 +31,4 @@ MonoBehaviour:
   requireStructures: []
   sprite1: []
   sprite2: []
+  RVUpgradeTo: 25

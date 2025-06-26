@@ -34,7 +34,8 @@ public class StructureSlot : UI_Base
 
     enum Buttons
     {
-        Button
+        Button,
+        RVBtn
     }
 
     Transform BedIcons, TurretIcons, AutoTurretIcon;
@@ -48,6 +49,8 @@ public class StructureSlot : UI_Base
     private int level = 0;
 
     bool upgrade = false;
+
+    Define.StructureType rvUpgradeType = Define.StructureType.None;
 
     public override void Init()
     {
@@ -67,15 +70,32 @@ public class StructureSlot : UI_Base
         });
     }
 
-    public void Setting(StructureData data, Action onPurcahse, int level, bool upgrade = false)
+    public void Setting(StructureData data, Action onPurcahse, int level, bool upgrade = false, Structure thisStructure = null, Action exitAction = null)
     {
         _data = data;
         this.upgrade = upgrade;
         this.level = level;
+        this.rvUpgradeType = data.RVUpgradeTo;
 
         GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();
+
+        if (rvUpgradeType != Define.StructureType.None && upgrade)
+        {
+            GetButton(Buttons.RVBtn).gameObject.SetActive(true);
+            GetButton(Buttons.RVBtn).AddButtonEvent(() =>
+            {
+                //TODO: RV 광고 재생
+                Managers.Game.BuildStructure(Managers.Game.playerData, rvUpgradeType, Managers.Game.selectedTile);
+
+                if (thisStructure != null)
+                    thisStructure.DestroyStructure();
+
+                exitAction?.Invoke();
+            });
+        }
+
 
         GetButton(Buttons.Button).AddButtonEvent(() =>
         {
