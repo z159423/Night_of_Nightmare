@@ -343,9 +343,9 @@ public class GameManager : MonoBehaviour
     {
         var structureData = GetStructureData(type);
 
-        if (structureData.CanPurchase(_playerData, 0))
+        if (structureData.CanPurchase(_playerData, out string reason, 0))
         {
-            if (IsFreeStructure(_playerData, type))
+            if (reason == "FREE")
             {
                 _playerData.AddFreeCount(type);
             }

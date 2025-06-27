@@ -263,7 +263,7 @@ public class AiCharactor : PlayerableCharactor
         }
 
         foreach (var tile in tiles)
-            if (Managers.Game.GetStructureData(type).CanPurchase(playerData, 0))
+            if (Managers.Game.GetStructureData(type).CanPurchase(playerData, out string reason, 0))
                 BuildStructure(type, tile);
     }
 

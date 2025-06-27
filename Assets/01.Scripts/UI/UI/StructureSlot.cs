@@ -26,10 +26,9 @@ public class StructureSlot : UI_Base
     {
         NameText,
         DescText,
-        FreeText,
         CoinText,
         EnergyText,
-        MaxText
+        BtnText
     }
 
     enum Buttons
@@ -99,7 +98,10 @@ public class StructureSlot : UI_Base
 
         GetButton(Buttons.Button).AddButtonEvent(() =>
         {
-            onPurcahse?.Invoke();
+            if (_data.CanPurchase(Managers.Game.playerData, out string reason, level, upgrade))
+            {
+                onPurcahse?.Invoke();
+            }
             return;
         });
 
@@ -108,28 +110,38 @@ public class StructureSlot : UI_Base
 
     void UpdateUI()
     {
-        if (_data.upgradeCoin.Length <= level && _data.upgradeEnergy.Length <= level)
+        if (_data.CanPurchase(Managers.Game.playerData, out string reason, level, upgrade))
         {
-            GetButton(Buttons.Button).gameObject.SetActive(false);
-            return;
-        }
+            GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[0]; // 활성화된 버튼 이미지
 
-        if (_data.onlyOnePurcahse && Managers.Game.playerData.GetStructure(_data.structureType) != null)
-        {
-            GetTextMesh(Texts.MaxText).gameObject.SetActive(true);
-            GetTextMesh(Texts.CoinText).gameObject.SetActive(false);
-            GetTextMesh(Texts.EnergyText).gameObject.SetActive(false);
-            GetTextMesh(Texts.FreeText).gameObject.SetActive(false);
-            return;
+            switch (reason)
+            {
+                case "FREE":
+                    GetTextMesh(Texts.BtnText).gameObject.SetActive(true);
+                    GetTextMesh(Texts.BtnText).text = Managers.Localize.GetText("global.str_free");
+                    return;
+            }
         }
-
-        if (_data.structureType == Define.StructureType.Lamp && Managers.Game.playerData.buyLampCount >= 4)
+        else
         {
-            GetTextMesh(Texts.MaxText).gameObject.SetActive(true);
-            GetTextMesh(Texts.CoinText).gameObject.SetActive(false);
-            GetTextMesh(Texts.EnergyText).gameObject.SetActive(false);
-            GetTextMesh(Texts.FreeText).gameObject.SetActive(false);
-            return;
+            GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[1]; // 비활성화된 버튼 이미지
+
+            switch (reason)
+            {
+                case "MAX":
+                    GetTextMesh(Texts.BtnText).gameObject.SetActive(true);
+                    GetTextMesh(Texts.BtnText).text = Managers.Localize.GetText("global.str_max");
+                    return;
+
+                case "noLamp":
+                    GetTextMesh(Texts.BtnText).gameObject.SetActive(true);
+                    GetTextMesh(Texts.BtnText).text = Managers.Localize.GetText("global.str_no_lamp");
+                    return;
+
+                case "MAX_LEVEL":
+                    GetButton(Buttons.Button).gameObject.SetActive(false);
+                    return;
+            }
         }
 
         if (_data.upgradeCoin.Length > 0 && _data.GetPurchaseCoin(level, Managers.Game.playerData) > 0)
@@ -137,36 +149,12 @@ public class StructureSlot : UI_Base
             GetImage(Images.CoinSlot).gameObject.SetActive(true);
             GetTextMesh(Texts.CoinText).text = _data.GetPurchaseCoin(level, Managers.Game.playerData).ToString();
         }
-        else
-            GetImage(Images.CoinSlot).gameObject.SetActive(false);
-
 
         if (_data.upgradeEnergy.Length > 0 && _data.GetPurchaseEnergy(level, Managers.Game.playerData) > 0)
         {
             GetImage(Images.EnergySlot).gameObject.SetActive(true);
             GetTextMesh(Texts.EnergyText).text = _data.GetPurchaseEnergy(level, Managers.Game.playerData).ToString();
         }
-        else
-            GetImage(Images.EnergySlot).gameObject.SetActive(false);
-
-        if (_data.CanPurchase(Managers.Game.playerData, level, upgrade))
-        {
-            GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[0]; // 활성화된 버튼 이미지
-        }
-        else
-        {
-            GetButton(Buttons.Button).GetComponent<Image>().sprite = btnSprites[1]; // 비활성화된 버튼 이미지
-        }
-
-        if (upgrade ? false : Define.IsFreeStructure(Managers.Game.playerData, _data.structureType))
-        {
-            GetTextMesh(Texts.FreeText).gameObject.SetActive(true);
-            GetImage(Images.CoinSlot).gameObject.SetActive(false);
-            GetImage(Images.EnergySlot).gameObject.SetActive(false);
-        }
-
-        // if (Managers.Game.coin <= _data.upgradeCoin)
-        //     GetButton(Buttons.Button)
     }
 
     public void FirstSetting()

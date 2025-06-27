@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Define;
 
@@ -86,18 +87,40 @@ public class StructureData : ScriptableObject
         return upgradeEnergy[level] / 4;
     }
 
-    public bool CanPurchase(PlayerData playerData, int level, bool upgrade = false)
+    public bool CanPurchase(PlayerData playerData, out string reason, int level, bool upgrade = false)
     {
+        reason = "";
         if (structureType == StructureType.Lamp && playerData.buyLampCount >= 4)
+        {
+            reason = "MAX";
             return false;
+        }
+
+        if (purcahseLimit > 0 && playerData.structures.Count(n => n.type == structureType) >= purcahseLimit)
+        {
+            reason = "MAX";
+            return false;
+        }
 
         // 무료 구조물은 항상 구매 가능
         if (!upgrade && IsFreeStructure(playerData, structureType))
+        {
+            reason = "FREE";
             return true;
+        }
 
         // 이미 하나만 구매 가능한 구조물이고 이미 소유 중이면 구매 불가
         if (onlyOnePurcahse && playerData.GetStructure(structureType) != null)
+        {
+            reason = "MAX";
             return false;
+        }
+
+        if (upgradeCoin.Length <= level && upgradeEnergy.Length <= level)
+        {
+            reason = "MAX_LEVEL";
+            return false;
+        }
 
         // 요구 구조물 조건 체크
         if (requireStructures != null && requireStructures.Length > 0 && requireStructures.Length > level
@@ -115,7 +138,10 @@ public class StructureData : ScriptableObject
                                 : (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData));
 
         if (structureType == StructureType.Lamp && Managers.LocalData.PlayerLampCount <= 0)
+        {
+            reason = "noLamp";
             return false;
+        }
 
         return coinOk && energyOk;
     }
