@@ -67,7 +67,7 @@ public class AiCharactor : PlayerableCharactor
 
     Coroutine doorRepairCoroutine;
     Coroutine charactorStateMachine;
-
+    Coroutine freeDoorUpgradeCoroutine;
 
 
     public void SettingAiCharactor(Define.CharactorType charactorType)
@@ -164,6 +164,7 @@ public class AiCharactor : PlayerableCharactor
         //플레이어 리스트에서 삭제
         StopCoroutine(doorRepairCoroutine);
         StopCoroutine(charactorStateMachine);
+        StopCoroutine(freeDoorUpgradeCoroutine);
 
         die = true;
         Managers.Resource.Destroy(gameObject);
@@ -173,6 +174,8 @@ public class AiCharactor : PlayerableCharactor
     {
         doorRepairCoroutine = bed.StartCoroutine(CheckSelfDoorRepair());
         charactorStateMachine = bed.StartCoroutine(CharactorStateMachine());
+        freeDoorUpgradeCoroutine = bed.StartCoroutine(CheckDoorFreeUpgrade());
+
         base.OnActiveRoom(bed);
     }
 
@@ -313,6 +316,23 @@ public class AiCharactor : PlayerableCharactor
             if (playerData.canDoorRepair && currentActiveRoom.door != null && currentActiveRoom.door.GetHp() < currentActiveRoom.door.GetMaxHp() * 0.75f)
             {
                 playerData.SelfRepairDoor();
+            }
+        }
+    }
+
+    public IEnumerator CheckDoorFreeUpgrade()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+
+            if (!playerData.freeDoorUpgrade && currentActiveRoom.door != null && currentActiveRoom.door.GetHp() < currentActiveRoom.door.GetMaxHp() * 0.2f)
+            {
+                if (Random.Range(0, 100) < 25)
+                {
+                    currentActiveRoom.door.Upgrade();
+                    playerData.freeDoorUpgrade = true;
+                }
             }
         }
     }

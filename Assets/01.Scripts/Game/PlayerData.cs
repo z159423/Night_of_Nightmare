@@ -24,6 +24,8 @@ public class PlayerData
 
     public bool canDoorRepair = true;
 
+    public bool freeDoorUpgrade = false;
+
     public PlayerData(CharactorType type)
     {
         this.type = type;
