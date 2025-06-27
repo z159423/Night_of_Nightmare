@@ -106,7 +106,7 @@ public class Lamp : Structure
             Managers.Resource.Destroy(particle);
         }
 
-        Managers.Game.playerData.BuildStructure(lampStructures);
+        playerData.BuildStructure(lampStructures);
 
         if (selectedData.structureType != Define.StructureType.MovingFrog)
             transform.GetComponentInParent<Tile>().currentStructure = lampStructures;

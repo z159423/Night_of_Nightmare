@@ -20,8 +20,8 @@ public abstract class Structure : MonoBehaviour
 
     protected int MaxHp = 1;
     public int GetMaxHp() => MaxHp;
-    protected int Hp = 1;
-    public int GetHp() => Hp;
+    protected float Hp = 1;
+    public float GetHp() => Hp;
     public bool destroyed = false;
 
     public Define.StructureType type;
@@ -79,7 +79,7 @@ public abstract class Structure : MonoBehaviour
         level++;
     }
 
-    public virtual void Hit(int damage)
+    public virtual void Hit(float damage)
     {
         Hp -= damage;
         if (Hp <= 0)
@@ -114,7 +114,6 @@ public abstract class Structure : MonoBehaviour
 
     public virtual void DestroyStructure()
     {
-        // Implement destruction logic here, e.g., play animation, destroy object
         gameObject.SetActive(false);
 
         destroyed = true;
@@ -124,37 +123,16 @@ public abstract class Structure : MonoBehaviour
 
     public void CheckUpgrade()
     {
+        if (activeEffects.Any(e => e is CreepylaughterEffect))
+            return;
+
         if (Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
             return;
 
-        var _data = Managers.Game.GetStructureData(type);
-
-        // // 업그레이드가 가능한 상태가 아니면
-        // if (_data.upgradeCoin.Length < 2 && _data.upgradeEnergy.Length < 2)
-        // {
-        //     upgradeIcon.gameObject.SetActive(false);
-        // }
-        // // 업그레이드 가능한 상태라면
         if (Managers.Game.GetStructureData(type).CanUpgrade(playerData, level + 1))
             upgradeIcon.gameObject.SetActive(true);
         else
             upgradeIcon.gameObject.SetActive(false);
-    }
-
-    public bool CheckIsReqired()
-    {
-        var _data = Managers.Game.GetStructureData(type);
-
-        bool isMet = true;
-        if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level + 1
-          && _data.requireStructures[level + 1].type != _data.structureType)
-        {
-            var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level + 1].type);
-
-            isMet = currentRequire != null && currentRequire.level >= _data.requireStructures[level + 1].level;
-        }
-
-        return isMet;
     }
 
     protected void RemoveThisStructrue()
@@ -209,8 +187,11 @@ public abstract class Structure : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f); // 잠시 대기하여 UI 업데이트가 완료되도록 함
 
-                if (upgradePercent < Random.Range(0f, 100f) && _data.CanUpgrade(playerData, level + 1))
+                if (upgradePercent > Random.Range(0f, 100f) && _data.CanUpgrade(playerData, level + 1))
                 {
+#if UNITY_EDITOR
+                    Debug.Log($"{playerData.type} upgraded {type} at {transform.position}");
+#endif
                     playerData.UseResource(_data.upgradeCoin[level], _data.upgradeEnergy[level]);
                     Upgrade();
                 }

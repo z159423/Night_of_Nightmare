@@ -450,16 +450,16 @@ public class Define
         10000
     };
 
-    public static int GetEnemyDamage(EnemyType type, int level)
+    public static float GetEnemyDamage(EnemyType type, int level)
     {
         switch (type)
         {
             case EnemyType.SlanderMan:
-                return Mathf.RoundToInt(enemyDamage[level] * 0.6f);
+                return enemyDamage[level] * 0.6f;
             case EnemyType.TungTungTung:
-                return Mathf.RoundToInt(enemyDamage[level] * 1.2f);
+                return enemyDamage[level] * 1.2f;
             case EnemyType.Tralalero:
-                return Mathf.RoundToInt(enemyDamage[level] * 1.1f);
+                return enemyDamage[level] * 1.1f;
             default:
                 return enemyDamage[level];
         }

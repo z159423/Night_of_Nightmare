@@ -20238,7 +20238,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: enemy name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
   m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

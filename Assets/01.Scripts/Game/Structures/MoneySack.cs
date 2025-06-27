@@ -25,7 +25,7 @@ public class MoneySack : Structure
         while (currentDrop < dropCount)
         {
             ResourceGetParticle(goldPerDrop);
-            Managers.Game.playerData.AddCoin(goldPerDrop);
+            playerData.AddCoin(goldPerDrop);
             currentDrop++;
             yield return new WaitForSeconds(0.14f);
         }

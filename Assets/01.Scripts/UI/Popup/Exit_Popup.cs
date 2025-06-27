@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static Define;
 
 public class Exit_Popup : UI_Popup
 {

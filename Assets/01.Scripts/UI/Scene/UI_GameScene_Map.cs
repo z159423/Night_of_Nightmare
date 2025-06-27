@@ -162,7 +162,7 @@ public class UI_GameScene_Map : UI_Scene
 
     void Update()
     {
-        if (!canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
+        if (!Managers.Game.playerData.canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
         {
             TimeSpan timeSpan = DateTime.Now - repairStartTime;
             float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
@@ -219,9 +219,10 @@ public class UI_GameScene_Map : UI_Scene
         icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
     }
 
-    public void SetCharactorIcon(Define.CharactorType type)
+    public void SetCharactorIcon(Define.CharactorType type, AiCharactor aiCharactor)
     {
         var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
+        icon.GetComponent<CharactorIcon>().charactor = aiCharactor;
         icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
         icon.gameObject.FindRecursive("Arrrow").SetActive(false);
     }
@@ -372,6 +373,11 @@ public class UI_GameScene_Map : UI_Scene
 
             yield return null;
         }
+    }
+
+    public void DisableCharactorIcon(AiCharactor aiCharactor)
+    {
+        playerLayout.GetComponentsInChildren<CharactorIcon>().First(n => n.charactor == aiCharactor).OnDie();
     }
 
     public override void Show()

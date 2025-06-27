@@ -46,8 +46,6 @@ public class Enemy : Charactor
     private int changeStateTime = 0;
     private float currentChangeStateTime = 0;
 
-    private float checkHpTime = 0;
-    private float currentCheckHpTime = 0;
 
     Transform hpBarPivot;
     Transform hpBarFill;
@@ -174,7 +172,7 @@ public class Enemy : Charactor
 
         skills.Add(new AttackSpeedSkill());
         skills.Add(new AttackDamageSkill());
-        skills.Add(new Creepylaughter()); 
+        skills.Add(new Creepylaughter());
         skills.Add(new MothPowder());
 
         sickle = gameObject.FindRecursive("Sickle").transform;
@@ -200,6 +198,7 @@ public class Enemy : Charactor
         // }
 
         CheckUseSkill();
+        StartCoroutine(CheckHeal());
     }
 
     public void SetNameText(string name)
@@ -240,6 +239,7 @@ public class Enemy : Charactor
                 hp = MaxHp;
                 targetHealZone = null; // Stop healing when at max HP
                 enemyState = EnemyState.Chase; // Switch back to chasing state
+                agent.stoppingDistance = 0.8f;
             }
 
             if (hpBarPivot != null)
@@ -264,7 +264,6 @@ public class Enemy : Charactor
         if (enemyState != EnemyState.Heal)
         {
             currentChangeStateTime += Time.deltaTime;
-            currentCheckHpTime += Time.deltaTime;
         }
 
         if (agent != null)
@@ -298,29 +297,7 @@ public class Enemy : Charactor
             }
 
             if (enemyState != EnemyState.Heal)
-                if (hp < MaxHp * 0.2f && currentCheckHpTime > checkHpTime)
-                {
-                    currentCheckHpTime = 0;
-                    FindHealSpot();
-
-                    if (targetHealZone != null)
-                    {
-                        // Move towards the heal zone
-                        agent.SetDestination(targetHealZone.transform.position);
-                        enemyState = EnemyState.Heal;
-
-                        if (enemyType == Define.EnemyType.ScareCrow && activeSickle)
-                        {
-                            DeactiveSicle();
-                        }
-
-                        if (enemyType == Define.EnemyType.SlanderMan && activeSlanderManKnife)
-                        {
-                            DeactiveSlanderManKnife();
-                        }
-                    }
-                }
-                else if (currentTarget != null && currentTarget.playerData.room == null)
+                if (currentTarget != null && currentTarget.playerData.room == null)
                 {
                     float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
 
@@ -328,9 +305,6 @@ public class Enemy : Charactor
                     {
                         StartCoroutine(Attack());
                     }
-
-                    if (currentCheckHpTime > checkHpTime)
-                        checkHpTime = Random.Range(0.5f, 4f);
                 }
                 else if (Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null).Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f)
             .ToList().Count > 0)
@@ -358,9 +332,6 @@ public class Enemy : Charactor
                         {
                             StartCoroutine(Attack());
                         }
-
-                        if (currentCheckHpTime > checkHpTime)
-                            checkHpTime = Random.Range(0.5f, 4f);
                     }
                 }
                 else
@@ -388,10 +359,10 @@ public class Enemy : Charactor
     public void FindTarget()
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
-        // List<PlayerableCharactor> noBedPlayers = new List<PlayerableCharactor>();
+        // List<PlayerableCharactor> noBedPlayers = new List<PlayerableCharactor>();    
 
         // noBedPlayers.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null));
-        players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null));
+        players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null && currentTarget != n));
 
         // noBedPlayers 중에서 transform과의 거리가 150px 이하인 것만 필터링
         // var closeNoBedPlayers = noBedPlayers
@@ -475,7 +446,7 @@ public class Enemy : Charactor
             targetPosition = currentTargetStructure.transform.position;
             hitAction = () =>
             {
-                currentTargetStructure.Hit(Mathf.RoundToInt(attackPower.Value));
+                currentTargetStructure.Hit(attackPower.Value);
 
                 if (currentExp >= Define.GetEnemyExp(enemyType, level))
                 {
@@ -515,7 +486,7 @@ public class Enemy : Charactor
             yield return body.DOLocalMove(originalPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
         }
 
-        yield return new WaitForSeconds(1.2f / attackSpeed.Value);
+        yield return new WaitForSeconds(0.75f / attackSpeed.Value);
 
         canAttack = true;
     }
@@ -700,5 +671,37 @@ public class Enemy : Charactor
         }
 
         attackPower.RemoveMultiplier(1.1f);
+    }
+
+    public IEnumerator CheckHeal()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(0.5f, 4f));
+
+            if (enemyState != EnemyState.Heal && Random.Range(0, 100) < 66 && hp < MaxHp * (skills.Any(n => n is AttackSpeedSkill) ? 0.20f : 0.28f))
+            {
+                FindHealSpot();
+
+                if (targetHealZone != null)
+                {
+                    // Move towards the heal zone
+                    agent.SetDestination(targetHealZone.transform.position);
+                    enemyState = EnemyState.Heal;
+
+                    agent.stoppingDistance = 0.1f;
+
+                    if (enemyType == Define.EnemyType.ScareCrow && activeSickle)
+                    {
+                        DeactiveSicle();
+                    }
+
+                    if (enemyType == Define.EnemyType.SlanderMan && activeSlanderManKnife)
+                    {
+                        DeactiveSlanderManKnife();
+                    }
+                }
+            }
+        }
     }
 }

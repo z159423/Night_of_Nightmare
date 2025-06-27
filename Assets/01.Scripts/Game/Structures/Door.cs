@@ -119,7 +119,7 @@ public class Door : Structure
         ShowHpBar();
     }
 
-    public override void Hit(int damage)
+    public override void Hit(float damage)
     {
         // 에너지 쉴드가 활성화 중이면 데미지 무시
         if (energyShield || activeEffects.Any(e => e is HolyProtection))

@@ -85,6 +85,8 @@ public class MatchResult_Popup : UI_Popup
             {
                 //이긴 경우 이 버튼 클릭하면 RV 광고 재생
 
+                Managers.LocalData.PlayerGemCount += GemCount * 4;
+
                 Exit();
             }
             else

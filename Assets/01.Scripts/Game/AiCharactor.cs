@@ -77,7 +77,7 @@ public class AiCharactor : PlayerableCharactor
         SetBodySkin();
 
         if (Managers.UI._currentScene is UI_GameScene_Map)
-            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetCharactorIcon(charactorType);
+            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetCharactorIcon(charactorType, this);
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
 
@@ -160,13 +160,30 @@ public class AiCharactor : PlayerableCharactor
 
     public override void Die()
     {
+        // Prevent multiple Die() calls
+        if (die) return;
+
+        playerData.room.bed.StopAllCoroutines();
+
         //죽으면 방에 있는 모든 건축물 파괴
         //플레이어 리스트에서 삭제
-        StopCoroutine(doorRepairCoroutine);
-        StopCoroutine(charactorStateMachine);
-        StopCoroutine(freeDoorUpgradeCoroutine);
+        // if (doorRepairCoroutine != null) StopCoroutine(doorRepairCoroutine);
+        // if (charactorStateMachine != null) StopCoroutine(charactorStateMachine);
+        // if (freeDoorUpgradeCoroutine != null) StopCoroutine(freeDoorUpgradeCoroutine);
+
+        for (int i = 0; i < playerData.structures.Count; i++)
+        {
+            var structure = playerData.structures[i];
+            if (structure == null || structure.destroyed || structure.type == StructureType.Bed) continue;
+            structure.DestroyStructure();
+        }
 
         die = true;
+
+        GameObserver.Call(GameObserverType.Game.OnCharactorDie);
+
+        Managers.UI.GetSceneUI<UI_GameScene_Map>().DisableCharactorIcon(this);
+
         Managers.Resource.Destroy(gameObject);
     }
 
@@ -243,31 +260,39 @@ public class AiCharactor : PlayerableCharactor
     {
         Tile[] tiles = playerData.room.tiles.Where(n => n.currentStructure == null).ToArray();
 
-        BuildStructureType structureType = GetRandomByProp(buildStructureProp);
-
         tiles = tiles.OrderBy(n => Random.value).ToArray(); // 타일을 랜덤하게 섞기
 
-        StructureType type = StructureType.Turret;
-
-        switch (structureType)
-        {
-            case BuildStructureType.Turret:
-                type = StructureType.Turret;
-                break;
-            case BuildStructureType.Generator:
-                type = StructureType.Generator;
-                break;
-            case BuildStructureType.Ore:
-                type = GetRandomByProp(buildOreProp);
-                break;
-            case BuildStructureType.Special:
-                type = GetRandomByProp(buildSpecialProp);
-                break;
-        }
-
         foreach (var tile in tiles)
+        {
+            BuildStructureType structureType = GetRandomByProp(buildStructureProp);
+
+            StructureType type = StructureType.Turret;
+
+            switch (structureType)
+            {
+                case BuildStructureType.Turret:
+                    type = StructureType.Turret;
+                    break;
+                case BuildStructureType.Generator:
+                    type = StructureType.Generator;
+                    break;
+                case BuildStructureType.Ore:
+                    type = GetRandomByProp(buildOreProp);
+                    break;
+                case BuildStructureType.Special:
+                    type = GetRandomByProp(buildSpecialProp);
+                    break;
+            }
+
             if (Managers.Game.GetStructureData(type).CanPurchase(playerData, out string reason, 0))
                 BuildStructure(type, tile);
+            else
+            {
+#if UNITY_EDITOR
+                Debug.LogWarning($"{charactorType} cannot build {type} at {tile.transform.position}. Reason: {reason}");
+#endif
+            }
+        }
     }
 
     private void BuildStructure(StructureType type, Tile tile)
@@ -330,6 +355,9 @@ public class AiCharactor : PlayerableCharactor
             {
                 if (Random.Range(0, 100) < 25)
                 {
+#if UNITY_EDITOR
+                    Debug.Log($"{charactorType} Free Door Upgrade {playerData.room.door?.transform.position}");
+#endif
                     currentActiveRoom.door.Upgrade();
                     playerData.freeDoorUpgrade = true;
                 }

@@ -28,7 +28,7 @@ public class PlayerData
 
     public Dictionary<StructureType, int> rvUpgradeCount = new Dictionary<Define.StructureType, int>()
     {
-        
+
     };
 
     public PlayerData(CharactorType type)
@@ -56,6 +56,7 @@ public class PlayerData
     public void GetResources()
     {
         int coinValue = room == null ? (int)Managers.Game.GetStructureData(Define.StructureType.Bed).argment1[0] : (int)Managers.Game.GetStructureData(Define.StructureType.Bed).argment1[room.bed.level];
+        int energy = 0;
 
         if (room != null && room.bed != null)
             room.bed.ResourceGetParticle(coinValue);
@@ -63,9 +64,9 @@ public class PlayerData
         foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))
         {
             generator.GetComponent<Generator>().ResourceGetParticle((int)Managers.Game.GetStructureData(Define.StructureType.Generator).argment1[generator.level]);
+            energy += (int)Managers.Game.GetStructureData(StructureType.Generator).argment1[generator.level];
         }
 
-        var energy = structures.Where(s => s.type == Define.StructureType.Generator).Count();
         var coin = coinValue;
 
         var ores = structures.Where(s =>

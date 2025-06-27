@@ -22,12 +22,13 @@ public partial struct GameObserverType
         OnChangeHammerCount,
         OnChangeHolyShieldCount,
         OnChangeOverHeatCount,
-        OnChangeBoostItemCount
+        OnChangeBoostItemCount,
+        OnCharactorDie
     }
 
     public enum Data
     {
-        
+
     }
 }
 

@@ -25,7 +25,7 @@ public class Battery : Structure
         while (currentDrop < dropCount)
         {
             ResourceGetParticle(energyPreDrop);
-            Managers.Game.playerData.AddEnergy(energyPreDrop);
+            playerData.AddEnergy(energyPreDrop);
             currentDrop++;
             yield return new WaitForSeconds(0.14f);
         }

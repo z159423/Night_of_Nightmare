@@ -241,6 +241,9 @@ public class StructureSlot : UI_Base
         switch (_data.structureType)
         {
             case Define.StructureType.Turret:
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString() + "<br>" + Managers.Localize.GetDynamicText(_data.descriptionKey, "7"));
+                break;
+
             case Define.StructureType.Bed:
             case Define.StructureType.Door:
             case Define.StructureType.Generator:

@@ -17,6 +17,8 @@ public class Turret : Structure
 
     float headOffset = -90;
 
+    List<GameObject> bullets = new List<GameObject>();
+
     protected override void Start()
     {
         base.Start();
@@ -64,19 +66,20 @@ public class Turret : Structure
         var bullet = Managers.Resource.Instantiate("Bullet");
         bullet.transform.position = transform.position;
 
+        bullets.Add(bullet);
+
         float bulletSpeed = 10f;
         StartCoroutine(BulletFollowTarget(bullet, target, bulletSpeed));
 
-        var goldenChest = playerData.structures.Where(n => n.type == Define.StructureType.GoldenChest);
+        var goldenChest = playerData.structures.Any(n => n.type == Define.StructureType.GoldenChest);
 
         int coinValue = 0;
 
         if (this is GoldenTurret)
-        {
             coinValue += (int)Managers.Game.GetStructureData(Define.StructureType.GoldenTurret).argment2[level];
-        }
 
-        coinValue += level + 1;
+        if (goldenChest)
+            coinValue += level + 1;
 
         if (coinValue > 0)
         {
@@ -98,6 +101,7 @@ public class Turret : Structure
             {
                 bullet.transform.position = target.transform.position;
                 Managers.Resource.Destroy(bullet);
+                bullets.Remove(bullet);
                 target.Hit((int)Managers.Game.GetStructureData(type).argment1[level]);
                 yield break;
             }
@@ -110,7 +114,10 @@ public class Turret : Structure
 
         // 타겟이 사라졌거나 총알이 파괴된 경우
         if (bullet != null)
+        {
             Managers.Resource.Destroy(bullet);
+            bullets.Remove(bullet);
+        }
     }
 
     public override void Upgrade()
@@ -185,5 +192,14 @@ public class Turret : Structure
         }
 
         return coolDown;
+    }
+
+    void OnDisable()
+    {
+        foreach (var bullet in bullets)
+        {
+            if (bullet != null)
+                Managers.Resource.Destroy(bullet);
+        }
     }
 }

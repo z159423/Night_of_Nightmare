@@ -139,7 +139,7 @@ public class StructureData : ScriptableObject
         bool energyOk = upgrade ? (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData))
                                 : (upgradeEnergy.Length > level && playerData.energy >= GetPurchaseEnergy(level, playerData));
 
-        if (structureType == StructureType.Lamp && Managers.LocalData.PlayerLampCount <= 0)
+        if (structureType == StructureType.Lamp && playerData == Managers.Game.playerData && Managers.LocalData.PlayerLampCount <= 0)
         {
             reason = "noLamp";
             return false;
@@ -150,6 +150,8 @@ public class StructureData : ScriptableObject
 
     public bool CanUpgrade(PlayerData playerData, int level)
     {
+        
+
         // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
         if (upgradeCoin == null || upgradeEnergy == null || structureType == StructureType.Lamp)
             return false;

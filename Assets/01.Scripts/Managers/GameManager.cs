@@ -39,13 +39,7 @@ public class GameManager : MonoBehaviour
     public bool isChallengeMode = false;
     public int challengeLevel = 0;
 
-    void Start()
-    {
-        this.SetListener(GameObserverType.Game.OnChangeCoinCount, () =>
-        {
-
-        });
-    }
+    float lossPoint = 0;
 
 #if UNITY_EDITOR
     void Update()
@@ -81,6 +75,8 @@ public class GameManager : MonoBehaviour
     [Button("OnRankGameStart")]
     public void OnRankGameStart(bool challengeMode = false, int level = 0)
     {
+        lossPoint = LoseRankingPoint();
+
         isGameStart = true;
         isChallengeMode = challengeMode;
         challengeLevel = level;
@@ -229,26 +225,14 @@ public class GameManager : MonoBehaviour
     [Button("GameOver")]
     public void GameOver()
     {
+        Managers.UI.CloseAllPopupUI();
+
         GoHome();
-
-        float point = 0;
-
-        if (isChallengeMode)
-        {
-
-        }
-        else
-        {
-            var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
-            point = Random.Range(pointRange.Item1, pointRange.Item2) * TierLossRatio[GetPlayerCurrentTier()];
-
-            Managers.LocalData.PlayerRankingPoint -= (int)point;
-        }
 
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
 
         result.Init();
-        result.Setting(false, (int)point, isChallengeMode);
+        result.Setting(false, (int)lossPoint, isChallengeMode);
 
         isChallengeMode = false;
     }
@@ -259,6 +243,8 @@ public class GameManager : MonoBehaviour
         Managers.LocalData.PlayerWinCount++;
 
         int point = 0;
+
+        Managers.LocalData.PlayerRankingPoint += (int)lossPoint;
 
         if (isChallengeMode)
         {
@@ -355,14 +341,14 @@ public class GameManager : MonoBehaviour
             {
                 _playerData.UseResource(structureData.GetPurchaseCoin(0, _playerData), structureData.GetPurchaseEnergy(0, _playerData));
 
-                if (type == StructureType.Lamp)
+                if (type == StructureType.Lamp && _playerData == Managers.Game.playerData)
                     Managers.LocalData.PlayerLampCount--;
             }
 
             var find = Managers.Resource.LoadAll<GameObject>("Structures").First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == structureData.structureType);
             var structure = Instantiate(find, tile.transform).GetComponentInChildren<Structure>();
 
-            if (_playerData != this.playerData && (type == StructureType.Turret || type == StructureType.Generator))
+            if (_playerData != this.playerData && (type == StructureType.Turret || type == StructureType.Generator || type == StructureType.CopperOre || type == StructureType.SilverOre || type == StructureType.GoldOre))
             {
                 structure.CheckPossibleUpgrade();
             }
@@ -388,5 +374,20 @@ public class GameManager : MonoBehaviour
         }
         else
             return false;
+    }
+
+    public float LoseRankingPoint()
+    {
+        if (!isChallengeMode)
+        {
+            var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
+            float point = Random.Range(pointRange.Item1, pointRange.Item2) * TierLossRatio[GetPlayerCurrentTier()];
+
+            Managers.LocalData.PlayerRankingPoint -= (int)point;
+
+            return (int)point;
+        }
+
+        return 0;
     }
 }
