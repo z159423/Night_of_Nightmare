@@ -26,6 +26,11 @@ public class PlayerData
 
     public bool freeDoorUpgrade = false;
 
+    public Dictionary<StructureType, int> rvUpgradeCount = new Dictionary<Define.StructureType, int>()
+    {
+        
+    };
+
     public PlayerData(CharactorType type)
     {
         this.type = type;

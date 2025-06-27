@@ -82,7 +82,7 @@ public class Upgrade_Popup : UI_Popup
 
         int level = structure.level + 1;
 
-        var upgradeSlot = GetComponentInChildren<StructureSlot>();
+        var upgradeSlot = gameObject.FindRecursive("UpgradeSlot").GetComponent<StructureSlot>();
 
         upgradeSlot.Init();
         upgradeSlot.Setting(data, () =>
@@ -97,6 +97,23 @@ public class Upgrade_Popup : UI_Popup
                 Exit();
             }
         }, level, true, thisStructure: structure, Exit);
+
+        if (data.canRvUpgrade)
+        {
+            var rvUpgradeSlot = gameObject.FindRecursive("RVUpgradeSlot").GetComponent<StructureSlot>();
+
+            rvUpgradeSlot.gameObject.SetActive(true);
+
+            rvUpgradeSlot.Init();
+            rvUpgradeSlot.RVUpgradeSetting(data, () =>
+            {
+                selectedStructure.Upgrade();
+
+                GameObserver.Call(GameObserverType.Game.OnChangeStructure);
+
+                Exit();
+            }, level);
+        }
 
         OpenAnimation();
     }

@@ -15,8 +15,12 @@ MonoBehaviour:
   category: 0
   structureType: 101
   icon: {fileID: 0}
+  lampProp: 0
   baseStructure: 1
   sellable: 0
+  onlyOnePurcahse: 0
+  canRvUpgrade: 1
+  rvUpgradeCount: 1
   nameKey: global.str_door_name
   descriptionKey: global.str_desc_hp
   upgradeCoin: 000000001000000020000000400000008000000000010000f4010000e803000002080000041000000820000010400000007d000000000000
@@ -54,3 +58,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: eb6fe7413df6faf45b4291bb1c9e40e4, type: 3}
   - {fileID: 21300000, guid: 82a0b135e87f2254f8a14f90747c5149, type: 3}
   sprite2: []
+  RVUpgradeTo: 9999

@@ -69,6 +69,35 @@ public class StructureSlot : UI_Base
         });
     }
 
+    public void RVUpgradeSetting(StructureData data, Action onPurcahse, int level)
+    {
+        _data = data;
+        this.level = level;
+
+        GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
+        GetTextMesh(Texts.DescText).text = GetDesc();
+        SetIcon();
+
+        GetButton(Buttons.RVBtn).gameObject.SetActive(true);
+
+        if (Managers.Game.playerData.rvUpgradeCount.ContainsKey(data.structureType) && Managers.Game.playerData.rvUpgradeCount[data.structureType] <= data.rvUpgradeCount)
+        {
+            GetButton(Buttons.RVBtn).GetComponent<Image>().sprite = btnSprites[1]; // 비활성화된 버튼 이미지
+        }
+        else
+        {
+            GetButton(Buttons.RVBtn).AddButtonEvent(() =>
+            {
+                //TODO: RV 광고 재생
+                onPurcahse?.Invoke();
+                if (Managers.Game.playerData.rvUpgradeCount.ContainsKey(data.structureType))
+                    Managers.Game.playerData.rvUpgradeCount[data.structureType]++;
+                else
+                    Managers.Game.playerData.rvUpgradeCount.Add(data.structureType, 1);
+            });
+        }
+    }
+
     public void Setting(StructureData data, Action onPurcahse, int level, bool upgrade = false, Structure thisStructure = null, Action exitAction = null)
     {
         _data = data;

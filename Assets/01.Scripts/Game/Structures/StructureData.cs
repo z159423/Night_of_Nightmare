@@ -18,6 +18,8 @@ public class StructureData : ScriptableObject
     public bool baseStructure = false;
     public bool sellable = true;
     public bool onlyOnePurcahse = false;
+    public bool canRvUpgrade = false;
+    public int rvUpgradeCount;
 
     public string nameKey;
     public string descriptionKey;

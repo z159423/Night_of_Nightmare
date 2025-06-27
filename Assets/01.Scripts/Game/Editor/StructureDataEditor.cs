@@ -39,6 +39,8 @@ public class StructureDataEditor : Editor
         EditorGUILayout.PropertyField(so.FindProperty("lampProp"), true);
         EditorGUILayout.PropertyField(so.FindProperty("baseStructure"));
         EditorGUILayout.PropertyField(so.FindProperty("RVUpgradeTo"));
+        EditorGUILayout.PropertyField(so.FindProperty("canRvUpgrade"));
+        EditorGUILayout.PropertyField(so.FindProperty("rvUpgradeCount"));
         EditorGUILayout.PropertyField(so.FindProperty("upgradeCoin"), true);
         EditorGUILayout.PropertyField(so.FindProperty("upgradeEnergy"), true);
         EditorGUILayout.PropertyField(so.FindProperty("sellable"));

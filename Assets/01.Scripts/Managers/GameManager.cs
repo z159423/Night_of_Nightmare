@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
             charactorType[5]
         };
 
+        int waitTime = Random.Range(Managers.LocalData.PlayerWinCount > 0 ? 1 : 3, 6);
+
         // ai 캐릭터 생성
         for (int i = 0; i < 5; i++)
         {
@@ -132,7 +134,7 @@ public class GameManager : MonoBehaviour
             SetPos(aiCharactor.transform);
 
             aiCharactor.GetComponentInChildren<AiCharactor>().SettingAiCharactor(tempTypes[i]);
-            aiCharactor.GetComponentInChildren<AiCharactor>().ActiveAiCharactor();
+            aiCharactor.GetComponentInChildren<AiCharactor>().ActiveAiCharactor(waitTime);
         }
 
         // 캐릭터 컨트롤러 생성

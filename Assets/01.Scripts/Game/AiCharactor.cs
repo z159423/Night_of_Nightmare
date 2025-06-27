@@ -85,7 +85,7 @@ public class AiCharactor : PlayerableCharactor
         Managers.Game.aiPlayerDatas.Add(playerData);
     }
 
-    public void ActiveAiCharactor()
+    public void ActiveAiCharactor(float waitTime)
     {
         Managers.Game.charactors.Add(this);
 
@@ -93,7 +93,7 @@ public class AiCharactor : PlayerableCharactor
 
         IEnumerator wait()
         {
-            yield return new WaitForSeconds(Random.Range(Managers.LocalData.PlayerWinCount > 0 ? 1 : 3, 6));
+            yield return new WaitForSeconds(waitTime);
             FindBed();
         }
     }
