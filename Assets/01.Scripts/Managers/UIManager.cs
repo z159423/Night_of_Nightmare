@@ -378,8 +378,11 @@ public class UIManager : MonoBehaviour
             return;
 
         UI_Popup popup = _popupList[_popupList.Count - 1];
-        popup.Reset();
-        Managers.Resource.Destroy(popup.gameObject);
+        if (popup != null)
+        {
+            popup.Reset();
+            Managers.Resource.Destroy(popup.gameObject);
+        }
         _popupList.RemoveAt(_popupList.Count - 1);
         _order--;
     }
