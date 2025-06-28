@@ -112,10 +112,16 @@ public class Door : Structure
         switch (closeType)
         {
             case CloseType.RightToLeft:
-                transform.DOLocalMoveX(transform.localPosition.x - 0.8f, 1);
+                transform.DOLocalMoveX(transform.localPosition.x - 0.8f, 1).OnComplete(() =>
+                {
+                    bodySpriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+                });
                 break;
             case CloseType.DownToUp:
-                transform.DOLocalMoveY(transform.localPosition.y + 0.8f, 1);
+                transform.DOLocalMoveY(transform.localPosition.y + 0.8f, 1).OnComplete(() =>
+                {
+                    bodySpriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+                });
                 break;
         }
 
