@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         playerData = new PlayerData((Define.CharactorType)Managers.LocalData.SelectedCharactor);
 
-        int mapIndex = 7;
+        int mapIndex = 8;
 
         currentMap = Managers.Resource.Instantiate("Maps/Map" + mapIndex).GetComponent<Map>();
         currentMap.Setting();
