@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         playerData = new PlayerData((Define.CharactorType)Managers.LocalData.SelectedCharactor);
 
-        int mapIndex = 1;
+        int mapIndex = 3;
 
         currentMap = Managers.Resource.Instantiate("Maps/Map" + mapIndex).GetComponent<Map>();
         currentMap.Setting();
@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour
         navMeshSurface.BuildNavMeshAsync();
 
         // navMeshSurface.UpdateNavMesh(Managers.Resource.Load<NavMeshData>("NavMeshSurfaceData/Map" + 1));
-
         // navMeshInstance = NavMesh.AddNavMeshData(Managers.Resource.Load<NavMeshData>("NavMeshSurfaceData/Map" + 1), transform.position, transform.rotation);
 
         Managers.Game.ChangeGameMode(GameMode.Map);

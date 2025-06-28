@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2665632159763998154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.099, y: 0, z: 0}
+  m_LocalPosition: {x: 0.036840014, y: -0.08100009, z: 0}
   m_LocalScale: {x: 0.8400001, y: 0.8400001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -138,6 +138,18 @@ MonoBehaviour:
   destroyed: 0
   type: 100
   level: 0
+  playerData:
+    type: 0
+    coin: 0
+    energy: 0
+    room: {fileID: 0}
+    structures: []
+    freeTurretCount: 0
+    freeRepaireStationCount: 0
+    freeLampCount: 0
+    buyLampCount: 0
+    canDoorRepair: 0
+    freeDoorUpgrade: 0
   bed: {fileID: 0}
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
@@ -196,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2665632160180832469}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.364, y: -0.184, z: 0}
+  m_LocalPosition: {x: 0.30184, y: -0.2650001, z: 0}
   m_LocalScale: {x: 0.84000033, y: 0.84000033, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -330,7 +342,7 @@ MonoBehaviour:
   loopType: 0
   loops: -1
   id: 
-  isRelative: 0
+  isRelative: 1
   isFrom: 0
   isIndependentUpdate: 0
   autoKill: 1
@@ -344,7 +356,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0.364, y: -0.1, z: 0}
+  endValueV3: {x: 0, y: 0.16, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -389,7 +401,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2665632161633875567}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.08315998, y: 0.085, z: 0}
+  m_LocalPosition: {x: 0.021, y: 0.004, z: 0}
   m_LocalScale: {x: 0.7560001, y: 0.7560001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -582,7 +594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2665632161878097841}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.24444008, y: 0.091720104, z: 0}
+  m_LocalPosition: {x: 0.1822801, y: 0.010720015, z: 0}
   m_LocalScale: {x: 0.7560003, y: 0.7560003, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -22,6 +22,7 @@ public class Door : Structure
     public Transform energyShieldObj;
     private Transform thornBush;
     private Transform coolerParticle;
+    private SpriteRenderer bodySpriteRenderer;
 
 
     private float energyShieldDuration = 4f;
@@ -41,6 +42,8 @@ public class Door : Structure
                 transform.localPosition += new Vector3(0, -0.8f, 0);
                 break;
         }
+
+        bodySpriteRenderer = gameObject.FindRecursive("Body").GetComponent<SpriteRenderer>();
 
         MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
         Hp = MaxHp;
@@ -90,7 +93,7 @@ public class Door : Structure
         if (energyShieldObj != null)
             energyShieldObj.gameObject.SetActive(true);
 
-        energyShieldObj.GetComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
+        energyShieldObj.GetComponent<SpriteRenderer>().sprite = bodySpriteRenderer.sprite;
         StartCoroutine(EnergyShieldDurationRoutine());
     }
 
@@ -173,7 +176,7 @@ public class Door : Structure
         MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
         Hp = MaxHp;
 
-        GetComponent<SpriteRenderer>().sprite = Managers.Game.GetStructureData(Define.StructureType.Door).sprite1[level];
+        bodySpriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.Door).sprite1[level];
 
         ShowHpBar();
     }
@@ -214,14 +217,14 @@ public class Door : Structure
 
     public void ActiveCooler()
     {
-        spriteRenderer.color = new Color32(61, 67, 255, 255);
+        bodySpriteRenderer.color = new Color32(61, 67, 255, 255);
 
         coolerParticle.gameObject.SetActive(true);
     }
 
     public void DeactiveCooler()
     {
-        spriteRenderer.color = Color.white;
+        bodySpriteRenderer.color = Color.white;
 
         coolerParticle.gameObject.SetActive(false);
     }
