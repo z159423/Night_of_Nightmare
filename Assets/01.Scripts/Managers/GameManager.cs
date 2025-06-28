@@ -5,7 +5,8 @@ using UnityEngine;
 using VInspector;
 using System.Linq;
 using static Define;
-using Unity.VisualScripting;
+using NavMeshPlus.Components;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     private CharactorController charactorController;
 
     public Map currentMap;
+    public NavMeshPlus.Components.NavMeshSurface navMeshSurface;
     public List<Bed> beds = new List<Bed>();
     public CharactorType[] charactorType;
     public List<PlayerableCharactor> charactors = new List<PlayerableCharactor>();
@@ -39,6 +41,9 @@ public class GameManager : MonoBehaviour
     public int challengeLevel = 0;
 
     float lossPoint = 0;
+
+    private NavMeshDataInstance navMeshInstance;
+
 
     public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
 
@@ -84,8 +89,21 @@ public class GameManager : MonoBehaviour
 
         playerData = new PlayerData((Define.CharactorType)Managers.LocalData.SelectedCharactor);
 
-        currentMap = Managers.Resource.Instantiate("Maps/Map1").GetComponent<Map>();
+        int mapIndex = 1;
+
+        currentMap = Managers.Resource.Instantiate("Maps/Map" + mapIndex).GetComponent<Map>();
         currentMap.Setting();
+
+        if (navMeshSurface == null)
+        {
+            navMeshSurface = Managers.Resource.Instantiate("NavMeshSurface2D").GetComponent<NavMeshPlus.Components.NavMeshSurface>();
+        }
+
+        navMeshSurface.BuildNavMeshAsync();
+
+        // navMeshSurface.UpdateNavMesh(Managers.Resource.Load<NavMeshData>("NavMeshSurfaceData/Map" + 1));
+
+        // navMeshInstance = NavMesh.AddNavMeshData(Managers.Resource.Load<NavMeshData>("NavMeshSurfaceData/Map" + 1), transform.position, transform.rotation);
 
         Managers.Game.ChangeGameMode(GameMode.Map);
 
