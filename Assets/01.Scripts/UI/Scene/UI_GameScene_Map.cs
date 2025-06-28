@@ -229,21 +229,7 @@ public class UI_GameScene_Map : UI_Scene
 
     public void AttackedAnimation(int index)
     {
-        if (!Managers.Game.charactors[index].die)
-        {
-            RectTransform iconRect = playerLayout.GetChild(index).gameObject.FindRecursive("Icon").transform as RectTransform;
-            if (iconRect != null)
-            {
-                iconRect.DOShakeAnchorPos(0.5f, 10f, 30, 90, false, true);
-            }
-            playerLayout.GetChild(index).gameObject.FindRecursive("Icon").GetComponent<Image>().DOColor(Color.red, 0.5f).OnComplete(() =>
-            {
-                playerLayout.GetChild(index).gameObject.FindRecursive("Icon").GetComponent<Image>().DOColor(Color.white, 0.5f);
-            });
-        }
-        else
-            playerLayout.GetChild(index).gameObject.FindRecursive("Icon").GetComponent<Image>().color = new Color32(30, 30, 30, 255);
-
+        playerLayout.GetChild(index).GetComponent<CharactorIcon>().AttackedAnimation();
     }
 
     IEnumerator StartFireBoost()

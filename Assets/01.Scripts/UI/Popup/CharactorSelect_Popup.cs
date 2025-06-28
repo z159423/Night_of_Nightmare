@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using System;
+using System.Net.NetworkInformation;
 
 public class CharactorSelect_Popup : UI_Popup
 {
@@ -22,14 +23,29 @@ public class CharactorSelect_Popup : UI_Popup
     enum Texts
     {
         CharactorName,
-        CharactorDesc
+        CharactorDesc,
+        GemCountText,
+        SelectText
     }
 
-    private Transform charctorIconLayouts;
+    public readonly Define.CharactorType[] charactorTypes = new Define.CharactorType[]
+    {
+        Define.CharactorType.Farmer,
+        Define.CharactorType.ReapireMan,
+        Define.CharactorType.LampGirl,
+        Define.CharactorType.Miner,
+        Define.CharactorType.Scientist,
+        Define.CharactorType.Chef,
+    };
 
-    public static Define.CharactorType selectedCharactorType;
+    private Transform layoutParent;
+    private List<CharactorSelectIcon> icons = new List<CharactorSelectIcon>();
+    public CharactorSelectIcon selectedIcon;
+    public static Define.CharactorType selectedType;
 
     public Action onExit = null;
+
+    [SerializeField] Sprite[] btnSprites;
 
     public override void Init()
     {
@@ -37,7 +53,17 @@ public class CharactorSelect_Popup : UI_Popup
 
         OpenAnimation();
 
-        selectedCharactorType = Managers.Game.currentPlayerCharacterType;
+        selectedType = (Define.CharactorType)Managers.LocalData.SelectedCharactor;
+
+        selectedIcon = icons.Find(n => n.type == selectedType);
+        selectedIcon?.OnSelect();
+
+        GameObserver.Call(GameObserverType.Game.OnChangeSelectedCharactorType);
+
+        this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
+        {
+            UpdateUI();
+        });
     }
 
     public override void FirstSetting()
@@ -47,41 +73,122 @@ public class CharactorSelect_Popup : UI_Popup
         Bind<Button>(typeof(Buttons));
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
-        charctorIconLayouts = gameObject.FindRecursive("CharactorIconLayouts").transform;
+        layoutParent = gameObject.FindRecursive("CharactorIconLayouts").transform;
 
         GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
 
         var charactorDataList = Managers.Resource.LoadAll<CharactorData>("CharactorData/")
-            .OrderBy(data => (int)data.charactorType)
+            .OrderBy(data => Array.IndexOf(charactorTypes, data.charactorType))
             .ToList();
 
         foreach (var type in charactorDataList)
         {
-            var btn = Managers.Resource.Instantiate("CharactorSelectIcon", charctorIconLayouts);
+            var btn = Managers.Resource.Instantiate("CharactorSelectIcon", layoutParent);
 
-            btn.GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type.charactorType + 1);
-
-            btn.GetComponent<Button>().onClick.AddListener(() =>
+            if (btn.TryGetComponent<CharactorSelectIcon>(out var charactorSelectIcon))
             {
-                selectedCharactorType = type.charactorType;
+                charactorSelectIcon.Setting(type.charactorType, () =>
+                {
+                    SelectCharactorIcon(type.charactorType);
+                });
 
-                UpdateUI();
-
-                GameObserver.Call(GameObserverType.Game.OnChangeSelectedCharactorType);
-            });
+                icons.Add(charactorSelectIcon);
+            }
         }
+    }
+
+    public void SelectCharactorIcon(Define.CharactorType charactorType)
+    {
+        if (selectedIcon != null)
+            selectedIcon.UnSelect();
+
+        selectedType = charactorType;
+
+        UpdateUI();
+
+        var icon = icons.Find(n => n.type == selectedType);
+        selectedIcon = icon;
+        icon.OnSelect();
+
+        GameObserver.Call(GameObserverType.Game.OnChangeSelectedCharactorType);
     }
 
     public void UpdateUI()
     {
-        var find = Managers.Resource.LoadAll<CharactorData>("CharactorData/").FirstOrDefault(n => n.charactorType == selectedCharactorType);
+        var find = Managers.Resource.LoadAll<CharactorData>("CharactorData/").FirstOrDefault(n => n.charactorType == selectedType);
 
         GetTextMesh(Texts.CharactorName).text = Managers.Localize.GetText(find.nameKey) + ":";
         GetTextMesh(Texts.CharactorDesc).text = Managers.Localize.GetText(find.descriptionKey);
+        GetButton(Buttons.SelectBtn).gameObject.FindRecursive("Gem").gameObject.SetActive(false);
 
-        foreach (Transform child in charctorIconLayouts)
+        if (selectedType == (Define.CharactorType)Managers.LocalData.SelectedCharactor)
         {
+            GetButton(Buttons.SelectBtn).GetComponent<Image>().sprite = btnSprites[1];
 
+            GetTextMesh(Texts.SelectText).gameObject.SetActive(true);
+            GetTextMesh(Texts.SelectText).text = Managers.Localize.GetText("global.str_choiced");
+        }
+        else
+        {
+            if (Managers.LocalData.HasCharactor(selectedType))
+            {
+                GetButton(Buttons.SelectBtn).GetComponent<Image>().sprite = btnSprites[0];
+                GetTextMesh(Texts.SelectText).gameObject.SetActive(true);
+                GetTextMesh(Texts.SelectText).text = Managers.Localize.GetText("global.str_choice");
+
+                GetButton(Buttons.SelectBtn).AddButtonEvent(() =>
+                {
+                    Managers.Game.ChangePlayerCharactor(selectedType);
+
+                    UpdateUI();
+                });
+            }
+            else
+            {
+                var charactorData = Managers.Resource.LoadAll<CharactorData>($"CharactorData/").FirstOrDefault(n => n.charactorType == selectedType);
+                if (charactorData.purchaseType == Define.CharactorPurchaseType.Iap)
+                {
+                    GetTextMesh(Texts.SelectText).gameObject.SetActive(true);
+                    GetTextMesh(Texts.SelectText).text = "$4.50"; //TODO: IAP 가격 설정
+
+                    GetButton(Buttons.SelectBtn).GetComponent<Image>().sprite = btnSprites[0];
+
+                    GetButton(Buttons.SelectBtn).AddButtonEvent(() =>
+                    {
+                        //TODO: IAP 구매 로직 추가
+
+                        Managers.LocalData.SetCharactorOwned(charactorData.charactorType, true);
+                        Managers.Game.ChangePlayerCharactor(selectedType);
+                        UpdateUI();
+                    });
+                }
+                else if (charactorData.purchaseType == Define.CharactorPurchaseType.Gem)
+                {
+                    GetButton(Buttons.SelectBtn).gameObject.FindRecursive("Gem").gameObject.SetActive(true);
+                    GetTextMesh(Texts.SelectText).gameObject.SetActive(false);
+                    GetTextMesh(Texts.GemCountText).text = charactorData.requireGem.ToString();
+
+                    if (Managers.LocalData.PlayerGemCount >= charactorData.requireGem)
+                    {
+                        GetButton(Buttons.SelectBtn).GetComponent<Image>().sprite = btnSprites[0];
+
+                        GetButton(Buttons.SelectBtn).AddButtonEvent(() =>
+                        {
+                            Managers.LocalData.PlayerGemCount -= charactorData.requireGem;
+                            Managers.LocalData.SetCharactorOwned(charactorData.charactorType, true);
+
+                            Managers.Game.ChangePlayerCharactor(selectedType);
+
+                            UpdateUI();
+                        });
+                    }
+                    else
+                    {
+                        GetButton(Buttons.SelectBtn).GetComponent<Image>().sprite = btnSprites[1];
+                        GetButton(Buttons.SelectBtn).onClick.RemoveAllListeners();
+                    }
+                }
+            }
         }
     }
 
@@ -92,6 +199,16 @@ public class CharactorSelect_Popup : UI_Popup
 
     private void Exit()
     {
+        this.RemoveListener(GameObserverType.Game.OnChangeGemCount);
+
+        selectedType = (Define.CharactorType)Managers.LocalData.SelectedCharactor;
+        GameObserver.Call(GameObserverType.Game.OnChangeSelectedCharactorType);
+
+        foreach (var charactor in Managers.Game.homeCharactors)
+        {
+            charactor.OnUnselect();
+        }
+
         onExit?.Invoke();
         ClosePopupUI();
     }

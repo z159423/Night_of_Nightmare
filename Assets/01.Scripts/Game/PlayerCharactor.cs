@@ -9,7 +9,7 @@ public class PlayerCharactor : PlayerableCharactor
 {
     public void Setting()
     {
-        charactorType = Managers.Game.currentPlayerCharacterType;
+        charactorType = (Define.CharactorType)Managers.LocalData.SelectedCharactor;
 
         Managers.Game.playerCharactor = this;
 

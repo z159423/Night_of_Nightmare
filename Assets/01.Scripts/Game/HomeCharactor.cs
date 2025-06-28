@@ -17,6 +17,8 @@ public class HomeCharactor : MonoBehaviour
     // Start is called before the first frame updat
     void Start()
     {
+        Managers.Game.homeCharactors.Add(this);
+
         StartCoroutine(waitUntil());
         IEnumerator waitUntil()
         {
@@ -32,39 +34,16 @@ public class HomeCharactor : MonoBehaviour
 
             icon.sprite = Managers.Resource.GetCharactorImage((int)type + 1);
 
-            if (type == Managers.Game.currentPlayerCharacterType)
-            {
-                selectIcon.SetActive(true);
-                icon.color = Color.white;
-                dOTweenAnimation.DORestart();
-            }
-            else
-            {
-                selectIcon.SetActive(false);
-                icon.color = new Color32(34, 34, 34, 255);
-                dOTweenAnimation.DOPause();
-            }
+            UpdateUI();
 
             this.SetListener(GameObserverType.Game.OnChangeCharactor, () =>
             {
-                if (type == Managers.Game.currentPlayerCharacterType)
-                {
-                    selectIcon.SetActive(true);
-                    icon.color = Color.white;
-                    dOTweenAnimation.DORestart();
-
-                }
-                else
-                {
-                    selectIcon.SetActive(false);
-                    icon.color = new Color32(34, 34, 34, 255);
-                    dOTweenAnimation.DOPause();
-                }
+                UpdateUI();
             });
 
             this.SetListener(GameObserverType.Game.OnChangeSelectedCharactorType, () =>
             {
-                if (CharactorSelect_Popup.selectedCharactorType == type)
+                if (CharactorSelect_Popup.selectedType == type)
                 {
                     OnSelect();
                 }
@@ -76,16 +55,29 @@ public class HomeCharactor : MonoBehaviour
         }
     }
 
-    public void OnSelect()
+    void UpdateUI()
     {
-        if (dOTweenAnimation != null)
+        if (type == (Define.CharactorType)Managers.LocalData.SelectedCharactor)
         {
-            dOTweenAnimation.DORestart();
+            selectIcon.SetActive(true);
         }
         else
         {
-            Debug.LogWarning("DOTweenAnimation component is not attached to the GameObject.");
+            selectIcon.SetActive(false);
         }
+
+        if (Managers.LocalData.HasCharactor(type))
+        {
+            icon.color = Color.white;
+        }
+        else
+        {
+            icon.color = new Color32(34, 34, 34, 255);
+        }
+    }
+
+    public void OnSelect()
+    {
 
         // 0.5초마다 selectFloor가 켜지고 꺼지는 트윈
         DOTween.Kill(selectFloor); // 중복 방지
@@ -97,24 +89,11 @@ public class HomeCharactor : MonoBehaviour
             .AppendInterval(0.5f)
             .SetLoops(-1, LoopType.Restart)
             .SetId(selectFloor);
-
-        dOTweenAnimation.DORestart();
     }
 
     public void OnUnselect()
     {
-        if (dOTweenAnimation != null)
-        {
-            dOTweenAnimation.DOPlayBackwards();
-        }
-        else
-        {
-            Debug.LogWarning("DOTweenAnimation component is not attached to the GameObject.");
-        }
-
         DOTween.Kill(selectFloor); // 트윈 중지
         selectFloor.SetActive(false);
-
-        dOTweenAnimation.DOPause();
     }
 }

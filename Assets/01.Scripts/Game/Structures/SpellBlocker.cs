@@ -31,7 +31,7 @@ public class SpellBlocker : Structure
         if (Time.time - usedTime < coolTime) return;
 
         // 30% 확률 체크
-        if (UnityEngine.Random.value > 0.3f) return;
+        if (UnityEngine.Random.value < 0.3f) return;
 
         // 발동
         usedTime = Time.time;

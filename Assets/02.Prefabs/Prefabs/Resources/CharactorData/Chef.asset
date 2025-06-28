@@ -15,6 +15,6 @@ MonoBehaviour:
   charactorType: 5
   nameKey: global.str_character_name_6
   descriptionKey: global.str_character_desc_6
-  purchaseType: 2
-  requireGem: 0
+  purchaseType: 1
+  requireGem: 9000
   iapKey: 9000

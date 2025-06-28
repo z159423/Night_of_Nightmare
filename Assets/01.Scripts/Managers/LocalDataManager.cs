@@ -11,8 +11,14 @@ public class LocalDataManager
     // 캐릭터 소유 정보 (비트 플래그)
     public int OwnedCharactorFlags
     {
-        get => PlayerPrefs.GetInt("OwnedCharactorFlags", 0);
+        get => PlayerPrefs.GetInt("OwnedCharactorFlags", 1);
         set { PlayerPrefs.SetInt("OwnedCharactorFlags", value); IsSave = true; }
+    }
+
+    public int SelectedCharactor
+    {
+        get => PlayerPrefs.GetInt("SelectedCharactor", (int)Define.CharactorType.Farmer);
+        set { PlayerPrefs.SetInt("SelectedCharactor", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeCharactor); }
     }
 
     // 특정 캐릭터를 소유하고 있는지 확인
@@ -33,6 +39,8 @@ public class LocalDataManager
         else
             flags &= ~bit;
         OwnedCharactorFlags = flags;
+
+        GameObserver.Call(GameObserverType.Game.OnChangeCharactor);
     }
 
     // 소유한 캐릭터 개수 반환

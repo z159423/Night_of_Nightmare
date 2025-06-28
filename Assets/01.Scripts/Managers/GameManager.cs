@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public GameMode currentGameMode = GameMode.Home;
     public PlayerCharactor playerCharactor;
     private CharactorController charactorController;
-    public CharactorType currentPlayerCharacterType = CharactorType.Farmer;
 
     public Map currentMap;
     public List<Bed> beds = new List<Bed>();
@@ -40,6 +39,8 @@ public class GameManager : MonoBehaviour
     public int challengeLevel = 0;
 
     float lossPoint = 0;
+
+    public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
 
 #if UNITY_EDITOR
     void Update()
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
         isChallengeMode = challengeMode;
         challengeLevel = level;
 
-        playerData = new PlayerData(currentPlayerCharacterType);
+        playerData = new PlayerData((Define.CharactorType)Managers.LocalData.SelectedCharactor);
 
         currentMap = Managers.Resource.Instantiate("Maps/Map1").GetComponent<Map>();
         currentMap.Setting();
@@ -389,5 +390,10 @@ public class GameManager : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public void ChangePlayerCharactor(CharactorType type)
+    {
+        Managers.LocalData.SelectedCharactor = (int)type;
     }
 }
