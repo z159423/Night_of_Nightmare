@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb9c12a8c6c949f7af83a3d238359d0, type: 3}
-  m_Name: vFolders Data
+  m_Script: {fileID: 11500000, guid: 3a9752b0c8e144801967e6897679604b, type: 3}
+  m_Name: vHierarchy Data
   m_EditorClassIdentifier: 
-  folderDatas_byGuid:
-    keys: []
-    values: []
-  bookmarks:
-  - guid: b9b152c12a201d044a577a0c8af69e74
-  - guid: 93ada41fa586e7240866fb4f52dc6064
-  - guid: 6e9f3f2f8e7049942b7d8a7dcc1148c5
+  sceneDatas_byGuid:
+    keys:
+    - b021c0e32adb4074c8961fbba9a4b380
+    values:
+    - goDatas_byGlobalId:
+        keys: []
+        values: []
