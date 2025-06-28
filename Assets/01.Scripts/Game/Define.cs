@@ -278,16 +278,30 @@ public class Define
         {Tier.Challenger, new Color32(228, 22, 219, 255)}
     };
 
-    public static int GetResultGemCount(bool isWin)
+    public static int GetResultGemCount(bool isWin, bool isChallengeMode)
     {
-        if (isWin)
-        {
-            return (int)(Random.Range(3, 8) + (GetCurrentStageDiffValue() * 0.015f));
-        }
+        int count = 0;
+        if (isChallengeMode)
+            count = (int)(Random.Range(3, 8) + (GetCurrentStageDiffValue() * 0.015f));
         else
+            count = (int)(Random.Range(2, 5) + (GetCurrentStageDiffValue() * 0.015f));
+
+        if (!isWin)
         {
-            return (int)(Random.Range(2, 5) + (GetCurrentStageDiffValue() * 0.015f));
+            // playTime에 따라 timeMultiplierDict에서 곱할 값 결정
+            float multiplier = 0.1f;
+            foreach (var kv in timeMultiplierDict.OrderBy(kv => kv.Key))
+            {
+                if (Managers.Game.playTime < kv.Key)
+                {
+                    multiplier = kv.Value;
+                    break;
+                }
+            }
+            count = Mathf.RoundToInt(count * multiplier);
         }
+
+        return count;
     }
 
     public enum GameMode
@@ -623,5 +637,20 @@ public class Define
     { 18, 180 },
     { 19, 190 },
     { 20, 200 },
+};
+
+    public static Dictionary<int, float> timeMultiplierDict = new Dictionary<int, float>
+    {
+    { 180, 0.1f },
+    { 240, 0.15f },
+    { 360, 0.2f },
+    { 480, 0.25f },
+    { 600, 0.3f },
+    { 720, 0.4f },
+    { 840, 0.5f },
+    { 960, 0.6f },
+    { 1080, 0.7f },
+    { 1200, 0.8f },
+    { int.MaxValue, 0.9f } // 1200초 이상 처리용
 };
 }

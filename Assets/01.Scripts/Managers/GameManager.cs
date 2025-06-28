@@ -42,10 +42,28 @@ public class GameManager : MonoBehaviour
 
     float lossPoint = 0;
 
+    public int playTime = 0;
+
     private NavMeshDataInstance navMeshInstance;
 
 
     public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
+
+    void Start()
+    {
+        StartCoroutine(Timer());
+        IEnumerator Timer()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(1f);
+                if (isGameStart)
+                {
+                    playTime++;
+                }
+            }
+        }
+    }
 
 #if UNITY_EDITOR
     void Update()
@@ -81,6 +99,8 @@ public class GameManager : MonoBehaviour
     [Button("OnRankGameStart")]
     public void OnRankGameStart(bool challengeMode = false, int level = 0)
     {
+        playTime = 0;
+
         lossPoint = LoseRankingPoint();
 
         isGameStart = true;
@@ -89,7 +109,9 @@ public class GameManager : MonoBehaviour
 
         playerData = new PlayerData((Define.CharactorType)Managers.LocalData.SelectedCharactor);
 
-        int mapIndex = 9;
+        int mapCount = Managers.Resource.LoadAll<GameObject>("Maps").Length;
+
+        int mapIndex = Managers.LocalData.PlayerRankingPoint < 100 ? 4 : Random.Range(1, mapCount + 1);
 
         currentMap = Managers.Resource.Instantiate("Maps/Map" + mapIndex).GetComponent<Map>();
         currentMap.Setting();
