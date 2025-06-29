@@ -29,12 +29,14 @@ public class UI_GameScene_Map : UI_Scene
         BoostHammerCoolTimeText,
         BoostFireCountText,
         BoostShieldCountText,
-        BoostHammerCountText
+        BoostHammerCountText,
+        TutorialText
     }
 
     enum Images
     {
         RepairHpbarMask,
+        Tutorial
     }
 
     private Transform playerLayout;
@@ -53,6 +55,9 @@ public class UI_GameScene_Map : UI_Scene
     private RectTransform hpBarRect;
     private TextMeshProUGUI repairCoolTimeText;
     private Transform hpbar;
+
+    [SerializeField] private Sprite[] tutorialSprites;
+    private TutorialData currentTutorial;
 
 
     public override void Init()
@@ -93,6 +98,13 @@ public class UI_GameScene_Map : UI_Scene
         GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
         GetTextMesh(Texts.EnergyCount).text = Managers.Game.playerData.energy.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+
+        StartTutorial();
+
+        this.SetListener(GameObserverType.Game.OnPlayerTutorialActing, () =>
+        {
+            TutorialCheck();
+        });
     }
 
     public void FirstSetting()
@@ -366,6 +378,101 @@ public class UI_GameScene_Map : UI_Scene
         playerLayout.GetComponentsInChildren<CharactorIcon>().First(n => n.charactor == aiCharactor).OnDie();
     }
 
+    public void StartTutorial()
+    {
+        var tutorialdata = Managers.Resource.LoadAll<TutorialData>("TutorialData/")
+            .OrderBy(td => int.Parse(System.IO.Path.GetFileNameWithoutExtension(td.name)))
+            .ToList();
+        if (tutorialdata.Count() > Managers.LocalData.PlayerTutorialStep)
+        {
+            currentTutorial = tutorialdata[Managers.LocalData.PlayerTutorialStep];
+
+            GetImage(Images.Tutorial).gameObject.SetActive(true);
+            GetImage(Images.Tutorial).sprite = tutorialSprites[0];
+            GetTextMesh(Texts.TutorialText).text = GetTutorialText(currentTutorial);
+
+            TutorialCheck();
+        }
+        else
+        {
+            GetImage(Images.Tutorial).gameObject.SetActive(false);
+        }
+    }
+
+    public void TutorialCheck()
+    {
+        if (currentTutorial == null)
+            return;
+
+        if (Managers.Game.playerData != null && Managers.Game.playerData.room != null && Managers.Game.playerData.room.bed != null)
+            switch (currentTutorial.jubjectType)
+            {
+                case TutorialData.JubjectType.LayBed:
+                    if (Managers.Game.playerData.room.bed.active)
+                        OnClearTutorial();
+                    break;
+
+                case TutorialData.JubjectType.PurchaseStructure:
+                    GetTextMesh(Texts.TutorialText).text = GetTutorialText(currentTutorial);
+
+                    if (currentTutorial.purchaseCount <= Managers.Game.playerData.structures.Count(n => n.type == currentTutorial.purchaseType))
+                        OnClearTutorial();
+
+                    break;
+
+                case TutorialData.JubjectType.UpgradeStructure:
+                    int maxLevel = Managers.Game.playerData.structures.Count > 0
+                        ? Managers.Game.playerData.structures.Where(n => n.type == currentTutorial.upgradeType).Max(s => s.level)
+                        : 0;
+                    if (currentTutorial.upgradeLevel <= maxLevel)
+                        OnClearTutorial();
+                    break;
+            }
+    }
+
+    public void OnClearTutorial()
+    {
+        currentTutorial = null;
+        Managers.LocalData.PlayerTutorialStep++;
+
+        var tutorialCount = Managers.Resource.LoadAll<TutorialData>("TutorialData/").Count();
+
+        if (tutorialCount <= Managers.LocalData.PlayerTutorialStep)
+        {
+            GetTextMesh(Texts.TutorialText).text = Managers.Localize.GetText("global.str_tuto_desc_12");
+        }
+
+        StartCoroutine(clear());
+
+        IEnumerator clear()
+        {
+            GetImage(Images.Tutorial).sprite = tutorialSprites[1];
+            yield return new WaitForSeconds(3);
+
+            StartTutorial();
+        }
+    }
+
+    string GetTutorialText(TutorialData tutorialData)
+    {
+        switch (tutorialData.jubjectType)
+        {
+            case TutorialData.JubjectType.LayBed:
+                return Managers.Localize.GetText("tutorial_lay_bed");
+
+            case TutorialData.JubjectType.PurchaseStructure:
+                var structureData = Managers.Game.GetStructureData(tutorialData.purchaseType);
+                int currentCount = Managers.Game.playerData.structures.Count(n => n.type == tutorialData.purchaseType);
+                return Managers.Localize.GetDynamicText("tutorial_purchase", Managers.Localize.GetText(structureData.nameKey), currentCount.ToString(), tutorialData.purchaseCount.ToString());
+
+            case TutorialData.JubjectType.UpgradeStructure:
+                var structureData2 = Managers.Game.GetStructureData(tutorialData.upgradeType);
+                return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData2.nameKey), (tutorialData.upgradeLevel + 1).ToString());
+            default:
+                return "";
+        }
+    }
+
     public override void Show()
     {
         gameObject.SetActive(true);
@@ -374,7 +481,7 @@ public class UI_GameScene_Map : UI_Scene
     public override void Hide()
     {
         gameObject.SetActive(false);
-
+        this.RemoveListener(GameObserverType.Game.OnPlayerTutorialActing);
         StopAllCoroutines();
     }
 }

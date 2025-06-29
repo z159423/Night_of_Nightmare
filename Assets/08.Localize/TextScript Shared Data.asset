@@ -47,6 +47,26 @@ MonoBehaviour:
     m_Key: global.str_upgrade
     m_Metadata:
       m_Items: []
+  - m_Id: 15216660432052224
+    m_Key: global.str_tower_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9823531126251520
+    m_Key: global.str_dynamo_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15218835740712960
+    m_Key: global.str_bed_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15219586214944768
+    m_Key: global.str_door_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15221875206021120
+    m_Key: global.str_mineral_name
+    m_Metadata:
+      m_Items: []
   - m_Id: 9781154177028
     m_Key: global.str_tower_name_1
     m_Metadata:
@@ -567,6 +587,18 @@ MonoBehaviour:
     m_Key: global.str_tuto_desc_12
     m_Metadata:
       m_Items: []
+  - m_Id: 15205107414622208
+    m_Key: tutorial_lay_bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15205107481731072
+    m_Key: tutorial_purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15205107481731073
+    m_Key: tutorial_upgrade
+    m_Metadata:
+      m_Items: []
   - m_Id: 9781154177158
     m_Key: global.str_toast_enemy_level_up
     m_Metadata:
@@ -773,10 +805,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9781154177209
     m_Key: global.str_infinity_result_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9823531126251520
-    m_Key: global.str_dynamo_name
     m_Metadata:
       m_Items: []
   m_Metadata:

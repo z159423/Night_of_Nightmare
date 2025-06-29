@@ -34,6 +34,9 @@ public class PlayerData
     public PlayerData(CharactorType type)
     {
         this.type = type;
+
+        if (type == CharactorType.Scientist)
+            AddEnergy(10);
     }
 
     public void BuildStructure(Structure structure)

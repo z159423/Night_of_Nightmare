@@ -292,6 +292,8 @@ public class GameManager : MonoBehaviour
         if (!inGame)
             return;
 
+        Managers.UI.CloseAllPopupUI();
+
         Managers.LocalData.PlayerWinCount++;
 
         int point = 0;
@@ -421,6 +423,11 @@ public class GameManager : MonoBehaviour
 
             if (type != StructureType.MovingFrog)
                 tile.currentStructure = structure;
+
+            if (playerData == _playerData)
+            {
+                GameObserver.Call(GameObserverType.Game.OnPlayerTutorialActing);
+            }
 
             return true;
         }

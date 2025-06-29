@@ -778,7 +778,35 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9823531126251520
-    m_Localized: Dynamo
+    m_Localized: Generator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15205107414622208
+    m_Localized: Lie down on the bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15205107481731072
+    m_Localized: Build @2/@3 @1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15205107481731073
+    m_Localized: Build @1 Lv.@2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15216660432052224
+    m_Localized: Turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15218835740712960
+    m_Localized: Bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15219586214944768
+    m_Localized: Door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15221875206021120
+    m_Localized: Copper Ore
     m_Metadata:
       m_Items: []
   references:

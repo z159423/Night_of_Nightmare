@@ -71,6 +71,8 @@ class QClear : EditorWindow
     // Auto Generated
     [MenuItem("QTool/Clear/OwnedCharactorFlags", priority = 1)]
     public static void ClearOwnedCharactorFlags() { PlayerPrefs.DeleteKey("OwnedCharactorFlags"); Debug.Log("<Color=red>PlayerPrefs Delete : OwnedCharactorFlags</color>"); }
+    [MenuItem("QTool/Clear/SelectedCharactor", priority = 1)]
+    public static void ClearSelectedCharactor() { PlayerPrefs.DeleteKey("SelectedCharactor"); Debug.Log("<Color=red>PlayerPrefs Delete : SelectedCharactor</color>"); }
     [MenuItem("QTool/Clear/UseHaptic", priority = 1)]
     public static void ClearUseHaptic() { PlayerPrefs.DeleteKey("UseHaptic"); Debug.Log("<Color=red>PlayerPrefs Delete : UseHaptic</color>"); }
     [MenuItem("QTool/Clear/UseSound", priority = 1)]
@@ -93,6 +95,10 @@ class QClear : EditorWindow
     public static void ClearPlayerHolyShieldCount() { PlayerPrefs.DeleteKey("PlayerHolyShieldCount"); Debug.Log("<Color=red>PlayerPrefs Delete : PlayerHolyShieldCount</color>"); }
     [MenuItem("QTool/Clear/PlayerOverHeatCount", priority = 1)]
     public static void ClearPlayerOverHeatCount() { PlayerPrefs.DeleteKey("PlayerOverHeatCount"); Debug.Log("<Color=red>PlayerPrefs Delete : PlayerOverHeatCount</color>"); }
+    [MenuItem("QTool/Clear/ChallengeModeLevel", priority = 1)]
+    public static void ClearChallengeModeLevel() { PlayerPrefs.DeleteKey("ChallengeModeLevel"); Debug.Log("<Color=red>PlayerPrefs Delete : ChallengeModeLevel</color>"); }
+    [MenuItem("QTool/Clear/PlayerTutorialStep", priority = 1)]
+    public static void ClearPlayerTutorialStep() { PlayerPrefs.DeleteKey("PlayerTutorialStep"); Debug.Log("<Color=red>PlayerPrefs Delete : PlayerTutorialStep</color>"); }
     // End
 }
 #endif

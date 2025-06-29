@@ -166,4 +166,10 @@ public class LocalDataManager
             _ => 0
         };
     }
+
+    public int PlayerTutorialStep
+    {
+        get => PlayerPrefs.GetInt("PlayerTutorialStep", 0);
+        set { PlayerPrefs.SetInt("PlayerTutorialStep", value); IsSave = true; }
+    }
 }

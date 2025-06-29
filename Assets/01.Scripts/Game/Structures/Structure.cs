@@ -77,6 +77,9 @@ public abstract class Structure : MonoBehaviour
     public virtual void Upgrade()
     {
         level++;
+
+        if (playerData == Managers.Game.playerData)
+            GameObserver.Call(GameObserverType.Game.OnPlayerTutorialActing);
     }
 
     public virtual void Hit(float damage)
