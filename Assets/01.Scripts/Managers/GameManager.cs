@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
     public bool isChallengeMode = false;
     public int challengeLevel = 0;
 
+    public bool inGame = false;
+
     float lossPoint = 0;
 
     public int playTime = 0;
@@ -99,6 +101,8 @@ public class GameManager : MonoBehaviour
     [Button("OnRankGameStart")]
     public void OnRankGameStart(bool challengeMode = false, int level = 0)
     {
+        inGame = true;
+
         playTime = 0;
 
         lossPoint = LoseRankingPoint();
@@ -266,6 +270,9 @@ public class GameManager : MonoBehaviour
     [Button("GameOver")]
     public void GameOver()
     {
+        if (!inGame)
+            return;
+
         Managers.UI.CloseAllPopupUI();
 
         GoHome();
@@ -276,11 +283,15 @@ public class GameManager : MonoBehaviour
         result.Setting(false, (int)lossPoint, isChallengeMode);
 
         isChallengeMode = false;
+        inGame = false;
     }
 
     [Button("GameWin")]
     public void GameWin()
     {
+        if (!inGame)
+            return;
+
         Managers.LocalData.PlayerWinCount++;
 
         int point = 0;
@@ -311,7 +322,7 @@ public class GameManager : MonoBehaviour
         result.Setting(true, point, isChallengeMode);
 
         isChallengeMode = false;
-
+        inGame = false;
     }
 
     public IEnumerator GetResources()
