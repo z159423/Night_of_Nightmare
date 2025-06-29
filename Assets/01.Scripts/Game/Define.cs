@@ -282,9 +282,9 @@ public class Define
     {
         int count = 0;
         if (isChallengeMode)
-            count = (int)(Random.Range(3, 8) + (GetCurrentStageDiffValue() * 0.015f));
+            count = (int)(Random.Range(2, 4) + (GetCurrentStageDiffValue() * 0.015f));
         else
-            count = (int)(Random.Range(2, 5) + (GetCurrentStageDiffValue() * 0.015f));
+            count = (int)(Random.Range(3, 7) + (GetCurrentStageDiffValue() * 0.015f));
 
         if (!isWin)
         {
@@ -298,7 +298,7 @@ public class Define
                     break;
                 }
             }
-            count = Mathf.Clamp(Mathf.RoundToInt(count * multiplier), 1, int.MaxValue);
+            count = Mathf.Clamp(Mathf.RoundToInt(count * multiplier),1, int.MaxValue);
         }
 
         return count;

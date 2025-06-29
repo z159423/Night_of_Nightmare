@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System;
 using UnityEngine;
 using System.Linq;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using DG.Tweening.Core.Easing;
 
 public class StructureSlot : UI_Base

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-using VInspector.Libs;
 
 public class ResourceGetParticle : MonoBehaviour
 {

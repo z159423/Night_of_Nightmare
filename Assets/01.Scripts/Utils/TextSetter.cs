@@ -13,8 +13,9 @@ public class TextSetter : MonoBehaviour
             Text = GetComponent<TextMeshProUGUI>();
     }
 
-    private void start()
+    private async void Start()
     {
-        Text.text = Managers.Localize.GetText(KeyString);
+        string localizedText = await Managers.Localize.GetTextAsync(KeyString);
+        Text.text = localizedText;
     }
 }

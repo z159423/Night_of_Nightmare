@@ -5,6 +5,7 @@ using UnityEngine.Localization;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Text.RegularExpressions;
 using UnityEngine.Localization.Settings;
+using System.Threading.Tasks;
 
 
 /// <summary>
@@ -18,12 +19,23 @@ public class LocalizeManager : MonoBehaviour
     bool init = false;
 
 
-    private void Start()
+    void Start()
     {
         _regex = new Regex(@"[\u0600-\u06FF]+");
 
         if (!init)
             Setting();
+
+        StartCoroutine(wait());
+
+        IEnumerator wait()
+        {
+            yield return new WaitUntil(() => init);
+            print(GetText("global.str_character_name_2"));
+            print(GetDynamicText("global.global.str_boost_protect_desc", "Test1"));
+        }
+
+        print("LocalizeManager Start");
     }
 
     public IEnumerator Setting()
@@ -128,6 +140,18 @@ public class LocalizeManager : MonoBehaviour
         {
             return null;
         }
+
+    }
+
+    public async Task<string> GetTextAsync(string type)
+    {
+        LocalizedString localizeString = new LocalizedString() { TableReference = "TextScript", TableEntryReference = type };
+        var stringOperation = localizeString.GetLocalizedStringAsync();
+        await stringOperation.Task;
+        if (stringOperation.Status == AsyncOperationStatus.Succeeded)
+            return stringOperation.Result;
+        else
+            return null;
     }
 
     public string GetDynamicText(string type, params string[] contents)

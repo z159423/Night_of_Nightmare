@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using System;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class Upgrade_Popup : UI_Popup
 {

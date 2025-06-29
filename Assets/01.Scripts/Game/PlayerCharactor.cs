@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
+using System.Linq;
 
 
 public class PlayerCharactor : PlayerableCharactor
 {
+    private GameObject tutorialArrow;
+
     public void Setting()
     {
         charactorType = (Define.CharactorType)Managers.LocalData.SelectedCharactor;
@@ -24,6 +27,17 @@ public class PlayerCharactor : PlayerableCharactor
         Managers.Game.playerData = playerData;
 
         SetBodySkin();
+
+        tutorialArrow = gameObject.FindRecursive("TutorialArrow");
+
+        if (Managers.LocalData.PlayerTutorialStep == 0)
+        {
+            tutorialArrow.SetActive(true);
+        }
+        else
+        {
+            tutorialArrow.SetActive(false);
+        }
     }
 
     public override void SetBodySkin()
@@ -60,6 +74,21 @@ public class PlayerCharactor : PlayerableCharactor
                 icon.transform.localRotation = Quaternion.Euler(0, dir >= 0 ? 0 : 180, 0);
             }
         }
+
+        if (tutorialArrow.activeSelf)
+        {
+            var nearestBed = Managers.Game.beds
+                .Where(b => !b.active)
+                .OrderBy(b => Vector3.Distance(transform.position, b.transform.position))
+                .FirstOrDefault();
+
+            if (nearestBed != null)
+            {
+                Vector3 direction = (nearestBed.transform.position - tutorialArrow.transform.position).normalized;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                tutorialArrow.transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+            }
+        }
     }
 
 
@@ -81,6 +110,8 @@ public class PlayerCharactor : PlayerableCharactor
                 currentActiveRoom.door.playerData = playerData;
 
                 GameObserver.Call(GameObserverType.Game.OnPlayerTutorialActing);
+
+                tutorialArrow.gameObject.SetActive(false);
             }
         }
     }
