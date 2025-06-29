@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Linq;
 using System.Text;
+using VInspector;
 
 public abstract class Structure : MonoBehaviour
 {
@@ -114,6 +115,7 @@ public abstract class Structure : MonoBehaviour
         }
     }
 
+    [Button("Destroy Structure")]
     public virtual void DestroyStructure()
     {
         gameObject.SetActive(false);

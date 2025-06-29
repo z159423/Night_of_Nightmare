@@ -105,6 +105,10 @@ public class UI_GameScene_Map : UI_Scene
         {
             TutorialCheck();
         });
+
+        GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
+        hpbar.gameObject.SetActive(false);
+        GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
     }
 
     public void FirstSetting()

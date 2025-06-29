@@ -13,15 +13,20 @@ public class CharactorIcon : MonoBehaviour
         var iconObj = gameObject.FindRecursive("Icon");
         var image = iconObj.GetComponent<Image>();
 
-        // AttackedAnimation의 모든 DOTween 트윈 중지
-        image.DOKill();
-        iconObj.transform.DOKill();
+        // 모든 Tween 중지 (Image와 Transform 모두)
+        DOTween.Kill(image);
+        DOTween.Kill(iconObj.transform);
 
+        // 컬러 즉시 적용
         image.color = new Color32(30, 30, 30, 255);
     }
 
     public void AttackedAnimation()
     {
+        if (charactor.die)
+            return;
+
+
         RectTransform iconRect = gameObject.FindRecursive("Icon").transform as RectTransform;
         if (iconRect != null)
         {
