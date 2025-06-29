@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
         int mapCount = Managers.Resource.LoadAll<GameObject>("Maps").Length;
 
         int mapIndex = Managers.LocalData.PlayerRankingPoint < 100 ? 4 : Random.Range(1, mapCount + 1);
+        // int mapIndex = 7;
 
         currentMap = Managers.Resource.Instantiate("Maps/Map" + mapIndex).GetComponent<Map>();
         currentMap.Setting();

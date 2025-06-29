@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField] public Room parentRoom;
+
     [SerializeField] public Tile[] tiles;
     [SerializeField] public Bed bed;
     [SerializeField] public Door door;

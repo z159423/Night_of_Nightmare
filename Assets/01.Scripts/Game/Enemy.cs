@@ -356,6 +356,7 @@ public class Enemy : Charactor
         bodySpriteRenderer.sprite = Managers.Resource.GetEnemyImage((int)Managers.Game.enemyType + 1);
     }
 
+    [Button("Force Target Player")]
     public void FindTarget()
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
@@ -384,9 +385,31 @@ public class Enemy : Charactor
             int randomIndex = Random.Range(0, players.Count);
             currentTarget = players[randomIndex];
 
-            targetIndex = Managers.Game.charactors.IndexOf(currentTarget);
+            List<Room> roomStack = new List<Room>();
 
-            currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
+            Room currentRoom = currentTarget.currentActiveRoom;
+
+            while (true)
+            {
+                if (currentRoom.bed.active && !currentRoom.bed.destroyed)
+                    roomStack.Add(currentRoom);
+
+                if (currentRoom.parentRoom != null)
+                {
+                    currentRoom = currentRoom.parentRoom;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (roomStack.Count > 0)
+            {
+                currentTarget = roomStack.Last().bed.currentCharactor;
+                targetIndex = Managers.Game.charactors.IndexOf(currentTarget);
+                currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
+            }
         }
         else
         {
@@ -395,7 +418,7 @@ public class Enemy : Charactor
         }
     }
 
-    [Button("Force Target Player")]
+
     public void ForceTargetPlayer()
     {
         targetIndex = Managers.Game.charactors.IndexOf(Managers.Game.playerCharactor);

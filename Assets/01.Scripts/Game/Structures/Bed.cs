@@ -11,7 +11,7 @@ public class Bed : Structure
     [SerializeField] SpriteRenderer blanket;
     [SerializeField] DOTweenAnimation blanketAnimation;
 
-    PlayerableCharactor currentCharactor;
+    public PlayerableCharactor currentCharactor;
 
     public bool active = false;
     bool playerActive = false;

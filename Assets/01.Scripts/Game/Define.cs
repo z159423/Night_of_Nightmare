@@ -298,7 +298,7 @@ public class Define
                     break;
                 }
             }
-            count = Mathf.RoundToInt(count * multiplier);
+            count = Mathf.Clamp(Mathf.RoundToInt(count * multiplier), 1, int.MaxValue);
         }
 
         return count;

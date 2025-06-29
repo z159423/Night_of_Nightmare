@@ -5080,6 +5080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -38994,6 +38995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 4940002950435102505}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -39140,6 +39142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -39676,6 +39679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -40095,6 +40099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -40161,6 +40166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -45458,6 +45464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}
@@ -47208,6 +47215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b2e8c23d18a6d4da987de8522186d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   tiles: []
   bed: {fileID: 0}
   door: {fileID: 0}

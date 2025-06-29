@@ -137,7 +137,7 @@ public class MatchResult_Popup : UI_Popup
     public void Setting(bool isWin, int point, bool isChallengeMode = false)
     {
         iswin = isWin;
-        GemCount = Define.GetResultGemCount(isWin);
+        GemCount = Define.GetResultGemCount(isWin, isChallengeMode);
 
         GetTextMesh(Texts.Title).text = isChallengeMode ? Managers.Localize.GetText("global.str_challenge_mode") : Managers.Localize.GetText("global.str_rank_mode");
 
