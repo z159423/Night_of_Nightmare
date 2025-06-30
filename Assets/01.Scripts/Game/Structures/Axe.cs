@@ -59,6 +59,8 @@ public class Axe : Structure
                 int damage = Mathf.RoundToInt(target.MaxHp * 0.15f);
                 target.Hit(damage, false);
 
+                Managers.Audio.PlaySound("snd_cutter", target.transform);
+
                 Managers.Resource.Destroy(axeBullet);
                 yield break;
             }

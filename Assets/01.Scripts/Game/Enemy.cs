@@ -471,6 +471,11 @@ public class Enemy : Charactor
             {
                 currentTargetStructure.Hit(attackPower.Value);
 
+                if (skills.Any(n => n is AttackDamageSkill))
+                    Managers.Audio.PlaySound("snd_enemy_power_hit", transform);
+                else
+                    Managers.Audio.PlaySound("snd_enemy_hit2", transform);
+
                 if (currentExp >= Define.GetEnemyExp(enemyType, level))
                 {
                     currentExp = 0;
@@ -485,7 +490,6 @@ public class Enemy : Charactor
                     if (door.playerData.structures.Any(n => n.type == Define.StructureType.ThornBush && !n.destroyed))
                         AddEffect(new BleedEffect(3f));
                 }
-
 
                 if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)
                     gameScene_Map.AttackedAnimation(targetIndex);
@@ -540,6 +544,8 @@ public class Enemy : Charactor
         {
             ActiveSlanderManKnife();
         }
+
+        Managers.Audio.PlaySound("snd_enemy_laugh");
     }
 
     public void CheckUseSkill()

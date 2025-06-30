@@ -134,6 +134,8 @@ public class Door : Structure
         if (energyShield || activeEffects.Any(e => e is HolyProtection))
         {
             ShowHpBar();
+
+            Managers.Audio.PlaySound("snd_autoguard", transform);
             return;
         }
 

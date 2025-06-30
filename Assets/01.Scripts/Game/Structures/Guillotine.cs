@@ -93,6 +93,8 @@ public class Guillotine : Structure
 
                 int damage = Mathf.RoundToInt(target.MaxHp * 0.12f);
                 target.Hit(damage, false);
+
+                Managers.Audio.PlaySound("snd_cutter", cutterBullet.transform);
             }
 
             // 도착 체크

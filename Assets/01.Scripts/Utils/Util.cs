@@ -139,14 +139,14 @@ public static class Util
     }
 
     public static void AddButtonEvent(this Button go, UnityEngine.Events.UnityAction action, bool sound = true)
-    {
+    {       
         go.onClick.RemoveAllListeners();
         go.onClick.AddListener(() =>
         {
             if (Input.touchCount < 2) action.Invoke();
             if (sound)
             {
-                // Managers.AudioManager.Play("button click");
+                Managers.Audio.PlaySound("snd_click");
             }
         });
     }

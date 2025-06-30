@@ -7,6 +7,8 @@ public class Login : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Managers.Instance.CreateManagers();
+
         var loading = Managers.UI.ShowSceneUI<UI_GameScene_Loading>();
         loading.Init();
     }

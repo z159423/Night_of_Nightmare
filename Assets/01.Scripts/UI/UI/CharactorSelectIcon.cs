@@ -17,7 +17,7 @@ public class CharactorSelectIcon : MonoBehaviour
 
         this.type = type;
 
-        GetComponent<Button>().onClick.AddListener(() =>
+        GetComponent<Button>().AddButtonEvent(() =>
         {
             onClick?.Invoke();
         });

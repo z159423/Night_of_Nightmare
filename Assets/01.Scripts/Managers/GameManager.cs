@@ -65,7 +65,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
         Application.targetFrameRate = 60;
     }
 
@@ -91,10 +90,12 @@ public class GameManager : MonoBehaviour
         {
             case GameMode.Home:
                 var scene1 = Managers.UI.ShowSceneUI<UI_GameScene_Home>();
+                Managers.Audio.PlaySound("bgm_base");
                 scene1.Init();
                 break;
             case GameMode.Map:
                 var scene2 = Managers.UI.ShowSceneUI<UI_GameScene_Map>();
+                Managers.Audio.StopBGM();
                 scene2.Init();
                 break;
         }

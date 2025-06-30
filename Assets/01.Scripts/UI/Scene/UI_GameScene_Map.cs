@@ -121,7 +121,7 @@ public class UI_GameScene_Map : UI_Scene
 
         playerLayout = gameObject.FindRecursive("PlayerLayout").transform;
 
-        GetButton(Buttons.PauseBtn).onClick.AddListener(() =>
+        GetButton(Buttons.PauseBtn).AddButtonEvent(() =>
         {
             Managers.UI.ShowPopupUI<Exit_Popup>();
         });
@@ -131,7 +131,7 @@ public class UI_GameScene_Map : UI_Scene
         hpBarRect = GetImage(Images.RepairHpbarMask).rectTransform;
         repairCoolTimeText = GetTextMesh(Texts.RepairCoolTimeText);
 
-        GetButton(Buttons.RepairBtn).onClick.AddListener(() =>
+        GetButton(Buttons.RepairBtn).AddButtonEvent(() =>
         {
             if (Managers.Game.playerData.canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
             {
@@ -157,19 +157,19 @@ public class UI_GameScene_Map : UI_Scene
             }
         });
 
-        GetButton(Buttons.BoostFireBtn).onClick.AddListener(() =>
+        GetButton(Buttons.BoostFireBtn).AddButtonEvent(() =>
         {
             if (canFireBoost && Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat) > 0)
                 StartCoroutine(StartFireBoost());
         });
 
-        GetButton(Buttons.BoostShieldBtn).onClick.AddListener(() =>
+        GetButton(Buttons.BoostShieldBtn).AddButtonEvent(() =>
         {
             if (canShieldBoost && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed && Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection) > 0)
                 StartCoroutine(StartShieldBoost());
         });
 
-        GetButton(Buttons.BoostHammerBtn).onClick.AddListener(() =>
+        GetButton(Buttons.BoostHammerBtn).AddButtonEvent(() =>
         {
             if (canHammerBoost && Managers.Game.enemy != null && Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow) > 0)
                 StartCoroutine(StartHammerBoost());
@@ -260,6 +260,8 @@ public class UI_GameScene_Map : UI_Scene
                 }
             }
 
+        Managers.Audio.PlaySound("snd_get");
+
             Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
             GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canFireBoost = false;
@@ -278,6 +280,8 @@ public class UI_GameScene_Map : UI_Scene
     {
         if (canShieldBoost)
         {
+            Managers.Audio.PlaySound("snd_get");
+
             Managers.Game.playerData.room.door.AddEffect(new HolyProtection(15));
 
             Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
@@ -298,6 +302,8 @@ public class UI_GameScene_Map : UI_Scene
     {
         if (canHammerBoost)
         {
+            Managers.Audio.PlaySound("snd_get");
+
             StartCoroutine(FireHammerBullet(Managers.Game.enemy));
 
             Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
@@ -318,6 +324,8 @@ public class UI_GameScene_Map : UI_Scene
     {
         if (target == null || !target.gameObject.activeInHierarchy)
             yield break;
+
+        Managers.Audio.PlaySound("snd_get");
 
         GameObject hammer = Managers.Resource.Instantiate("HammerBullet");
         Vector3 startPos = target.transform.position + new Vector3(0, 6f, 0);
@@ -356,6 +364,8 @@ public class UI_GameScene_Map : UI_Scene
                 int damage = Mathf.RoundToInt(target.MaxHp * 0.12f);
                 target.Hit(damage, false);
                 target.AddEffect(new StunEffect(3f));
+
+                Managers.Audio.PlaySound("snd_cutter", target.transform);
 
                 // 1초 동안 hammer의 color를 0으로 페이드 아웃
                 var spriteRenderer = hammer.GetComponent<SpriteRenderer>();

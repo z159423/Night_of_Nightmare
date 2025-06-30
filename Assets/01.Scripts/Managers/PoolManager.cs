@@ -15,7 +15,7 @@ public class PoolManager : MonoBehaviour
         {
             Original = original;
             Root = new GameObject().transform;
-            Root.transform.SetParent(Managers.AudioManager.transform.parent.Find("@Root"));
+            Root.transform.SetParent(Managers.Instance.transform);
             Root.name = $"{original.name}_Root";
 
             for (int i = 0; i < count; i++)

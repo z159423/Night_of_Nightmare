@@ -57,6 +57,8 @@ public class AttackSpeedSkill : EnemySkill
 
         //근처에 spellBlocker가 있는지 확인
 
+        Managers.Audio.PlaySound("snd_enemy_laugh");
+
         Managers.Game.charactors
             .Where(n => n.currentActiveRoom != null && n.playerData != null)
             .ToList()
@@ -105,6 +107,8 @@ public class AttackDamageSkill : EnemySkill
         // 타격 사운드 변경 등 추가 효과는 필요시 구현
 
         Managers.UI.ShowNotificationPopup("global.str_toast_enemy_dmg_skill");
+
+        Managers.Audio.PlaySound("snd_enemy_anger");
 
         Managers.Game.charactors
             .Where(n => n.currentActiveRoom != null && n.playerData != null)
@@ -166,6 +170,8 @@ public class Creepylaughter : EnemySkill
                 }
             }
         }
+
+        Managers.Audio.PlaySound("snd_enemy_lol");
     }
 
     public override void Deactivate(Enemy enemy)
@@ -214,6 +220,8 @@ public class MothPowder : EnemySkill
                 }
             }
         }
+
+        Managers.Audio.PlaySound("snd_boss_roar");
     }
 
     public override void Deactivate(Enemy enemy)

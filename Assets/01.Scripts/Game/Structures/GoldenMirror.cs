@@ -58,6 +58,8 @@ public class GoldenMirror : Structure
             {
                 int damage = Mathf.Max(1, Mathf.RoundToInt(target.MaxHp * 0.015f));
                 target.Hit(damage, false);
+
+                Managers.Audio.PlaySound("snd_enemy_hit2", target.transform);
             }
         }
     }

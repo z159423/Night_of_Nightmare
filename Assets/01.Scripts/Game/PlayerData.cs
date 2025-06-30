@@ -62,7 +62,10 @@ public class PlayerData
         int energy = 0;
 
         if (room != null && room.bed != null)
+        {
             room.bed.ResourceGetParticle(coinValue);
+            Managers.Audio.PlaySound("snd_coin", room.bed.transform);
+        }
 
         foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))
         {
@@ -101,6 +104,8 @@ public class PlayerData
             }
 
             ore.GetComponent<Ore>().ResourceGetParticle((int)Managers.Game.GetStructureData(ore.type).argment1[ore.level]);
+
+            Managers.Audio.PlaySound("snd_coin", ore.transform);
         }
 
         var deadPlayerCount = Managers.Game.charactors.Count(n => n.die);
@@ -109,12 +114,16 @@ public class PlayerData
         {
             sheep.GetComponent<Sheep>().ResourceGetParticle((int)Managers.Game.GetStructureData(StructureType.Sheep).argment1[deadPlayerCount]);
             coin += (int)Managers.Game.GetStructureData(StructureType.Sheep).argment1[deadPlayerCount];
+
+            Managers.Audio.PlaySound("snd_coin", sheep.transform);
         }
 
         foreach (var sheep in structures.Where(n => n.type == Define.StructureType.Grave).ToList())
         {
             sheep.GetComponent<Grave>().ResourceGetParticle((int)Managers.Game.GetStructureData(StructureType.Grave).argment1[0]);
             coin += (int)Managers.Game.GetStructureData(StructureType.Grave).argment1[0];
+
+            Managers.Audio.PlaySound("snd_coin", sheep.transform);
         }
 
         AddCoin(coin);

@@ -10,30 +10,28 @@ public class Managers : SingletonStatic<Managers>
     public static ResourceManager Resource { get; set; } = new ResourceManager();
     public static LocalizeManager Localize { get; set; } = new LocalizeManager();
     public static PoolManager Pool { get; set; } = new PoolManager();
-    public static AudioManager AudioManager { get; set; } = new AudioManager();
+    public static AudioManager Audio { get; set; } = new AudioManager();
     public static UIManager UI { get; set; } = new UIManager();
     public static LocalDataManager LocalData { get; set; } = new LocalDataManager();
     public static GameManager Game { get; set; } = new GameManager();
     public static CameraManager Camera { get; set; } = new CameraManager();
 
-
-
-    void CreateManagers()
+    public void CreateManagers()
     {
+        DontDestroyOnLoad(this);
+
         Localize = transform.AddComponent<LocalizeManager>();
         Resource = transform.AddComponent<ResourceManager>();
         Pool = transform.AddComponent<PoolManager>();
         UI = transform.AddComponent<UIManager>();
         Game = transform.AddComponent<GameManager>();
         Camera = transform.AddComponent<CameraManager>();
-
-        AudioManager = Resource.Instantiate("AudioManager", transform).GetComponent<AudioManager>();
+        Audio = transform.AddComponent<AudioManager>();
     }
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
-        CreateManagers();
+        // CreateManagers();
     }
 
     private void Update()

@@ -49,6 +49,7 @@ public class UI_GameScene_Loading : UI_Scene
             yield return new WaitForSeconds(1f);
 
             var scene = Managers.UI.ShowSceneUI<UI_GameScene_Home>();
+            Managers.Audio.PlaySound("bgm_base");
             scene.Init();
         }
     }

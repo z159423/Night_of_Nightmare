@@ -118,6 +118,8 @@ public abstract class Structure : MonoBehaviour
     [Button("Destroy Structure")]
     public virtual void DestroyStructure()
     {
+        Managers.Audio.PlaySound("snd_broken_object", transform);
+
         gameObject.SetActive(false);
 
         destroyed = true;

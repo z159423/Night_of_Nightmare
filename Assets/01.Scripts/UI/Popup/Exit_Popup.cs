@@ -36,8 +36,8 @@ public class Exit_Popup : UI_Popup
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
 
-        GetButton(Buttons.ExitBtn).onClick.AddListener(Exit);
-        GetButton(Buttons.ConfirmBtn).onClick.AddListener(() =>
+        GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
+        GetButton(Buttons.ConfirmBtn).AddButtonEvent(() =>
         {
             Managers.Game.GoHome();
             Exit();

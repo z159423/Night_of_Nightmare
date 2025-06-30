@@ -119,7 +119,7 @@ public class UI_GameScene_Home : UI_Scene
             SelectLowerBtn(LowerBtnTypes.ShopBtn, lowerbtn);
         });
 
-        GetButton(Buttons.CharacterBtn).onClick.AddListener(() =>
+        GetButton(Buttons.CharacterBtn).AddButtonEvent(() =>
         {
             var lowerbtn = GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>();
 
@@ -148,25 +148,25 @@ public class UI_GameScene_Home : UI_Scene
 
         });
 
-        GetButton(Buttons.RankModeBtn).onClick.AddListener(() =>
+        GetButton(Buttons.RankModeBtn).AddButtonEvent(() =>
         {
             var popup = Managers.UI.ShowPopupUI<Match_Making_Popup>();
             popup.Setting(false, 0);
-        });
+        }, true);
 
-        GetButton(Buttons.ChallengeModeBtn).onClick.AddListener(() =>
+        GetButton(Buttons.ChallengeModeBtn).AddButtonEvent(() =>
         {
             Managers.UI.ShowPopupUI<ChallengeMode_Popup>();
         });
 
-        GetButton(Buttons.CenterCharactorBtn).onClick.AddListener(() =>
+        GetButton(Buttons.CenterCharactorBtn).AddButtonEvent(() =>
         {
             var lowerbtn = GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>();
 
             SelectLowerBtn(LowerBtnTypes.CharacterBtn, lowerbtn);
         });
 
-        GetButton(Buttons.ChallengeLockBtn).onClick.AddListener(() =>
+        GetButton(Buttons.ChallengeLockBtn).AddButtonEvent(() =>
         {
             var btn = GetButton(Buttons.ChallengeLockBtn);
             btn.transform.DOScale(1.15f, 0.12f).SetEase(Ease.Linear).OnComplete(() =>
@@ -175,7 +175,9 @@ public class UI_GameScene_Home : UI_Scene
             });
 
             Managers.UI.ShowNotificationPopup("global.str_not_enough_rank", 2);
-        });
+
+            Managers.Audio.PlaySound("snd_stage_unlock");
+        }, false);
 
         this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
         {
