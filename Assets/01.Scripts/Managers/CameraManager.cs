@@ -41,6 +41,16 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    public void FocusToTarget(Transform target)
+    {
+        if (cameras.TryGetValue(Managers.Game.currentGameMode, out var camera))
+        {
+            Vector3 camPos = camera.transform.position;
+            Vector3 targetPos = target.position;
+            camera.transform.position = new Vector3(targetPos.x, targetPos.y, camPos.z);
+        }
+    }
+
     public void TurnVinettaEffect(bool isOn)
     {
         Camera.main.GetComponent<PostProcessVolume>().enabled = isOn;

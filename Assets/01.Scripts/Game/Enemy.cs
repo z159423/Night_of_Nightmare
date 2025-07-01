@@ -119,7 +119,7 @@ public class Enemy : Charactor
         {
             var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
 
-            particle.transform.position = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), -1);
+            particle.transform.position = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), -0.4f);
 
             yield return new WaitForSeconds(1f);
 
@@ -232,7 +232,7 @@ public class Enemy : Charactor
 
         if (enemyState == EnemyState.Heal && targetHealZone != null && Vector2.Distance(targetHealZone.transform.position, transform.position) < 1.5f)
         {
-            hp += MaxHp * 0.00030f; // Heal 0.14% of MaxHp per frame
+            hp += MaxHp * 0.084f * Time.deltaTime; // Heal 0.84% of MaxHp per second
 
             hp = Mathf.Clamp(hp, 0, MaxHp); // Ensure hp does not exceed MaxHp
 
@@ -358,7 +358,7 @@ public class Enemy : Charactor
         bodySpriteRenderer.sprite = Managers.Resource.GetEnemyImage((int)Managers.Game.enemyType + 1);
     }
 
-    [Button("Force Target Player")]
+    [Button("Force Target Random")]
     public void FindTarget()
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
@@ -421,6 +421,7 @@ public class Enemy : Charactor
     }
 
 
+    [Button("Force Target Player")]
     public void ForceTargetPlayer()
     {
         targetIndex = Managers.Game.charactors.IndexOf(Managers.Game.playerCharactor);
@@ -473,7 +474,7 @@ public class Enemy : Charactor
             {
                 currentTargetStructure.Hit(attackPower.Value);
 
-                if (skills.Any(n => n is AttackDamageSkill))
+                if (skills.Find(n => n is AttackDamageSkill).IsActive)
                     Managers.Audio.PlaySound("snd_enemy_power_hit", transform, minRangeVolumeMul: 0.4f);
                 else
                     Managers.Audio.PlaySound("snd_enemy_hit2", transform, minRangeVolumeMul: 0.4f);
@@ -496,35 +497,34 @@ public class Enemy : Charactor
                     if (canScream)
                     {
                         float value = Random.Range(0, 1f);
+
+                        var pitch = Random.Range(1.0f, 1.3f);
                         if (currentTargetStructure.playerData.type == Define.CharactorType.LampGirl)
                         {
                             if (value < 0.25f)
-                                Managers.Audio.PlaySound("snd_girl_scream_1", transform, -1f);
+                                Managers.Audio.PlaySound("snd_girl_scream_1", minRangeVolumeMul: -1f, pitch: pitch);
                             else if (value < 0.5f && value >= 0.25f)
-                                Managers.Audio.PlaySound("snd_girl_scream_2", transform, -1f);
+                                Managers.Audio.PlaySound("snd_girl_scream_2", minRangeVolumeMul: -1f, pitch: pitch);
                             else if (value < 0.625f && value >= 0.5f)
-                                Managers.Audio.PlaySound("snd_girl_scream_3", transform, -1f);
+                                Managers.Audio.PlaySound("snd_girl_scream_3", minRangeVolumeMul: -1f, pitch: pitch);
 
                         }
                         else
                         {
                             if (value < 0.25f)
-                                Managers.Audio.PlaySound("snd_scream_1", transform, -1f);
+                                Managers.Audio.PlaySound("snd_scream_1", minRangeVolumeMul: -1f, pitch: pitch);
                             else if (value < 0.5f && value >= 0.25f)
-                                Managers.Audio.PlaySound("snd_scream_2", transform, -1f);
+                                Managers.Audio.PlaySound("snd_scream_2", minRangeVolumeMul: -1f, pitch: pitch);
                             else if (value < 0.625f && value >= 0.5f)
-                                Managers.Audio.PlaySound("snd_scream_3", transform, -1f);
+                                Managers.Audio.PlaySound("snd_scream_3", minRangeVolumeMul: -1f, pitch: pitch);
                         }
 
-                        if (value < 0.625f)
-                        {
-                            StartCoroutine(cooltime());
-                        }
+                        StartCoroutine(cooltime());
 
                         IEnumerator cooltime()
                         {
                             canScream = false;
-                            yield return new WaitForSeconds(3f);
+                            yield return new WaitForSeconds(2f);
                             canScream = true;
                         }
                     }
@@ -584,7 +584,7 @@ public class Enemy : Charactor
             ActiveSlanderManKnife();
         }
 
-        Managers.Audio.PlaySound("snd_enemy_laugh");
+        Managers.Audio.PlaySound("snd_enemy_level_up", minRangeVolumeMul: 0.4f);
     }
 
     public void CheckUseSkill()

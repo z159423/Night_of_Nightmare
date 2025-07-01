@@ -27,6 +27,9 @@ public class MoneySack : Structure
             ResourceGetParticle(goldPerDrop);
             playerData.AddCoin(goldPerDrop);
             currentDrop++;
+
+            Managers.Audio.PlaySound("snd_coin", transform, minRangeVolumeMul: 0.4f);
+
             yield return new WaitForSeconds(0.14f);
         }
 

@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f)
+    public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f)
     {
         if (!Define.soundDatas.TryGetValue(soundKey, out var data))
         {
@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            PlaySFXInternal(clip, data, sourceTransform, minRangeVolumeMul, volumeMul);
+            PlaySFXInternal(clip, data, sourceTransform, minRangeVolumeMul, volumeMul, pitch);
         }
     }
 
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    private void PlaySFXInternal(AudioClip clip, SoundData data, Transform sourceTransform, float minRangeVolumeMul = -2f, float volumeMul = 1f)
+    private void PlaySFXInternal(AudioClip clip, SoundData data, Transform sourceTransform, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f)
     {
         if (sourceTransform == null)
             sourceTransform = Camera.main.transform;
@@ -84,7 +84,7 @@ public class AudioManager : MonoBehaviour
                 // 거리에 따른 사운드 값 계산
                 // float soundValue = data.maxVolumeRange / pixelDistance;
 
-                float soundValue = data.maxVolumeRange / pixelDistance;
+                float soundValue = data.maxVolumeRange / pixelDistance * 1.5f;
 
                 // minVolumeMul보다 커야만 재생
                 if (soundValue <= minVolumeMul)
@@ -102,6 +102,7 @@ public class AudioManager : MonoBehaviour
         source.clip = clip;
         source.spatialBlend = 1f;
         source.volume = finalVolume;
+        source.pitch = pitch == 1 ? data.pitch : pitch;
         source.Play();
 
         StartCoroutine(destroy());

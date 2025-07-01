@@ -298,7 +298,7 @@ public class Define
                     break;
                 }
             }
-            count = Mathf.Clamp(Mathf.RoundToInt(count * multiplier), 1, int.MaxValue);
+            count = Mathf.Clamp(Mathf.RoundToInt(count * multiplier), 10, int.MaxValue);
         }
 
         return count;
@@ -672,13 +672,13 @@ public class Define
     { "snd_get", new SoundData { soundKey = "snd_get", baseVolume = 0.75f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_get_item", new SoundData { soundKey = "snd_get_item", baseVolume = 1f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_girl_die", new SoundData { soundKey = "snd_girl_die", baseVolume = 0.4f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
-    { "snd_girl_scream_1", new SoundData { soundKey = "snd_girl_scream_1", baseVolume = 1f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
-    { "snd_girl_scream_2", new SoundData { soundKey = "snd_girl_scream_2", baseVolume = 1f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
-    { "snd_girl_scream_3", new SoundData { soundKey = "snd_girl_scream_3", baseVolume = 1f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
+    { "snd_girl_scream_1", new SoundData { soundKey = "snd_girl_scream_1", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
+    { "snd_girl_scream_2", new SoundData { soundKey = "snd_girl_scream_2", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
+    { "snd_girl_scream_3", new SoundData { soundKey = "snd_girl_scream_3", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
     { "snd_loading", new SoundData { soundKey = "snd_loading", baseVolume = 1f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
-    { "snd_scream_1", new SoundData { soundKey = "snd_scream_1", baseVolume = 1f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
-    { "snd_scream_2", new SoundData { soundKey = "snd_scream_2", baseVolume = 1f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
-    { "snd_scream_3", new SoundData { soundKey = "snd_scream_3", baseVolume = 1f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
+    { "snd_scream_1", new SoundData { soundKey = "snd_scream_1", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
+    { "snd_scream_2", new SoundData { soundKey = "snd_scream_2", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
+    { "snd_scream_3", new SoundData { soundKey = "snd_scream_3", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
     { "snd_skill_spawn_effect", new SoundData { soundKey = "snd_skill_spawn_effect", baseVolume = 0.35f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_spell", new SoundData { soundKey = "snd_spell", baseVolume = 1f, pitch = 1f, maxVolumeRange = 432f, minRangeVolumeMul = -1f } },
     { "snd_stage_unlock", new SoundData { soundKey = "snd_stage_unlock", baseVolume = 0.3f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },

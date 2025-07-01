@@ -85,7 +85,7 @@ public class StructureSlot : UI_Base
         }
         else
         {
-            GetButton(Buttons.RVBtn).AddButtonEvent(() =>
+            GetButton(Buttons.RVBtn).onClick.AddListener(() =>
             {
                 //TODO: RV 광고 재생
                 onPurcahse?.Invoke();
@@ -111,7 +111,7 @@ public class StructureSlot : UI_Base
         if (rvUpgradeType != Define.StructureType.None && upgrade)
         {
             GetButton(Buttons.RVBtn).gameObject.SetActive(true);
-            GetButton(Buttons.RVBtn).AddButtonEvent(() =>
+            GetButton(Buttons.RVBtn).onClick.AddListener(() =>
             {
                 //TODO: RV 광고 재생
                 Managers.Game.BuildStructure(Managers.Game.playerData, rvUpgradeType, Managers.Game.selectedTile);
@@ -124,7 +124,7 @@ public class StructureSlot : UI_Base
         }
 
 
-        GetButton(Buttons.Button).AddButtonEvent(() =>
+        GetButton(Buttons.Button).onClick.AddListener(() =>
         {
             if (_data.CanPurchase(Managers.Game.playerData, out string reason, level, upgrade))
             {

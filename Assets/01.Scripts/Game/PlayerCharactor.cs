@@ -112,6 +112,8 @@ public class PlayerCharactor : PlayerableCharactor
                 GameObserver.Call(GameObserverType.Game.OnPlayerTutorialActing);
 
                 tutorialArrow.gameObject.SetActive(false);
+
+                Managers.Camera.FocusToTarget(transform);
             }
         }
     }

@@ -171,7 +171,7 @@ public class Creepylaughter : EnemySkill
             }
         }
 
-        Managers.Audio.PlaySound("snd_enemy_lol");
+        Managers.Audio.PlaySound("snd_enemy_lol", pitch: Random.Range(1.0f, 1.3f));
     }
 
     public override void Deactivate(Enemy enemy)

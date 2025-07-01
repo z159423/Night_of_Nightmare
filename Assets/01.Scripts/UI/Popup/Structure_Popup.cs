@@ -80,7 +80,7 @@ public class Structure_Popup : UI_Popup
         GetButton(Buttons.BuffBtn).AddButtonEvent(() => SelectTap(TapTypes.Buff));
         GetButton(Buttons.LampBtn).AddButtonEvent(() => SelectTap(TapTypes.Lamp));
 
-        GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
+        GetButton(Buttons.ExitBtn).onClick.AddListener(Exit);
     }
 
     public void SelectTap(TapTypes tapType)

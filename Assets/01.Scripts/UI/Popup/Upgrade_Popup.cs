@@ -47,7 +47,7 @@ public class Upgrade_Popup : UI_Popup
 
         layout = gameObject.FindRecursive("Layout").GetComponent<VerticalLayoutGroup>();
 
-        GetButton(Buttons.ExitBtn).AddButtonEvent(Exit);
+        GetButton(Buttons.ExitBtn).onClick.AddListener(Exit);
     }
 
     public void Setting(Structure structure)

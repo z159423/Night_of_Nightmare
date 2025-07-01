@@ -23,9 +23,8 @@ public class CharactorIcon : MonoBehaviour
 
     public void AttackedAnimation()
     {
-        if (charactor.die)
+        if (charactor == null || charactor.die)
             return;
-
 
         RectTransform iconRect = gameObject.FindRecursive("Icon").transform as RectTransform;
         if (iconRect != null)

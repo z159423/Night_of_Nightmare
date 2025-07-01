@@ -27,6 +27,9 @@ public class Battery : Structure
             ResourceGetParticle(energyPreDrop);
             playerData.AddEnergy(energyPreDrop);
             currentDrop++;
+
+            Managers.Audio.PlaySound("snd_tick", transform, minRangeVolumeMul: 0.6f);
+
             yield return new WaitForSeconds(0.14f);
         }
 
