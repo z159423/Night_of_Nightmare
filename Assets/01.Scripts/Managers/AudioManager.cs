@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Audio;
 using System.Linq;
+using System.Threading;
 
 public class AudioManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class AudioManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    public void PlaySound(string soundKey, Transform sourceTransform = null)
+    public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f)
     {
         if (!Define.soundDatas.TryGetValue(soundKey, out var data))
         {
@@ -41,7 +42,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            PlaySFXInternal(clip, data, sourceTransform);
+            PlaySFXInternal(clip, data, sourceTransform, minRangeVolumeMul, volumeMul);
         }
     }
 
@@ -53,31 +54,65 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    private void PlaySFXInternal(AudioClip clip, SoundData data, Transform sourceTransform)
+    private void PlaySFXInternal(AudioClip clip, SoundData data, Transform sourceTransform, float minRangeVolumeMul = -2f, float volumeMul = 1f)
     {
         if (sourceTransform == null)
-        {
-            sourceTransform = Camera.main.transform; // fallback
-        }
-
-        float finalVolume = data.baseVolume;
+            sourceTransform = Camera.main.transform;
 
         if (mainCamera == null)
             mainCamera = Camera.main;
 
-        if (!data.IsGlobal())
+        float finalVolume = data.baseVolume * volumeMul;
+
+        // minRangeVolumeMul이 -2가 아니면 data.minRangeVolumeMul 대신 매개변수 값 사용
+        float minVolumeMul = (minRangeVolumeMul != -2f) ? minRangeVolumeMul : data.minRangeVolumeMul;
+
+        if (sourceTransform != null)
         {
-            Vector2 screenCenter = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
-            float distance = Vector2.Distance(screenCenter, sourceTransform.position);
-            float volumeRatio = Mathf.Clamp01(data.maxVolumeRange / distance);
+            // minVolumeMul이 -1이면 거리 무시하고 baseVolume으로 재생
+            if (minVolumeMul == -1f)
+            {
+                finalVolume = data.baseVolume;
+            }
+            else
+            {
+                // 화면 중심과 오브젝트의 픽셀 거리 계산
+                Vector3 screenPos = mainCamera.WorldToScreenPoint(sourceTransform.position);
+                Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+                float pixelDistance = Vector2.Distance(screenCenter, screenPos);
 
-            if (volumeRatio < data.minRangeVolumeMul)
-                return;
+                // 거리에 따른 사운드 값 계산
+                // float soundValue = data.maxVolumeRange / pixelDistance;
 
-            finalVolume *= volumeRatio;
+                float soundValue = data.maxVolumeRange / pixelDistance;
+
+                // minVolumeMul보다 커야만 재생
+                if (soundValue <= minVolumeMul)
+                    return;
+
+                // 최종 볼륨 계산 (최대 1)
+                // finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
+                finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
+
+            }
         }
 
-        AudioSource.PlayClipAtPoint(clip, sourceTransform.position, finalVolume);
+        var source = Managers.Resource.Instantiate("AudioSource").GetComponent<AudioSource>();
+        source.transform.position = sourceTransform.position;
+        source.clip = clip;
+        source.spatialBlend = 1f;
+        source.volume = finalVolume;
+        source.Play();
+
+        StartCoroutine(destroy());
+
+        IEnumerator destroy()
+        {
+            yield return new WaitForSeconds(clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+            Managers.Resource.Destroy(source.gameObject);
+        }
+
+        // AudioSource.PlayClipAtPoint(clip, sourceTransform.position, finalVolume);
     }
 
     private AudioClip GetClip(string key)

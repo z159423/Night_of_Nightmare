@@ -80,6 +80,8 @@ public class Door : Structure
                 bool hasRepairStation = playerData.structures.Exists(s => s.type == Define.StructureType.RepairStation);
                 if (hasRepairStation)
                 {
+                    Managers.Audio.PlaySound("snd_stage_unlock", playerData.structures.Find(n => n.type == Define.StructureType.RepairStation).transform, minRangeVolumeMul: 0.4f, volumeMul: 0.8f);
+
                     RepaireDoor(0.02f);
                 }
             }

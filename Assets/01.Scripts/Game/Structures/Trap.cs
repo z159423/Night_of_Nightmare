@@ -51,6 +51,8 @@ public class Trap : Structure
         GameObject bullet = Managers.Resource.Instantiate("NetBullet");
         bullet.transform.position = transform.position;
 
+        Managers.Audio.PlaySound("snd_sword_swing", minRangeVolumeMul: -1f);
+
         float flightTime = 0.6f; // 포물선 비행 시간
         float elapsed = 0f;
         Vector2 start = transform.position;
@@ -87,7 +89,10 @@ public class Trap : Structure
         // 예시: OnNetBulletArrived(target);
 
         if (target != null)
+        {
             target.AddEffect(new StunEffect(2f));
+            Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: 0.4f);
+        }
 
         yield return new WaitForSeconds(2f); // 잠시 대기 후
         Managers.Resource.Destroy(bullet);

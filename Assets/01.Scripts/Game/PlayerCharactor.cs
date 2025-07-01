@@ -126,6 +126,11 @@ public class PlayerCharactor : PlayerableCharactor
 
     public override void Die()
     {
+        if (charactorType == Define.CharactorType.LampGirl)
+            Managers.Audio.PlaySound("snd_girl_die", minRangeVolumeMul: -1f);
+        else
+            Managers.Audio.PlaySound("snd_wizard_die", minRangeVolumeMul: -1f);
+
         Managers.Game.GameOver();
     }
 }

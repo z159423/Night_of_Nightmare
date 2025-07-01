@@ -61,6 +61,8 @@ public class Guillotine : Structure
         Vector3 startPos = target.transform.position + new Vector3(0, 4f, 0);
         cutterBullet.transform.position = startPos;
 
+        Managers.Audio.PlaySound("snd_sword_swing", minRangeVolumeMul: -1f);
+
         float speed = 7f;
         float slowSpeed = 4f;
         float minDistance = 0.1f;
@@ -95,6 +97,7 @@ public class Guillotine : Structure
                 target.Hit(damage, false);
 
                 Managers.Audio.PlaySound("snd_cutter", cutterBullet.transform);
+
             }
 
             // 도착 체크

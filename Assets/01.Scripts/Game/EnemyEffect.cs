@@ -156,6 +156,8 @@ public class PoisonEffect : EnemyEffect
         {
             tickTimer -= 0.5f;
             enemy.Hit(2, false);
+
+            Managers.Audio.PlaySound("snd_enemy_hit2", enemy.transform, minRangeVolumeMul: -6f);
         }
     }
 

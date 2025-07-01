@@ -7,7 +7,7 @@ public class SpellBlocker : Structure
 {
     [SerializeField] private const float coolTime = 30f;
     [SerializeField] private const float bulletSpeed = 4f;
-    [SerializeField] private  GameObject blockerDeco;
+    [SerializeField] private GameObject blockerDeco;
 
     private float usedTime = -999f;
 
@@ -95,6 +95,8 @@ public class SpellBlocker : Structure
             // 도달 체크
             if (distance < minDistance)
             {
+                Managers.Audio.PlaySound("snd_tower_hit", transform, minRangeVolumeMul: -0.4f);
+
                 hit = true;
                 spellDeactiveAction?.Invoke();
                 if (ps != null) ps.Stop(); // 파티클 중단

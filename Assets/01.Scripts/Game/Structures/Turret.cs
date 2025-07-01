@@ -103,6 +103,9 @@ public class Turret : Structure
                 Managers.Resource.Destroy(bullet);
                 bullets.Remove(bullet);
                 target.Hit((int)Managers.Game.GetStructureData(type).argment1[level]);
+
+                Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: -0.4f);
+
                 yield break;
             }
             else

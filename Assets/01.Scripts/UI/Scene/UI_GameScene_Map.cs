@@ -260,7 +260,7 @@ public class UI_GameScene_Map : UI_Scene
                 }
             }
 
-        Managers.Audio.PlaySound("snd_get");
+            Managers.Audio.PlaySound("snd_get");
 
             Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
             GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
@@ -337,6 +337,9 @@ public class UI_GameScene_Map : UI_Scene
 
         bool hitted = false;
 
+        float spinInterval = 0.8f;
+        float spinTimer = 0f;
+
         while (true)
         {
             if (target == null || !target.gameObject.activeInHierarchy)
@@ -356,6 +359,14 @@ public class UI_GameScene_Map : UI_Scene
             // y축만 감소시켜서 target을 향해 이동
             float newY = Mathf.MoveTowards(bulletPos.y, targetPos.y, moveSpeed * Time.deltaTime);
             hammer.transform.position = new Vector3(targetPos.x, newY, bulletPos.z);
+
+            // 0.8초마다 snd_sword_swing 재생
+            spinTimer += Time.deltaTime;
+            if (spinTimer >= spinInterval)
+            {
+                Managers.Audio.PlaySound("snd_sword_swing", minRangeVolumeMul: -1f);
+                spinTimer = 0f;
+            }
 
             if (!hitted && Mathf.Abs(newY - targetPos.y) < 2f)
             {

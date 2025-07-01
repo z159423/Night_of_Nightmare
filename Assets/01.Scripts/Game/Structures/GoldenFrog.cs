@@ -202,7 +202,7 @@ public class GoldenFrog : Structure
         playerData.AddCoin(gold);
         ResourceGetParticle(gold);
 
-        Managers.Audio.PlaySound("snd_get", transform);
+        Managers.Audio.PlaySound("snd_get", transform, minRangeVolumeMul: 0.4f);
     }
 
     // 파리 움직임 데이터용 컴포넌트

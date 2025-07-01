@@ -80,6 +80,8 @@ public abstract class Structure : MonoBehaviour
 
         if (playerData == Managers.Game.playerData)
             GameObserver.Call(GameObserverType.Game.OnPlayerTutorialActing);
+
+        Managers.Audio.PlaySound("snd_build", transform, minRangeVolumeMul: 0.6f);
     }
 
     public virtual void Hit(float damage)
@@ -346,6 +348,8 @@ public class SelfDoorRepair : StructureEffect
             {
                 tickTimer -= 1f;
                 door.Heal(Mathf.RoundToInt(door.GetMaxHp() * 0.07f));
+
+                Managers.Audio.PlaySound("snd_stage_unlock", structure.transform, minRangeVolumeMul: 0.4f, volumeMul: 0.8f);
             }
         }
 

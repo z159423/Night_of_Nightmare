@@ -80,6 +80,8 @@ public class Enemy : Charactor
     public bool activeSickle = false;
     public bool activeSlanderManKnife = false;
 
+    bool canScream = true;
+
     // Implementation of the abstract Hit() method from Charactor
 
     public override void Hit(int damage)
@@ -472,9 +474,9 @@ public class Enemy : Charactor
                 currentTargetStructure.Hit(attackPower.Value);
 
                 if (skills.Any(n => n is AttackDamageSkill))
-                    Managers.Audio.PlaySound("snd_enemy_power_hit", transform);
+                    Managers.Audio.PlaySound("snd_enemy_power_hit", transform, minRangeVolumeMul: 0.4f);
                 else
-                    Managers.Audio.PlaySound("snd_enemy_hit2", transform);
+                    Managers.Audio.PlaySound("snd_enemy_hit2", transform, minRangeVolumeMul: 0.4f);
 
                 if (currentExp >= Define.GetEnemyExp(enemyType, level))
                 {
@@ -489,6 +491,43 @@ public class Enemy : Charactor
 
                     if (door.playerData.structures.Any(n => n.type == Define.StructureType.ThornBush && !n.destroyed))
                         AddEffect(new BleedEffect(3f));
+
+
+                    if (canScream)
+                    {
+                        float value = Random.Range(0, 1f);
+                        if (currentTargetStructure.playerData.type == Define.CharactorType.LampGirl)
+                        {
+                            if (value < 0.25f)
+                                Managers.Audio.PlaySound("snd_girl_scream_1", transform, -1f);
+                            else if (value < 0.5f && value >= 0.25f)
+                                Managers.Audio.PlaySound("snd_girl_scream_2", transform, -1f);
+                            else if (value < 0.625f && value >= 0.5f)
+                                Managers.Audio.PlaySound("snd_girl_scream_3", transform, -1f);
+
+                        }
+                        else
+                        {
+                            if (value < 0.25f)
+                                Managers.Audio.PlaySound("snd_scream_1", transform, -1f);
+                            else if (value < 0.5f && value >= 0.25f)
+                                Managers.Audio.PlaySound("snd_scream_2", transform, -1f);
+                            else if (value < 0.625f && value >= 0.5f)
+                                Managers.Audio.PlaySound("snd_scream_3", transform, -1f);
+                        }
+
+                        if (value < 0.625f)
+                        {
+                            StartCoroutine(cooltime());
+                        }
+
+                        IEnumerator cooltime()
+                        {
+                            canScream = false;
+                            yield return new WaitForSeconds(3f);
+                            canScream = true;
+                        }
+                    }
                 }
 
                 if (Managers.UI._currentScene is UI_GameScene_Map gameScene_Map)

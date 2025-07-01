@@ -46,6 +46,8 @@ public class PlayerData
 
         structures.Add(structure);
         structure.playerData = this;
+
+        Managers.Audio.PlaySound("snd_build", structure.transform, minRangeVolumeMul: 0.6f);
     }
 
     public void UpgradeStructure(Structure structure)
@@ -64,13 +66,15 @@ public class PlayerData
         if (room != null && room.bed != null)
         {
             room.bed.ResourceGetParticle(coinValue);
-            Managers.Audio.PlaySound("snd_coin", room.bed.transform);
+            Managers.Audio.PlaySound("snd_coin", room.bed.transform, minRangeVolumeMul: 0.6f);
         }
 
         foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))
         {
             generator.GetComponent<Generator>().ResourceGetParticle((int)Managers.Game.GetStructureData(Define.StructureType.Generator).argment1[generator.level]);
             energy += (int)Managers.Game.GetStructureData(StructureType.Generator).argment1[generator.level];
+
+            Managers.Audio.PlaySound("snd_tick", room.bed.transform, minRangeVolumeMul: 0.6f);
         }
 
         var coin = coinValue;

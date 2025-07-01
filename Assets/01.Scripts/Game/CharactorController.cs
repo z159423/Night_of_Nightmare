@@ -155,7 +155,10 @@ public class CharactorController : MonoBehaviour
                     void Upgrade_Popup(Structure structure)
                     {
                         if (structure.activeEffects.Any(a => a is CreepylaughterEffect))
+                        {
+                            Managers.Audio.PlaySound("snd_stage_unlock", minRangeVolumeMul: -1f);
                             return;
+                        }
 
                         if (structure.type == Define.StructureType.MoneySack || structure.type == Define.StructureType.Battery || structure.type == Define.StructureType.Lamp)
                         {

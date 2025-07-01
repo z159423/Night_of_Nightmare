@@ -104,6 +104,8 @@ public class Lamp : Structure
         {
             yield return new WaitForSeconds(1.2f);
             Managers.Resource.Destroy(particle);
+
+            Managers.Audio.PlaySound("snd_skill_spawn_effect", minRangeVolumeMul: -1f);
         }
 
         playerData.BuildStructure(lampStructures);
