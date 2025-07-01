@@ -19,6 +19,8 @@ public class CharactorController : MonoBehaviour
     private Vector2 startTouchPosition;
     private bool isDragging;
 
+    private bool touch = false;
+
     private CinemachineVirtualCamera mapVirtualCamera;
 
     private void Start()
@@ -28,9 +30,21 @@ public class CharactorController : MonoBehaviour
 
         this.SetListener(GameObserverType.Game.OnActivePlayerBed, () =>
         {
-            isDragging = false;
-            joystickBackground.gameObject.SetActive(false);
-            playerCharactor.OnMoveStop();
+            touch = false;
+            if (isDragging)
+            {
+                // 드래그 중이면 강제로 드래그 종료 처리
+                isDragging = false;
+                joystickBackground.gameObject.SetActive(false);
+                joystickHandle.anchoredPosition = Vector2.zero;
+                playerCharactor.OnMoveStop();
+            }
+            else
+            {
+                // 드래그 중이 아니어도 UI 숨김 및 이동 중지
+                joystickBackground.gameObject.SetActive(false);
+                playerCharactor.OnMoveStop();
+            }
         });
 
         mapVirtualCamera = Managers.Camera.cameras[Define.GameMode.Map];
@@ -41,6 +55,7 @@ public class CharactorController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             startTouchPosition = Input.mousePosition;
+            touch = true;
         }
 
         if (Managers.Camera.currentMapCameraMode == CameraManager.MapCameraMode.Player)
@@ -89,7 +104,7 @@ public class CharactorController : MonoBehaviour
         }
         else if (Managers.Camera.currentMapCameraMode == CameraManager.MapCameraMode.Room)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && touch)
             {
                 Vector2 currentTouchPosition = Input.mousePosition;
                 Vector2 dragDelta = currentTouchPosition - startTouchPosition;
@@ -119,8 +134,10 @@ public class CharactorController : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && touch)
             {
+                touch = false;
+
                 if (!isDragging)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

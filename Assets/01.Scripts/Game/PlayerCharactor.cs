@@ -98,9 +98,9 @@ public class PlayerCharactor : PlayerableCharactor
         {
             if (!bed.active)
             {
+                GameObserver.Call(GameObserverType.Game.OnActivePlayerBed);
                 currentActiveRoom = bed.OnActive(this);
                 gameObject.SetActive(false);
-                GameObserver.Call(GameObserverType.Game.OnActivePlayerBed);
 
                 playerData.room = currentActiveRoom;
 

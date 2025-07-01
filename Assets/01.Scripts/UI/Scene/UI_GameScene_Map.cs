@@ -492,7 +492,7 @@ public class UI_GameScene_Map : UI_Scene
 
             case TutorialData.JubjectType.UpgradeStructure:
                 var structureData2 = Managers.Game.GetStructureData(tutorialData.upgradeType);
-                return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData2.nameKey), (tutorialData.upgradeLevel + 1).ToString());
+                return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData2.nameKey+ "_" + (tutorialData.upgradeLevel+1)));
             default:
                 return "";
         }
