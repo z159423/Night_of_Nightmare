@@ -112,6 +112,24 @@ public class Enemy : Charactor
             bodySpriteRenderer.DOColor(Color.white, 0.5f).OnComplete(() => isHitColorEffectRunning = false);
         }
 
+        if (bodySpriteRenderer != null)
+        {
+            // 펀치(흔들림) 효과 추가 - 랜덤 방향
+            bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
+
+            // 0.12~0.18 사이의 랜덤 세기, 방향도 랜덤
+            float punchX = Random.Range(-0.3f, 0.3f);
+            float punchY = Random.Range(-0.3f, 0.3f);
+            Vector3 punch = new Vector3(punchX, punchY, 0);
+
+            bodySpriteRenderer.transform.DOPunchPosition(
+                punch,     // 랜덤 방향
+                0.3f,      // 지속 시간
+                15,        // 진동 횟수
+                1f         // 탄성
+            );
+        }
+
         if (particle)
             StartCoroutine(Particle());
 
@@ -281,6 +299,21 @@ public class Enemy : Charactor
                 OnMoveStop();
             }
         }
+    }
+
+    public override void OnMove()
+    {
+        if (_moveTween != null && _moveTween.IsActive())
+            return;
+
+        _moveTween = body.DOLocalRotate(new Vector3(0, 0, 4), 0.3f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .From(new Vector3(0, 0, -4));
+    }
+
+    public override void OnMoveStop()
+    {
+
     }
 
     public IEnumerator EnemyStateMachine()

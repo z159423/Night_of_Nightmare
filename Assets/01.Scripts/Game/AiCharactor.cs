@@ -163,7 +163,10 @@ public class AiCharactor : PlayerableCharactor
         // Prevent multiple Die() calls
         if (die) return;
 
-        playerData.room.bed.StopAllCoroutines();
+        base.Die();
+
+        if (playerData.room != null && playerData.room.bed != null)
+            playerData.room.bed.StopAllCoroutines();
 
         //죽으면 방에 있는 모든 건축물 파괴
         //플레이어 리스트에서 삭제
