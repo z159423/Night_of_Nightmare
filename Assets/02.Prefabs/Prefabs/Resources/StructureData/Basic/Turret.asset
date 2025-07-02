@@ -19,6 +19,8 @@ MonoBehaviour:
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
+  canRvUpgrade: 0
+  rvUpgradeCount: 0
   nameKey: global.str_tower_name
   descriptionKey: global.str_desc_atk_dmg
   upgradeCoin: 08000000100000002b00000056000000ac000000c201000084030000920900002e1300005c2600009853000010a400003498010000000000
@@ -38,7 +40,20 @@ MonoBehaviour:
   - 4096
   - 8192
   - 16384
-  argment2: []
+  argment2:
+  - 4
+  - 4.5
+  - 5
+  - 5.5
+  - 6
+  - 6.5
+  - 7
+  - 7.5
+  - 8
+  - 8.5
+  - 9
+  - 9.5
+  - 10
   requireStructures: []
   sprite1:
   - {fileID: 21300000, guid: 56bee379c4c2d574db1e7a9f29dce0ca, type: 3}
@@ -68,3 +83,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 828ac427b492ef544a688fd6eb998495, type: 3}
   - {fileID: 21300000, guid: 0e8251558012d49458a9e369a77ae7d4, type: 3}
   - {fileID: 21300000, guid: 10b609ece281cb14a9222629030d94a8, type: 3}
+  RVUpgradeTo: 9999

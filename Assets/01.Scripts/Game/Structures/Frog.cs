@@ -52,7 +52,7 @@ public class Frog : Structure
 
             float distance = Vector3.Distance(transform.position, target.transform.position);
 
-            if (Time.time - lastAttackTime >= attackCooldown && distance < 4f)
+            if (Time.time - lastAttackTime >= attackCooldown && distance < 8f)
             {
                 lastAttackTime = Time.time;
                 if (attackRoutine != null)

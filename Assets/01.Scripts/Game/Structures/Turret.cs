@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 public class Turret : Structure
 {
     public Enemy target;
-    public readonly float attackRange = 4f;
     protected float attackCooldown = 1f;
     private float lastAttackTime;
 
@@ -20,7 +19,7 @@ public class Turret : Structure
     List<GameObject> bullets = new List<GameObject>();
 
     protected override void Start()
-    {
+    { 
         base.Start();
         lastAttackTime = Time.time;
 
@@ -37,7 +36,7 @@ public class Turret : Structure
         {
             // 타겟이 없으면 120px(=1.2f) 범위 내의 enemy를 찾음
             float distance = Vector3.Distance(transform.position, Managers.Game.enemy.transform.position);
-            if (distance <= Define.turretRange) // Ensure turretRange is static in Define
+            if (distance <= GetAttackRange()) // Ensure turretRange is static in Define
             {
                 target = Managers.Game.enemy;
             }
@@ -154,7 +153,7 @@ public class Turret : Structure
 
     public float GetAttackRange()
     {
-        float range = attackRange;
+        float range = Managers.Game.GetStructureData(type).argment2[level];
 
         range = (playerData.structures.Find(n => n.type == Define.StructureType.Telescope) != null) ? (range * 1.2f) : range;
 

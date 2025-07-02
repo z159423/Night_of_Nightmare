@@ -8,7 +8,7 @@ public class MovingFrog : Frog
 {
     NavMeshAgent agent;
     bool isAttacking = false;
-    float attackRange = 4f;
+    readonly float attackRange = 8f;
 
     DOTweenAnimation dOTweenAnimation;
 
