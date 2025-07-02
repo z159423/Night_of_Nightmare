@@ -1151,7 +1151,6 @@ GameObject:
   - component: {fileID: 1572184923339216385}
   - component: {fileID: 9144655080249851983}
   - component: {fileID: 5378750073602868282}
-  - component: {fileID: 3906983899897139071}
   - component: {fileID: 2889903927521387269}
   m_Layer: 5
   m_Name: BtnText
@@ -1208,7 +1207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCD5C\uB300"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
   m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
@@ -1277,21 +1276,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3906983899897139071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4507132077429653012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Text: {fileID: 5378750073602868282}
-  KeyString: global.str_max
-  IsPassRTL: 0
 --- !u!114 &2889903927521387269
 MonoBehaviour:
   m_ObjectHideFlags: 0
