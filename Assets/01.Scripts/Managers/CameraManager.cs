@@ -51,6 +51,20 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    public void FollowTargetSmoothly(Transform target, float speed = 5f)
+    {
+        if (Managers.Game.currentGameMode == GameMode.Map)
+        {
+            if (cameras.TryGetValue(Managers.Game.currentGameMode, out var camera))
+            {
+                Vector3 camPos = camera.transform.position;
+                Vector3 targetPos = target.position;
+                Vector3 newPos = Vector3.Lerp(camPos, new Vector3(targetPos.x, targetPos.y, camPos.z), Time.deltaTime * speed);
+                camera.transform.position = newPos;
+            }
+        }
+    }
+
     public void TurnVinettaEffect(bool isOn)
     {
         Camera.main.GetComponent<PostProcessVolume>().enabled = isOn;
@@ -92,5 +106,55 @@ public class CameraManager : MonoBehaviour
             yield return null;
         }
         camera.m_Lens.OrthographicSize = targetSize;
+    }
+
+    private Coroutine followCoroutine;
+
+    public void StartFollowTarget(Transform target, float speed = 5f)
+    {
+        if (followCoroutine != null)
+            StopCoroutine(followCoroutine);
+        followCoroutine = StartCoroutine(FollowTargetCoroutine(target, speed));
+    }
+
+    private IEnumerator FollowTargetCoroutine(Transform target, float speed)
+    {
+        const float stopDistance = 0.5f; // 도달했다고 판단할 거리 오차
+
+        while (target != null && Managers.Game.currentGameMode == GameMode.Map)
+        {
+            if (cameras.TryGetValue(Managers.Game.currentGameMode, out var camera))
+            {
+                Vector3 camPos = camera.transform.position;
+                Vector3 targetPos = target.position;
+                Vector3 desiredPos = new Vector3(targetPos.x, targetPos.y, camPos.z);
+
+                // 리니어(등속) 이동
+                Vector3 direction = (desiredPos - camPos).normalized;
+                float distance = Vector3.Distance(camPos, desiredPos);
+                float moveStep = speed * Time.deltaTime;
+
+                if (distance <= stopDistance || moveStep >= distance)
+                {
+                    camera.transform.position = desiredPos;
+                    break;
+                }
+                else
+                {
+                    camera.transform.position = camPos + direction * moveStep;
+                }
+            }
+            yield return null;
+        }
+        followCoroutine = null;
+    }
+
+    public void OnTouched()
+    {
+        if (Managers.Game.currentGameMode == GameMode.Map && followCoroutine != null)
+        {
+            StopCoroutine(followCoroutine);
+            followCoroutine = null;
+        }
     }
 }

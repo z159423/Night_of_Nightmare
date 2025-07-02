@@ -256,7 +256,7 @@ public class UI_GameScene_Map : UI_Scene
     public void SetCharactorIcon(Define.CharactorType type, AiCharactor aiCharactor)
     {
         var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
-        icon.GetComponent<CharactorIcon>().charactor = aiCharactor;
+        icon.GetComponent<CharactorIcon>().Setting(aiCharactor);
         icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
         icon.gameObject.FindRecursive("Arrrow").SetActive(false);
     }

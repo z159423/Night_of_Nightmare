@@ -8,6 +8,19 @@ public class CharactorIcon : MonoBehaviour
 {
     public AiCharactor charactor;
 
+    public void Setting(AiCharactor ai)
+    {
+        charactor = ai;
+
+        GetComponent<Button>().onClick.AddListener(() =>
+        {
+            if (charactor != null && !charactor.die)
+            {
+                Managers.Camera.StartFollowTarget(charactor.transform);
+            }
+        });
+    }
+
     public void OnDie()
     {
         var iconObj = gameObject.FindRecursive("Icon");

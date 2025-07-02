@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Cinemachine;
 using System.Linq;
 using UnityEditor;
+using UnityEngine.EventSystems; // 꼭 추가!
 
 public class CharactorController : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class CharactorController : MonoBehaviour
         {
             startTouchPosition = Input.mousePosition;
             touch = true;
+
+            Managers.Camera.OnTouched();
         }
 
         if (Managers.Camera.currentMapCameraMode == CameraManager.MapCameraMode.Player)
@@ -137,6 +140,13 @@ public class CharactorController : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && touch)
             {
                 touch = false;
+
+                // UI 위에서 클릭한 경우 팝업 띄우지 않음
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                {
+                    isDragging = false;
+                    return;
+                }
 
                 if (!isDragging)
                 {
