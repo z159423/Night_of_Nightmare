@@ -207,6 +207,7 @@ public class Door : Structure
         repair.gameObject.SetActive(true);
         StartCoroutine(DisableRepairAfterDelay());
 
+        Managers.Audio.PlaySound("snd_stage_unlock", transform, minRangeVolumeMul: 0.4f, volumeMul: 0.8f);
     }
 
     private IEnumerator DisableRepairAfterDelay()
