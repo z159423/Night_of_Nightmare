@@ -50,5 +50,11 @@ public abstract class PlayerableCharactor : Charactor
         currentActiveRoom.door.playerData = playerData;
     }
 
-    public abstract void Die();
+    public virtual void Die()
+    {
+        if (charactorType == Define.CharactorType.LampGirl)
+            Managers.Audio.PlaySound("snd_girl_die", minRangeVolumeMul: -1f);
+        else
+            Managers.Audio.PlaySound("snd_wizard_die", minRangeVolumeMul: -1f);
+    }
 }

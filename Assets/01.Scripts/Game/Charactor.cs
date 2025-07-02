@@ -9,7 +9,7 @@ public abstract class Charactor : MonoBehaviour
 {
     protected Transform body;
     public GameObject icon;
-    private Tween _moveTween;
+    protected Tween _moveTween;
     protected SpriteRenderer bodySpriteRenderer;
 
     protected NavMeshAgent agent;
@@ -43,7 +43,7 @@ public abstract class Charactor : MonoBehaviour
     {
     }
 
-    public void OnMove()
+    public virtual void OnMove()
     {
         if (_moveTween != null && _moveTween.IsActive())
             return;
@@ -53,7 +53,7 @@ public abstract class Charactor : MonoBehaviour
             .From(new Vector3(0, 0, -3));
     }
 
-    public void OnMoveStop()
+    public virtual void OnMoveStop()
     {
         if (_moveTween != null && _moveTween.IsActive())
         {
