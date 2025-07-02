@@ -576,7 +576,7 @@ public class Enemy : Charactor
         if (hitAction != null)
         {
             Vector3 targetDirection = (targetPosition - body.position).normalized;
-            Vector3 dashPosition = body.localPosition + targetDirection * 1.75f;
+            Vector3 dashPosition = body.localPosition + targetDirection * 1.5f;
 
             yield return body.DOLocalMove(dashPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
 

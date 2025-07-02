@@ -298,8 +298,10 @@ public class Define
                     break;
                 }
             }
-            count = Mathf.Clamp(Mathf.RoundToInt(count * multiplier), 10, int.MaxValue);
+            count = Mathf.RoundToInt(count * multiplier);
         }
+
+        count = Mathf.Clamp(count, 10, int.MaxValue);
 
         return count;
     }
@@ -414,8 +416,6 @@ public class Define
         SatelliteAntenna,
         TurretBooster
     }
-
-    public static float turretRange = 12f;
 
     public static int[] enemyHp = new int[]
     {
@@ -681,7 +681,7 @@ public class Define
     { "snd_scream_3", new SoundData { soundKey = "snd_scream_3", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
     { "snd_skill_spawn_effect", new SoundData { soundKey = "snd_skill_spawn_effect", baseVolume = 0.35f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_spell", new SoundData { soundKey = "snd_spell", baseVolume = 1f, pitch = 1f, maxVolumeRange = 432f, minRangeVolumeMul = -1f } },
-    { "snd_stage_unlock", new SoundData { soundKey = "snd_stage_unlock", baseVolume = 0.3f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
+    { "snd_stage_unlock", new SoundData { soundKey = "snd_stage_unlock", baseVolume = 0.3f, pitch = 1f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },
     { "snd_sword_swing", new SoundData { soundKey = "snd_sword_swing", baseVolume = 1f, pitch = 0.8f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_tick", new SoundData { soundKey = "snd_tick", baseVolume = 1f, pitch = 1f, maxVolumeRange = 432f, minRangeVolumeMul = 0.6f } },
     { "snd_tower_hit", new SoundData { soundKey = "snd_tower_hit", baseVolume = 0.4f, pitch = 0.6f, maxVolumeRange = 432f, minRangeVolumeMul = 0.4f } },
