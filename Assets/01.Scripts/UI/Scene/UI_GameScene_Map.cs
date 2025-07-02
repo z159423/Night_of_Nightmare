@@ -15,7 +15,10 @@ public class UI_GameScene_Map : UI_Scene
         BoostFireBtn,
         BoostShieldBtn,
         BoostHammerBtn,
-        RepairBtn
+        RepairBtn,
+        CoinBtn,
+        EnergyBtn,
+        EnemyForceBtn
     }
 
     enum Texts
@@ -173,6 +176,21 @@ public class UI_GameScene_Map : UI_Scene
         {
             if (canHammerBoost && Managers.Game.enemy != null && Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow) > 0)
                 StartCoroutine(StartHammerBoost());
+        });
+
+        GetButton(Buttons.CoinBtn).AddButtonEvent(() =>
+       {
+           Managers.Game.playerData.AddCoin(10000);
+       });
+
+        GetButton(Buttons.EnergyBtn).AddButtonEvent(() =>
+        {
+            Managers.Game.playerData.AddEnergy(10000);
+        });
+
+        GetButton(Buttons.EnemyForceBtn).AddButtonEvent(() =>
+        {
+            Managers.Game.enemy.ForceTargetPlayer();
         });
     }
 
@@ -492,7 +510,7 @@ public class UI_GameScene_Map : UI_Scene
 
             case TutorialData.JubjectType.UpgradeStructure:
                 var structureData2 = Managers.Game.GetStructureData(tutorialData.upgradeType);
-                return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData2.nameKey+ "_" + (tutorialData.upgradeLevel+1)));
+                return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData2.nameKey + "_" + (tutorialData.upgradeLevel + 1)));
             default:
                 return "";
         }

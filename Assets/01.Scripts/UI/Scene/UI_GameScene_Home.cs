@@ -20,7 +20,8 @@ public class UI_GameScene_Home : UI_Scene
         RankModeBtn,
         ChallengeModeBtn,
         CenterCharactorBtn,
-        ChallengeLockBtn
+        ChallengeLockBtn,
+        GemBtn
     }
 
     enum Texts
@@ -187,6 +188,11 @@ public class UI_GameScene_Home : UI_Scene
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
         {
             GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+        });
+
+        GetButton(Buttons.GemBtn).AddButtonEvent(() =>
+        {
+            Managers.LocalData.PlayerGemCount += 1000;
         });
     }
 
