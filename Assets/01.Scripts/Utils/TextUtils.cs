@@ -44,8 +44,8 @@ public static class TextUtils
 
     public static Tween UINumberTween(TextMeshProUGUI text, int start, int end, float duration, string format = null, bool ts = false)
     {
-        start = Mathf.Max(0, start);
-        end = Mathf.Max(0, end);
+        start = Mathf.Max(int.MinValue, start);
+        end = Mathf.Max(int.MinValue, end);
         var value = start;
         if (string.IsNullOrEmpty(format))
             format = "%d";
