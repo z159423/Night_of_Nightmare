@@ -345,7 +345,7 @@ public class Enemy : Charactor
                 {
                     float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
 
-                    if (canAttack && distanceToTarget < 1.5f) // Example attack range
+                    if (canAttack && distanceToTarget < 2f) // Example attack range
                     {
                         StartCoroutine(Attack());
                     }
@@ -585,7 +585,7 @@ public class Enemy : Charactor
         if (hitAction != null)
         {
             Vector3 targetDirection = (targetPosition - body.position).normalized;
-            Vector3 dashPosition = body.localPosition + targetDirection * 1.7f;
+            Vector3 dashPosition = body.localPosition + targetDirection * 2f;
 
             yield return body.DOLocalMove(dashPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
 
