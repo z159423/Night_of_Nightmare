@@ -18,13 +18,17 @@ public class Turret : Structure
 
     List<GameObject> bullets = new List<GameObject>();
 
+    public GameObject overHeatParticlel;
+
     protected override void Start()
-    { 
+    {
         base.Start();
         lastAttackTime = Time.time;
 
         body = gameObject.FindRecursive("Body");
         head = gameObject.FindRecursive("Head");
+
+        overHeatParticlel = gameObject.FindRecursive("OverHeatParticle");
 
         upgradePercent = 2.5f;
     }
