@@ -15,8 +15,13 @@ MonoBehaviour:
   category: 0
   structureType: 100
   icon: {fileID: 21300000, guid: 2997853272aafa144907da637eadef0a, type: 3}
+  lampProp: 0
   baseStructure: 1
   sellable: 0
+  onlyOnePurcahse: 0
+  canRvUpgrade: 0
+  rvOnlyStructure: 0
+  rvUpgradeCount: 0
   nameKey: global.str_bed_name
   descriptionKey: global.str_desc_produce_gold
   upgradeCoin: 00000000180000003000000064000000c8000000900100002003000040060000800c00000019000000000000
@@ -34,6 +39,7 @@ MonoBehaviour:
   - 256
   - 512
   argment2: []
+  argment3: []
   requireStructures:
   - type: 100
     level: 0
@@ -70,7 +76,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 002c73a313b606d4f9181daa97674ad5, type: 3}
   sprite2:
   - {fileID: 21300000, guid: 2997853272aafa144907da637eadef0a, type: 3}
-  - {fileID: 21300000, guid: 2997853272aafa144907da637eadef0a, type: 3}
+  - {fileID: 21300000, guid: 0c191b0529257e84d83cdd5f0d9ab166, type: 3}
   - {fileID: 21300000, guid: 516095df44cd8ad4ebdd51a3727e9c2c, type: 3}
   - {fileID: 21300000, guid: 516095df44cd8ad4ebdd51a3727e9c2c, type: 3}
   - {fileID: 21300000, guid: 516095df44cd8ad4ebdd51a3727e9c2c, type: 3}
@@ -79,3 +85,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0e25c8ef944d2704989910ca2011e7c1, type: 3}
   - {fileID: 21300000, guid: e8fb4440a1c47384f8b21122f8c9b01c, type: 3}
   - {fileID: 21300000, guid: c4e8e6c73f3a97046ba2a386f2e22d97, type: 3}
+  RVUpgradeTo: 9999
