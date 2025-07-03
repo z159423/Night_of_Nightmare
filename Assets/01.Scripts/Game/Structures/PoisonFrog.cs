@@ -18,16 +18,17 @@ public class PoisonFrog : Frog
             // Play the tongue particle effect
             if (tongueParticle != null)
             {
-                tongueParticle.gameObject.SetActive(true);
+                tongueParticle.GetComponent<ParticleSystem>().Play();
             }
         };
 
         attackEndAction = () =>
         {
-            // Stop the tongue particle effect
+            // Stop emitting new particles, but keep existing ones alive
             if (tongueParticle != null)
             {
-                tongueParticle.gameObject.SetActive(false);
+                var ps = tongueParticle.GetComponent<ParticleSystem>();
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             }
         };
 
