@@ -73,6 +73,8 @@ public class Enemy : Charactor
     public Transform mirrorParticle;
     public Transform creepylaughterParticle;
     public Transform mossManSkillParticle;
+    public Transform attackSpeedSkillParticle;
+    public Transform attackDamageSkillParticle;
 
     public Transform sickle;
     public Transform slanderManKnife;
@@ -81,6 +83,8 @@ public class Enemy : Charactor
     public bool activeSlanderManKnife = false;
 
     bool canScream = true;
+
+    private bool isPunching = false;
 
     // Implementation of the abstract Hit() method from Charactor
 
@@ -115,19 +119,22 @@ public class Enemy : Charactor
         if (bodySpriteRenderer != null)
         {
             // 펀치(흔들림) 효과 추가 - 랜덤 방향
-            bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
+            if (!isPunching)
+            {
+                isPunching = true;
+                bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
 
-            // 0.12~0.18 사이의 랜덤 세기, 방향도 랜덤
-            float punchX = Random.Range(-0.3f, 0.3f);
-            float punchY = Random.Range(-0.3f, 0.3f);
-            Vector3 punch = new Vector3(punchX, punchY, 0);
+                float punchX = Random.Range(-0.3f, 0.3f);
+                float punchY = Random.Range(-0.3f, 0.3f);
+                Vector3 punch = new Vector3(punchX, punchY, 0);
 
-            bodySpriteRenderer.transform.DOPunchPosition(
-                punch,     // 랜덤 방향
-                0.3f,      // 지속 시간
-                15,        // 진동 횟수
-                1f         // 탄성
-            );
+                bodySpriteRenderer.transform.DOPunchPosition(
+                    punch,     // 랜덤 방향
+                    0.3f,      // 지속 시간
+                    15,        // 진동 횟수
+                    1f         // 탄성
+                ).OnComplete(() => isPunching = false); // 트윈 끝나면 플래그 해제
+            }
         }
 
         if (particle)
@@ -179,6 +186,8 @@ public class Enemy : Charactor
         mirrorParticle = gameObject.FindRecursive("MirrorParticle").transform;
         creepylaughterParticle = gameObject.FindRecursive("CreepylaughterParticle").transform;
         mossManSkillParticle = gameObject.FindRecursive("MossManSkillParticle").transform;
+        attackSpeedSkillParticle = gameObject.FindRecursive("AttackSpeedParticle").transform;
+        attackDamageSkillParticle = gameObject.FindRecursive("AttackDamageParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 
@@ -336,7 +345,7 @@ public class Enemy : Charactor
                 {
                     float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
 
-                    if (canAttack && distanceToTarget < 1f) // Example attack range
+                    if (canAttack && distanceToTarget < 1.5f) // Example attack range
                     {
                         StartCoroutine(Attack());
                     }
@@ -576,7 +585,7 @@ public class Enemy : Charactor
         if (hitAction != null)
         {
             Vector3 targetDirection = (targetPosition - body.position).normalized;
-            Vector3 dashPosition = body.localPosition + targetDirection * 1.5f;
+            Vector3 dashPosition = body.localPosition + targetDirection * 1.7f;
 
             yield return body.DOLocalMove(dashPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
 

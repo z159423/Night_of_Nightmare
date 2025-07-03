@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public abstract class EnemySkill
@@ -18,6 +19,7 @@ public abstract class EnemySkill
     public abstract bool CanUse(Enemy enemy);
     public abstract void Activate(Enemy enemy);
     public abstract void Deactivate(Enemy enemy);
+    public abstract void DeactiveBySpellBlocker();
 
     public int GetCoolDown()
     {
@@ -52,12 +54,13 @@ public class AttackSpeedSkill : EnemySkill
         enemy.attackSpeed.AddMultiplier(speedMultiplier);
         enemy.moveSpeed.AddMultiplier(moveMultiplier);
         // 기타 효과
+        enemy.attackSpeedSkillParticle.GetComponent<ParticleSystem>().Play();
 
         Managers.UI.ShowNotificationPopup("global.str_toast_enemy_spd_skill");
 
         //근처에 spellBlocker가 있는지 확인
 
-        Managers.Audio.PlaySound("snd_enemy_laugh");
+        Managers.Audio.PlaySound("snd_enemy_laugh", minRangeVolumeMul: -1f);
 
         Managers.Game.charactors
             .Where(n => n.currentActiveRoom != null && n.playerData != null)
@@ -78,6 +81,13 @@ public class AttackSpeedSkill : EnemySkill
         IsActive = false;
         enemy.attackSpeed.RemoveMultiplier(speedMultiplier);
         enemy.moveSpeed.RemoveMultiplier(moveMultiplier);
+
+        enemy.attackSpeedSkillParticle.GetComponent<ParticleSystem>().Stop();
+    }
+
+    public override void DeactiveBySpellBlocker()
+    {
+        // 이 스킬은 SpellBlocker에 의해 비활성화되지 않음
     }
 }
 
@@ -108,7 +118,9 @@ public class AttackDamageSkill : EnemySkill
 
         Managers.UI.ShowNotificationPopup("global.str_toast_enemy_dmg_skill");
 
-        Managers.Audio.PlaySound("snd_enemy_anger");
+        Managers.Audio.PlaySound("snd_enemy_anger", minRangeVolumeMul: -1f);
+
+        enemy.attackDamageSkillParticle.GetComponent<ParticleSystem>().Play();
 
         Managers.Game.charactors
             .Where(n => n.currentActiveRoom != null && n.playerData != null)
@@ -128,11 +140,20 @@ public class AttackDamageSkill : EnemySkill
     {
         IsActive = false;
         enemy.attackPower.RemoveMultiplier(damageMultiplier);
+
+        enemy.attackDamageSkillParticle.GetComponent<ParticleSystem>().Stop();
+    }
+
+    public override void DeactiveBySpellBlocker()
+    {
+        // 이 스킬은 SpellBlocker에 의해 비활성화되지 않음
     }
 }
 
 public class Creepylaughter : EnemySkill
 {
+    private List<(StructureEffect, Structure)> effects = new List<(StructureEffect, Structure)>();
+
     public Creepylaughter()
     {
         Name = "Creepylaughter";
@@ -165,14 +186,45 @@ public class Creepylaughter : EnemySkill
                 {
                     if (!structure.destroyed && Vector2.Distance(structure.transform.position, enemy.transform.position) < 5f)
                     {
-                        structure.AddEffect(new CreepylaughterEffect(Duration));
+                        var effect = new CreepylaughterEffect(Duration);
+                        structure.AddEffect(effect);
+                        effects.Add((effect, structure));
                     }
                 }
             }
         }
 
-        Managers.Audio.PlaySound("snd_enemy_lol", pitch: Random.Range(1.0f, 1.3f));
+        Managers.Game.charactors
+            .Where(n => n.currentActiveRoom != null && n.playerData != null)
+            .ToList()
+            .ForEach(n =>
+            {
+                var spellBlocker = n.playerData.structures
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
+                {
+                    sb.TryCastSpellBlock(enemy, () =>
+                    {
+                        Deactivate(enemy);
+                        DeactiveBySpellBlocker();
+                    });
+                }
+            });
+
+        Managers.Audio.PlaySound("snd_enemy_lol", minRangeVolumeMul: -1f, pitch: Random.Range(1.0f, 1.3f));
     }
+
+    public override void DeactiveBySpellBlocker()
+    {
+        foreach (var effect in effects)
+        {
+            if (effect.Item2 != null && !effect.Item2.destroyed && effect.Item1.IsActive)
+            {
+                effect.Item1.Remove(effect.Item2);
+            }
+        }
+    }
+
 
     public override void Deactivate(Enemy enemy)
     {
@@ -182,6 +234,8 @@ public class Creepylaughter : EnemySkill
 
 public class MothPowder : EnemySkill
 {
+    private List<(StructureEffect, Structure)> effects = new List<(StructureEffect, Structure)>();
+
     public MothPowder()
     {
         Name = "MothPowder";
@@ -221,11 +275,39 @@ public class MothPowder : EnemySkill
             }
         }
 
-        Managers.Audio.PlaySound("snd_boss_roar");
+        Managers.Game.charactors
+            .Where(n => n.currentActiveRoom != null && n.playerData != null)
+            .ToList()
+            .ForEach(n =>
+            {
+                var spellBlocker = n.playerData.structures
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
+                {
+                    sb.TryCastSpellBlock(enemy, () =>
+                    {
+                        Deactivate(enemy);
+                        DeactiveBySpellBlocker();
+                    });
+                }
+            });
+
+        Managers.Audio.PlaySound("snd_boss_roar", minRangeVolumeMul: -1f);
     }
 
     public override void Deactivate(Enemy enemy)
     {
         IsActive = false;
+    }
+
+    public override void DeactiveBySpellBlocker()
+    {
+        foreach (var effect in effects)
+        {
+            if (effect.Item2 != null && !effect.Item2.destroyed && effect.Item1.IsActive)
+            {
+                effect.Item1.Remove(effect.Item2);
+            }
+        }
     }
 }
