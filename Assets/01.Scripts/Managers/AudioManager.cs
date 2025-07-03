@@ -100,7 +100,7 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        var source = Managers.Resource.Instantiate("AudioSource", Managers.Camera.cameras[Define.GameMode.Map].transform).GetComponent<AudioSource>();
+        var source = Managers.Resource.Instantiate("AudioSource", Managers.Camera.GetCurrentCamera().transform).GetComponent<AudioSource>();
         source.transform.localPosition = Vector3.zero;
         source.clip = clip;
         source.spatialBlend = 1f;

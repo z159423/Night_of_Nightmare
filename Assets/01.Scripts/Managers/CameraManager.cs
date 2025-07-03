@@ -21,6 +21,15 @@ public class CameraManager : MonoBehaviour
 
     public MapCameraMode currentMapCameraMode = MapCameraMode.Player;
 
+    public CinemachineVirtualCamera GetCurrentCamera()
+    {
+        if (cameras.TryGetValue(Managers.Game.currentGameMode, out var camera))
+        {
+            return camera;
+        }
+        return null;
+    }
+
     private void Awake()
     {
         instance = this;

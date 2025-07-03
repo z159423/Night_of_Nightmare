@@ -77,7 +77,7 @@ public class AiCharactor : PlayerableCharactor
         SetBodySkin();
 
         if (Managers.UI._currentScene is UI_GameScene_Map)
-            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetCharactorIcon(charactorType, this);
+            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetCharactorIcon(this);
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
 

@@ -17,7 +17,7 @@ public class PlayerCharactor : PlayerableCharactor
         Managers.Game.playerCharactor = this;
 
         if (Managers.UI._currentScene is UI_GameScene_Map)
-            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetPlayerIcon(charactorType);
+            Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().SetPlayerIcon(this);
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
 

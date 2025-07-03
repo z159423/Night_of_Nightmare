@@ -6,17 +6,17 @@ using DG.Tweening;
 
 public class CharactorIcon : MonoBehaviour
 {
-    public AiCharactor charactor;
+    public PlayerableCharactor charactor;
 
-    public void Setting(AiCharactor ai)
+    public void Setting(PlayerableCharactor charactor)
     {
-        charactor = ai;
+        this.charactor = charactor;
 
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            if (charactor != null && !charactor.die)
+            if (this.charactor != null && !this.charactor.die)
             {
-                Managers.Camera.StartFollowTarget(charactor.transform);
+                Managers.Camera.StartFollowTarget(this.charactor.transform);
             }
         });
     }

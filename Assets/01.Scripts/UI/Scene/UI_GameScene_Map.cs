@@ -246,18 +246,20 @@ public class UI_GameScene_Map : UI_Scene
         }
     }
 
-    public void SetPlayerIcon(Define.CharactorType type)
+    public void SetPlayerIcon(PlayerableCharactor player)
     {
         var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
 
-        icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
+        icon.GetComponent<CharactorIcon>().Setting(player);
+
+        icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)player.charactorType + 1);
     }
 
-    public void SetCharactorIcon(Define.CharactorType type, AiCharactor aiCharactor)
+    public void SetCharactorIcon(AiCharactor aiCharactor)
     {
         var icon = Managers.Resource.Instantiate("CharactorIcon", playerLayout);
         icon.GetComponent<CharactorIcon>().Setting(aiCharactor);
-        icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)type + 1);
+        icon.FindRecursive("Icon").GetComponent<Image>().sprite = Managers.Resource.GetCharactorIcons((int)aiCharactor.charactorType + 1);
         icon.gameObject.FindRecursive("Arrrow").SetActive(false);
     }
 
