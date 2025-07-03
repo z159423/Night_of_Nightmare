@@ -172,6 +172,16 @@ public abstract class Structure : MonoBehaviour
         }
     }
 
+    public void RemoveEffect(StructureEffect effect)
+    {
+        var exist = activeEffects.FirstOrDefault(e => e.GetType() == effect.GetType());
+        if (exist != null)
+        {
+            exist.Remove(this);
+            activeEffects.Remove(exist);
+        }
+    }
+
     // Enemy.Update() 등에서 호출
     private void UpdateEffects()
     {
@@ -253,7 +263,7 @@ public class CreepylaughterEffect : StructureEffect
 {
     private float tickTimer = 0f;
 
-    private GameObject effectObj;
+    public GameObject effectObj;
 
     public CreepylaughterEffect(float duration)
     {
@@ -380,6 +390,8 @@ public class OverHeat : StructureEffect
         if (structure is Turret turret)
         {
             tickTimer = 0f;
+
+            turret.overHeatParticlel.GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -394,7 +406,8 @@ public class OverHeat : StructureEffect
     {
         if (structure is Turret turret)
         {
-
+            var ps = turret.overHeatParticlel.GetComponent<ParticleSystem>();
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
     }
 }

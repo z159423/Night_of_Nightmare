@@ -110,7 +110,7 @@ public class CameraManager : MonoBehaviour
 
     private Coroutine followCoroutine;
 
-    public void StartFollowTarget(Transform target, float speed = 5f)
+    public void StartFollowTarget(Transform target, float speed = 20f)
     {
         if (followCoroutine != null)
             StopCoroutine(followCoroutine);

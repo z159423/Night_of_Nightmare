@@ -64,6 +64,7 @@ public class AudioManager : MonoBehaviour
 
         float finalVolume = data.baseVolume * volumeMul;
 
+
         // minRangeVolumeMul이 -2가 아니면 data.minRangeVolumeMul 대신 매개변수 값 사용
         float minVolumeMul = (minRangeVolumeMul != -2f) ? minRangeVolumeMul : data.minRangeVolumeMul;
 
@@ -81,6 +82,8 @@ public class AudioManager : MonoBehaviour
                 Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
                 float pixelDistance = Vector2.Distance(screenCenter, screenPos);
 
+
+
                 // 거리에 따른 사운드 값 계산
                 // float soundValue = data.maxVolumeRange / pixelDistance;
 
@@ -97,8 +100,8 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        var source = Managers.Resource.Instantiate("AudioSource").GetComponent<AudioSource>();
-        source.transform.position = sourceTransform.position;
+        var source = Managers.Resource.Instantiate("AudioSource", Managers.Camera.cameras[Define.GameMode.Map].transform).GetComponent<AudioSource>();
+        source.transform.localPosition = Vector3.zero;
         source.clip = clip;
         source.spatialBlend = 1f;
         source.volume = finalVolume;
