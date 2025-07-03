@@ -145,6 +145,28 @@ public class PlayerData
 
     public void AddCoin(int coin)
     {
+        var bed = structures.Find(s => s.type == Define.StructureType.Bed);
+
+        if (bed != null && Managers.Game.playerData != null && this != Managers.Game.playerData)
+        {
+            if (bed.level == 2)
+            {
+                coin = Mathf.RoundToInt(coin * 1.4f);
+            }
+            else if (bed.level == 3)
+            {
+                coin = Mathf.RoundToInt(coin * 1.3f);
+            }
+            else if (bed.level == 4)
+            {
+                coin = Mathf.RoundToInt(coin * 1.2f);
+            }
+            else if (bed.level == 5)
+            {
+                coin = Mathf.RoundToInt(coin * 1.1f);
+            }
+        }
+
         this.coin += coin;
 
         GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);

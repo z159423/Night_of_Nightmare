@@ -85,6 +85,12 @@ public class Bed : Structure
 
         blanket.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite1[level];
         bed.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite2[level];
+
+        if (Managers.Game.playerData != playerData)
+            if (level == 2)
+                playerData.AddCoin(25);
+            else if (level == 3)
+                playerData.AddCoin(75);
     }
 
     public override void DestroyStructure()
