@@ -40,6 +40,7 @@ public class StructureDataEditor : Editor
         EditorGUILayout.PropertyField(so.FindProperty("baseStructure"));
         EditorGUILayout.PropertyField(so.FindProperty("RVUpgradeTo"));
         EditorGUILayout.PropertyField(so.FindProperty("canRvUpgrade"));
+        EditorGUILayout.PropertyField(so.FindProperty("rvOnlyStructure"));
         EditorGUILayout.PropertyField(so.FindProperty("rvUpgradeCount"));
         EditorGUILayout.PropertyField(so.FindProperty("upgradeCoin"), true);
         EditorGUILayout.PropertyField(so.FindProperty("upgradeEnergy"), true);
@@ -48,6 +49,7 @@ public class StructureDataEditor : Editor
         EditorGUILayout.PropertyField(so.FindProperty("purcahseLimit"));
         EditorGUILayout.PropertyField(so.FindProperty("argment1"), true);
         EditorGUILayout.PropertyField(so.FindProperty("argment2"), true);
+        EditorGUILayout.PropertyField(so.FindProperty("argment3"), true);
         EditorGUILayout.PropertyField(so.FindProperty("requireStructures"), true);
         EditorGUILayout.PropertyField(so.FindProperty("sprite1"), true);
         EditorGUILayout.PropertyField(so.FindProperty("sprite2"), true);

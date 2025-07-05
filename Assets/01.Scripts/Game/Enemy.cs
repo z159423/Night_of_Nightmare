@@ -75,6 +75,7 @@ public class Enemy : Charactor
     public Transform mossManSkillParticle;
     public Transform attackSpeedSkillParticle;
     public Transform attackDamageSkillParticle;
+    public Transform hammerThrowParticle;
 
     public Transform sickle;
     public Transform slanderManKnife;
@@ -188,6 +189,7 @@ public class Enemy : Charactor
         mossManSkillParticle = gameObject.FindRecursive("MossManSkillParticle").transform;
         attackSpeedSkillParticle = gameObject.FindRecursive("AttackSpeedParticle").transform;
         attackDamageSkillParticle = gameObject.FindRecursive("AttackDamageParticle").transform;
+        hammerThrowParticle = gameObject.FindRecursive("HammerThrowParticle").transform;
 
         SetNameText(Managers.Game.enemyName);
 

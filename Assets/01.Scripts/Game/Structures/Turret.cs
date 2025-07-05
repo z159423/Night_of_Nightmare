@@ -79,7 +79,7 @@ public class Turret : Structure
         int coinValue = 0;
 
         if (this is GoldenTurret)
-            coinValue += (int)Managers.Game.GetStructureData(Define.StructureType.GoldenTurret).argment2[level];
+            coinValue += (int)Managers.Game.GetStructureData(Define.StructureType.GoldenTurret).argment3[level];
 
         if (goldenChest)
             coinValue += level + 1;

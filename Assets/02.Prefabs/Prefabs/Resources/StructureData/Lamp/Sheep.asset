@@ -19,10 +19,13 @@ MonoBehaviour:
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
+  canRvUpgrade: 0
+  rvOnlyStructure: 0
+  rvUpgradeCount: 0
   nameKey: global.str_sheep_name
   descriptionKey: global.str_sheep_desc
   upgradeCoin: 64000000
-  upgradeEnergy: 64000000
+  upgradeEnergy: 00000000
   purcahseLimit: -1
   argment1:
   - 1
@@ -34,7 +37,9 @@ MonoBehaviour:
   - 32
   - 32
   argment2: []
+  argment3: []
   requireStructures: []
   sprite1:
   - {fileID: 21300000, guid: 50aa8753cf60ead42b8a1b4e50195263, type: 3}
   sprite2: []
+  RVUpgradeTo: 9999

@@ -384,14 +384,14 @@ public class GameManager : MonoBehaviour
         Managers.LocalData.AddBoostItem(type, -1);
     }
 
-    public bool BuildStructure(PlayerData _playerData, StructureType type, Tile tile)
+    public Structure BuildStructure(PlayerData _playerData, StructureType type, Tile tile)
     {
         var structureData = GetStructureData(type);
 
         if (structureData.CanPurchase(_playerData, out string reason, 0))
         {
             if (reason == "FREE")
-            {
+            {   
                 _playerData.AddFreeCount(type);
             }
             else
@@ -432,10 +432,10 @@ public class GameManager : MonoBehaviour
                 GameObserver.Call(GameObserverType.Game.OnPlayerTutorialActing);
             }
 
-            return true;
+            return structure;
         }
         else
-            return false;
+            return null;
     }
 
     public float LoseRankingPoint()

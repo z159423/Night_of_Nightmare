@@ -55,6 +55,12 @@ public class CharactorController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (IsPointerOverUI())
+            {
+                isDragging = false;
+                return;
+            }
+
             startTouchPosition = Input.mousePosition;
             touch = true;
 
@@ -142,7 +148,7 @@ public class CharactorController : MonoBehaviour
                 touch = false;
 
                 // UI 위에서 클릭한 경우 팝업 띄우지 않음
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                if (IsPointerOverUI())
                 {
                     isDragging = false;
                     return;
@@ -205,5 +211,17 @@ public class CharactorController : MonoBehaviour
                 isDragging = false;
             }
         }
+    }
+
+    bool IsPointerOverUI()
+    {
+#if UNITY_EDITOR
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+#else
+        if (Input.touchCount > 0)
+            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+        else
+            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+#endif
     }
 }

@@ -84,6 +84,11 @@ public abstract class Structure : MonoBehaviour
         Managers.Audio.PlaySound("snd_build", transform, minRangeVolumeMul: 0.6f);
     }
 
+    public virtual void UpgradeTo(int level)
+    {
+        this.level = level;
+    }
+
     public virtual void Hit(float damage)
     {
         Hp -= damage;

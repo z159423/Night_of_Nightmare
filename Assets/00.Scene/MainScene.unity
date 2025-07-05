@@ -5716,14 +5716,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 698541168}
     m_Modifications:
-    - target: {fileID: 8512914269364925092, guid: cf213a3bbcc9ff244b0dc7a00c20b0dc, type: 3}
-      propertyPath: lengthInSec
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8512914269364925092, guid: cf213a3bbcc9ff244b0dc7a00c20b0dc, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 8512914269364925094, guid: cf213a3bbcc9ff244b0dc7a00c20b0dc, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -13648,14 +13640,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 623187791506821220, guid: 204dadb11aa15cc49b30ddf569088d7b, type: 3}
-      propertyPath: lengthInSec
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 623187791506821220, guid: 204dadb11aa15cc49b30ddf569088d7b, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 204dadb11aa15cc49b30ddf569088d7b, type: 3}
 --- !u!4 &1328262163 stripped
@@ -18494,14 +18478,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 698541168}
     m_Modifications:
-    - target: {fileID: 6131898803516416108, guid: b79ed8cfd4ea54a438c694467e1e2923, type: 3}
-      propertyPath: lengthInSec
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131898803516416108, guid: b79ed8cfd4ea54a438c694467e1e2923, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 6131898803516416114, guid: b79ed8cfd4ea54a438c694467e1e2923, type: 3}
       propertyPath: m_RootOrder
       value: 5

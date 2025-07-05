@@ -660,7 +660,6 @@ GameObject:
   - component: {fileID: 9158019878920902785}
   - component: {fileID: 1933794536438242127}
   - component: {fileID: 6718282082472961283}
-  - component: {fileID: 2985459475443759506}
   m_Layer: 5
   m_Name: NameText
   m_TagString: Untagged
@@ -800,21 +799,6 @@ MonoBehaviour:
   outlineColor: {r: 0.2830189, g: 0.25512704, b: 0.22294413, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
---- !u!114 &2985459475443759506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7387834720515141403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Text: {fileID: 1933794536438242127}
-  KeyString: global.str_lamp_name
-  IsPassRTL: 0
 --- !u!1 &8325401679284698881
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,8 +834,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: -11, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4555399077071535042
 CanvasRenderer:
@@ -881,7 +865,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: '20
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
   m_sharedMaterial: {fileID: -6946902509292710788, guid: 7312aadb30aa1504f9f6edb6ed882f30, type: 2}
@@ -908,11 +894,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
+  m_fontSize: 22.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 2
   m_fontSizeMax: 28
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -962,7 +948,6 @@ GameObject:
   - component: {fileID: 107693115568135066}
   - component: {fileID: 1846463254058033635}
   - component: {fileID: 1813053161181738954}
-  - component: {fileID: 1837309259363871292}
   m_Layer: 5
   m_Name: DescText
   m_TagString: Untagged
@@ -1102,18 +1087,3 @@ MonoBehaviour:
   outlineColor: {r: 0.28235295, g: 0.25490198, b: 0.22352943, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
---- !u!114 &1837309259363871292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8730662505167076689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Text: {fileID: 1846463254058033635}
-  KeyString: global.str_boost_lamp_desc
-  IsPassRTL: 0

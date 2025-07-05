@@ -92,7 +92,6 @@ public class Upgrade_Popup : UI_Popup
                 selectedStructure.Upgrade();
 
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);
-
                 Exit();
             }
         }, level, true, thisStructure: structure, Exit);
@@ -106,12 +105,23 @@ public class Upgrade_Popup : UI_Popup
             rvUpgradeSlot.Init();
             rvUpgradeSlot.RVUpgradeSetting(data, () =>
             {
-                selectedStructure.Upgrade();
+                // //TODO: 광고 
+                // if (data.RVUpgradeTo != Define.StructureType.None)
+                // {
+                //     var structure = Managers.Game.BuildStructure(Managers.Game.playerData, data.RVUpgradeTo, Managers.Game.selectedTile);
 
-                GameObserver.Call(GameObserverType.Game.OnChangeStructure);
+                //     structure.UpgradeTo(level);
+
+                //     if (structure != null)
+                //         structure.DestroyStructure();
+                // }
+                // else
+                //     selectedStructure.Upgrade();
+
+                // GameObserver.Call(GameObserverType.Game.OnChangeStructure);
 
                 Exit();
-            }, level);
+            }, level, thisStructure: structure);
         }
 
         OpenAnimation();

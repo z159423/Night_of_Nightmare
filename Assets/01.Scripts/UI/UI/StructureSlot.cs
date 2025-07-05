@@ -68,13 +68,20 @@ public class StructureSlot : UI_Base
         });
     }
 
-    public void RVUpgradeSetting(StructureData data, Action onPurcahse, int level)
+    public void RVUpgradeSetting(StructureData data, Action onPurcahse, int level, Structure thisStructure = null)
     {
-        _data = data;
+        if (data.structureType == Define.StructureType.AutoTurret)
+            _data = Managers.Game.GetStructureData(Define.StructureType.GoldenTurret);
+        else
+            _data = data;
         this.level = level;
 
         GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
-        GetTextMesh(Texts.DescText).text = GetDesc();
+        if (data.structureType == Define.StructureType.AutoTurret)
+            GetTextMesh(Texts.DescText).text = Managers.Localize.GetDynamicText("global.str_auto_tower_desc");
+        else
+            GetTextMesh(Texts.DescText).text = GetDesc();
+
         SetIcon();
 
         GetButton(Buttons.RVBtn).gameObject.SetActive(true);
@@ -88,11 +95,25 @@ public class StructureSlot : UI_Base
             GetButton(Buttons.RVBtn).onClick.AddListener(() =>
             {
                 //TODO: RV 광고 재생
-                onPurcahse?.Invoke();
-                if (Managers.Game.playerData.rvUpgradeCount.ContainsKey(data.structureType))
-                    Managers.Game.playerData.rvUpgradeCount[data.structureType]++;
+                if (data.structureType == Define.StructureType.AutoTurret)
+                {
+                    var structure = Managers.Game.BuildStructure(Managers.Game.playerData, data.RVUpgradeTo, Managers.Game.selectedTile);
+                    structure.UpgradeTo(level);
+
+                    if (thisStructure != null)
+                        thisStructure.DestroyStructure();
+
+                    onPurcahse?.Invoke();
+                }
                 else
-                    Managers.Game.playerData.rvUpgradeCount.Add(data.structureType, 1);
+                {
+                    thisStructure.Upgrade();
+                    onPurcahse?.Invoke();
+                    if (Managers.Game.playerData.rvUpgradeCount.ContainsKey(data.structureType))
+                        Managers.Game.playerData.rvUpgradeCount[data.structureType]++;
+                    else
+                        Managers.Game.playerData.rvUpgradeCount.Add(data.structureType, 1);
+                }
             });
         }
     }
@@ -108,13 +129,15 @@ public class StructureSlot : UI_Base
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();
 
-        if (rvUpgradeType != Define.StructureType.None && upgrade)
+        if (rvUpgradeType != Define.StructureType.None && upgrade && data.rvOnlyStructure)
         {
             GetButton(Buttons.RVBtn).gameObject.SetActive(true);
             GetButton(Buttons.RVBtn).onClick.AddListener(() =>
             {
                 //TODO: RV 광고 재생
-                Managers.Game.BuildStructure(Managers.Game.playerData, rvUpgradeType, Managers.Game.selectedTile);
+                var structure = Managers.Game.BuildStructure(Managers.Game.playerData, rvUpgradeType, Managers.Game.selectedTile);
+
+                structure.UpgradeTo(level - 1);
 
                 if (thisStructure != null)
                     thisStructure.DestroyStructure();
@@ -122,7 +145,6 @@ public class StructureSlot : UI_Base
                 exitAction?.Invoke();
             });
         }
-
 
         GetButton(Buttons.Button).onClick.AddListener(() =>
         {
@@ -240,7 +262,7 @@ public class StructureSlot : UI_Base
         switch (_data.structureType)
         {
             case Define.StructureType.Turret:
-                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString() + "<br>" + Managers.Localize.GetDynamicText(_data.descriptionKey, "7"));
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString() + "<br>" + Managers.Localize.GetDynamicText("global.str_desc_atk_range", _data.argment2[level].ToString()));
                 break;
 
             case Define.StructureType.Bed:
@@ -265,8 +287,10 @@ public class StructureSlot : UI_Base
                 break;
 
             case Define.StructureType.AutoTurret:
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString()) + "<br>" + Managers.Localize.GetDynamicText("global.str_desc_atk_range", _data.argment2[level].ToString());
+                break;
             case Define.StructureType.GoldenTurret:
-                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString()) + "<br>" + Managers.Localize.GetDynamicText("global.str_desc_atk_range", "10.5");
+                desc = Managers.Localize.GetDynamicText(_data.descriptionKey, _data.argment1[level].ToString()) + "<br>" + Managers.Localize.GetDynamicText("global.str_desc_atk_range", _data.argment2[level].ToString());
                 break;
 
             case Define.StructureType.Lamp:
@@ -318,6 +342,10 @@ public class StructureSlot : UI_Base
             GetImage(Images.BedIcon1).sprite = _data.sprite2[level];
             GetImage(Images.BedIcon2).sprite = Managers.Resource.GetCharactorImage((int)Managers.Game.playerCharactor.charactorType + 1);
             GetImage(Images.BedIcon3).sprite = _data.sprite1[level];
+
+            GetImage(Images.BedIcon1).SetNativeSize();
+            GetImage(Images.BedIcon2).SetNativeSize();
+            GetImage(Images.BedIcon3).SetNativeSize();
         }
         else if (_data.structureType == Define.StructureType.Door)
         {

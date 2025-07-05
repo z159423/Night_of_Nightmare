@@ -19,6 +19,8 @@ public class StructureData : ScriptableObject
     public bool sellable = true;
     public bool onlyOnePurcahse = false;
     public bool canRvUpgrade = false;
+    public bool rvOnlyStructure = false;
+
     public int rvUpgradeCount;
 
     public string nameKey;
@@ -30,6 +32,8 @@ public class StructureData : ScriptableObject
 
     public float[] argment1;
     public float[] argment2;
+    public float[] argment3;
+
 
     public RequireStructure[] requireStructures;
 

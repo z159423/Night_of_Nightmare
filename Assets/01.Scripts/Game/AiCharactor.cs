@@ -300,10 +300,10 @@ public class AiCharactor : PlayerableCharactor
 
     private void BuildStructure(StructureType type, Tile tile)
     {
-        bool success = Managers.Game.BuildStructure(playerData, type, tile);
+        var success = Managers.Game.BuildStructure(playerData, type, tile);
 
 #if UNITY_EDITOR
-        if (success)
+        if (success != null)
         {
             Debug.Log($"{charactorType} successfully built {type} at {tile.transform.position}");
         }
