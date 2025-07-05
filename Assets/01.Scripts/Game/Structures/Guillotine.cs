@@ -58,7 +58,7 @@ public class Guillotine : Structure
             yield break;
 
         GameObject cutterBullet = Managers.Resource.Instantiate("GuillotineCutterBullet");
-        Vector3 startPos = target.transform.position + new Vector3(0, 4f, 0);
+        Vector3 startPos = target.transform.position + new Vector3(0, 7f, 0);
         cutterBullet.transform.position = startPos;
 
         Managers.Audio.PlaySound("snd_sword_swing", minRangeVolumeMul: -1f);
@@ -96,8 +96,9 @@ public class Guillotine : Structure
                 int damage = Mathf.RoundToInt(target.MaxHp * 0.12f);
                 target.Hit(damage, false);
 
-                Managers.Audio.PlaySound("snd_cutter", cutterBullet.transform);
+                target.hammerThrowParticle.GetComponent<ParticleSystem>().Play();
 
+                Managers.Audio.PlaySound("snd_cutter", cutterBullet.transform);
             }
 
             // 도착 체크

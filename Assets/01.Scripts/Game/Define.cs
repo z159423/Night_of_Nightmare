@@ -669,7 +669,7 @@ public class Define
     { "snd_enemy_level_up", new SoundData { soundKey = "snd_enemy_level_up", baseVolume = 0.4f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_enemy_lol", new SoundData { soundKey = "snd_enemy_lol", baseVolume = 0.6f, pitch = 1.0f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_enemy_power_hit", new SoundData { soundKey = "snd_enemy_power_hit", baseVolume = 0.18f, pitch = 1f, maxVolumeRange = 432f, minRangeVolumeMul = 0.4f } },
-    { "snd_get", new SoundData { soundKey = "snd_get", baseVolume = 0.75f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
+    { "snd_get", new SoundData { soundKey = "snd_get", baseVolume = 0.75f, pitch = 1f, maxVolumeRange = 432f, minRangeVolumeMul = -1f } },
     { "snd_get_item", new SoundData { soundKey = "snd_get_item", baseVolume = 1f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_girl_die", new SoundData { soundKey = "snd_girl_die", baseVolume = 0.4f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_girl_scream_1", new SoundData { soundKey = "snd_girl_scream_1", baseVolume = 0.8f, pitch = 0.88f, maxVolumeRange = 600f, minRangeVolumeMul = -1f } },

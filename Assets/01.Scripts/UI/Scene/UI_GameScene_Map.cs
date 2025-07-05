@@ -18,7 +18,10 @@ public class UI_GameScene_Map : UI_Scene
         RepairBtn,
         CoinBtn,
         EnergyBtn,
-        EnemyForceBtn
+        EnemyForceBtn,
+        GameWinBtn,
+        GameLoseBtn,
+        EnemyLevelUp
     }
 
     enum Texts
@@ -192,6 +195,21 @@ public class UI_GameScene_Map : UI_Scene
         {
             Managers.Game.enemy.ForceTargetPlayer();
         });
+
+        GetButton(Buttons.EnemyLevelUp).AddButtonEvent(() =>
+        {
+            Managers.Game.enemy.LevelUp();
+        });
+
+        GetButton(Buttons.GameWinBtn).AddButtonEvent(() =>
+        {
+            Managers.Game.GameWin();
+        });
+
+        GetButton(Buttons.GameLoseBtn).AddButtonEvent(() =>
+        {
+            Managers.Game.GameOver();
+        });
     }
 
     void Update()
@@ -280,7 +298,7 @@ public class UI_GameScene_Map : UI_Scene
                 }
             }
 
-            Managers.Audio.PlaySound("snd_get");
+            Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
 
             Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
             GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
@@ -300,8 +318,7 @@ public class UI_GameScene_Map : UI_Scene
     {
         if (canShieldBoost)
         {
-            Managers.Audio.PlaySound("snd_get");
-
+            Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
             Managers.Game.playerData.room.door.AddEffect(new HolyProtection(15));
 
             Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
@@ -322,8 +339,7 @@ public class UI_GameScene_Map : UI_Scene
     {
         if (canHammerBoost)
         {
-            Managers.Audio.PlaySound("snd_get");
-
+            Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
             StartCoroutine(FireHammerBullet(Managers.Game.enemy));
 
             Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
@@ -345,8 +361,7 @@ public class UI_GameScene_Map : UI_Scene
         if (target == null || !target.gameObject.activeInHierarchy)
             yield break;
 
-        Managers.Audio.PlaySound("snd_get");
-
+        Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
         GameObject hammer = Managers.Resource.Instantiate("HammerBullet");
         Vector3 startPos = target.transform.position + new Vector3(0, 6f, 0);
         hammer.transform.position = startPos;
@@ -395,6 +410,8 @@ public class UI_GameScene_Map : UI_Scene
                 int damage = Mathf.RoundToInt(target.MaxHp * 0.12f);
                 target.Hit(damage, false);
                 target.AddEffect(new StunEffect(3f));
+
+                target.hammerThrowParticle.GetComponent<ParticleSystem>().Play();
 
                 Managers.Audio.PlaySound("snd_cutter", target.transform);
 
@@ -486,6 +503,7 @@ public class UI_GameScene_Map : UI_Scene
         {
             GetTextMesh(Texts.TutorialText).text = Managers.Localize.GetText("global.str_tuto_desc_12");
         }
+        Managers.Audio.PlaySound("snd_get_item");
 
         StartCoroutine(clear());
 
@@ -508,7 +526,10 @@ public class UI_GameScene_Map : UI_Scene
             case TutorialData.JubjectType.PurchaseStructure:
                 var structureData = Managers.Game.GetStructureData(tutorialData.purchaseType);
                 int currentCount = Managers.Game.playerData.structures.Count(n => n.type == tutorialData.purchaseType);
-                return Managers.Localize.GetDynamicText("tutorial_purchase", Managers.Localize.GetText(structureData.nameKey), currentCount.ToString(), tutorialData.purchaseCount.ToString());
+                if (tutorialData.purchaseCount == 1)
+                    return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData.nameKey));
+                else
+                    return Managers.Localize.GetDynamicText("tutorial_purchase", Managers.Localize.GetText(structureData.nameKey), currentCount.ToString(), tutorialData.purchaseCount.ToString());
 
             case TutorialData.JubjectType.UpgradeStructure:
                 var structureData2 = Managers.Game.GetStructureData(tutorialData.upgradeType);
