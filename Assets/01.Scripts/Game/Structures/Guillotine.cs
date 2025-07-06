@@ -57,7 +57,7 @@ public class Guillotine : Structure
         if (target == null || !target.gameObject.activeInHierarchy)
             yield break;
 
-        GameObject cutterBullet = Managers.Resource.Instantiate("GuillotineCutterBullet");
+        GameObject cutterBullet = Managers.Resource.Instantiate("GuillotineCutterBullet", transform);
         Vector3 startPos = target.transform.position + new Vector3(0, 7f, 0);
         cutterBullet.transform.position = startPos;
 

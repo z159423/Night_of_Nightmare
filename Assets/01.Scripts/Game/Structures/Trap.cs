@@ -48,7 +48,7 @@ public class Trap : Structure
     private IEnumerator FireNetBullet(Enemy target)
     {
         // NetBullet 생성 및 초기화
-        GameObject bullet = Managers.Resource.Instantiate("NetBullet");
+        GameObject bullet = Managers.Resource.Instantiate("NetBullet", transform);
         bullet.transform.position = transform.position;
 
         Managers.Audio.PlaySound("snd_sword_swing", minRangeVolumeMul: -1f);

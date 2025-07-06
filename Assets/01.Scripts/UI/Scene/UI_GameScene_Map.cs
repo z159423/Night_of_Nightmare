@@ -115,6 +115,22 @@ public class UI_GameScene_Map : UI_Scene
         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
         hpbar.gameObject.SetActive(false);
         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
+
+        GetTextMesh(Texts.BoostFireCoolTimeText).gameObject.SetActive(false);
+        canFireBoost = true;
+        GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = Color.white;
+
+        GetTextMesh(Texts.BoostShieldCoolTimeText).gameObject.SetActive(false);
+        canShieldBoost = true;
+        GetButton(Buttons.BoostShieldBtn).GetComponent<Image>().color = Color.white;
+
+        GetTextMesh(Texts.BoostHammerCoolTimeText).gameObject.SetActive(false);
+        canHammerBoost = true;
+        GetButton(Buttons.BoostHammerBtn).GetComponent<Image>().color = Color.white;
+
+        GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
+        hpbar.gameObject.SetActive(false);
+        GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
     }
 
     public void FirstSetting()

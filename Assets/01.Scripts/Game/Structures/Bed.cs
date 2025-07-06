@@ -16,7 +16,7 @@ public class Bed : Structure
     public bool active = false;
     bool playerActive = false;
 
-    float delay = 0;
+    public float delay = 0;
 
     protected override void Start()
     {
@@ -83,8 +83,7 @@ public class Bed : Structure
     {
         base.Upgrade();
 
-        blanket.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite1[level];
-        bed.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite2[level];
+        SetBodySprite();
 
         if (Managers.Game.playerData != playerData)
             if (level == 2)
@@ -92,6 +91,20 @@ public class Bed : Structure
             else if (level == 3)
                 playerData.AddCoin(75);
     }
+
+    public override void UpgradeTo(int levelTo)
+    {
+        base.UpgradeTo(levelTo);
+
+        SetBodySprite();
+    }
+
+    public override void SetBodySprite()
+    {
+        blanket.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite1[level];
+        bed.sprite = Managers.Game.GetStructureData(Define.StructureType.Bed).sprite2[level];
+    }
+
 
     public override void DestroyStructure()
     {

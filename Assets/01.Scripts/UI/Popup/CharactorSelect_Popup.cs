@@ -160,6 +160,8 @@ public class CharactorSelect_Popup : UI_Popup
                         Managers.LocalData.SetCharactorOwned(charactorData.charactorType, true);
                         Managers.Game.ChangePlayerCharactor(selectedType);
                         UpdateUI();
+
+                        Managers.Audio.PlaySound("snd_get_item");
                     });
                 }
                 else if (charactorData.purchaseType == Define.CharactorPurchaseType.Gem)
@@ -180,6 +182,8 @@ public class CharactorSelect_Popup : UI_Popup
                             Managers.Game.ChangePlayerCharactor(selectedType);
 
                             UpdateUI();
+
+                            Managers.Audio.PlaySound("snd_get_item");
                         });
                     }
                     else

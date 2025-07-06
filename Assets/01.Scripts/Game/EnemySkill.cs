@@ -30,7 +30,7 @@ public abstract class EnemySkill
 
 public class AttackSpeedSkill : EnemySkill
 {
-    private float speedMultiplier = 2.4f;
+    private float speedMultiplier = 0.416f;
     private float moveMultiplier = 2f;
 
     public AttackSpeedSkill()

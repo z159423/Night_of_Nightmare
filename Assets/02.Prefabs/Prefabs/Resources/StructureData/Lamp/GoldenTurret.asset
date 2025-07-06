@@ -16,10 +16,12 @@ MonoBehaviour:
   structureType: 33
   icon: {fileID: 21300000, guid: 441c3b3a901b382489a7dcac9f88e019, type: 3}
   lampProp: 2
+  DoNotSpawnInLamp: 1
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
   canRvUpgrade: 0
+  rvOnlyStructure: 0
   rvUpgradeCount: 0
   nameKey: global.str_auto_tower_name_2
   descriptionKey: global.str_desc_atk_dmg

@@ -83,7 +83,7 @@ public class BleedEffect : EnemyEffect
 
 public class FreezeEffect : EnemyEffect
 {
-    private float attackSpeedMultiplier = 0.8f;
+    private float attackSpeedMultiplier = 1.25f;
 
     public FreezeEffect(float duration)
     {

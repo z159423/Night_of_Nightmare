@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         int mapCount = Managers.Resource.LoadAll<GameObject>("Maps").Length;
 
         int mapIndex = Managers.LocalData.PlayerRankingPoint < 100 ? 4 : Random.Range(1, mapCount + 1);
-        // int mapIndex = 7;
+        // int mapIndex = 8;
 
         currentMap = Managers.Resource.Instantiate("Maps/Map" + mapIndex).GetComponent<Map>();
         currentMap.Setting();
@@ -391,7 +391,7 @@ public class GameManager : MonoBehaviour
         if (structureData.CanPurchase(_playerData, out string reason, 0))
         {
             if (reason == "FREE")
-            {   
+            {
                 _playerData.AddFreeCount(type);
             }
             else

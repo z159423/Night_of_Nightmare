@@ -99,6 +99,8 @@ class QClear : EditorWindow
     public static void ClearChallengeModeLevel() { PlayerPrefs.DeleteKey("ChallengeModeLevel"); Debug.Log("<Color=red>PlayerPrefs Delete : ChallengeModeLevel</color>"); }
     [MenuItem("QTool/Clear/PlayerTutorialStep", priority = 1)]
     public static void ClearPlayerTutorialStep() { PlayerPrefs.DeleteKey("PlayerTutorialStep"); Debug.Log("<Color=red>PlayerPrefs Delete : PlayerTutorialStep</color>"); }
+    [MenuItem("QTool/Clear/FirstUseLamp", priority = 1)]
+    public static void ClearFirstUseLamp() { PlayerPrefs.DeleteKey("FirstUseLamp"); Debug.Log("<Color=red>PlayerPrefs Delete : FirstUseLamp</color>"); }
     // End
 }
 #endif

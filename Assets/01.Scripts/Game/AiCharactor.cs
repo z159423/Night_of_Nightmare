@@ -235,13 +235,13 @@ public class AiCharactor : PlayerableCharactor
             playerData.UseResource(structureData.GetPurchaseCoin(level, playerData), structureData.GetPurchaseEnergy(level, playerData));
 
 #if UNITY_EDITOR
-            Debug.Log($"{charactorType} upgraded {type} at {currentFindBed?.transform.position}");
+            // Debug.Log($"{charactorType} upgraded {type} at {currentFindBed?.transform.position}");
 #endif
         }
         else
         {
 #if UNITY_EDITOR
-            Debug.LogWarning($"{charactorType} tried to upgrade a {type}, but upgrade conditions were not met.");
+            // Debug.LogWarning($"{charactorType} tried to upgrade a {type}, but upgrade conditions were not met.");
 #endif
 
         }
@@ -292,7 +292,7 @@ public class AiCharactor : PlayerableCharactor
             else
             {
 #if UNITY_EDITOR
-                Debug.LogWarning($"{charactorType} cannot build {type} at {tile.transform.position}. Reason: {reason}");
+                // Debug.LogWarning($"{charactorType} cannot build {type} at {tile.transform.position}. Reason: {reason}");
 #endif
             }
         }
@@ -305,11 +305,11 @@ public class AiCharactor : PlayerableCharactor
 #if UNITY_EDITOR
         if (success != null)
         {
-            Debug.Log($"{charactorType} successfully built {type} at {tile.transform.position}");
+            // Debug.Log($"{charactorType} successfully built {type} at {tile.transform.position}");
         }
         else
         {
-            Debug.LogWarning($"{charactorType} failed to build {type} at {tile.transform.position}");
+            // Debug.LogWarning($"{charactorType} failed to build {type} at {tile.transform.position}");
         }
 #endif
     }
@@ -359,7 +359,7 @@ public class AiCharactor : PlayerableCharactor
                 if (Random.Range(0, 100) < 25)
                 {
 #if UNITY_EDITOR
-                    Debug.Log($"{charactorType} Free Door Upgrade {playerData.room.door?.transform.position}");
+                    // Debug.Log($"{charactorType} Free Door Upgrade {playerData.room.door?.transform.position}");
 #endif
                     currentActiveRoom.door.Upgrade();
                     playerData.freeDoorUpgrade = true;

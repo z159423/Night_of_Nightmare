@@ -28,6 +28,8 @@ public class HomeCharactor : MonoBehaviour
             }
 
             dOTweenAnimation = GetComponentInChildren<DOTweenAnimation>();
+
+            dOTweenAnimation.DOPause();
             selectFloor = gameObject.FindRecursive("SelectFloor");
             icon = gameObject.FindRecursive("Icon").GetComponent<SpriteRenderer>();
             selectIcon = gameObject.FindRecursive("SelectIcon");
@@ -60,10 +62,13 @@ public class HomeCharactor : MonoBehaviour
         if (type == (Define.CharactorType)Managers.LocalData.SelectedCharactor)
         {
             selectIcon.SetActive(true);
+
+            dOTweenAnimation.DOPlay();
         }
         else
         {
             selectIcon.SetActive(false);
+
         }
 
         if (Managers.LocalData.HasCharactor(type))
@@ -78,7 +83,6 @@ public class HomeCharactor : MonoBehaviour
 
     public void OnSelect()
     {
-
         // 0.5초마다 selectFloor가 켜지고 꺼지는 트윈
         DOTween.Kill(selectFloor); // 중복 방지
         selectFloor.SetActive(true);
@@ -89,11 +93,18 @@ public class HomeCharactor : MonoBehaviour
             .AppendInterval(0.5f)
             .SetLoops(-1, LoopType.Restart)
             .SetId(selectFloor);
+
+        dOTweenAnimation.DOPlay();
     }
 
     public void OnUnselect()
     {
         DOTween.Kill(selectFloor); // 트윈 중지
         selectFloor.SetActive(false);
+
+        if (dOTweenAnimation != null)
+        {
+            dOTweenAnimation.DOPause();
+        }
     }
 }

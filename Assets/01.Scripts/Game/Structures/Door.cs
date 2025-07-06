@@ -80,7 +80,7 @@ public class Door : Structure
                 bool hasRepairStation = playerData.structures.Exists(s => s.type == Define.StructureType.RepairStation);
                 if (hasRepairStation)
                 {
-                    Managers.Audio.PlaySound("snd_stage_unlock", playerData.structures.Find(n => n.type == Define.StructureType.RepairStation).transform, minRangeVolumeMul: 0.4f, volumeMul: 0.8f);
+                    Managers.Audio.PlaySound("snd_stage_unlock", playerData.structures.Find(n => n.type == Define.StructureType.RepairStation).transform, minRangeVolumeMul: 0.6f, volumeMul: 0.8f);
 
                     RepaireDoor(0.02f);
                 }
@@ -183,12 +183,29 @@ public class Door : Structure
     {
         base.Upgrade();
 
+        SetStat();
+        SetBodySprite();
+        ShowHpBar();
+    }
+
+    public override void UpgradeTo(int levelTo)
+    {
+        base.UpgradeTo(levelTo);
+
+        SetStat();
+        SetBodySprite();
+        ShowHpBar();
+    }
+
+    public override void SetBodySprite()
+    {
+        bodySpriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.Door).sprite1[level];
+    }
+
+    public void SetStat()
+    {
         MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
         Hp = MaxHp;
-
-        bodySpriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.Door).sprite1[level];
-
-        ShowHpBar();
     }
 
     public void RepaireDoor()
@@ -207,7 +224,7 @@ public class Door : Structure
         repair.gameObject.SetActive(true);
         StartCoroutine(DisableRepairAfterDelay());
 
-        Managers.Audio.PlaySound("snd_stage_unlock", transform, minRangeVolumeMul: 0.4f, volumeMul: 0.8f);
+        Managers.Audio.PlaySound("snd_stage_unlock", transform, minRangeVolumeMul: 0.6f, volumeMul: 0.8f);
     }
 
     private IEnumerator DisableRepairAfterDelay()

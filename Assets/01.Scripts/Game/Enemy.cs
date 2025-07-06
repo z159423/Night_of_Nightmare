@@ -9,6 +9,9 @@ using UnityEngine.UI;
 using VInspector;
 using static EnemySkill;
 using static EnemyEffect;
+using System;
+using System.Data;
+using Unity.VisualScripting;
 
 public class Enemy : Charactor
 {
@@ -34,6 +37,8 @@ public class Enemy : Charactor
     public int currentExp = 0;
 
     public PlayerableCharactor currentTarget;
+    public Transform currentChaseTarget;
+
     public Structure currentTargetStructure;
     public int targetIndex;
     public HealZone targetHealZone;
@@ -43,8 +48,8 @@ public class Enemy : Charactor
 
     public bool canAttack = true;
 
-    private int changeStateTime = 0;
-    private float currentChangeStateTime = 0;
+    [SerializeField] private int changeStateTime = 0;
+    [SerializeField] private float currentChangeStateTime = 0;
 
 
     Transform hpBarPivot;
@@ -87,6 +92,13 @@ public class Enemy : Charactor
 
     private bool isPunching = false;
 
+    [SerializeField] private int targetCount = 2;
+    [SerializeField] private DateTime forcePlayerTargetedTime = DateTime.MinValue;
+    [SerializeField] private int forcePlayerTargetTimer = 0;
+    [SerializeField] private DateTime randomStateStartTime = DateTime.MinValue;
+    [SerializeField] private float randomStateTime = 0;
+
+
     // Implementation of the abstract Hit() method from Charactor
 
     public override void Hit(int damage)
@@ -123,10 +135,10 @@ public class Enemy : Charactor
             if (!isPunching)
             {
                 isPunching = true;
-                bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
+                // bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
 
-                float punchX = Random.Range(-0.3f, 0.3f);
-                float punchY = Random.Range(-0.3f, 0.3f);
+                float punchX = UnityEngine.Random.Range(-0.3f, 0.3f);
+                float punchY = UnityEngine.Random.Range(-0.3f, 0.3f);
                 Vector3 punch = new Vector3(punchX, punchY, 0);
 
                 bodySpriteRenderer.transform.DOPunchPosition(
@@ -145,7 +157,7 @@ public class Enemy : Charactor
         {
             var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
 
-            particle.transform.position = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), -0.4f);
+            particle.transform.position = transform.position + new Vector3(UnityEngine.Random.Range(-0.2f, 0.2f), UnityEngine.Random.Range(-0.2f, 0.2f), -0.4f);
 
             yield return new WaitForSeconds(1f);
 
@@ -170,7 +182,11 @@ public class Enemy : Charactor
 
         SetBodySkin();
 
-        transform.localPosition = Vector3.zero;
+        if (type == Define.EnemyType.SlanderMan)
+        {
+            bodySpriteRenderer.transform.localScale = new Vector3(3.8f, 3.5f, 1);
+            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.36f, 6, 0);
+        }
 
         StartCoroutine(EnemyStateMachine());
 
@@ -230,6 +246,9 @@ public class Enemy : Charactor
 
         CheckUseSkill();
         StartCoroutine(CheckHeal());
+
+        forcePlayerTargetedTime = DateTime.Now;
+        forcePlayerTargetTimer = UnityEngine.Random.Range(5, 120);
     }
 
     public void SetNameText(string name)
@@ -242,7 +261,16 @@ public class Enemy : Charactor
 
     protected override void Update()
     {
-        base.Update();
+        if (agent != null && agent.hasPath && agent.remainingDistance > 0.01f)
+        {
+            // 오른쪽 이동: y 회전 0, 왼쪽 이동: y 회전 180
+            float dir = agent.steeringTarget.x - agent.transform.position.x;
+            if (body != null)
+            {
+                body.transform.localRotation = Quaternion.Euler(0, dir >= 0 ? 0 : 180, 0);
+            }
+        }
+
         UpdateEffects();
         if (gameObject == null)
             return;
@@ -270,7 +298,7 @@ public class Enemy : Charactor
                 hp = MaxHp;
                 targetHealZone = null; // Stop healing when at max HP
                 enemyState = EnemyState.Chase; // Switch back to chasing state
-                agent.stoppingDistance = 0.8f;
+                agent.stoppingDistance = 1.5f;
             }
 
             if (hpBarPivot != null)
@@ -280,22 +308,26 @@ public class Enemy : Charactor
         }
         else if (currentTarget != null && currentTarget.playerData.room == null && enemyState == EnemyState.Chase)
         {
-            if (agent != null && agent.isOnNavMesh)
+            if (agent != null && agent.isOnNavMesh && currentChaseTarget != currentTarget)
             {
+                currentChaseTarget = currentTarget.transform;
                 agent.SetDestination(currentTarget.transform.position);
             }
         }
         else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
         {
             // Move towards the target
-            if (agent != null && agent.isOnNavMesh)
+            if (agent != null && agent.isOnNavMesh && currentChaseTarget != currentTargetStructure)
+            {
+                currentChaseTarget = currentTargetStructure.transform;
                 agent.SetDestination(currentTargetStructure.transform.position);
+            }
         }
 
-        if (enemyState != EnemyState.Heal)
-        {
-            currentChangeStateTime += Time.deltaTime;
-        }
+        // if (enemyState != EnemyState.Heal)
+        // {
+        currentChangeStateTime += Time.deltaTime;
+        // }
 
         if (agent != null)
         {
@@ -314,12 +346,12 @@ public class Enemy : Charactor
 
     public override void OnMove()
     {
-        if (_moveTween != null && _moveTween.IsActive())
-            return;
+        // if (_moveTween != null && _moveTween.IsActive())
+        //     return;
 
-        _moveTween = body.DOLocalRotate(new Vector3(0, 0, 4), 0.3f)
-            .SetLoops(-1, LoopType.Yoyo)
-            .From(new Vector3(0, 0, -4));
+        // _moveTween = bodySpriteRenderer.transform.DOLocalRotate(new Vector3(0, 0, 4), 0.3f)
+        //     .SetLoops(-1, LoopType.Yoyo)
+        //     .From(new Vector3(0, 0, -4));
     }
 
     public override void OnMoveStop()
@@ -330,6 +362,9 @@ public class Enemy : Charactor
     public IEnumerator EnemyStateMachine()
     {
         yield return new WaitForSeconds(1f);
+
+        randomStateStartTime = DateTime.Now;
+        randomStateTime = UnityEngine.Random.Range(0.1f, 6);
 
         while (true)
         {
@@ -345,12 +380,23 @@ public class Enemy : Charactor
             if (enemyState != EnemyState.Heal)
                 if (currentTarget != null && currentTarget.playerData.room == null)
                 {
-                    float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
+                    float distanceToTarget = Vector2.Distance(agent.transform.position, currentTarget.transform.position);
 
-                    if (canAttack && distanceToTarget < 2f) // Example attack range
+                    if (canAttack && distanceToTarget < 1.5f) // Example attack range
                     {
                         StartCoroutine(Attack());
                     }
+                }
+                else if (randomStateStartTime.AddSeconds(randomStateTime) > DateTime.Now)
+                {
+                    agent.SetDestination(GetRandomPointOnNavMesh());
+
+                    var speedMul = UnityEngine.Random.Range(0.5f, 1f);
+                    moveSpeed.AddMultiplier(speedMul);
+
+                    yield return new WaitForSeconds(UnityEngine.Random.Range(0.25f, 1.5f));
+
+                    moveSpeed.RemoveMultiplier(speedMul);
                 }
                 else if (Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null).Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f)
             .ToList().Count > 0)
@@ -360,9 +406,34 @@ public class Enemy : Charactor
 
                     currentTargetStructure = null;
                 }
+                else if (forcePlayerTargetedTime.AddSeconds(forcePlayerTargetTimer) < DateTime.Now)
+                {
+                    // 타겟 시간으로 인해 타겟을 플레이어로 강제 변경
+                    print("타겟 시간으로 인해 타겟을 플레이어로 강제 변경");
+                    forcePlayerTargetedTime = DateTime.Now;
+                    forcePlayerTargetTimer = UnityEngine.Random.Range(30, 120);
+
+                    // currentChangeStateTime = 0;
+                    // changeStateTime = UnityEngine.Random.Range(20, 45);
+                    FindTarget(Managers.Game.playerCharactor);
+                }
                 else if (currentTarget != null && currentTarget.playerData.room != null && changeStateTime > currentChangeStateTime)
                 {
-                    if (currentTargetStructure == null || currentTargetStructure.destroyed)
+                    if (targetCount == 4)
+                    {
+                        //타겟 카운트가 4여서 강제로 플레이어를 타겟
+                        print("타겟 카운트가 4여서 강제로 플레이어를 타겟");
+
+                        FindTarget(Managers.Game.playerCharactor);
+
+                        currentChangeStateTime = 0;
+                        changeStateTime = UnityEngine.Random.Range(20, 45);
+                        targetCount = 0;
+
+                        randomStateStartTime = DateTime.Now;
+                        randomStateTime = UnityEngine.Random.Range(0.1f, 6);
+                    }
+                    else if (currentTargetStructure == null || currentTargetStructure.destroyed)
                     {
                         if (currentTarget != null && !currentTarget.die)
                             currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
@@ -372,9 +443,9 @@ public class Enemy : Charactor
                     else
                     {
                         // Check if the target is within attack range
-                        float distanceToTarget = Vector2.Distance(transform.position, currentTargetStructure.transform.position);
+                        float distanceToTarget = Vector2.Distance(agent.transform.position, currentTargetStructure.transform.position);
 
-                        if (canAttack && distanceToTarget < 1f) // Example attack range
+                        if (canAttack && distanceToTarget < 1.5f) // Example attack range
                         {
                             StartCoroutine(Attack());
                         }
@@ -384,9 +455,13 @@ public class Enemy : Charactor
                 {
                     FindTarget();
 
-                    currentChangeStateTime = 0;
+                    print("시간 지나서 타겟 랜덤 변경");
 
-                    changeStateTime = Random.Range(20, 45);
+                    currentChangeStateTime = 0;
+                    changeStateTime = UnityEngine.Random.Range(20, 45);
+
+                    randomStateStartTime = DateTime.Now;
+                    randomStateTime = UnityEngine.Random.Range(0.1f, 6);
                 }
 
             yield return new WaitForSeconds(0.2f); // Adjust the frequency of state checks
@@ -403,33 +478,21 @@ public class Enemy : Charactor
     }
 
     [Button("Force Target Random")]
-    public void FindTarget()
+    public void FindTarget(PlayerableCharactor forceTarget = null)
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
-        // List<PlayerableCharactor> noBedPlayers = new List<PlayerableCharactor>();    
 
-        // noBedPlayers.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null));
         players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null && currentTarget != n));
 
-        // noBedPlayers 중에서 transform과의 거리가 150px 이하인 것만 필터링
-        // var closeNoBedPlayers = noBedPlayers
-        //     .Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f)
-        //     .ToList();
-
-        // if (closeNoBedPlayers.Count > 0)
-        // {
-        //     int randomIndex = Random.Range(0, closeNoBedPlayers.Count);
-        //     currentTarget = closeNoBedPlayers[randomIndex];
-
-        //     targetIndex = Managers.Game.charactors.IndexOf(currentTarget);
-
-        //     currentTargetStructure = null; // 침대가 없으므로 구조물 없음
-        // }
-        // else
         if (players.Count > 0)
         {
-            int randomIndex = Random.Range(0, players.Count);
-            currentTarget = players[randomIndex];
+            if (forceTarget == null)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, players.Count);
+                currentTarget = players[randomIndex];
+            }
+            else
+                currentTarget = forceTarget;
 
             List<Room> roomStack = new List<Room>();
 
@@ -456,6 +519,9 @@ public class Enemy : Charactor
                 targetIndex = Managers.Game.charactors.IndexOf(currentTarget);
                 currentTargetStructure = currentTarget.currentActiveRoom.GetAttackableStructure(transform.position);
             }
+
+            if (forceTarget == null)
+                targetCount++;
         }
         else
         {
@@ -479,7 +545,7 @@ public class Enemy : Charactor
 
         if (healZones.Count > 0)
         {
-            int randomIndex = Random.Range(0, healZones.Count);
+            int randomIndex = UnityEngine.Random.Range(0, healZones.Count);
             targetHealZone = healZones[randomIndex];
         }
         else
@@ -540,27 +606,18 @@ public class Enemy : Charactor
 
                     if (canScream)
                     {
-                        float value = Random.Range(0, 1f);
+                        float value = UnityEngine.Random.Range(0, 1f);
 
-                        var pitch = Random.Range(1.0f, 1.3f);
+                        var pitch = UnityEngine.Random.Range(0.88f, 1.07f);
                         if (currentTargetStructure.playerData.type == Define.CharactorType.LampGirl)
                         {
-                            if (value < 0.25f)
-                                Managers.Audio.PlaySound("snd_girl_scream_1", minRangeVolumeMul: -1f, pitch: pitch);
-                            else if (value < 0.5f && value >= 0.25f)
-                                Managers.Audio.PlaySound("snd_girl_scream_2", minRangeVolumeMul: -1f, pitch: pitch);
-                            else if (value < 0.625f && value >= 0.5f)
-                                Managers.Audio.PlaySound("snd_girl_scream_3", minRangeVolumeMul: -1f, pitch: pitch);
-
+                            if (value < 0.5f)
+                                Managers.Audio.PlaySound($"snd_girl_scream_{UnityEngine.Random.Range(1, 4)}", minRangeVolumeMul: -1f, pitch: pitch);
                         }
                         else
                         {
-                            if (value < 0.25f)
-                                Managers.Audio.PlaySound("snd_scream_1", minRangeVolumeMul: -1f, pitch: pitch);
-                            else if (value < 0.5f && value >= 0.25f)
-                                Managers.Audio.PlaySound("snd_scream_2", minRangeVolumeMul: -1f, pitch: pitch);
-                            else if (value < 0.625f && value >= 0.5f)
-                                Managers.Audio.PlaySound("snd_scream_3", minRangeVolumeMul: -1f, pitch: pitch);
+                            if (value < 0.5f)
+                                Managers.Audio.PlaySound($"snd_scream_{UnityEngine.Random.Range(1, 4)}", minRangeVolumeMul: -1f, pitch: pitch);
                         }
 
                         StartCoroutine(cooltime());
@@ -587,16 +644,21 @@ public class Enemy : Charactor
         if (hitAction != null)
         {
             Vector3 targetDirection = (targetPosition - body.position).normalized;
-            Vector3 dashPosition = body.localPosition + targetDirection * 2f;
+            Vector3 dashPosition = body.localPosition + targetDirection * 1.35f;
 
-            yield return body.DOLocalMove(dashPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
+            StartCoroutine(AttackMotion());
 
-            hitAction.Invoke();
+            IEnumerator AttackMotion()
+            {
+                yield return body.DOLocalMove(dashPosition, 0.1f * attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
 
-            yield return body.DOLocalMove(originalPosition, 0.1f / attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
+                hitAction.Invoke();
+
+                yield return body.DOLocalMove(originalPosition, 0.1f * attackSpeed.Value).SetEase(Ease.Linear).WaitForCompletion();
+            }
         }
 
-        yield return new WaitForSeconds(0.75f / attackSpeed.Value);
+        yield return new WaitForSeconds(attackSpeed.Value);
 
         canAttack = true;
     }
@@ -628,7 +690,7 @@ public class Enemy : Charactor
             ActiveSlanderManKnife();
         }
 
-        Managers.Audio.PlaySound("snd_enemy_level_up", minRangeVolumeMul: 0.4f);
+        Managers.Audio.PlaySound("snd_enemy_level_up");
     }
 
     public void CheckUseSkill()
@@ -661,13 +723,13 @@ public class Enemy : Charactor
             if (currentTarget != null && currentTarget.playerData.room == null)
             {
                 float distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
-                if (distanceToTarget < 1f) // 기존 공격 가능 거리와 동일하게
+                if (distanceToTarget < 2f) // 기존 공격 가능 거리와 동일하게
                     canAttackRange = true;
             }
             else if (currentTargetStructure != null)
             {
                 float distanceToTarget = Vector2.Distance(transform.position, currentTargetStructure.transform.position);
-                if (distanceToTarget < 1f)
+                if (distanceToTarget < 2f)
                     canAttackRange = true;
             }
 
@@ -789,9 +851,9 @@ public class Enemy : Charactor
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(0.5f, 4f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 4f));
 
-            if (enemyState != EnemyState.Heal && Random.Range(0, 100) < 66 && hp < MaxHp * (skills.Any(n => n is AttackSpeedSkill) ? 0.20f : 0.28f))
+            if (enemyState != EnemyState.Heal && UnityEngine.Random.Range(0, 100f) < 66.6f && hp <= MaxHp * ((skills.Any(n => n is AttackSpeedSkill) ? 0.20f : 0.28f)))
             {
                 FindHealSpot();
 
@@ -815,5 +877,10 @@ public class Enemy : Charactor
                 }
             }
         }
+    }
+
+    public Vector3 GetRandomPointOnNavMesh()
+    {
+        return Managers.Game.currentMap.randomBeacons[UnityEngine.Random.Range(0, Managers.Game.currentMap.randomBeacons.Count)].transform.position;
     }
 }

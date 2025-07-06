@@ -107,7 +107,7 @@ public class Turret : Structure
                 bullets.Remove(bullet);
                 target.Hit((int)Managers.Game.GetStructureData(type).argment1[level]);
 
-                Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: -0.4f);
+                Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: 0.4f);
 
                 yield break;
             }
@@ -129,7 +129,6 @@ public class Turret : Structure
     public override void Upgrade()
     {
         base.Upgrade();
-        var data = Managers.Resource.GetStructureData(type);
 
         if (body == null || head == null)
         {
@@ -139,9 +138,32 @@ public class Turret : Structure
 
         if (type != Define.StructureType.AutoTurret && type != Define.StructureType.GoldenTurret)
         {
-            body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
-            head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];
+            SetBodySprite();
         }
+    }
+
+    public override void UpgradeTo(int levelTo)
+    {
+        base.UpgradeTo(levelTo);
+        
+        if (body == null || head == null)
+        {
+            body = gameObject.FindRecursive("Body");
+            head = gameObject.FindRecursive("Head");
+        }
+
+        if (type != Define.StructureType.AutoTurret && type != Define.StructureType.GoldenTurret)
+        {
+            SetBodySprite();
+        }
+    }
+
+    public override void SetBodySprite()
+    {
+        var data = Managers.Resource.GetStructureData(type);
+
+        body.GetComponent<SpriteRenderer>().sprite = data.sprite1[level];
+        head.GetComponent<SpriteRenderer>().sprite = data.sprite2[level];
     }
 
     public void ResourceGetParticle(int value)

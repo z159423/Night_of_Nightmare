@@ -16,9 +16,13 @@ MonoBehaviour:
   structureType: 25
   icon: {fileID: 21300000, guid: 8cf0fe3c3e81bce42a5ef856bdc50495, type: 3}
   lampProp: 3
+  DoNotSpawnInLamp: 1
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
+  canRvUpgrade: 0
+  rvOnlyStructure: 0
+  rvUpgradeCount: 0
   nameKey: global.str_mirror_name_2
   descriptionKey: global.str_mirror_desc
   upgradeCoin: c8000000
@@ -28,6 +32,8 @@ MonoBehaviour:
   - 1.5
   - 1.5
   argment2: []
+  argment3: []
   requireStructures: []
   sprite1: []
   sprite2: []
+  RVUpgradeTo: 9999

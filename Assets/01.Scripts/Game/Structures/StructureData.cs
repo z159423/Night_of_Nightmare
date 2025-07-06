@@ -15,6 +15,7 @@ public class StructureData : ScriptableObject
     public Sprite icon;
 
     public float lampProp;
+    public bool DoNotSpawnInLamp = false;
     public bool baseStructure = false;
     public bool sellable = true;
     public bool onlyOnePurcahse = false;
@@ -154,7 +155,7 @@ public class StructureData : ScriptableObject
 
     public bool CanUpgrade(PlayerData playerData, int level)
     {
-        
+
 
         // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
         if (upgradeCoin == null || upgradeEnergy == null || structureType == StructureType.Lamp)

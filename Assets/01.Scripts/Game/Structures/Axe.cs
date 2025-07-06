@@ -34,7 +34,7 @@ public class Axe : Structure
 
     private IEnumerator FireAxeBullet(Enemy target)
     {
-        GameObject axeBullet = Managers.Resource.Instantiate("AxeBullet");
+        GameObject axeBullet = Managers.Resource.Instantiate("AxeBullet", transform);
         axeBullet.transform.position = transform.position;
 
         float speed = 5f;

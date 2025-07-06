@@ -24,6 +24,9 @@ public class CharactorController : MonoBehaviour
 
     private CinemachineVirtualCamera mapVirtualCamera;
 
+    private Vector3? cameraTargetPos = null;
+    private float cameraSmoothSpeed = 25; // 값이 클수록 더 빠르게 따라감
+
     private void Start()
     {
         // 처음에는 조이스틱 UI를 숨김
@@ -122,6 +125,7 @@ public class CharactorController : MonoBehaviour
                 if (!isDragging && dragDelta.magnitude > dragThreshold && Managers.UI._currentPopup == null)
                 {
                     isDragging = true;
+                    cameraTargetPos = mapVirtualCamera.transform.position;
                 }
 
                 if (isDragging)
@@ -131,12 +135,18 @@ public class CharactorController : MonoBehaviour
 
                     if (mapVirtualCamera != null)
                     {
-                        mapVirtualCamera.transform.Translate(move, Space.World);
+                        // 목표 위치를 누적해서 저장
+                        if (cameraTargetPos == null)
+                            cameraTargetPos = mapVirtualCamera.transform.position;
 
-                        Vector3 pos = mapVirtualCamera.transform.position;
-                        pos.x = Mathf.Clamp(pos.x, 188f, 222f);
-                        pos.y = Mathf.Clamp(pos.y, -29f, 3f);
-                        mapVirtualCamera.transform.position = pos;
+                        cameraTargetPos += move;
+
+                        // Clamp 적용
+                        cameraTargetPos = new Vector3(
+                            Mathf.Clamp(cameraTargetPos.Value.x, 188f, 222f),
+                            Mathf.Clamp(cameraTargetPos.Value.y, -29f, 3f),
+                            mapVirtualCamera.transform.position.z
+                        );
                     }
 
                     startTouchPosition = currentTouchPosition;
@@ -210,6 +220,16 @@ public class CharactorController : MonoBehaviour
                 }
                 isDragging = false;
             }
+        }
+
+        if (mapVirtualCamera != null && cameraTargetPos != null && isDragging)
+        {
+            // Lerp로 부드럽게 이동
+            mapVirtualCamera.transform.position = Vector3.Lerp(
+                mapVirtualCamera.transform.position,
+                cameraTargetPos.Value,
+                Time.deltaTime * cameraSmoothSpeed
+            );
         }
     }
 

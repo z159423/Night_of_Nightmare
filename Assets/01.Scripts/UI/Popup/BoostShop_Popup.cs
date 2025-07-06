@@ -44,6 +44,8 @@ public class BoostShop_Popup : UI_Popup
             {
                 Managers.LocalData.AddBoostItem(data.type, 1);
                 Managers.LocalData.PlayerGemCount -= data.price;
+
+                Managers.Audio.PlaySound("snd_get_item");
             }, data);
         }
 

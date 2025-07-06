@@ -12,23 +12,29 @@ public class Ore : Structure
     public override void Upgrade()
     {
         base.Upgrade();
+
+        SetBodySprite();
+    }
+
+    public override void SetBodySprite()
+    {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         switch (type)
         {
             case Define.StructureType.CopperOre:
-            spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.CopperOre).sprite1[level];
-            break;
+                spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.CopperOre).sprite1[level];
+                break;
             case Define.StructureType.SilverOre:
-            spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.SilverOre).sprite1[level];
-            break;
+                spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.SilverOre).sprite1[level];
+                break;
             case Define.StructureType.GoldOre:
-            spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.GoldOre).sprite1[level];
-            break;
+                spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.GoldOre).sprite1[level];
+                break;
             case Define.StructureType.DiamondOre:
-            spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.DiamondOre).sprite1[level];
-            break;
+                spriteRenderer.sprite = Managers.Game.GetStructureData(Define.StructureType.DiamondOre).sprite1[level];
+                break;
         }
-        }
+    }
 
     public void ResourceGetParticle(int value)
     {

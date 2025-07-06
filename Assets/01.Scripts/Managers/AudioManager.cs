@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f)
+    public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f, float delay = 0f)
     {
         if (!Define.soundDatas.TryGetValue(soundKey, out var data))
         {
@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            PlaySFXInternal(clip, data, sourceTransform, minRangeVolumeMul, volumeMul, pitch);
+            PlaySFXInternal(clip, data, sourceTransform, minRangeVolumeMul, volumeMul, pitch, delay);
         }
     }
 
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    private void PlaySFXInternal(AudioClip clip, SoundData data, Transform sourceTransform, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f)
+    private void PlaySFXInternal(AudioClip clip, SoundData data, Transform sourceTransform, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f, float delay = 0f)
     {
         if (sourceTransform == null)
             sourceTransform = Camera.main.transform;
@@ -82,16 +82,23 @@ public class AudioManager : MonoBehaviour
                 Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
                 float pixelDistance = Vector2.Distance(screenCenter, screenPos);
 
-
-
                 // 거리에 따른 사운드 값 계산
                 // float soundValue = data.maxVolumeRange / pixelDistance;
 
-                float soundValue = data.maxVolumeRange / pixelDistance * 1.5f;
+                float soundValue = (data.maxVolumeRange * 1.2f) / (pixelDistance * 1f);
 
                 // minVolumeMul보다 커야만 재생
                 if (soundValue <= minVolumeMul)
+                {
+#if UNITY_EDITOR
+                    Debug.Log($"{clip.name} 사운드 크기 {soundValue} / {minVolumeMul} 보다 작아서 재생 안함");
+#endif
                     return;
+                }
+
+#if UNITY_EDITOR
+                Debug.Log($"{clip.name} 사운드 크기 {soundValue} / {minVolumeMul} 보다 커서 재생");
+#endif
 
                 // 최종 볼륨 계산 (최대 1)
                 // finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
@@ -106,7 +113,13 @@ public class AudioManager : MonoBehaviour
         source.spatialBlend = 1f;
         source.volume = finalVolume;
         source.pitch = pitch == 1 ? data.pitch : pitch;
-        source.Play();
+
+        if (delay == 0f)
+            source.Play();
+        else
+        {
+            StartCoroutine(wait());
+        }
 
         StartCoroutine(destroy());
 
@@ -114,6 +127,13 @@ public class AudioManager : MonoBehaviour
         {
             yield return new WaitForSeconds(clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
             Managers.Resource.Destroy(source.gameObject);
+        }
+
+        IEnumerator wait()
+        {
+            yield return new WaitForSeconds(delay);
+            source.Play();
+
         }
 
         // AudioSource.PlayClipAtPoint(clip, sourceTransform.position, finalVolume);

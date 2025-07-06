@@ -172,4 +172,10 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("PlayerTutorialStep", 0);
         set { PlayerPrefs.SetInt("PlayerTutorialStep", value); IsSave = true; }
     }
+
+    public int FirstUseLamp
+    {
+        get => PlayerPrefs.GetInt("FirstUseLamp", 0);
+        set { PlayerPrefs.SetInt("FirstUseLamp", value); IsSave = true; }
+    }
 }

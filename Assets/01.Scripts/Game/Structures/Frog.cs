@@ -104,7 +104,7 @@ public class Frog : Structure
             target.Hit((int)Managers.Game.GetStructureData(Define.StructureType.Frog).argment1[0], false);
             attackHitAction?.Invoke(target);
 
-            Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: -0.4f);
+            Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: 0.4f);
         }
 
         // tongue를 원래 위치로 되돌리기

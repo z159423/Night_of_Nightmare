@@ -63,10 +63,34 @@ public class PlayerData
         int coinValue = room == null ? (int)Managers.Game.GetStructureData(Define.StructureType.Bed).argment1[0] : (int)Managers.Game.GetStructureData(Define.StructureType.Bed).argment1[room.bed.level];
         int energy = 0;
 
+        float delay = 0;
+
         if (room != null && room.bed != null)
         {
             room.bed.ResourceGetParticle(coinValue);
-            Managers.Audio.PlaySound("snd_coin", room.bed.transform, minRangeVolumeMul: 0.6f);
+
+            if (Managers.Game.playerData != null && this != Managers.Game.playerData)
+            {
+                if (room.bed.level == 2)
+                {
+                    coinValue = Mathf.RoundToInt(coinValue * 1.4f);
+                }
+                else if (room.bed.level == 3)
+                {
+                    coinValue = Mathf.RoundToInt(coinValue * 1.3f);
+                }
+                else if (room.bed.level == 4)
+                {
+                    coinValue = Mathf.RoundToInt(coinValue * 1.2f);
+                }
+                else if (room.bed.level == 5)
+                {
+                    coinValue = Mathf.RoundToInt(coinValue * 1.1f);
+                }
+            }
+
+            delay = room.bed.delay;
+            Managers.Audio.PlaySound("snd_coin", room.bed.transform, minRangeVolumeMul: 0.6f, delay: delay);
         }
 
         foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))
@@ -145,28 +169,6 @@ public class PlayerData
 
     public void AddCoin(int coin)
     {
-        var bed = structures.Find(s => s.type == Define.StructureType.Bed);
-
-        if (bed != null && Managers.Game.playerData != null && this != Managers.Game.playerData)
-        {
-            if (bed.level == 2)
-            {
-                coin = Mathf.RoundToInt(coin * 1.4f);
-            }
-            else if (bed.level == 3)
-            {
-                coin = Mathf.RoundToInt(coin * 1.3f);
-            }
-            else if (bed.level == 4)
-            {
-                coin = Mathf.RoundToInt(coin * 1.2f);
-            }
-            else if (bed.level == 5)
-            {
-                coin = Mathf.RoundToInt(coin * 1.1f);
-            }
-        }
-
         this.coin += coin;
 
         GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);

@@ -16,6 +16,18 @@ public class Generator : Structure
     {
         base.Upgrade();
 
+        SetBodySprite();
+    }
+
+    public override void UpgradeTo(int levelTo)
+    {
+        base.UpgradeTo(levelTo);
+
+        SetBodySprite();
+    }
+
+    public override void SetBodySprite()
+    {
         GetComponentInChildren<SpriteRenderer>().sprite = Managers.Game.GetStructureData(Define.StructureType.Generator).sprite1[level];
     }
 

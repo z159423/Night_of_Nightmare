@@ -43,7 +43,7 @@ public class SpellBlocker : Structure
         if (target == null)
             yield break;
 
-        blockerBullet = Managers.Resource.Instantiate("SpellBlockerBullet");
+        blockerBullet = Managers.Resource.Instantiate("SpellBlockerBullet", transform);
         blockerBullet.transform.position = transform.position;
 
         GameObject icon = blockerBullet.FindRecursive("Icon");
@@ -95,7 +95,7 @@ public class SpellBlocker : Structure
             // 도달 체크
             if (distance < minDistance)
             {
-                Managers.Audio.PlaySound("snd_tower_hit", transform, minRangeVolumeMul: -0.4f);
+                Managers.Audio.PlaySound("snd_tower_hit", transform, minRangeVolumeMul: 0.4f);
 
                 hit = true;
                 spellDeactiveAction?.Invoke();

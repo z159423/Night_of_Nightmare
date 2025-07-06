@@ -89,6 +89,11 @@ public abstract class Structure : MonoBehaviour
         this.level = level;
     }
 
+    public virtual void SetBodySprite()
+    {
+        
+    }
+
     public virtual void Hit(float damage)
     {
         Hp -= damage;

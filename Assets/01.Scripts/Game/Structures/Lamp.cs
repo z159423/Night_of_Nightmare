@@ -20,22 +20,34 @@ public class Lamp : Structure
 
         // StructureData 폴더 전체에서 Lamp 타입만 필터링
         var allData = Managers.Resource.LoadAll<StructureData>("StructureData");
-        var finds = allData.Where(sd => sd.lampProp > 0 && IsOnlyOne(sd.structureType)).ToList();
+        var finds = allData.Where(sd => sd.lampProp > 0 && IsOnlyOne(sd.structureType) && !sd.DoNotSpawnInLamp).ToList();
 
-        // LampProp(확률 비중)으로 랜덤 선택
-        float totalWeight = finds.Sum(sd => sd.lampProp);
-        float rand = Random.Range(0f, totalWeight);
-        float accum = 0f;
-        StructureData selectedData = finds[0];
-        foreach (var sd in finds)
+        StructureData selectedData;
+
+        if (Managers.LocalData.FirstUseLamp == 0)
         {
-            accum += sd.lampProp;
-            if (rand <= accum)
+            selectedData = finds.First(n => n.structureType == Define.StructureType.MoneySack);
+
+            Managers.LocalData.FirstUseLamp = 1;
+        }
+        else
+        {
+            // LampProp(확률 비중)으로 랜덤 선택
+            float totalWeight = finds.Sum(sd => sd.lampProp);
+            float rand = Random.Range(0f, totalWeight);
+            float accum = 0f;
+            selectedData = finds[0];
+            foreach (var sd in finds)
             {
-                selectedData = sd;
-                break;
+                accum += sd.lampProp;
+                if (rand <= accum)
+                {
+                    selectedData = sd;
+                    break;
+                }
             }
         }
+
 
         bool IsOnlyOne(Define.StructureType type)
         {
@@ -45,54 +57,46 @@ public class Lamp : Structure
             else if (Managers.Game.GetStructureData(type).onlyOnePurcahse)
                 return false;
 
-            return false;
+            return true;
         }
 
         var find = Managers.Resource.LoadAll<GameObject>("Structures");
         var find2 = find.First(n => n.GetComponentInChildren<Structure>() != null && n.GetComponentInChildren<Structure>().type == selectedData.structureType);
         var lampStructures = Instantiate(find2, transform.GetComponentInParent<Tile>().transform).GetComponentInChildren<Structure>();
 
-        if (lampStructures is Turret)
+        if (lampStructures.type == Define.StructureType.Turret)
         {
             // 3~6레벨 중 확률 분포에 따라 최대 업그레이드 레벨 결정
-            int maxLevel;
+            int levelTo;
             float rand2 = Random.value;
             if (rand2 < 0.4f)
-                maxLevel = 1;
+                levelTo = 2;
             else if (rand2 < 0.8f)
-                maxLevel = 2;
+                levelTo = 3;
             else if (rand2 < 0.9f)
-                maxLevel = 3;
+                levelTo = 4;
             else
-                maxLevel = 4;
+                levelTo = 5;
 
-            int upgradeCount = Mathf.Max(0, 3 + maxLevel);
-
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                lampStructures.Upgrade();
-            }
+            lampStructures.UpgradeTo(levelTo);
         }
 
-        if (lampStructures is Generator)
+        if (lampStructures.type == Define.StructureType.Generator)
         {
-            int maxLevel;
+            int levelTo;
             float rand2 = Random.value;
             if (rand2 < 0.4f)
-                maxLevel = 1;
+                levelTo = 0;
             else if (rand2 < 0.8f)
-                maxLevel = 2;
+                levelTo = 1;
             else if (rand2 < 0.9f)
-                maxLevel = 3;
+                levelTo = 2;
             else if (rand2 < 0.95f)
-                maxLevel = 4;
+                levelTo = 3;
             else
-                maxLevel = 5;
+                levelTo = 4;
 
-            for (int i = 0; i < Random.Range(0, maxLevel); i++)
-            {
-                lampStructures.Upgrade();
-            }
+            lampStructures.UpgradeTo(levelTo);
         }
 
         var particle = Managers.Resource.Instantiate("Particles/StructureProductParticle");

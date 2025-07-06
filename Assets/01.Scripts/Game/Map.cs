@@ -8,6 +8,8 @@ public class Map : MonoBehaviour
 
     public List<HealZone> healZones = new List<HealZone>();
 
+    public List<RandomBeacon> randomBeacons = new List<RandomBeacon>();
+
     public void Setting()
     {
         charactorSpawnPoint = gameObject.FindRecursive("CharactorSpawnPoint").transform;
