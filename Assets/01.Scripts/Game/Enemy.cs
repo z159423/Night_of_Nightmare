@@ -306,21 +306,24 @@ public class Enemy : Charactor
                 hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
             }
         }
-        else if (currentTarget != null && currentTarget.playerData.room == null && enemyState == EnemyState.Chase)
+        else if (randomStateStartTime.AddSeconds(randomStateTime) <= DateTime.Now)
         {
-            if (agent != null && agent.isOnNavMesh && currentChaseTarget != currentTarget)
+            if (currentTarget != null && currentTarget.playerData.room == null && enemyState == EnemyState.Chase)
             {
-                currentChaseTarget = currentTarget.transform;
-                agent.SetDestination(currentTarget.transform.position);
+                if (agent != null && agent.isOnNavMesh && currentChaseTarget != currentTarget)
+                {
+                    currentChaseTarget = currentTarget.transform;
+                    agent.SetDestination(currentTarget.transform.position);
+                }
             }
-        }
-        else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
-        {
-            // Move towards the target
-            if (agent != null && agent.isOnNavMesh && currentChaseTarget != currentTargetStructure)
+            else if (currentTargetStructure != null && enemyState == EnemyState.Chase)
             {
-                currentChaseTarget = currentTargetStructure.transform;
-                agent.SetDestination(currentTargetStructure.transform.position);
+                // Move towards the target
+                if (agent != null && agent.isOnNavMesh && currentChaseTarget != currentTargetStructure)
+                {
+                    currentChaseTarget = currentTargetStructure.transform;
+                    agent.SetDestination(currentTargetStructure.transform.position);
+                }
             }
         }
 
@@ -393,6 +396,8 @@ public class Enemy : Charactor
 
                     var speedMul = UnityEngine.Random.Range(0.5f, 1f);
                     moveSpeed.AddMultiplier(speedMul);
+
+                    print("타겟 풀리고 랜덤 상태");
 
                     yield return new WaitForSeconds(UnityEngine.Random.Range(0.25f, 1.5f));
 
