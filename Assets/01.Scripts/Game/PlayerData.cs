@@ -90,7 +90,7 @@ public class PlayerData
             }
 
             delay = room.bed.delay;
-            Managers.Audio.PlaySound("snd_coin", room.bed.transform, minRangeVolumeMul: 0.7f, delay: delay);
+            Managers.Audio.PlaySound("snd_coin", room.bed.transform, minRangeVolumeMul: 0.8f, delay: delay);
         }
 
         foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))

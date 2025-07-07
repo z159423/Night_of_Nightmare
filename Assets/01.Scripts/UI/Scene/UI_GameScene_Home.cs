@@ -265,7 +265,8 @@ public class UI_GameScene_Home : UI_Scene
                         GetImage(Images.TouchGuard).gameObject.SetActive(false);
                     });
 
-                    Managers.Camera.ChangeCameraLensOrthoSize(7, 0.5f);
+                    Managers.Camera.ChangeCameraLensOrthoSizeAndPosition(7, new Vector3(0, 0f, -10), 0.5f);
+
                 }
                 else if (selectedLowerBtnType == LowerBtnTypes.BoostBtn ||
                          selectedLowerBtnType == LowerBtnTypes.ShopBtn)
@@ -293,7 +294,7 @@ public class UI_GameScene_Home : UI_Scene
 
                     lowerMenu.transform.DOLocalMoveY(-400, 0.5f).SetRelative();
 
-                    Managers.Camera.ChangeCameraLensOrthoSize(5, 0.5f);
+                    Managers.Camera.ChangeCameraLensOrthoSizeAndPosition(5, new Vector3(0, -1.5f, -10), 0.5f);
 
                     StartCoroutine(wait());
 

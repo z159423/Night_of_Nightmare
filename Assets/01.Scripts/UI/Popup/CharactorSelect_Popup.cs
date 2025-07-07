@@ -64,6 +64,8 @@ public class CharactorSelect_Popup : UI_Popup
         {
             UpdateUI();
         });
+
+        UpdateUI();
     }
 
     public override void FirstSetting()

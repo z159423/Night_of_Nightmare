@@ -117,6 +117,31 @@ public class CameraManager : MonoBehaviour
         camera.m_Lens.OrthographicSize = targetSize;
     }
 
+    public void ChangeCameraLensOrthoSizeAndPosition(float size, Vector3 targetPosition, float duration = 1.5f)
+    {
+        if (cameras.TryGetValue(Managers.Game.currentGameMode, out var camera))
+        {
+            StartCoroutine(LerpOrthoSizeAndPosition(camera, size, targetPosition, duration));
+        }
+    }
+
+    private IEnumerator LerpOrthoSizeAndPosition(CinemachineVirtualCamera camera, float targetSize, Vector3 targetPosition, float duration)
+    {
+        float startSize = camera.m_Lens.OrthographicSize;
+        Vector3 startPos = camera.transform.position;
+        float time = 0f;
+        while (time < duration)
+        {
+            float t = time / duration;
+            camera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, t);
+            camera.transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        camera.m_Lens.OrthographicSize = targetSize;
+        camera.transform.position = targetPosition;
+    }
+
     private Coroutine followCoroutine;
 
     public void StartFollowTarget(Transform target, float speed = 20f)
