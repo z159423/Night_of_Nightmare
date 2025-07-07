@@ -436,15 +436,22 @@ public class Define
 
     public static int GetEnemyMaxHp(EnemyType type, int level)
     {
+        int hp = 0;
+
         switch (type)
         {
             case EnemyType.TungTungTung:
-                return Mathf.RoundToInt(enemyHp[level] * 0.8f);
+                hp = Mathf.RoundToInt(enemyHp[level] * 0.8f);
+                break;
             case EnemyType.Tralalero:
-                return Mathf.RoundToInt(enemyHp[level] * 0.9f);
+                hp = Mathf.RoundToInt(enemyHp[level] * 0.9f);
+                break;
             default:
-                return enemyHp[level];
+                hp = enemyHp[level];
+                break;
         }
+
+        return Mathf.RoundToInt(hp * ((100 + GetCurrentStageDiffValue()) * 0.01f));
     }
 
     public static int[] enemyDamage = new int[]
@@ -466,17 +473,24 @@ public class Define
 
     public static float GetEnemyDamage(EnemyType type, int level)
     {
+        float damage = 0;
         switch (type)
         {
             case EnemyType.SlanderMan:
-                return enemyDamage[level] * 0.6f;
+                damage = enemyDamage[level] * 0.6f;
+                break;
             case EnemyType.TungTungTung:
-                return enemyDamage[level] * 1.2f;
+                damage = enemyDamage[level] * 1.2f;
+                break;
             case EnemyType.Tralalero:
-                return enemyDamage[level] * 1.1f;
+                damage = enemyDamage[level] * 1.1f;
+                break;
             default:
-                return enemyDamage[level];
+                damage = enemyDamage[level];
+                break;
         }
+
+        return damage * ((100 + GetCurrentStageDiffValue()) * 0.01f);
     }
 
     public static float GetEnemyAttackSpeed(EnemyType type)
@@ -509,14 +523,19 @@ public class Define
 
     public static int GetEnemyExp(EnemyType type, int level)
     {
+        int needyExp = 0;
         switch (type)
         {
             case EnemyType.SlanderMan:
-                return Mathf.RoundToInt(enemyExp[level] * 1.5f);
+                needyExp = Mathf.RoundToInt(enemyExp[level] * 1.5f);
+                break;
 
             default:
-                return enemyExp[level];
+                needyExp = enemyExp[level];
+                break;
         }
+
+        return Mathf.RoundToInt(needyExp + (-GetCurrentStageDiffValue() * 0.1f));
     }
 
     public enum CharactorPurchaseType

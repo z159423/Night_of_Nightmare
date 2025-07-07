@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
+using Unity.VisualScripting;
 
 public class CharactorIcon : MonoBehaviour
 {
     public PlayerableCharactor charactor;
+
+    TextMeshProUGUI coinText;
+    TextMeshProUGUI energyText;
+
 
     public void Setting(PlayerableCharactor charactor)
     {
@@ -19,6 +25,24 @@ public class CharactorIcon : MonoBehaviour
                 Managers.Camera.StartFollowTarget(this.charactor.transform);
             }
         });
+
+        coinText = gameObject.FindRecursive("CoinText").GetComponent<TextMeshProUGUI>();
+        energyText = gameObject.FindRecursive("EnergyText").GetComponent<TextMeshProUGUI>();
+
+        StartCoroutine(ResourceCheck());
+    }
+
+    IEnumerator ResourceCheck()
+    {
+        while (!charactor.die)
+        {
+            if (charactor != null)
+            {
+                coinText.text = charactor.playerData.coin.ToString();
+                energyText.text = charactor.playerData.energy.ToString();
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     public void OnDie()

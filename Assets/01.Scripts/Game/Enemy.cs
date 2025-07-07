@@ -98,6 +98,8 @@ public class Enemy : Charactor
     [SerializeField] private DateTime randomStateStartTime = DateTime.MinValue;
     [SerializeField] private float randomStateTime = 0;
 
+    TextMeshPro _damage;
+    TextMeshPro _hp;
 
     // Implementation of the abstract Hit() method from Charactor
 
@@ -118,7 +120,7 @@ public class Enemy : Charactor
         // Show HP bar
         if (hpBarPivot != null)
         {
-            hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+            SetHpBar();
         }
 
         // Change sprite color to red and smoothly transition back to white using DOTween
@@ -172,7 +174,7 @@ public class Enemy : Charactor
 
         if (hpBarPivot != null)
         {
-            hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+            SetHpBar();
         }
     }
 
@@ -182,10 +184,16 @@ public class Enemy : Charactor
 
         SetBodySkin();
 
+        bodySpriteRenderer.transform.localRotation = Quaternion.Euler(0, 0, -4);
+
         if (type == Define.EnemyType.SlanderMan)
         {
             bodySpriteRenderer.transform.localScale = new Vector3(3.8f, 3.5f, 1);
-            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.36f, 6, 0);
+            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.4f, 6, 0);
+        }
+        else if (type == Define.EnemyType.TungTungTung || type == Define.EnemyType.Tralalero)
+        {
+            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.4f, 4.33f, 0);
         }
 
         StartCoroutine(EnemyStateMachine());
@@ -206,6 +214,10 @@ public class Enemy : Charactor
         attackSpeedSkillParticle = gameObject.FindRecursive("AttackSpeedParticle").transform;
         attackDamageSkillParticle = gameObject.FindRecursive("AttackDamageParticle").transform;
         hammerThrowParticle = gameObject.FindRecursive("HammerThrowParticle").transform;
+
+        _damage = gameObject.FindRecursive("Damage").GetComponent<TextMeshPro>();
+        _hp = gameObject.FindRecursive("Hp").GetComponent<TextMeshPro>();
+        StartCoroutine(Check());
 
         SetNameText(Managers.Game.enemyName);
 
@@ -303,7 +315,7 @@ public class Enemy : Charactor
 
             if (hpBarPivot != null)
             {
-                hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+                SetHpBar();
             }
         }
         else if (randomStateStartTime.AddSeconds(randomStateTime) <= DateTime.Now)
@@ -681,7 +693,7 @@ public class Enemy : Charactor
 
         attackPower.BaseValue = Define.GetEnemyDamage(enemyType, level);
 
-        hpBarPivot.localScale = new Vector3(hp / MaxHp, 1, 1);
+        SetHpBar();
 
         Managers.UI.ShowNotificationPopup("global.str_toast_enemy_level_up");
 
@@ -887,5 +899,23 @@ public class Enemy : Charactor
     public Vector3 GetRandomPointOnNavMesh()
     {
         return Managers.Game.currentMap.randomBeacons[UnityEngine.Random.Range(0, Managers.Game.currentMap.randomBeacons.Count)].transform.position;
+    }
+
+    public void SetHpBar()
+    {
+        hpBarPivot.localScale = new Vector3(hp / MaxHp, hpBarPivot.localScale.y, 1);
+    }
+
+
+
+    IEnumerator Check()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            _damage.text = attackPower.Value.ToString("F1");
+            _hp.text = $"{Mathf.RoundToInt(hp).ToString()} / {Mathf.RoundToInt(MaxHp).ToString()}";
+        }
     }
 }
