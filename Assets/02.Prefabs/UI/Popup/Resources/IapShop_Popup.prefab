@@ -595,6 +595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &744115196467877130
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &1028731535899077276
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +778,7 @@ GameObject:
   - component: {fileID: 5226431380740015457}
   - component: {fileID: 251777233097930412}
   - component: {fileID: 3839485341597880790}
+  - component: {fileID: 1533918620359477534}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -915,6 +918,21 @@ MonoBehaviour:
   outlineColor: {r: 0.17254902, g: 0.14117648, b: 0.1254902, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
+--- !u!114 &1533918620359477534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028731535899077276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 251777233097930412}
+  KeyString: global.str_gem
+  IsPassRTL: 0
 --- !u!1 &1166231611492303257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &1179262851163982692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &1191217463853232386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,6 +1560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &1486568394445671824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1552,6 +1573,7 @@ GameObject:
   - component: {fileID: 1734904182733663734}
   - component: {fileID: 8021239456413755118}
   - component: {fileID: 938300328445709606}
+  - component: {fileID: 1557479430225741406}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1691,6 +1713,21 @@ MonoBehaviour:
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
+--- !u!114 &1557479430225741406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486568394445671824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 8021239456413755118}
+  KeyString: global.str_shop
+  IsPassRTL: 0
 --- !u!1 &1567812069304868983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1968,7 @@ GameObject:
   - component: {fileID: 3892491038615874211}
   - component: {fileID: 6212411065726156442}
   - component: {fileID: 214528079348975848}
+  - component: {fileID: 6886348264281197400}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2070,6 +2108,21 @@ MonoBehaviour:
   outlineColor: {r: 0.17254902, g: 0.14117648, b: 0.1254902, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
+--- !u!114 &6886348264281197400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134915321426161172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 6212411065726156442}
+  KeyString: global.str_boost_pack
+  IsPassRTL: 0
 --- !u!1 &2137858878174649223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,6 +2601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &2882634601821102248
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,6 +2770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &2980921603460053278
 GameObject:
   m_ObjectHideFlags: 0
@@ -3576,6 +3631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &3718217178884452689
 GameObject:
   m_ObjectHideFlags: 0
@@ -4857,6 +4913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &5524933177509768030
 GameObject:
   m_ObjectHideFlags: 0
@@ -4949,6 +5006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &5660740514487915263
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,6 +5147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &5730258030069408879
 GameObject:
   m_ObjectHideFlags: 0
@@ -5180,6 +5239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &6089749443908909874
 GameObject:
   m_ObjectHideFlags: 0
@@ -5272,6 +5332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &6260344107710159168
 GameObject:
   m_ObjectHideFlags: 0
@@ -5858,6 +5919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &6873829715890334113
 GameObject:
   m_ObjectHideFlags: 0
@@ -6285,6 +6347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &7152183495869397432
 GameObject:
   m_ObjectHideFlags: 0
@@ -6377,6 +6440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &7262838756547285541
 GameObject:
   m_ObjectHideFlags: 0
@@ -6882,6 +6946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 1
+  staticSize: 0
 --- !u!1 &7908582962102793945
 GameObject:
   m_ObjectHideFlags: 0
@@ -7427,6 +7492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   animationType: 0
+  staticSize: 0
 --- !u!1 &8211479198415568413
 GameObject:
   m_ObjectHideFlags: 0
@@ -7676,6 +7742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   animationType: 0
+  staticSize: 0
 --- !u!1 &8386763605621404781
 GameObject:
   m_ObjectHideFlags: 0
@@ -7990,6 +8057,7 @@ GameObject:
   - component: {fileID: 8486715557017242400}
   - component: {fileID: 795081611590023100}
   - component: {fileID: 2393660280805138458}
+  - component: {fileID: 2794812023691124744}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -8129,3 +8197,18 @@ MonoBehaviour:
   outlineColor: {r: 0.17254902, g: 0.14117648, b: 0.1254902, a: 1}
   outlineThickness: 0.4
   faceDilate: 0.4
+--- !u!114 &2794812023691124744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949441985038327307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786aad00bcc7142f3b6b68ab4f0d6de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 795081611590023100}
+  KeyString: global.str_remove_ads_ticket
+  IsPassRTL: 0
