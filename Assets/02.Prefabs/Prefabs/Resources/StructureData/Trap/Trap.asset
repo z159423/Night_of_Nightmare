@@ -16,16 +16,22 @@ MonoBehaviour:
   structureType: 12
   icon: {fileID: 21300000, guid: 2c49004552655a04992f01e98fc828aa, type: 3}
   lampProp: 3
+  DoNotSpawnInLamp: 0
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
+  canRvUpgrade: 0
+  rvOnlyStructure: 0
+  rvUpgradeCount: 0
   nameKey: global.str_trap_name
   descriptionKey: global.str_trap_desc
-  upgradeCoin: 00010000
-  upgradeEnergy: 00000000
+  upgradeCoin: 00000000
+  upgradeEnergy: 00010000
   purcahseLimit: -1
   argment1: []
   argment2: []
+  argment3: []
   requireStructures: []
   sprite1: []
   sprite2: []
+  RVUpgradeTo: 9999
