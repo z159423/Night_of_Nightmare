@@ -4,6 +4,7 @@ using TMPro;
 using System.IO;
 using System.Linq;
 
+#if UNITY_EDITOR
 public class FontFixerUtility
 {
     [MenuItem("Assets/fontSetter")]
@@ -54,3 +55,4 @@ public class FontFixerUtility
         Debug.Log($"[FontFixerUtility] 처리 완료: {modifiedCount}개 프리팹 수정됨.");
     }
 }
+#endif
