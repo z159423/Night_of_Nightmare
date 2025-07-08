@@ -425,33 +425,3 @@ public static class Util
         return 0f;
     }
 }
-
-public static class CustomOpenURL
-{
-#if UNITY_IOS && !UNITY_EDITOR
-    [DllImport("__Internal")]
-    private static extern void _OpenURL(string url);
-#endif
-
-    public static void OpenURL(string url)
-    {
-        if (string.IsNullOrEmpty(url))
-        {
-            Debug.LogWarning("CustomOpenURL: URL is empty or null.");
-            return;
-        }
-
-#if UNITY_IOS && !UNITY_EDITOR
-        _OpenURL(url);
-#elif UNITY_ANDROID && !UNITY_EDITOR
-        using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-        using (AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-        using (AndroidJavaObject intent = new AndroidJavaObject("android.content.Intent", "android.intent.action.VIEW", new AndroidJavaObject("android.net.Uri", url)))
-        {
-            currentActivity.Call("startActivity", intent);
-        }
-#else
-        Application.OpenURL(url);
-#endif
-    }
-}

@@ -32,7 +32,7 @@ namespace MoreMountains.NiceVibrations
 	/// - heavy  
 	/// 
 	/// </summary>
-	public static class MMVibrationManager 
+	public static class MMVibrationManager
 	{
 		// INTERFACE ---------------------------------------------------------------------------------------------------------
 
@@ -43,30 +43,30 @@ namespace MoreMountains.NiceVibrations
 		public static int MediumAmplitude = 120;
 		public static int HeavyAmplitude = 255;
 		private static int _sdkVersion = -1;
-        private static long[] _lightimpactPattern = { 0, LightDuration };
-        private static int[] _lightimpactPatternAmplitude = { 0, LightAmplitude };
-        private static long[] _mediumimpactPattern = { 0, MediumDuration };
-        private static int[] _mediumimpactPatternAmplitude = { 0, MediumAmplitude };
-        private static long[] _HeavyimpactPattern = { 0, HeavyDuration };
-        private static int[] _HeavyimpactPatternAmplitude = { 0, HeavyAmplitude };
-        private static long[] _successPattern = { 0, LightDuration, LightDuration, HeavyDuration};
-		private static int[] _successPatternAmplitude = { 0, LightAmplitude, 0, HeavyAmplitude};
-		private static long[] _warningPattern = { 0, HeavyDuration, LightDuration, MediumDuration};
-		private static int[] _warningPatternAmplitude = { 0, HeavyAmplitude, 0, MediumAmplitude};
-		private static long[] _failurePattern = { 0, MediumDuration, LightDuration, MediumDuration, LightDuration, HeavyDuration, LightDuration, LightDuration};
-		private static int[] _failurePatternAmplitude = { 0, MediumAmplitude, 0, MediumAmplitude, 0, HeavyAmplitude, 0, LightAmplitude};
+		private static long[] _lightimpactPattern = { 0, LightDuration };
+		private static int[] _lightimpactPatternAmplitude = { 0, LightAmplitude };
+		private static long[] _mediumimpactPattern = { 0, MediumDuration };
+		private static int[] _mediumimpactPatternAmplitude = { 0, MediumAmplitude };
+		private static long[] _HeavyimpactPattern = { 0, HeavyDuration };
+		private static int[] _HeavyimpactPatternAmplitude = { 0, HeavyAmplitude };
+		private static long[] _successPattern = { 0, LightDuration, LightDuration, HeavyDuration };
+		private static int[] _successPatternAmplitude = { 0, LightAmplitude, 0, HeavyAmplitude };
+		private static long[] _warningPattern = { 0, HeavyDuration, LightDuration, MediumDuration };
+		private static int[] _warningPatternAmplitude = { 0, HeavyAmplitude, 0, MediumAmplitude };
+		private static long[] _failurePattern = { 0, MediumDuration, LightDuration, MediumDuration, LightDuration, HeavyDuration, LightDuration, LightDuration };
+		private static int[] _failurePatternAmplitude = { 0, MediumAmplitude, 0, MediumAmplitude, 0, HeavyAmplitude, 0, LightAmplitude };
 
 
-        /// <summary>
-        /// Returns true if the current platform is Android, false otherwise.
-        /// </summary>
-        public static bool Android()
+		/// <summary>
+		/// Returns true if the current platform is Android, false otherwise.
+		/// </summary>
+		public static bool Android()
 		{
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 				return true;
-			#else
-				return false;
-			#endif
+#else
+			return false;
+#endif
 		}
 
 		/// <summary>
@@ -75,26 +75,26 @@ namespace MoreMountains.NiceVibrations
 		/// <returns><c>true</c>, if O was ied, <c>false</c> otherwise.</returns>
 		public static bool iOS()
 		{
-			#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 				return true;
-			#else
-				return false;
-			#endif
+#else
+			return false;
+#endif
 		}
 
 		/// <summary>
 		/// Triggers a simple vibration
 		/// </summary>
 		public static void Vibrate()
-        {
-            if (Android ())
+		{
+			if (Android())
 			{
-				AndroidVibrate (MediumDuration);
-			} 
-			else if (iOS ())
+				AndroidVibrate(MediumDuration);
+			}
+			else if (iOS())
 			{
-				iOSTriggerHaptics (HapticTypes.MediumImpact);
-			} 
+				iOSTriggerHaptics(HapticTypes.MediumImpact);
+			}
 		}
 
 		/// <summary>
@@ -103,23 +103,26 @@ namespace MoreMountains.NiceVibrations
 		/// <param name="type">Type.</param>
 		public static void Haptic(HapticTypes type, bool defaultToRegularVibrate = false)
 		{
-            if (defaultToRegularVibrate)
-            {
-                #if UNITY_IOS || UNITY_ANDROID
-                    Handheld.Vibrate();
-                #endif
-                return;
-            }
+			if ((ES3.KeyExists("Vibration") ? ES3.Load<int>("Vibration") : 0) == 0)
+				return;
 
-			if (Android ())
+			if (defaultToRegularVibrate)
+			{
+#if UNITY_IOS || UNITY_ANDROID
+				Handheld.Vibrate();
+#endif
+				return;
+			}
+
+			if (Android())
 			{
 				switch (type)
 				{
-                    case HapticTypes.None:
-                        // do nothing
-                        break;
+					case HapticTypes.None:
+						// do nothing
+						break;
 					case HapticTypes.Selection:
-						AndroidVibrate (LightDuration, LightAmplitude);
+						AndroidVibrate(LightDuration, LightAmplitude);
 						break;
 
 					case HapticTypes.Success:
@@ -135,34 +138,34 @@ namespace MoreMountains.NiceVibrations
 						break;
 
 					case HapticTypes.LightImpact:
-						AndroidVibrate (_lightimpactPattern, _lightimpactPatternAmplitude, -1);
+						AndroidVibrate(_lightimpactPattern, _lightimpactPatternAmplitude, -1);
 						break;
 
 					case HapticTypes.MediumImpact:
-                        AndroidVibrate (_mediumimpactPattern, _mediumimpactPatternAmplitude, -1);
+						AndroidVibrate(_mediumimpactPattern, _mediumimpactPatternAmplitude, -1);
 						break;
 
 					case HapticTypes.HeavyImpact:
-						AndroidVibrate (_HeavyimpactPattern, _HeavyimpactPatternAmplitude, -1);
+						AndroidVibrate(_HeavyimpactPattern, _HeavyimpactPatternAmplitude, -1);
 						break;
 				}
-			} 
-			else if (iOS ())
+			}
+			else if (iOS())
 			{
-				iOSTriggerHaptics (type);
-			} 
+				iOSTriggerHaptics(type);
+			}
 		}
 
-        // INTERFACE END ---------------------------------------------------------------------------------------------------------
+		// INTERFACE END ---------------------------------------------------------------------------------------------------------
 
 
 
-        // Android ---------------------------------------------------------------------------------------------------------
+		// Android ---------------------------------------------------------------------------------------------------------
 
-        // Android Vibration reference can be found at :
-        // https://developer.android.com/reference/android/os/Vibrator.html
-        // And there starting v26, with support for amplitude :
-        // https://developer.android.com/reference/android/os/VibrationEffect.html
+		// Android Vibration reference can be found at :
+		// https://developer.android.com/reference/android/os/Vibrator.html
+		// And there starting v26, with support for amplitude :
+		// https://developer.android.com/reference/android/os/VibrationEffect.html
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 			private static AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -174,45 +177,45 @@ namespace MoreMountains.NiceVibrations
             private static IntPtr AndroidVibrateMethodRawClass = AndroidJNIHelper.GetMethodID(AndroidVibrator.GetRawClass(), "vibrate", "(J)V", false);
             private static jvalue[] AndroidVibrateMethodRawClassParameters = new jvalue[1];
 #else
-        private static AndroidJavaClass UnityPlayer;
-			private static AndroidJavaObject CurrentActivity;
-			private static AndroidJavaObject AndroidVibrator = null;
-			private static AndroidJavaClass VibrationEffectClass = null;
-			private static AndroidJavaObject VibrationEffect;
-			private static int DefaultAmplitude;
-            private static IntPtr AndroidVibrateMethodRawClass = IntPtr.Zero;
-            private static jvalue[] AndroidVibrateMethodRawClassParameters = null;
+		private static AndroidJavaClass UnityPlayer;
+		private static AndroidJavaObject CurrentActivity;
+		private static AndroidJavaObject AndroidVibrator = null;
+		private static AndroidJavaClass VibrationEffectClass = null;
+		private static AndroidJavaObject VibrationEffect;
+		private static int DefaultAmplitude;
+		private static IntPtr AndroidVibrateMethodRawClass = IntPtr.Zero;
+		private static jvalue[] AndroidVibrateMethodRawClassParameters = null;
 #endif
 
-        /// <summary>
-        /// Requests a default vibration on Android, for the specified duration, in milliseconds
-        /// </summary>
-        /// <param name="milliseconds">Milliseconds.</param>
-        public static void AndroidVibrate(long milliseconds)
+		/// <summary>
+		/// Requests a default vibration on Android, for the specified duration, in milliseconds
+		/// </summary>
+		/// <param name="milliseconds">Milliseconds.</param>
+		public static void AndroidVibrate(long milliseconds)
 		{
-			if (!Android ()) { return; }
-            AndroidVibrateMethodRawClassParameters[0].j = milliseconds;
-            AndroidJNI.CallVoidMethod(AndroidVibrator.GetRawObject(), AndroidVibrateMethodRawClass, AndroidVibrateMethodRawClassParameters);
-        }
+			if (!Android()) { return; }
+			AndroidVibrateMethodRawClassParameters[0].j = milliseconds;
+			AndroidJNI.CallVoidMethod(AndroidVibrator.GetRawObject(), AndroidVibrateMethodRawClass, AndroidVibrateMethodRawClassParameters);
+		}
 
-        /// <summary>
-        /// Requests a vibration of the specified amplitude and duration. If amplitude is not supported by the device's SDK, a default vibration will be requested
-        /// </summary>
-        /// <param name="milliseconds">Milliseconds.</param>
-        /// <param name="amplitude">Amplitude.</param>
-        public static void AndroidVibrate(long milliseconds, int amplitude)
+		/// <summary>
+		/// Requests a vibration of the specified amplitude and duration. If amplitude is not supported by the device's SDK, a default vibration will be requested
+		/// </summary>
+		/// <param name="milliseconds">Milliseconds.</param>
+		/// <param name="amplitude">Amplitude.</param>
+		public static void AndroidVibrate(long milliseconds, int amplitude)
 		{
-			if (!Android ()) { return; }
+			if (!Android()) { return; }
 			// amplitude is only supported after API26
-			if ((AndroidSDKVersion() < 26)) 
-			{ 
-				AndroidVibrate (milliseconds); 
+			if ((AndroidSDKVersion() < 26))
+			{
+				AndroidVibrate(milliseconds);
 			}
 			else
 			{
-				VibrationEffectClassInitialization ();
-				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject> ("createOneShot", new object[] { milliseconds,	amplitude });
-                AndroidVibrator.Call ("vibrate", VibrationEffect);
+				VibrationEffectClassInitialization();
+				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject>("createOneShot", new object[] { milliseconds, amplitude });
+				AndroidVibrator.Call("vibrate", VibrationEffect);
 			}
 		}
 
@@ -225,17 +228,17 @@ namespace MoreMountains.NiceVibrations
 		// repeat:  the index into pattern at which to repeat, or -1 if you don't want to repeat.
 		public static void AndroidVibrate(long[] pattern, int repeat)
 		{
-			if (!Android ()) { return; }
-			if ((AndroidSDKVersion () < 26))
-			{ 
-				AndroidVibrator.Call ("vibrate", pattern, repeat);
+			if (!Android()) { return; }
+			if ((AndroidSDKVersion() < 26))
+			{
+				AndroidVibrator.Call("vibrate", pattern, repeat);
 			}
 			else
 			{
-				VibrationEffectClassInitialization ();
-				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject> ("createWaveform", new object[] { pattern,	repeat });
-                AndroidVibrator.Call ("vibrate", VibrationEffect);
-            }
+				VibrationEffectClassInitialization();
+				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject>("createWaveform", new object[] { pattern, repeat });
+				AndroidVibrator.Call("vibrate", VibrationEffect);
+			}
 		}
 
 		/// <summary>
@@ -244,18 +247,18 @@ namespace MoreMountains.NiceVibrations
 		/// <param name="pattern">Pattern.</param>
 		/// <param name="amplitudes">Amplitudes.</param>
 		/// <param name="repeat">Repeat.</param>
-		public static void AndroidVibrate(long[] pattern, int[] amplitudes, int repeat )
+		public static void AndroidVibrate(long[] pattern, int[] amplitudes, int repeat)
 		{
-			if (!Android ()) { return; }
-			if ((AndroidSDKVersion () < 26))
-			{ 
-				AndroidVibrator.Call ("vibrate", pattern, repeat);
+			if (!Android()) { return; }
+			if ((AndroidSDKVersion() < 26))
+			{
+				AndroidVibrator.Call("vibrate", pattern, repeat);
 			}
 			else
 			{
-				VibrationEffectClassInitialization ();
-				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject> ("createWaveform", new object[] { pattern,	amplitudes, repeat });
-				AndroidVibrator.Call ("vibrate", VibrationEffect);
+				VibrationEffectClassInitialization();
+				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject>("createWaveform", new object[] { pattern, amplitudes, repeat });
+				AndroidVibrator.Call("vibrate", VibrationEffect);
 			}
 		}
 
@@ -264,39 +267,39 @@ namespace MoreMountains.NiceVibrations
 		/// </summary>
 		public static void AndroidCancelVibrations()
 		{
-			if (!Android ()) { return; }
+			if (!Android()) { return; }
 			AndroidVibrator.Call("cancel");
 		}
 
 		/// <summary>
 		/// Initializes the VibrationEffectClass if needed.
 		/// </summary>
-		private static void VibrationEffectClassInitialization ()
+		private static void VibrationEffectClassInitialization()
 		{
 			if (VibrationEffectClass == null)
-            {
-                VibrationEffectClass = new AndroidJavaClass ("android.os.VibrationEffect");
-            }	
+			{
+				VibrationEffectClass = new AndroidJavaClass("android.os.VibrationEffect");
+			}
 		}
 
 		/// <summary>
 		/// Returns the current Android SDK version as an int
 		/// </summary>
 		/// <returns>The SDK version.</returns>
-		public static int AndroidSDKVersion() 
+		public static int AndroidSDKVersion()
 		{
 			if (_sdkVersion == -1)
 			{
-				int apiLevel = int.Parse (SystemInfo.operatingSystem.Substring(SystemInfo.operatingSystem.IndexOf("-") + 1, 3));
+				int apiLevel = int.Parse(SystemInfo.operatingSystem.Substring(SystemInfo.operatingSystem.IndexOf("-") + 1, 3));
 				_sdkVersion = apiLevel;
-				return apiLevel;	
+				return apiLevel;
 			}
 			else
 			{
 				return _sdkVersion;
 			}
 		}
-			
+
 		// Android End ---------------------------------------------------------------------------------------------------------
 
 		// iOS ----------------------------------------------------------------------------------------------------------------
@@ -305,7 +308,7 @@ namespace MoreMountains.NiceVibrations
 		// It's a pretty straightforward implementation of iOS's UIFeedbackGenerator's methods.
 		// You can learn more about them there : https://developer.apple.com/documentation/uikit/uifeedbackgenerator
 
-		#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 			[DllImport ("__Internal")]
 			private static extern void InstantiateFeedbackGenerators();
 			[DllImport ("__Internal")]
@@ -324,17 +327,17 @@ namespace MoreMountains.NiceVibrations
 			private static extern void MediumImpactHaptic();
 			[DllImport ("__Internal")]
 			private static extern void HeavyImpactHaptic();
-		#else
-			private static void InstantiateFeedbackGenerators() {}
-			private static void ReleaseFeedbackGenerators() {}
-			private static void SelectionHaptic() {}
-			private static void SuccessHaptic() {}
-			private static void WarningHaptic() {}
-			private static void FailureHaptic() {}
-			private static void LightImpactHaptic() {}
-			private static void MediumImpactHaptic() {}
-			private static void HeavyImpactHaptic() {}
-		#endif
+#else
+		private static void InstantiateFeedbackGenerators() { }
+		private static void ReleaseFeedbackGenerators() { }
+		private static void SelectionHaptic() { }
+		private static void SuccessHaptic() { }
+		private static void WarningHaptic() { }
+		private static void FailureHaptic() { }
+		private static void LightImpactHaptic() { }
+		private static void MediumImpactHaptic() { }
+		private static void HeavyImpactHaptic() { }
+#endif
 		private static bool iOSHapticsInitialized = false;
 
 		/// <summary>
@@ -343,8 +346,8 @@ namespace MoreMountains.NiceVibrations
 		/// </summary>
 		public static void iOSInitializeHaptics()
 		{
-			if (!iOS ()) { return; }
-			InstantiateFeedbackGenerators ();
+			if (!iOS()) { return; }
+			InstantiateFeedbackGenerators();
 			iOSHapticsInitialized = true;
 		}
 
@@ -352,10 +355,10 @@ namespace MoreMountains.NiceVibrations
 		/// Releases the feedback generators, usually you'll want to call this at OnDisable(); or anytime you know you won't need 
 		/// vibrations anymore.
 		/// </summary>
-		public static void iOSReleaseHaptics ()
+		public static void iOSReleaseHaptics()
 		{
-			if (!iOS ()) { return; }
-			ReleaseFeedbackGenerators ();
+			if (!iOS()) { return; }
+			ReleaseFeedbackGenerators();
 		}
 
 		/// <summary>
@@ -392,20 +395,20 @@ namespace MoreMountains.NiceVibrations
 			}
 #endif
 
-            return hapticsSupported;
+			return hapticsSupported;
 		}
-	
+
 		/// <summary>
 		/// iOS only : triggers a haptic feedback of the specified type
 		/// </summary>
 		/// <param name="type">Type.</param>
 		public static void iOSTriggerHaptics(HapticTypes type)
 		{
-			if (!iOS ()) { return; }
+			if (!iOS()) { return; }
 
 			if (!iOSHapticsInitialized)
 			{
-				iOSInitializeHaptics ();
+				iOSInitializeHaptics();
 			}
 
 			// this will trigger a standard vibration on all the iOS devices that don't support haptic feedback
@@ -415,36 +418,36 @@ namespace MoreMountains.NiceVibrations
 				switch (type)
 				{
 					case HapticTypes.Selection:
-						SelectionHaptic ();
+						SelectionHaptic();
 						break;
 
 					case HapticTypes.Success:
-						SuccessHaptic ();
+						SuccessHaptic();
 						break;
 
 					case HapticTypes.Warning:
-						WarningHaptic ();
+						WarningHaptic();
 						break;
 
 					case HapticTypes.Failure:
-						FailureHaptic ();
+						FailureHaptic();
 						break;
 
 					case HapticTypes.LightImpact:
-						LightImpactHaptic ();
+						LightImpactHaptic();
 						break;
 
 					case HapticTypes.MediumImpact:
-						MediumImpactHaptic ();
+						MediumImpactHaptic();
 						break;
 
 					case HapticTypes.HeavyImpact:
-						HeavyImpactHaptic ();
+						HeavyImpactHaptic();
 						break;
 				}
 			}
 			// CHRI
-			
+
 			// else
 			// {
 			// 	#if UNITY_IOS 
@@ -457,13 +460,13 @@ namespace MoreMountains.NiceVibrations
 		/// Returns a string containing iOS SDK informations
 		/// </summary>
 		/// <returns>The OSSDK version.</returns>
-		public static string iOSSDKVersion() 
+		public static string iOSSDKVersion()
 		{
-			#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 				return Device.systemVersion;
-			#else
-				return null;
-			#endif
+#else
+			return null;
+#endif
 		}
 
 		// iOS End ----------------------------------------------------------------------------------------------------------------
