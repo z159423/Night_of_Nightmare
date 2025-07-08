@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 6023100685930018123}
   - component: {fileID: 2308558968895344705}
   - component: {fileID: 6635497386344193455}
+  - component: {fileID: -1796714022318113445}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -532,6 +533,18 @@ MonoBehaviour:
   Text: {fileID: 2308558968895344705}
   KeyString: global.str_home
   IsPassRTL: 0
+--- !u!114 &-1796714022318113445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712923751006591514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1501747222389134608
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +755,7 @@ GameObject:
   - component: {fileID: 258832399725134360}
   - component: {fileID: 8804473606536537283}
   - component: {fileID: 3057495506805838931}
+  - component: {fileID: -5533322418385116248}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -881,6 +895,18 @@ MonoBehaviour:
   Text: {fileID: 8804473606536537283}
   KeyString: global.str_boost
   IsPassRTL: 0
+--- !u!114 &-5533322418385116248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138543706864571155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2432548738846040555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,6 +1298,7 @@ GameObject:
   - component: {fileID: 2719742769557048658}
   - component: {fileID: 5279614899639769772}
   - component: {fileID: 375553710059796981}
+  - component: {fileID: -8269120789899397664}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1396,6 +1423,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-8269120789899397664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3138779651374304200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3815162600182636380
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2067,7 @@ GameObject:
   - component: {fileID: 5365989088685629264}
   - component: {fileID: 2707183941735349756}
   - component: {fileID: 5823419557638808686}
+  - component: {fileID: 5576405977657579182}
   m_Layer: 5
   m_Name: GemText
   m_TagString: Untagged
@@ -2152,6 +2192,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5576405977657579182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014608980138307275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5356971183218966891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,6 +2517,7 @@ GameObject:
   - component: {fileID: 5541525035138405958}
   - component: {fileID: 3527422536953537168}
   - component: {fileID: 4638705354348821082}
+  - component: {fileID: -5261181027067104735}
   m_Layer: 5
   m_Name: TicketCount
   m_TagString: Untagged
@@ -2589,6 +2642,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-5261181027067104735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6720940255103493867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7093706790017950833
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,6 +3273,7 @@ GameObject:
   - component: {fileID: 8036291408572271510}
   - component: {fileID: 414454184577471629}
   - component: {fileID: 4216289136689475770}
+  - component: {fileID: 770355542043220876}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3347,6 +3413,18 @@ MonoBehaviour:
   Text: {fileID: 414454184577471629}
   KeyString: global.str_shop
   IsPassRTL: 0
+--- !u!114 &770355542043220876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7610446110880283998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7651030853235070456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3550,6 +3628,7 @@ GameObject:
   - component: {fileID: 6943717030360313622}
   - component: {fileID: 2350810240986062439}
   - component: {fileID: 4419236754198942473}
+  - component: {fileID: 3419389278077884000}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3689,6 +3768,18 @@ MonoBehaviour:
   Text: {fileID: 2350810240986062439}
   KeyString: 
   IsPassRTL: 0
+--- !u!114 &3419389278077884000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849834261508596960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7954400998522678876
 GameObject:
   m_ObjectHideFlags: 0

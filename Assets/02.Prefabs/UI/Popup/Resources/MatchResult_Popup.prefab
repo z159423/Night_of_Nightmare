@@ -873,6 +873,7 @@ GameObject:
   - component: {fileID: 511396663737426623}
   - component: {fileID: 753081124012367103}
   - component: {fileID: 1356272471171947551}
+  - component: {fileID: 3857124156876182998}
   m_Layer: 5
   m_Name: TicketCount
   m_TagString: Untagged
@@ -997,6 +998,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3857124156876182998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3154796239589655544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3188612393669509337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2636,7 @@ GameObject:
   - component: {fileID: 8385137846133266349}
   - component: {fileID: 3943146664803008746}
   - component: {fileID: 7452410058087590985}
+  - component: {fileID: -885876880484392543}
   m_Layer: 0
   m_Name: RankingPointDiffText
   m_TagString: Untagged
@@ -2747,6 +2761,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-885876880484392543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203399813198936881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6234950377679278788
 GameObject:
   m_ObjectHideFlags: 0
@@ -2834,6 +2860,7 @@ GameObject:
   - component: {fileID: 1925422747201928088}
   - component: {fileID: 8263182869670396203}
   - component: {fileID: 8458678510627608517}
+  - component: {fileID: -8765742554856692518}
   m_Layer: 5
   m_Name: GemText
   m_TagString: Untagged
@@ -2958,6 +2985,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-8765742554856692518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6734246856869378156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6852531501462286129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3425,6 +3464,7 @@ GameObject:
   - component: {fileID: 6760808782434693408}
   - component: {fileID: 425631098930100887}
   - component: {fileID: 9060986706205260928}
+  - component: {fileID: -2394978009002836843}
   m_Layer: 0
   m_Name: NoThanksGemCountText
   m_TagString: Untagged
@@ -3549,6 +3589,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-2394978009002836843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7485466324197336477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7535929677752733660
 GameObject:
   m_ObjectHideFlags: 0

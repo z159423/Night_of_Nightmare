@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02f45a9901cfaa40ac9c55cf38fadaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uIAnimationTargets: []
 --- !u!1 &7676122163311866520
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +273,7 @@ GameObject:
   - component: {fileID: 883538536539223740}
   - component: {fileID: 2851294011114462111}
   - component: {fileID: 8527653979303773135}
+  - component: {fileID: -1861767620586278685}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -411,6 +413,18 @@ MonoBehaviour:
   Text: {fileID: 2851294011114462111}
   KeyString: global.str_exit_desc
   IsPassRTL: 0
+--- !u!114 &-1861767620586278685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7676122163311866520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8004803894239359475
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +437,7 @@ GameObject:
   - component: {fileID: 2149238951724157008}
   - component: {fileID: 7131344372719946854}
   - component: {fileID: 582611899132188851}
+  - component: {fileID: -8445993587706045884}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -562,6 +577,18 @@ MonoBehaviour:
   Text: {fileID: 7131344372719946854}
   KeyString: global.str_exit
   IsPassRTL: 0
+--- !u!114 &-8445993587706045884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004803894239359475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8494799000521740951
 GameObject:
   m_ObjectHideFlags: 0

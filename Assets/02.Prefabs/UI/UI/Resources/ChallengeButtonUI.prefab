@@ -70,7 +70,7 @@ MonoBehaviour:
   m_text: "\uC0C1\uC704 96.92%"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 0.1
+  outlineThickness: 0.2
+  faceDilate: 0.2
 --- !u!1 &5343843513424622838
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,6 +162,7 @@ GameObject:
   - component: {fileID: 5392541630899949353}
   - component: {fileID: 407532514914430529}
   - component: {fileID: 7377901554800761555}
+  - component: {fileID: -937842297299878566}
   m_Layer: 0
   m_Name: StageText
   m_TagString: Untagged
@@ -285,6 +287,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-937842297299878566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5343843513424622838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8fcf123d6ca534f84ba7e81a6f1995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6168461452994259646
 GameObject:
   m_ObjectHideFlags: 0
