@@ -95,10 +95,10 @@ public class LocalDataManager
         set { PlayerPrefs.SetInt("PlayerGemCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeGemCount); }
     }
 
-    public int PlayerTicketCount
+    public int PlayerRvTicketCount
     {
-        get => PlayerPrefs.GetInt("PlayerTicketCount", 0);
-        set { PlayerPrefs.SetInt("PlayerTicketCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
+        get => PlayerPrefs.GetInt("PlayerRvTicketCount", 0);
+        set { PlayerPrefs.SetInt("PlayerRvTicketCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
     }
 
     public int PlayerLampCount

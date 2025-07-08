@@ -90,7 +90,7 @@ public class UI_GameScene_Home : UI_Scene
         });
 
         GetTextMesh(Texts.GemText).text = Managers.LocalData.PlayerGemCount.ToString();
-        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
 
         challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 1);
     }
@@ -187,7 +187,7 @@ public class UI_GameScene_Home : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
         {
-            GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+            GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
         });
 
         GetButton(Buttons.GemBtn).AddButtonEvent(() =>

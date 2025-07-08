@@ -87,7 +87,7 @@ public class UI_GameScene_Map : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
         {
-            GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+            GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
         });
 
         this.SetListener(GameObserverType.Game.OnChangeBoostItemCount, () =>
@@ -103,7 +103,7 @@ public class UI_GameScene_Map : UI_Scene
 
         GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
         GetTextMesh(Texts.EnergyCount).text = Managers.Game.playerData.energy.ToString();
-        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
 
         StartTutorial();
 

@@ -61,7 +61,7 @@ public class MatchResult_Popup : UI_Popup
         GetButton(Buttons.NoThanksBtn).gameObject.SetActive(false);
 
         GetTextMesh(Texts.GemText).text = Managers.LocalData.PlayerGemCount.ToString();
-        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerTicketCount.ToString();
+        GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
     }
 
     public override void FirstSetting()

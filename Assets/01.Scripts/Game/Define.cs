@@ -707,4 +707,15 @@ public class Define
     { "snd_wizard_die", new SoundData { soundKey = "snd_wizard_die", baseVolume = 0.4f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_build", new SoundData { soundKey = "snd_build", baseVolume = 1f, pitch = 1.1f, maxVolumeRange = 432f, minRangeVolumeMul = 0.6f } }
 };
+
+    public static readonly string[] SoundKeys = new string[]
+    {
+        "RvTicket_5",
+        "RvTicket_30",
+        "RvTicket_100",
+        "Gem_1500",
+        "Gem_5000",
+        "Gem_11000",
+        "BoostPack"
+    };
 }
