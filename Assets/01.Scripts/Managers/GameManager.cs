@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
 
     public int playTime = 0;
 
+    public int lastRankPoint = 0;
+
     private NavMeshDataInstance navMeshInstance;
 
 
@@ -107,6 +109,8 @@ public class GameManager : MonoBehaviour
         inGame = true;
 
         playTime = 0;
+
+        lastRankPoint = Managers.LocalData.PlayerRankingPoint;
 
         lossPoint = LoseRankingPoint();
 

@@ -96,7 +96,10 @@ public class Define
         return GetTierByScore(Managers.LocalData.PlayerRankingPoint);
     }
 
-
+    public static Tier GetPlayerLastTier()
+    {
+        return GetTierByScore(Managers.Game.lastRankPoint);
+    }
 
     public static Tier GetTierByScore(int score)
     {
@@ -160,7 +163,7 @@ public class Define
         }
         else
         {
-            return TierDiffValue[GetPlayerCurrentTier()];
+            return TierDiffValue[GetPlayerLastTier()];
         }
     }
 
