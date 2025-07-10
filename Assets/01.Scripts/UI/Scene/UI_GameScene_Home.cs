@@ -21,7 +21,8 @@ public class UI_GameScene_Home : UI_Scene
         ChallengeModeBtn,
         CenterCharactorBtn,
         ChallengeLockBtn,
-        GemBtn
+        GemBtn,
+        AdTicket,
     }
 
     enum Texts
@@ -200,6 +201,19 @@ public class UI_GameScene_Home : UI_Scene
         {
             Managers.LocalData.PlayerGemCount += 1000;
         });
+
+        GetButton(Buttons.AdTicket).AddButtonEvent(() =>
+        {
+            Managers.LocalData.CheatMode = Managers.LocalData.CheatMode == 0 ? 1 : 0;
+            GameObserver.Call(GameObserverType.Game.OnCheatModeOn);
+        });
+
+        this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
+        {
+            GetButton(Buttons.GemBtn).gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        });
+
+        GetButton(Buttons.GemBtn).gameObject.SetActive(Managers.LocalData.CheatMode == 1);
     }
 
     public override void Show()

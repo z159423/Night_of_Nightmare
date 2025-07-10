@@ -101,82 +101,6 @@ public class Enemy : Charactor
     TextMeshPro _damage;
     TextMeshPro _hp;
 
-    // Implementation of the abstract Hit() method from Charactor
-
-    public override void Hit(int damage)
-    {
-
-    }
-    public void Hit(int damage, bool particle = true)
-    {
-        hp -= damage;
-        if (hp <= 0)
-        {
-            // Handle enemy death
-
-            Managers.Game.GameWin();
-        }
-
-        // Show HP bar
-        if (hpBarPivot != null)
-        {
-            SetHpBar();
-        }
-
-        // Change sprite color to red and smoothly transition back to white using DOTween
-        if (bodySpriteRenderer != null && !isHitColorEffectRunning)
-        {
-            isHitColorEffectRunning = true;
-            bodySpriteRenderer.color = Color.red;
-            bodySpriteRenderer.DOColor(Color.white, 0.5f).OnComplete(() => isHitColorEffectRunning = false);
-        }
-
-        if (bodySpriteRenderer != null)
-        {
-            // 펀치(흔들림) 효과 추가 - 랜덤 방향
-            if (!isPunching)
-            {
-                isPunching = true;
-                // bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
-
-                float punchX = UnityEngine.Random.Range(-0.3f, 0.3f);
-                float punchY = UnityEngine.Random.Range(-0.3f, 0.3f);
-                Vector3 punch = new Vector3(punchX, punchY, 0);
-
-                bodySpriteRenderer.transform.DOPunchPosition(
-                    punch,     // 랜덤 방향
-                    0.3f,      // 지속 시간
-                    15,        // 진동 횟수
-                    1f         // 탄성
-                ).OnComplete(() => isPunching = false); // 트윈 끝나면 플래그 해제
-            }
-        }
-
-        if (particle)
-            StartCoroutine(Particle());
-
-        IEnumerator Particle()
-        {
-            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
-
-            particle.transform.position = transform.position + new Vector3(UnityEngine.Random.Range(-0.2f, 0.2f), UnityEngine.Random.Range(-0.2f, 0.2f), -0.4f);
-
-            yield return new WaitForSeconds(1f);
-
-            Managers.Resource.Destroy(particle);
-        }
-    }
-
-    void Heal(int amount)
-    {
-        hp += amount;
-        hp = Mathf.Clamp(hp, 0, MaxHp);
-
-        if (hpBarPivot != null)
-        {
-            SetHpBar();
-        }
-    }
 
     public void Setting(Define.EnemyType type)
     {
@@ -237,30 +161,20 @@ public class Enemy : Charactor
         sickle = gameObject.FindRecursive("Sickle").transform;
         slanderManKnife = gameObject.FindRecursive("SlanderManKnife").transform;
 
-        // switch (Managers.Game.enemyType)
-        // {
-        //     case Define.EnemyType.Sickle:
-        //         enemyType = Define.EnemyType.Sickle;
-        //         skills.Add(new SickleSkill());
-        //         break;
-        //     case Define.EnemyType.Pierrot:
-        //         enemyType = Define.EnemyType.Pierrot;
-        //         skills.Add(new PierrotSkill());
-        //         break;
-        //     case Define.EnemyType.MossMan:
-        //         enemyType = Define.EnemyType.MossMan;
-        //         skills.Add(new MossManSkill());
-        //         break;
-        //     case Define.EnemyType.SlanderMan:
-        //         enemyType = Define.EnemyType.SlanderMan;
-        //         skills.Add(new SlanderManSkill());
-        // }
-
         CheckUseSkill();
         StartCoroutine(CheckHeal());
 
         forcePlayerTargetedTime = DateTime.Now;
         forcePlayerTargetTimer = UnityEngine.Random.Range(5, 120);
+
+        this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
+        {
+            _damage.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+            _hp.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        });
+
+        _damage.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        _hp.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
     }
 
     public void SetNameText(string name)
@@ -678,6 +592,81 @@ public class Enemy : Charactor
         yield return new WaitForSeconds(attackSpeed.Value);
 
         canAttack = true;
+    }
+
+    public override void Hit(int damage)
+    {
+
+    }
+    public void Hit(int damage, bool particle = true)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            // Handle enemy death
+
+            Managers.Game.GameWin();
+        }
+
+        // Show HP bar
+        if (hpBarPivot != null)
+        {
+            SetHpBar();
+        }
+
+        // Change sprite color to red and smoothly transition back to white using DOTween
+        if (bodySpriteRenderer != null && !isHitColorEffectRunning)
+        {
+            isHitColorEffectRunning = true;
+            bodySpriteRenderer.color = Color.red;
+            bodySpriteRenderer.DOColor(Color.white, 0.5f).OnComplete(() => isHitColorEffectRunning = false);
+        }
+
+        if (bodySpriteRenderer != null)
+        {
+            // 펀치(흔들림) 효과 추가 - 랜덤 방향
+            if (!isPunching)
+            {
+                isPunching = true;
+                // bodySpriteRenderer.transform.DOKill(); // 기존 트윈 중지
+
+                float punchX = UnityEngine.Random.Range(-0.3f, 0.3f);
+                float punchY = UnityEngine.Random.Range(-0.3f, 0.3f);
+                Vector3 punch = new Vector3(punchX, punchY, 0);
+
+                bodySpriteRenderer.transform.DOPunchPosition(
+                    punch,     // 랜덤 방향
+                    0.3f,      // 지속 시간
+                    15,        // 진동 횟수
+                    1f         // 탄성
+                ).OnComplete(() => isPunching = false); // 트윈 끝나면 플래그 해제
+            }
+        }
+
+        if (particle)
+            StartCoroutine(Particle());
+
+        IEnumerator Particle()
+        {
+            var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
+
+            particle.transform.position = transform.position + new Vector3(UnityEngine.Random.Range(-0.2f, 0.2f), UnityEngine.Random.Range(-0.2f, 0.2f), -0.4f);
+
+            yield return new WaitForSeconds(1f);
+
+            Managers.Resource.Destroy(particle);
+        }
+    }
+
+    void Heal(int amount)
+    {
+        hp += amount;
+        hp = Mathf.Clamp(hp, 0, MaxHp);
+
+        if (hpBarPivot != null)
+        {
+            SetHpBar();
+        }
     }
 
     [Button("Level Up")]

@@ -21,7 +21,8 @@ public class UI_GameScene_Map : UI_Scene
         EnemyForceBtn,
         GameWinBtn,
         GameLoseBtn,
-        EnemyLevelUp
+        EnemyLevelUp,
+        AdTicket
     }
 
     enum Texts
@@ -64,6 +65,8 @@ public class UI_GameScene_Map : UI_Scene
 
     [SerializeField] private Sprite[] tutorialSprites;
     private TutorialData currentTutorial;
+
+    private Transform cheatBtns;
 
 
     public override void Init()
@@ -131,6 +134,7 @@ public class UI_GameScene_Map : UI_Scene
         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
         hpbar.gameObject.SetActive(false);
         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
+
     }
 
     public void FirstSetting()
@@ -226,6 +230,23 @@ public class UI_GameScene_Map : UI_Scene
         {
             Managers.Game.GameOver();
         });
+
+        GetButton(Buttons.AdTicket).AddButtonEvent(() =>
+        {
+            Managers.LocalData.CheatMode = Managers.LocalData.CheatMode == 0 ? 1 : 0;
+            GameObserver.Call(GameObserverType.Game.OnCheatModeOn);
+        });
+
+        cheatBtns = gameObject.FindRecursive("CheatBtn").transform;
+
+        this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
+        {
+            cheatBtns.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+            GetImage(Images.Tutorial).GetComponent<RectTransform>().anchoredPosition = Managers.LocalData.CheatMode == 0 ? new Vector2(475, -410) : new Vector2(475, -590); // 초기 위치를 화면 밖으로 설정
+        });
+
+        cheatBtns.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        GetImage(Images.Tutorial).GetComponent<RectTransform>().anchoredPosition = Managers.LocalData.CheatMode == 0 ? new Vector2(475, -410) : new Vector2(475, -590); // 초기 위치를 화면 밖으로 설정
     }
 
     void Update()

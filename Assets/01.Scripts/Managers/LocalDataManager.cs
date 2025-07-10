@@ -178,4 +178,10 @@ public class LocalDataManager
         get => PlayerPrefs.GetInt("FirstUseLamp", 0);
         set { PlayerPrefs.SetInt("FirstUseLamp", value); IsSave = true; }
     }
+
+    public int CheatMode
+    {
+        get => PlayerPrefs.GetInt("CheatMode", 0);
+        set { PlayerPrefs.SetInt("CheatMode", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnCheatModeOn); }
+    }
 }

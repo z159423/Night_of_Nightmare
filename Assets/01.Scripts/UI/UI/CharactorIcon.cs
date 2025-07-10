@@ -30,6 +30,15 @@ public class CharactorIcon : MonoBehaviour
         energyText = gameObject.FindRecursive("EnergyText").GetComponent<TextMeshProUGUI>();
 
         StartCoroutine(ResourceCheck());
+
+        this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
+        {
+            coinText.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+            energyText.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        });
+
+        coinText.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        energyText.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
     }
 
     IEnumerator ResourceCheck()
