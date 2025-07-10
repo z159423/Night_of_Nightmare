@@ -94,26 +94,28 @@ public class StructureSlot : UI_Base
         {
             GetButton(Buttons.RVBtn).onClick.AddListener(() =>
             {
-                //TODO: RV 광고 재생
-                if (data.structureType == Define.StructureType.AutoTurret)
+                Managers.Ad.ShowRewardAd(() =>
                 {
-                    var structure = Managers.Game.BuildStructure(Managers.Game.playerData, data.RVUpgradeTo, Managers.Game.selectedTile);
-                    structure.UpgradeTo(level);
+                    if (data.structureType == Define.StructureType.AutoTurret)
+                    {
+                        var structure = Managers.Game.BuildStructure(Managers.Game.playerData, data.RVUpgradeTo, Managers.Game.selectedTile);
+                        structure.UpgradeTo(level);
 
-                    if (thisStructure != null)
-                        thisStructure.DestroyStructure();
+                        if (thisStructure != null)
+                            thisStructure.DestroyStructure();
 
-                    onPurcahse?.Invoke();
-                }
-                else
-                {
-                    thisStructure.Upgrade();
-                    onPurcahse?.Invoke();
-                    if (Managers.Game.playerData.rvUpgradeCount.ContainsKey(data.structureType))
-                        Managers.Game.playerData.rvUpgradeCount[data.structureType]++;
+                        onPurcahse?.Invoke();
+                    }
                     else
-                        Managers.Game.playerData.rvUpgradeCount.Add(data.structureType, 1);
-                }
+                    {
+                        thisStructure.Upgrade();
+                        onPurcahse?.Invoke();
+                        if (Managers.Game.playerData.rvUpgradeCount.ContainsKey(data.structureType))
+                            Managers.Game.playerData.rvUpgradeCount[data.structureType]++;
+                        else
+                            Managers.Game.playerData.rvUpgradeCount.Add(data.structureType, 1);
+                    }
+                });
             });
         }
     }
@@ -134,15 +136,17 @@ public class StructureSlot : UI_Base
             GetButton(Buttons.RVBtn).gameObject.SetActive(true);
             GetButton(Buttons.RVBtn).onClick.AddListener(() =>
             {
-                //TODO: RV 광고 재생
-                var structure = Managers.Game.BuildStructure(Managers.Game.playerData, rvUpgradeType, Managers.Game.selectedTile);
+                Managers.Ad.ShowRewardAd(() =>
+                {
+                    var structure = Managers.Game.BuildStructure(Managers.Game.playerData, rvUpgradeType, Managers.Game.selectedTile);
 
-                structure.UpgradeTo(level - 1);
+                    structure.UpgradeTo(level - 1);
 
-                if (thisStructure != null)
-                    thisStructure.DestroyStructure();
+                    if (thisStructure != null)
+                        thisStructure.DestroyStructure();
 
-                exitAction?.Invoke();
+                    exitAction?.Invoke();
+                });
             });
         }
 

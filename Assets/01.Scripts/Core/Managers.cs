@@ -16,6 +16,7 @@ public class Managers : SingletonStatic<Managers>
     public static GameManager Game { get; set; } = new GameManager();
     public static CameraManager Camera { get; set; } = new CameraManager();
     public static IapManager IAP { get; set; } = new IapManager();
+    public static AdManager Ad { get; set; } = new AdManager();
 
 
     public void CreateManagers()
@@ -30,11 +31,7 @@ public class Managers : SingletonStatic<Managers>
         Camera = transform.AddComponent<CameraManager>();
         Audio = transform.AddComponent<AudioManager>();
         IAP = transform.AddComponent<IapManager>();
-    }
-
-    private void Awake()
-    {
-        // CreateManagers();
+        Ad = transform.AddComponent<AdManager>();
     }
 
     private void Update()
