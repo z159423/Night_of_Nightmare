@@ -146,7 +146,13 @@ public class UI_GameScene_Home : UI_Scene
 
         GetButton(Buttons.QeustBtn).AddButtonEvent(() =>
         {
+            var btn = GetButton(Buttons.QeustBtn);
+            btn.transform.DOScale(1.15f, 0.12f).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                btn.transform.DOScale(1f, 0.12f).SetEase(Ease.Linear);
+            });
 
+            Managers.UI.ShowNotificationPopup("global.str_update_coming_soon", 2);
         });
 
         GetButton(Buttons.RankModeBtn).AddButtonEvent(() =>
