@@ -113,18 +113,6 @@ public class Enemy : Charactor
 
         SetBodySkin();
 
-        bodySpriteRenderer.transform.localRotation = Quaternion.Euler(0, 0, -4);
-
-        if (type == Define.EnemyType.SlanderMan)
-        {
-            bodySpriteRenderer.transform.localScale = new Vector3(3.8f, 3.5f, 1);
-            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.4f, 6, 0);
-        }
-        else if (type == Define.EnemyType.TungTungTung || type == Define.EnemyType.Tralalero)
-        {
-            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.4f, 4.33f, 0);
-        }
-
         StartCoroutine(EnemyStateMachine());
 
         GetComponentInParent<NavMeshAgent>(true).enabled = true;
@@ -171,6 +159,22 @@ public class Enemy : Charactor
 
         forcePlayerTargetedTime = DateTime.Now;
         forcePlayerTargetTimer = UnityEngine.Random.Range(5, 120);
+
+        bodySpriteRenderer.transform.localRotation = Quaternion.Euler(0, 0, -4);
+
+
+        if (type == Define.EnemyType.SlanderMan)
+        {
+            bodySpriteRenderer.transform.localScale = new Vector3(3.8f, 3.5f, 1);
+            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.4f, 6, 0);
+
+            stunParticle.transform.localPosition = new Vector3(stunParticle.transform.localPosition.x, 5.18f, stunParticle.transform.localPosition.z);
+            hammerThrowParticle.transform.localPosition = new Vector3(hammerThrowParticle.transform.localPosition.x, 4f, hammerThrowParticle.transform.localPosition.z);
+        }
+        else if (type == Define.EnemyType.TungTungTung || type == Define.EnemyType.Tralalero)
+        {
+            gameObject.FindRecursive("HpBar").transform.localPosition = new Vector3(0.4f, 4.33f, 0);
+        }
 
         this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
         {

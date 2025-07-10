@@ -23,6 +23,8 @@ public class UI_GameScene_Home : UI_Scene
         ChallengeLockBtn,
         GemBtn,
         AdTicket,
+        RankPointUp,
+        RankPointDown
     }
 
     enum Texts
@@ -60,6 +62,8 @@ public class UI_GameScene_Home : UI_Scene
     private UI_Popup currentPopup;
 
     private GameObject challengeLock;
+
+    private Transform cheat;
 
 
     public override void Init()
@@ -113,6 +117,8 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.QeustBtn).GetComponent<LowerBtn>().Init();
 
         challengeLock = gameObject.FindRecursive("ChallengeLock");
+
+        cheat = gameObject.FindRecursive("Cheat").transform;
 
         GetButton(Buttons.ShopBtn).AddButtonEvent(() =>
         {
@@ -210,10 +216,20 @@ public class UI_GameScene_Home : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
         {
-            GetButton(Buttons.GemBtn).gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+            cheat.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
         });
 
-        GetButton(Buttons.GemBtn).gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+        cheat.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+
+        GetButton(Buttons.RankPointUp).AddButtonEvent(() =>
+        {
+            Managers.LocalData.PlayerRankingPoint += 100;
+        });
+
+        GetButton(Buttons.RankPointDown).AddButtonEvent(() =>
+        {
+            Managers.LocalData.PlayerRankingPoint -= 100;
+        });
     }
 
     public override void Show()
