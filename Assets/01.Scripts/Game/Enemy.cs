@@ -95,8 +95,13 @@ public class Enemy : Charactor
     [SerializeField] private int targetCount = 2;
     [SerializeField] private DateTime forcePlayerTargetedTime = DateTime.MinValue;
     [SerializeField] private int forcePlayerTargetTimer = 0;
+
+
     [SerializeField] private DateTime randomStateStartTime = DateTime.MinValue;
     [SerializeField] private float randomStateTime = 0;
+    [SerializeField] private DateTime randomStateWaitTime = DateTime.MinValue;
+    private bool randomState = false;
+    private float randomSpeedMul = -1f;
 
     TextMeshPro _damage;
     TextMeshPro _hp;
@@ -175,6 +180,14 @@ public class Enemy : Charactor
 
         _damage.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
         _hp.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
+
+        moveSpeed.onValueChanged += (value) =>
+        {
+            if (agent != null)
+            {
+                agent.speed = value;
+            }
+        };
     }
 
     public void SetNameText(string name)
@@ -297,6 +310,15 @@ public class Enemy : Charactor
 
         while (true)
         {
+            if (randomState && randomSpeedMul != -1)
+            {
+                moveSpeed.RemoveMultiplier(randomSpeedMul);
+                randomSpeedMul = -1f;
+            }
+
+            if (randomStateStartTime.AddSeconds(randomStateTime) <= DateTime.Now)
+                randomState = false;
+
             if (IsStunned)
             {
                 // NavMeshAgent 즉시 멈춤
@@ -316,19 +338,6 @@ public class Enemy : Charactor
                         StartCoroutine(Attack());
                     }
                 }
-                else if (randomStateStartTime.AddSeconds(randomStateTime) > DateTime.Now)
-                {
-                    agent.SetDestination(GetRandomPointOnNavMesh());
-
-                    var speedMul = UnityEngine.Random.Range(0.5f, 1f);
-                    moveSpeed.AddMultiplier(speedMul);
-
-                    print("타겟 풀리고 랜덤 상태");
-
-                    yield return new WaitForSeconds(UnityEngine.Random.Range(0.25f, 1.5f));
-
-                    moveSpeed.RemoveMultiplier(speedMul);
-                }
                 else if (Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom == null).Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f)
             .ToList().Count > 0)
                 {
@@ -336,6 +345,27 @@ public class Enemy : Charactor
                         .Where(n => Vector2.Distance(n.transform.position, transform.position) <= 2.5f).ToList().First();
 
                     currentTargetStructure = null;
+                }
+                else if (randomStateStartTime.AddSeconds(randomStateTime) > DateTime.Now)
+                {
+                    if (randomStateWaitTime > DateTime.Now)
+                    {
+                        // 랜덤 상태 대기 중
+
+                    }
+                    else
+                    {
+                        randomState = true;
+                        agent.SetDestination(GetRandomPointOnNavMesh());
+
+                        randomSpeedMul = UnityEngine.Random.Range(0.5f, 1f);
+                        moveSpeed.AddMultiplier(randomSpeedMul);
+
+                        print("타겟 풀리고 랜덤 상태");
+
+                        randomStateWaitTime = DateTime.Now.AddSeconds(UnityEngine.Random.Range(0.25f, 1.5f));
+
+                    }
                 }
                 else if (forcePlayerTargetedTime.AddSeconds(forcePlayerTargetTimer) < DateTime.Now)
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class StatMultiplier
     private List<float> multipliers = new List<float>();
 
     public float BaseValue { get; set; } = 1f;
+
+    public Action<float> onValueChanged;
 
     public float Value
     {
@@ -23,15 +26,24 @@ public class StatMultiplier
     public void AddMultiplier(float multiplier)
     {
         multipliers.Add(multiplier);
+
+        if (onValueChanged != null)
+            onValueChanged(Value);
     }
 
     public void RemoveMultiplier(float multiplier)
     {
         multipliers.Remove(multiplier);
+
+        if (onValueChanged != null)
+            onValueChanged(Value);
     }
 
     public void ClearMultipliers()
     {
         multipliers.Clear();
+
+        if (onValueChanged != null)
+            onValueChanged(Value);
     }
 }
