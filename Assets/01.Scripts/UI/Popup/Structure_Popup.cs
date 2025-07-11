@@ -61,6 +61,8 @@ public class Structure_Popup : UI_Popup
         SelectTap(TapTypes.Basic);
 
         OpenAnimation();
+
+        GetButton(Buttons.LampBtn).gameObject.SetActive(Managers.LocalData.CheatMode == 1);
     }
 
     public override void FirstSetting()
