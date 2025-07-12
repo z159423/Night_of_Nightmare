@@ -68,47 +68,57 @@ public class AudioManager : MonoBehaviour
         // minRangeVolumeMul이 -2가 아니면 data.minRangeVolumeMul 대신 매개변수 값 사용
         float minVolumeMul = (minRangeVolumeMul != -2f) ? minRangeVolumeMul : data.minRangeVolumeMul;
 
-        if (sourceTransform != null)
+        //         if (sourceTransform != null)
+        //         {
+        //             // minVolumeMul이 -1이면 거리 무시하고 baseVolume으로 재생
+        //             if (minVolumeMul == -1f)
+        //             {
+        //                 finalVolume = data.baseVolume;
+        //             }
+        //             else
+        //             {
+        //                 // 화면 중심과 오브젝트의 픽셀 거리 계산
+        //                 Vector3 screenPos = mainCamera.WorldToScreenPoint(sourceTransform.position);
+        //                 Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        //                 float pixelDistance = Vector2.Distance(screenCenter, screenPos);
+
+        //                 // 거리에 따른 사운드 값 계산
+        //                 // float soundValue = data.maxVolumeRange / pixelDistance;
+
+        //                 float soundValue = (data.maxVolumeRange * 1.2f) / (pixelDistance * 1f);
+
+        //                 // minVolumeMul보다 커야만 재생
+        //                 if (soundValue <= minVolumeMul)
+        //                 {
+        // #if UNITY_EDITOR
+        //                     Debug.Log($"{clip.name} 사운드 크기 {soundValue} / {minVolumeMul} 보다 작아서 재생 안함");
+        // #endif
+        //                     return;
+        //                 }
+
+        // #if UNITY_EDITOR
+        //                 Debug.Log($"{clip.name} 사운드 크기 {soundValue} / {minVolumeMul} 보다 커서 재생");
+        // #endif
+
+        //                 // 최종 볼륨 계산 (최대 1)
+        //                 // finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
+        //                 finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
+
+        //             }
+        //         }
+
+        var source = Managers.Resource.Instantiate("AudioSource").GetComponent<AudioSource>();
+
+        if (minVolumeMul == -1f || sourceTransform == null)
         {
-            // minVolumeMul이 -1이면 거리 무시하고 baseVolume으로 재생
-            if (minVolumeMul == -1f)
-            {
-                finalVolume = data.baseVolume;
-            }
-            else
-            {
-                // 화면 중심과 오브젝트의 픽셀 거리 계산
-                Vector3 screenPos = mainCamera.WorldToScreenPoint(sourceTransform.position);
-                Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-                float pixelDistance = Vector2.Distance(screenCenter, screenPos);
-
-                // 거리에 따른 사운드 값 계산
-                // float soundValue = data.maxVolumeRange / pixelDistance;
-
-                float soundValue = (data.maxVolumeRange * 1.2f) / (pixelDistance * 1f);
-
-                // minVolumeMul보다 커야만 재생
-                if (soundValue <= minVolumeMul)
-                {
-#if UNITY_EDITOR
-                    Debug.Log($"{clip.name} 사운드 크기 {soundValue} / {minVolumeMul} 보다 작아서 재생 안함");
-#endif
-                    return;
-                }
-
-#if UNITY_EDITOR
-                Debug.Log($"{clip.name} 사운드 크기 {soundValue} / {minVolumeMul} 보다 커서 재생");
-#endif
-
-                // 최종 볼륨 계산 (최대 1)
-                // finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
-                finalVolume = data.baseVolume * Mathf.Clamp01(soundValue);
-
-            }
+            source.transform.SetParent(Managers.Camera.GetCurrentCamera().transform);
+            source.transform.localPosition = Vector3.zero; // 월드 좌표로 재생
+        }
+        else
+        {
+            source.transform.localPosition = new Vector3(sourceTransform.position.x, sourceTransform.position.y, -10);
         }
 
-        var source = Managers.Resource.Instantiate("AudioSource", Managers.Camera.GetCurrentCamera().transform).GetComponent<AudioSource>();
-        source.transform.localPosition = Vector3.zero;
         source.clip = clip;
         source.spatialBlend = 1f;
         source.volume = finalVolume;
