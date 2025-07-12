@@ -242,11 +242,11 @@ public class UI_GameScene_Map : UI_Scene
         this.SetListener(GameObserverType.Game.OnCheatModeOn, () =>
         {
             cheatBtns.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
-            GetImage(Images.Tutorial).GetComponent<RectTransform>().anchoredPosition = Managers.LocalData.CheatMode == 0 ? new Vector2(475, -510) : new Vector2(475, -660); // 초기 위치를 화면 밖으로 설정
+            GetImage(Images.Tutorial).GetComponent<RectTransform>().anchoredPosition = Managers.LocalData.CheatMode == 0 ? new Vector2(475, -490) : new Vector2(475, -640); // 초기 위치를 화면 밖으로 설정
         });
 
         cheatBtns.gameObject.SetActive(Managers.LocalData.CheatMode == 1);
-        GetImage(Images.Tutorial).GetComponent<RectTransform>().anchoredPosition = Managers.LocalData.CheatMode == 0 ? new Vector2(475, -510) : new Vector2(475, -660); // 초기 위치를 화면 밖으로 설정
+        GetImage(Images.Tutorial).GetComponent<RectTransform>().anchoredPosition = Managers.LocalData.CheatMode == 0 ? new Vector2(475, -490) : new Vector2(475, -640); // 초기 위치를 화면 밖으로 설정
     }
 
     void Update()
