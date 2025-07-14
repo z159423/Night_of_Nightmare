@@ -18,6 +18,13 @@ class QClear : EditorWindow
         Caching.ClearCache();
     }
 
+    [MenuItem("QTool/Clear/All Local Data", priority = 0)]
+    public static void ClearAllLocalData()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("<Color=red>PlayerPrefs DeleteAll : All local data cleared!</color>");
+    }
+
     [MenuItem("QTool/Clear/Detect")]
     public static void Generate()
     {

@@ -31,19 +31,19 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp-firstpass
     - Assembly-CSharp
-    - Cinemachine
-    - NavMeshComponentsTestsPlaymode
-    - NavMeshPlus
-    - NavMeshComponentsExamples
-    - VInspector
-    - Purchasing.Common
-    - NavMeshComponents
-    - VHierarchy
     - PsdPlugin
-    - VFolders
+    - Cinemachine
+    - VHierarchy
+    - NavMeshComponentsExamples
     - NavMeshPlusEditor
-    - NavMeshComponentsTestsEditmode
     - NavMeshComponentsEditor
+    - NavMeshPlus
+    - NavMeshComponents
+    - VFolders
+    - VInspector
+    - NavMeshComponentsTestsPlaymode
+    - NavMeshComponentsTestsEditmode
+    - Purchasing.Common
     - NavMeshComponentsExamplesEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
