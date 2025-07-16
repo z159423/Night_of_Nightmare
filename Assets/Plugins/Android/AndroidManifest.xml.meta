@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Plugins/Android/AndroidManifest.xml.meta
 guid: 6ad989d045729b944a4069418cd209c2
 TextScriptImporter:
+========
+guid: f118deb2a28b28343bb3fbd8d5b41727
+DefaultImporter:
+>>>>>>>> main:Assets/Plugins/Android/gradleTemplate.properties.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

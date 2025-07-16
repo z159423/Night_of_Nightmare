@@ -79,6 +79,17 @@ public class CameraManager : MonoBehaviour
         Camera.main.GetComponent<PostProcessVolume>().enabled = isOn;
     }
 
+    public void ChangeVinettaIntensity(float intensity)
+    {
+        if (Camera.main.TryGetComponent<PostProcessVolume>(out var volume))
+        {
+            if (volume.profile.TryGetSettings<Vignette>(out var vignette))
+            {
+                vignette.intensity.Override(intensity);
+            }
+        }
+    }
+
     public void ChangeMapCameraMode(MapCameraMode mode)
     {
         if (currentMapCameraMode == mode)

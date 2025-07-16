@@ -147,8 +147,18 @@ public class Match_Making_Popup : UI_Popup
 
         // Define.EnemyType 배열에서 랜덤으로 하나 선택
         var enemyTypes = System.Enum.GetValues(typeof(Define.EnemyType));
-        var random = new System.Random();
-        var enemyType = (Define.EnemyType)enemyTypes.GetValue(random.Next(enemyTypes.Length));
+
+        Define.EnemyType enemyType;
+
+        if (Managers.LocalData.PlayerWinCount == 0)
+            enemyType = Define.EnemyType.TungTungTung;
+        else if (Managers.LocalData.PlayerWinCount == 1)
+            enemyType = Define.EnemyType.Tralalero;
+        else
+        {
+            var random = new System.Random();
+            enemyType = (Define.EnemyType)enemyTypes.GetValue(random.Next(enemyTypes.Length));
+        }
 
         Managers.Game.enemyType = enemyType;
 

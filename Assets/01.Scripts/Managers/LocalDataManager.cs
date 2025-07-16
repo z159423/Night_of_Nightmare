@@ -91,7 +91,7 @@ public class LocalDataManager
 
     public int PlayerGemCount
     {
-        get => PlayerPrefs.GetInt("PlayerGemCount", 0);
+        get => PlayerPrefs.GetInt("PlayerGemCount", 200);
         set { PlayerPrefs.SetInt("PlayerGemCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeGemCount); }
     }
 

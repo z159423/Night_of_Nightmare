@@ -116,7 +116,6 @@ public class UI_GameScene_Map : UI_Scene
         });
 
         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
-        hpbar.gameObject.SetActive(false);
         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
 
         GetTextMesh(Texts.BoostFireCoolTimeText).gameObject.SetActive(false);
@@ -132,8 +131,14 @@ public class UI_GameScene_Map : UI_Scene
         GetButton(Buttons.BoostHammerBtn).GetComponent<Image>().color = Color.white;
 
         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
-        hpbar.gameObject.SetActive(false);
         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
+
+        hpbar.gameObject.SetActive(false);
+
+        this.SetListener(GameObserverType.Game.OnActivePlayerBed, () =>
+        {
+            hpbar.gameObject.SetActive(true);
+        });
 
     }
 
@@ -171,12 +176,10 @@ public class UI_GameScene_Map : UI_Scene
                         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
                         repairStartTime = DateTime.Now;
                         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(true);
-                        hpbar.gameObject.SetActive(true);
 
                         yield return new WaitForSeconds(20);
 
                         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(false);
-                        hpbar.gameObject.SetActive(false);
                         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = Color.white;
                     }
                 }

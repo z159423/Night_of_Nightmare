@@ -193,7 +193,8 @@ public class GameManager : MonoBehaviour
             charactorController.player = Managers.Game.playerCharactor.GetComponentInParent<UnityEngine.AI.NavMeshAgent>();
             charactorController.playerCharactor = Managers.Game.playerCharactor;
 
-            Managers.Camera.TurnVinettaEffect(false);
+            // Managers.Camera.TurnVinettaEffect(false);
+            Managers.Camera.ChangeVinettaIntensity(0.3f);
         }
 
         // 적생성
@@ -254,7 +255,8 @@ public class GameManager : MonoBehaviour
             charactorController = null;
         }
 
-        Managers.Camera.TurnVinettaEffect(true);
+        // Managers.Camera.TurnVinettaEffect(true);
+        Managers.Camera.ChangeVinettaIntensity(0.45f);
 
         Destroy(currentMap.gameObject);
 
