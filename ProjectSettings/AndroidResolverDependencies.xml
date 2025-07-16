@@ -1,0 +1,28 @@
+<dependencies>
+  <packages>
+    <package>com.longriversdk:LongriverAdjust:0.0.50</package>
+    <package>com.longriversdk:LongriverAndroidSDK:0.0.50</package>
+    <package>com.longriversdk:LongriverBase:0.0.50</package>
+    <package>com.longriversdk:LongriverFirebase:0.0.50</package>
+    <package>com.longriversdk:LongriverMax:0.0.50</package>
+    <package>com.longriversdk:LongriverUserPayment:0.0.50</package>
+  </packages>
+  <files />
+  <settings>
+    <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />
+    <setting name="bundleId" value="com.non.game" />
+    <setting name="explodeAars" value="True" />
+    <setting name="gradleBuildEnabled" value="True" />
+    <setting name="gradlePropertiesTemplateEnabled" value="True" />
+    <setting name="gradleTemplateEnabled" value="True" />
+    <setting name="installAndroidPackages" value="True" />
+    <setting name="localMavenRepoDir" value="Assets/GeneratedLocalRepo" />
+    <setting name="packageDir" value="Assets/Plugins/Android" />
+    <setting name="patchAndroidManifest" value="True" />
+    <setting name="patchMainTemplateGradle" value="True" />
+    <setting name="projectExportEnabled" value="False" />
+    <setting name="useFullCustomMavenRepoPathWhenExport" value="True" />
+    <setting name="useFullCustomMavenRepoPathWhenNotExport" value="False" />
+    <setting name="useJetifier" value="True" />
+  </settings>
+</dependencies>

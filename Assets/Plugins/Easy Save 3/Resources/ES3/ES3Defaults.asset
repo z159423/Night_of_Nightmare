@@ -43,7 +43,6 @@ MonoBehaviour:
     - VInspector
     - NavMeshComponentsTestsPlaymode
     - NavMeshComponentsTestsEditmode
-    - Purchasing.Common
     - NavMeshComponentsExamplesEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

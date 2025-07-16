@@ -6,12 +6,13 @@
     android:installLocation="preferExternal"
     android:versionCode="1"
     android:versionName="1.0">
+
     <supports-screens
         android:smallScreens="true"
         android:normalScreens="true"
         android:largeScreens="true"
         android:xlargeScreens="true"
-        android:anyDensity="true"/>
+        android:anyDensity="true" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -19,6 +20,12 @@
         android:theme="@style/UnityThemeSelector"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name">
+
+        <!-- ✅ 여기에 AdMob App ID 삽입 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -27,5 +34,6 @@
             </intent-filter>
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
         </activity>
+
     </application>
 </manifest>

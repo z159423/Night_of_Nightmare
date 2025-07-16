@@ -1,0 +1,45 @@
+pluginManagement {
+    repositories {
+        **ARTIFACTORYREPOSITORY**
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+include ':launcher', ':unityLibrary'
+**INCLUDES**
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        **ARTIFACTORYREPOSITORY**
+        google()
+        mavenCentral()
+// Android Resolver Repos Start
+        def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
+        maven {
+            url "https://mvn.bepicgames.com/repository/maven-releases/" // Assets/LongriverSDK/Editor/Dependencies.xml:11
+        }
+        maven {
+            url "https://android-sdk.is.com" // Assets/LongriverSDK/Editor/Dependencies.xml:11
+        }
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" // Assets/LongriverSDK/Editor/Dependencies.xml:11
+        }
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle" // Assets/LongriverSDK/Editor/Dependencies.xml:11
+        }
+        maven {
+            url "https://anythink.jfrog.io/artifactory/android_sdk" // Assets/LongriverSDK/Editor/Dependencies.xml:11
+        }
+        maven {
+            url "https://sdk.tapjoy.com" // Assets/LongriverSDK/Editor/Dependencies.xml:11
+        }
+        mavenLocal()
+// Android Resolver Repos End
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
+    }
+}
