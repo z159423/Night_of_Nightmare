@@ -52,7 +52,7 @@ public class AttackSpeedSkill : EnemySkill
         IsActive = true;
         LastUseTime = Time.time;
         enemy.attackSpeed.AddMultiplier(speedMultiplier);
-        enemy.moveSpeed.AddMultiplier(moveMultiplier);
+        // enemy.moveSpeed.AddMultiplier(moveMultiplier);
         // 기타 효과
         enemy.attackSpeedSkillParticle.GetComponent<ParticleSystem>().Play();
 
@@ -80,7 +80,7 @@ public class AttackSpeedSkill : EnemySkill
     {
         IsActive = false;
         enemy.attackSpeed.RemoveMultiplier(speedMultiplier);
-        enemy.moveSpeed.RemoveMultiplier(moveMultiplier);
+        // enemy.moveSpeed.RemoveMultiplier(moveMultiplier);
 
         enemy.attackSpeedSkillParticle.GetComponent<ParticleSystem>().Stop();
     }

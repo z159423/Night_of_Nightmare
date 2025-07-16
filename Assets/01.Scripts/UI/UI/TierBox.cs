@@ -49,7 +49,10 @@ public class TierBox : UI_Base
         GetTextMesh(Texts.NameText).color = Define.TierColor[tier];
         GetTextMesh(Texts.ScoreText).color = Define.TierColor[tier];
 
-        if (Managers.LocalData.PlayerRankingPoint < Define.TierToScore[tier])
+        // 가장 낮은 티어인지 확인
+        bool isLowestTier = tier == (Define.Tier)System.Enum.GetValues(typeof(Define.Tier)).GetValue(0);
+
+        if (Managers.LocalData.PlayerRankingPoint < Define.TierToScore[tier] && !isLowestTier)
         {
             GetImage(Images.Icon).color = new Color32(90, 90, 90, 255);
             GetImage(Images.Frame).color = new Color32(90, 90, 90, 255);
@@ -63,14 +66,14 @@ public class TierBox : UI_Base
             nextTierScore = int.MaxValue;
             GetImage(Images.Line).gameObject.SetActive(false);
         }
-
+        
         // 점수가 해당 Tier에 포함되는 경우만 SetActive true
         bool isInTier = Managers.LocalData.PlayerRankingPoint < nextTierScore &&
-                        Managers.LocalData.PlayerRankingPoint >= Define.TierToScore[tier];
+                        (Managers.LocalData.PlayerRankingPoint >= Define.TierToScore[tier] || isLowestTier);
 
         GetImage(Images.BackYellow).gameObject.SetActive(isInTier);
 
-        if (isInTier || (Managers.LocalData.PlayerRankingPoint < 0 && tier == Define.Tier.Iron4)) return this;
+        if (isInTier) return this;
         else
             return null;
     }
