@@ -16,7 +16,7 @@ public class LocalizeManager : MonoBehaviour
     public Regex _regex;
     public int LangIndex { get; private set; } = 0;
 
-    bool init = false;
+    public bool init = false;
 
 
     void Start()
@@ -24,18 +24,14 @@ public class LocalizeManager : MonoBehaviour
         _regex = new Regex(@"[\u0600-\u06FF]+");
 
         if (!init)
-            Setting();
+            StartCoroutine(Setting());
 
         StartCoroutine(wait());
 
         IEnumerator wait()
         {
             yield return new WaitUntil(() => init);
-            print(GetText("global.str_character_name_2"));
-            print(GetDynamicText("global.global.str_boost_protect_desc", "Test1"));
         }
-
-        print("LocalizeManager Start");
     }
 
     public IEnumerator Setting()
@@ -55,18 +51,18 @@ public class LocalizeManager : MonoBehaviour
                 case (SystemLanguage.Japanese):
                     LangIndex = 2;
                     break;
-                case (SystemLanguage.ChineseSimplified):
-                    LangIndex = 3;
-                    break;
-                case (SystemLanguage.ChineseTraditional):
-                    LangIndex = 4;
-                    break;
-                case (SystemLanguage.German):
-                    LangIndex = 5;
-                    break;
-                case (SystemLanguage.Spanish):
-                    LangIndex = 6;
-                    break;
+                // case (SystemLanguage.ChineseSimplified):
+                //     LangIndex = 3;
+                //     break;
+                // case (SystemLanguage.ChineseTraditional):
+                //     LangIndex = 4;
+                //     break;
+                // case (SystemLanguage.German):
+                //     LangIndex = 5;
+                //     break;
+                // case (SystemLanguage.Spanish):
+                //     LangIndex = 6;
+                //     break;
 
                 default:
                     LangIndex = 0;

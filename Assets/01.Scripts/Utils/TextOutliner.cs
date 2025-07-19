@@ -11,6 +11,8 @@ public class TextOutliner : MonoBehaviour
     private TextMeshPro textMeshPro;
     private Material instanceMaterial;
 
+    private const float offset = 0.8f;
+
     void Awake()
     {
         ApplyOutline();
@@ -23,7 +25,7 @@ public class TextOutliner : MonoBehaviour
 
     void OnValidate()
     {
-            ApplyOutline();
+        ApplyOutline();
     }
 
     private void ApplyOutline()
@@ -56,9 +58,9 @@ public class TextOutliner : MonoBehaviour
             if (instanceMaterial.HasProperty("_OutlineColor"))
                 instanceMaterial.SetColor("_OutlineColor", outlineColor);
             if (instanceMaterial.HasProperty("_OutlineWidth"))
-                instanceMaterial.SetFloat("_OutlineWidth", outlineThickness);
+                instanceMaterial.SetFloat("_OutlineWidth", outlineThickness * offset);
             if (instanceMaterial.HasProperty("_FaceDilate"))
-                instanceMaterial.SetFloat("_FaceDilate", faceDilate);
+                instanceMaterial.SetFloat("_FaceDilate", faceDilate * offset);
         }
     }
 

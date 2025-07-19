@@ -39,6 +39,7 @@ MonoBehaviour:
     - NavMeshComponentsEditor
     - NavMeshPlus
     - NavMeshComponents
+    - AssetUsageDetector.Editor
     - VFolders
     - VInspector
     - NavMeshComponentsTestsPlaymode

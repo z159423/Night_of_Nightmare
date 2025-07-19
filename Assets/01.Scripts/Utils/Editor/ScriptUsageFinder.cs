@@ -27,10 +27,26 @@ public class ScriptUsageFinder
 
                 if (comp.GetType().Name == scriptName)
                 {
-                    Debug.Log($"Found in: {path}", prefab);
+                    string gameObjectPath = GetFullPath(comp.gameObject, prefab);
+                    Debug.Log($"✅ Found '{scriptName}' on GameObject '{gameObjectPath}' in Prefab: {path}", prefab);
                     break;
                 }
             }
         }
+    }
+
+    // 프리팹 내에서의 상대 GameObject 경로 계산
+    private static string GetFullPath(GameObject obj, GameObject root)
+    {
+        string path = obj.name;
+        Transform current = obj.transform;
+
+        while (current.parent != null && current.parent != root.transform)
+        {
+            current = current.parent;
+            path = current.name + "/" + path;
+        }
+
+        return path;
     }
 }
