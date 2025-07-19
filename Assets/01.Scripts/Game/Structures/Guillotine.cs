@@ -30,7 +30,7 @@ public class Guillotine : Structure
             bool isLowHp = target.hp <= target.MaxHp * 0.2f;
 
             // 쿨타임, 거리, hp 체크
-            if (Time.time - lastUsedTime >= cooldown && distance <= 5f && isLowHp)
+            if (Time.time - lastUsedTime >= cooldown && distance <= 7f && isLowHp)
             {
                 lastUsedTime = Time.time;
                 if (cutter != null) cutter.SetActive(false);

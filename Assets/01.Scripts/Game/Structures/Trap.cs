@@ -35,7 +35,7 @@ public class Trap : Structure
             bool isLowHp = target.hp <= target.MaxHp * 0.22f;
 
             // 쿨타임 체크, 거리 체크, hp 체크
-            if (Time.time - lastUsedTime >= cooldown && distance <= 5f && isLowHp)
+            if (Time.time - lastUsedTime >= cooldown && distance <= 7f && isLowHp)
             {
                 lastUsedTime = Time.time;
                 if (net != null) net.SetActive(false);
