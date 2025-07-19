@@ -43,7 +43,10 @@ public class UI_GameScene_Map : UI_Scene
     enum Images
     {
         RepairHpbarMask,
-        Tutorial
+        Tutorial,
+        BoostFireRvIcon,
+        BoostShieldRvIcon,
+        BoostHammerRvIcon
     }
 
     private Transform playerLayout;
@@ -95,14 +98,11 @@ public class UI_GameScene_Map : UI_Scene
 
         this.SetListener(GameObserverType.Game.OnChangeBoostItemCount, () =>
         {
-            GetTextMesh(Texts.BoostFireCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat).ToString();
-            GetTextMesh(Texts.BoostShieldCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection).ToString();
-            GetTextMesh(Texts.BoostHammerCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow).ToString();
+            UpdateBoostItemUI();
         });
 
-        GetTextMesh(Texts.BoostFireCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat).ToString();
-        GetTextMesh(Texts.BoostShieldCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection).ToString();
-        GetTextMesh(Texts.BoostHammerCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow).ToString();
+        UpdateBoostItemUI();
+
 
         GetTextMesh(Texts.GoldText).text = Managers.Game.playerData.coin.ToString();
         GetTextMesh(Texts.EnergyCount).text = Managers.Game.playerData.energy.ToString();
@@ -188,20 +188,56 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.BoostFireBtn).AddButtonEvent(() =>
         {
-            if (canFireBoost && Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat) > 0)
-                StartCoroutine(StartFireBoost());
+            if (canFireBoost)
+            {
+                if (Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat) > 0)
+                {
+                    StartCoroutine(StartFireBoost());
+                }
+                else
+                {
+                    Managers.Ad.ShowRewardAd(() =>
+                    {
+                        StartCoroutine(StartFireBoost());
+                    });
+                }
+            }
         });
 
         GetButton(Buttons.BoostShieldBtn).AddButtonEvent(() =>
         {
-            if (canShieldBoost && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed && Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection) > 0)
-                StartCoroutine(StartShieldBoost());
+            if (canShieldBoost && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
+            {
+                if (Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection) > 0)
+                {
+                    StartCoroutine(StartShieldBoost());
+                }
+                else
+                {
+                    Managers.Ad.ShowRewardAd(() =>
+                    {
+                        StartCoroutine(StartShieldBoost());
+                    });
+                }
+            }
         });
 
         GetButton(Buttons.BoostHammerBtn).AddButtonEvent(() =>
         {
-            if (canHammerBoost && Managers.Game.enemy != null && Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow) > 0)
-                StartCoroutine(StartHammerBoost());
+            if (canHammerBoost && Managers.Game.enemy != null)
+            {
+                if (Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow) > 0)
+                {
+                    StartCoroutine(StartHammerBoost());
+                }
+                else
+                {
+                    Managers.Ad.ShowRewardAd(() =>
+                    {
+                        StartCoroutine(StartHammerBoost());
+                    });
+                }
+            }
         });
 
         GetButton(Buttons.CoinBtn).AddButtonEvent(() =>
@@ -576,6 +612,46 @@ public class UI_GameScene_Map : UI_Scene
                 return Managers.Localize.GetDynamicText("tutorial_upgrade", Managers.Localize.GetText(structureData2.nameKey + "_" + (tutorialData.upgradeLevel + 1)));
             default:
                 return "";
+        }
+    }
+
+    public void UpdateBoostItemUI()
+    {
+        GetTextMesh(Texts.BoostFireCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat).ToString();
+        GetTextMesh(Texts.BoostShieldCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection).ToString();
+        GetTextMesh(Texts.BoostHammerCountText).text = Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow).ToString();
+
+        if (Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat) > 0)
+        {
+            GetTextMesh(Texts.BoostFireCountText).transform.parent.gameObject.SetActive(true);
+            GetImage(Images.BoostFireRvIcon).gameObject.SetActive(false);
+        }
+        else
+        {
+            GetTextMesh(Texts.BoostFireCountText).transform.parent.gameObject.SetActive(false);
+            GetImage(Images.BoostFireRvIcon).gameObject.SetActive(true);
+        }
+
+        if (Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection) > 0)
+        {
+            GetTextMesh(Texts.BoostShieldCountText).transform.parent.gameObject.SetActive(true);
+            GetImage(Images.BoostShieldRvIcon).gameObject.SetActive(false);
+        }
+        else
+        {
+            GetTextMesh(Texts.BoostShieldCountText).transform.parent.gameObject.SetActive(false);
+            GetImage(Images.BoostShieldRvIcon).gameObject.SetActive(true);
+        }
+
+        if (Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow) > 0)
+        {
+            GetTextMesh(Texts.BoostHammerCountText).transform.parent.gameObject.SetActive(true);
+            GetImage(Images.BoostHammerRvIcon).gameObject.SetActive(false);
+        }
+        else
+        {
+            GetTextMesh(Texts.BoostHammerCountText).transform.parent.gameObject.SetActive(false);
+            GetImage(Images.BoostHammerRvIcon).gameObject.SetActive(true);
         }
     }
 
