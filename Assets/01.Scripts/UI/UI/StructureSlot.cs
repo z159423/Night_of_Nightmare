@@ -127,9 +127,13 @@ public class StructureSlot : UI_Base
         this.level = level;
         this.rvUpgradeType = data.RVUpgradeTo;
 
-        if (!data.CanUpgrade(Managers.Game.playerData, level))
+        if (!data.CanUpgrade(Managers.Game.playerData, level, out string reason))
         {
-            level = level - 1;
+            if (reason == "MAX_LEVEL")
+            {
+                GetButton(Buttons.Button).gameObject.SetActive(false);
+                this.level = level - 1;
+            }
         }
 
         GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
@@ -312,7 +316,7 @@ public class StructureSlot : UI_Base
         }
 
         if (_data.requireStructures != null && _data.requireStructures.Length > 0 && _data.requireStructures.Length >= level
-          && _data.requireStructures[level].type != _data.structureType)
+          && _data.requireStructures[level].type != _data.structureType && _data.requireStructures[level].type != Define.StructureType.None)
         {
             var require = Managers.Game.GetStructureData(_data.requireStructures[level].type);
             var currentRequire = Managers.Game.playerData.GetStructure(_data.requireStructures[level].type);

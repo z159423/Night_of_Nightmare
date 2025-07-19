@@ -68,7 +68,7 @@ public class AttackSpeedSkill : EnemySkill
             .ForEach(n =>
             {
                 var spellBlocker = n.playerData.structures
-                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 7f);
                 if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
                 {
                     sb.TryCastSpellBlock(enemy, () => Deactivate(enemy));
@@ -128,7 +128,7 @@ public class AttackDamageSkill : EnemySkill
             .ForEach(n =>
             {
                 var spellBlocker = n.playerData.structures
-                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 7f);
                 if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
                 {
                     sb.TryCastSpellBlock(enemy, () => Deactivate(enemy));
@@ -200,7 +200,7 @@ public class Creepylaughter : EnemySkill
             .ForEach(n =>
             {
                 var spellBlocker = n.playerData.structures
-                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 7f);
                 if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
                 {
                     sb.TryCastSpellBlock(enemy, () =>
@@ -281,7 +281,7 @@ public class MothPowder : EnemySkill
             .ForEach(n =>
             {
                 var spellBlocker = n.playerData.structures
-                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 5f);
+                    .FirstOrDefault(s => s.type == Define.StructureType.SpellBlocker && !s.destroyed && Vector2.Distance(s.transform.position, enemy.transform.position) < 7f);
                 if (spellBlocker != null && spellBlocker.TryGetComponent<SpellBlocker>(out var sb))
                 {
                     sb.TryCastSpellBlock(enemy, () =>

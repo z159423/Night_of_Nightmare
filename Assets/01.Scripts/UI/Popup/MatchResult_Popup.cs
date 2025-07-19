@@ -80,21 +80,21 @@ public class MatchResult_Popup : UI_Popup
         GetButton(Buttons.ClaimBtn).AddButtonEvent(() =>
         {
             //광고 보고 잼 4배 추가로 획득
-
-            if (iswin)
+            Managers.Ad.ShowRewardAd(() =>
             {
-                //이긴 경우 이 버튼 클릭하면 RV 광고 재생
+                if (iswin)
+                {
+                    //이긴 경우 이 버튼 클릭하면 RV 광고 재생
+                    Managers.LocalData.PlayerGemCount += GemCount * 4;
 
-                Managers.LocalData.PlayerGemCount += GemCount * 4;
-
-                Exit();
-            }
-            else
-            {
-                Managers.LocalData.PlayerGemCount += GemCount;
-                Exit();
-            }
-
+                    Exit();
+                }
+                else
+                {
+                    Managers.LocalData.PlayerGemCount += GemCount;
+                    Exit();
+                }
+            });
         });
 
         GetButton(Buttons.NoThanksBtn).AddButtonEvent(() =>

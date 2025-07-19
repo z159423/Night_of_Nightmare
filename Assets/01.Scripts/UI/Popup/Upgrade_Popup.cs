@@ -55,7 +55,6 @@ public class Upgrade_Popup : UI_Popup
         selectedStructure = structure;
 
         var data = Managers.Game.GetStructureData(structure.type);
-        var currentStructure = Managers.Game.playerData.GetStructure(structure.type);
 
         if (data.baseStructure)
         {
@@ -67,10 +66,10 @@ public class Upgrade_Popup : UI_Popup
             GetButton(Buttons.SellBtn).gameObject.SetActive(true);
             GetImage(Images.SellSlot).gameObject.SetActive(true);
 
-            int sellCoin = data.GetSellCoin(currentStructure.level);
+            int sellCoin = data.GetSellCoin(structure.level);
             GetImage(Images.SellCoinSlot).gameObject.SetActive(sellCoin > 0);
 
-            int sellEnergy = data.GetSellEnergy(currentStructure.level);
+            int sellEnergy = data.GetSellEnergy(structure.level);
             GetImage(Images.SellEnergySlot).gameObject.SetActive(sellEnergy > 0);
 
             GetTextMesh(Texts.SellCoinCount).text = sellCoin.ToString();
@@ -86,7 +85,7 @@ public class Upgrade_Popup : UI_Popup
         upgradeSlot.Init();
         upgradeSlot.Setting(data, () =>
         {
-            if (data.CanUpgrade(Managers.Game.playerData, level))
+            if (data.CanUpgrade(Managers.Game.playerData, level, out string reason))
             {
                 Managers.Game.playerData.UseResource(data.GetPurchaseCoin(level, Managers.Game.playerData), data.GetPurchaseEnergy(level, Managers.Game.playerData));
                 selectedStructure.Upgrade();
@@ -96,7 +95,7 @@ public class Upgrade_Popup : UI_Popup
             }
         }, level, true, thisStructure: structure, Exit);
 
-        if (data.canRvUpgrade)
+        if (data.canRvUpgrade && data.CanUpgrade(Managers.Game.playerData, level, out string reason))
         {
             var rvUpgradeSlot = gameObject.FindRecursive("RVUpgradeSlot").GetComponent<StructureSlot>();
 

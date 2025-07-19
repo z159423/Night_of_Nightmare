@@ -229,7 +229,7 @@ public class AiCharactor : PlayerableCharactor
     {
         var structureData = Managers.Game.GetStructureData(type);
 
-        if (structure != null && !structure.destroyed && structureData.CanUpgrade(playerData, level))
+        if (structure != null && !structure.destroyed && structureData.CanUpgrade(playerData, level, out string reason))
         {
             structure.Upgrade();
             playerData.UseResource(structureData.GetPurchaseCoin(level, playerData), structureData.GetPurchaseEnergy(level, playerData));

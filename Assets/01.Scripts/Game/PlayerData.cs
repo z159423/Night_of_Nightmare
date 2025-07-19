@@ -196,6 +196,9 @@ public class PlayerData
         structures.Remove(structure);
         coin += Managers.Game.GetStructureData(structure.type).GetSellCoin(structure.level);
         energy += Managers.Game.GetStructureData(structure.type).GetSellEnergy(structure.level);
+
+        GameObserver.Call(GameObserverType.Game.OnChangeCoinCount);
+        GameObserver.Call(GameObserverType.Game.OnChangeEnergyCount);
     }
 
     public void AddFreeCount(StructureType type)

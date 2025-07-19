@@ -147,7 +147,7 @@ public abstract class Structure : MonoBehaviour
         if (Managers.Game.playerCharactor.playerData.structures.Contains(this) == false)
             return;
 
-        if (Managers.Game.GetStructureData(type).CanUpgrade(playerData, level + 1))
+        if (Managers.Game.GetStructureData(type).CanUpgrade(playerData, level + 1, out string reason))
             upgradeIcon.gameObject.SetActive(true);
         else
             upgradeIcon.gameObject.SetActive(false);
@@ -215,7 +215,7 @@ public abstract class Structure : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f); // 잠시 대기하여 UI 업데이트가 완료되도록 함
 
-                if (upgradePercent > Random.Range(0f, 100f) && _data.CanUpgrade(playerData, level + 1))
+                if (upgradePercent > Random.Range(0f, 100f) && _data.CanUpgrade(playerData, level + 1, out string reason))
                 {
 #if UNITY_EDITOR
                     Debug.Log($"{playerData.type} upgraded {type} at {transform.position}");

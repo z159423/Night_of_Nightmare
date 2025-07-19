@@ -153,18 +153,22 @@ public class StructureData : ScriptableObject
         return coinOk && energyOk;
     }
 
-    public bool CanUpgrade(PlayerData playerData, int level)
+    public bool CanUpgrade(PlayerData playerData, int level, out string reason)
     {
+        reason = "";
         // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
         if (upgradeCoin == null || upgradeEnergy == null || structureType == StructureType.Lamp)
             return false;
 
         if ((level) >= upgradeCoin.Length || (level) >= upgradeEnergy.Length)
-            return false;   
+        {
+            reason = "MAX_LEVEL";
+            return false;
+        }
 
         // 요구 구조물 조건 체크
         if (requireStructures != null && requireStructures.Length > 0 && requireStructures.Length > level
-            && requireStructures[level].type != structureType)
+            && requireStructures[level].type != structureType && requireStructures[level].type != Define.StructureType.None)
         {
             var currentRequire = playerData.GetStructure(requireStructures[level].type);
             if (currentRequire == null || currentRequire.level < requireStructures[level].level)
