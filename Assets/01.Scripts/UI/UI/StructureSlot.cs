@@ -127,6 +127,11 @@ public class StructureSlot : UI_Base
         this.level = level;
         this.rvUpgradeType = data.RVUpgradeTo;
 
+        if (!data.CanUpgrade(Managers.Game.playerData, level))
+        {
+            level = level - 1;
+        }
+
         GetTextMesh(Texts.NameText).text = $"[{GetName()}]";
         GetTextMesh(Texts.DescText).text = GetDesc();
         SetIcon();
@@ -232,7 +237,7 @@ public class StructureSlot : UI_Base
 
     public string GetName()
     {
-        if (_data.structureType == Define.StructureType.Turret || _data.structureType == Define.StructureType.Bed || _data.structureType == Define.StructureType.Door)
+        if (_data.structureType == Define.StructureType.Turret || _data.structureType == Define.StructureType.Bed || _data.structureType == Define.StructureType.Door || _data.structureType == Define.StructureType.Generator)
             return Managers.Localize.GetText(_data.nameKey + "_" + (level + 1));
         else if (_data.structureType == Define.StructureType.CopperOre || _data.structureType == Define.StructureType.SilverOre || _data.structureType == Define.StructureType.GoldOre || _data.structureType == Define.StructureType.DiamondOre)
         {

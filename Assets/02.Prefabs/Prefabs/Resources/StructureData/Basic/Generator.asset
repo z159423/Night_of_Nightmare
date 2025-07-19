@@ -16,26 +16,31 @@ MonoBehaviour:
   structureType: 1
   icon: {fileID: 21300000, guid: 2c85f5c9b6981d0488d5062f66e9a921, type: 3}
   lampProp: 7
+  DoNotSpawnInLamp: 0
   baseStructure: 0
   sellable: 1
   onlyOnePurcahse: 0
+  canRvUpgrade: 0
+  rvOnlyStructure: 0
+  rvUpgradeCount: 0
   nameKey: global.str_dynamo_name
   descriptionKey: global.str_desc_produce_energy
-  upgradeCoin: c8000000900100005802000020030000e8030000
-  upgradeEnergy: 0000000000000000000000000000000000000000
+  upgradeCoin: c8000000900100002003000040060000800c000000190000003200000064000000c8000000900100
+  upgradeEnergy: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   purcahseLimit: -1
   argment1:
   - 1
   - 2
-  - 5
+  - 4
+  - 6
   - 8
-  - 16
-  - 32
-  - 64
-  - 128
-  - 256
-  - 512
+  - 10
+  - 15
+  - 20
+  - 25
+  - 30
   argment2: []
+  argment3: []
   requireStructures: []
   sprite1:
   - {fileID: 21300000, guid: 2c85f5c9b6981d0488d5062f66e9a921, type: 3}
@@ -49,3 +54,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 658e16f76b7daf14c814644bd79efef3, type: 3}
   - {fileID: 21300000, guid: 236f28ae8b3e0c34fbf1cfcb1dfff9b0, type: 3}
   sprite2: []
+  RVUpgradeTo: 9999

@@ -88,7 +88,7 @@ public class Upgrade_Popup : UI_Popup
         {
             if (data.CanUpgrade(Managers.Game.playerData, level))
             {
-                Managers.Game.playerData.UseResource(data.upgradeCoin[level], data.upgradeEnergy[level]);
+                Managers.Game.playerData.UseResource(data.GetPurchaseCoin(level, Managers.Game.playerData), data.GetPurchaseEnergy(level, Managers.Game.playerData));
                 selectedStructure.Upgrade();
 
                 GameObserver.Call(GameObserverType.Game.OnChangeStructure);

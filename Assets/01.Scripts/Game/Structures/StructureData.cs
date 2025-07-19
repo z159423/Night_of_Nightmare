@@ -155,14 +155,12 @@ public class StructureData : ScriptableObject
 
     public bool CanUpgrade(PlayerData playerData, int level)
     {
-
-
         // 업그레이드가 가능한지: 배열 범위 내에 있는지 체크
         if (upgradeCoin == null || upgradeEnergy == null || structureType == StructureType.Lamp)
             return false;
 
         if ((level) >= upgradeCoin.Length || (level) >= upgradeEnergy.Length)
-            return false;
+            return false;   
 
         // 요구 구조물 조건 체크
         if (requireStructures != null && requireStructures.Length > 0 && requireStructures.Length > level

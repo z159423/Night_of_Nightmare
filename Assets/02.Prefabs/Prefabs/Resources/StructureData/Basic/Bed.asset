@@ -16,6 +16,7 @@ MonoBehaviour:
   structureType: 100
   icon: {fileID: 21300000, guid: 2997853272aafa144907da637eadef0a, type: 3}
   lampProp: 0
+  DoNotSpawnInLamp: 0
   baseStructure: 1
   sellable: 0
   onlyOnePurcahse: 0
@@ -24,8 +25,8 @@ MonoBehaviour:
   rvUpgradeCount: 0
   nameKey: global.str_bed_name
   descriptionKey: global.str_desc_produce_gold
-  upgradeCoin: 00000000180000003000000064000000c8000000900100002003000040060000800c00000019000000000000
-  upgradeEnergy: 0000000000000000000000000000000000000000000000001000000020000000400000008000000000000000
+  upgradeCoin: 00000000180000003000000064000000c8000000900100002003000040060000800c000000190000
+  upgradeEnergy: 00000000000000000000000000000000000000000000000010000000200000004000000080000000
   purcahseLimit: -1
   argment1:
   - 1
@@ -61,8 +62,6 @@ MonoBehaviour:
     level: 10
   - type: 101
     level: 11
-  - type: 100
-    level: 0
   sprite1:
   - {fileID: 21300000, guid: dd12205146bcad546831d06a59fc658a, type: 3}
   - {fileID: 21300000, guid: 6a75bdf2572c9fc4db7fe35924203d5c, type: 3}
