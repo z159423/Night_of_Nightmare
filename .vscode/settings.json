@@ -52,5 +52,5 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "Night_of_Nightmare2.sln"
+    "dotnet.defaultSolution": "Night_of_Nightmare.sln"
 }

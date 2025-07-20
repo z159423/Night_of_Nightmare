@@ -290,11 +290,14 @@ public class UI_GameScene_Map : UI_Scene
 
     void Update()
     {
-        if (!Managers.Game.playerData.canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
+        if (Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
         {
-            TimeSpan timeSpan = DateTime.Now - repairStartTime;
-            float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
-            repairCoolTimeText.text = remainingTime.ToString("F1");
+            if (!Managers.Game.playerData.canDoorRepair)
+            {
+                TimeSpan timeSpan = DateTime.Now - repairStartTime;
+                float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
+                repairCoolTimeText.text = remainingTime.ToString("F1");
+            }
 
             var maxHp = Managers.Game.playerData.room.door.GetMaxHp();
             var hp = Managers.Game.playerData.room.door.GetHp();
