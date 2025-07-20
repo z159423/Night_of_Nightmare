@@ -215,6 +215,18 @@ public class GameManager : MonoBehaviour
 
         Managers.Camera.cameras[GameMode.Map].Follow = Managers.Game.playerCharactor.transform;
 
+        if (Managers.LocalData.PlayerWinCount >= 5)
+        {
+            Managers.Ad.ShowInterstitialAd();
+        }
+        else if (Managers.LocalData.PlayerWinCount >= 2)
+        {
+            if (Random.value < 0.5f)
+            {
+                Managers.Ad.ShowInterstitialAd();
+            }
+        }
+
         // 반지름 1.6유닛(160px) 원 안에 랜덤 스폰
     }
     void SetPos(Transform trans)

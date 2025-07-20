@@ -12,22 +12,22 @@ public class AdManager : MonoBehaviour
     public class RewardVideoListener : LongriverSDKRewardedVideoListener
     {
         private AdManager adManager;
-        
+
         public RewardVideoListener(AdManager adManager)
         {
             this.adManager = adManager;
         }
-        
+
         public void onRewardedVideoAdPlayStart(string adEntry, CallbackInfo callbackInfo)
         {
             Debug.Log("AdManager: reward video start");
         }
-        
+
         public void onRewardedVideoAdPlayFail(string adEntry, string code, string message)
         {
             Debug.Log($"AdManager: reward video play fail - code: {code}, message: {message}");
         }
-        
+
         public void onRewardedVideoAdPlayClicked(string adEntry, CallbackInfo callbackInfo)
         {
             Debug.Log("AdManager: reward video click");
@@ -74,7 +74,7 @@ public class AdManager : MonoBehaviour
             // 광고가 준비되었는지 먼저 확인
             bool hasReward = LongriverSDKAd.instance.HasReward("");
             Debug.Log($"AdManager: HasReward check: {hasReward}");
-            
+
             if (hasReward)
             {
                 // 광고 호출하고 광고가 끝나면 onComplete 호출
@@ -89,5 +89,12 @@ public class AdManager : MonoBehaviour
                 onComplete?.Invoke(); // 또는 에러 처리
             }
         }
+    }
+    
+    public void ShowInterstitialAd()
+    {
+        // 인터스티셜 광고 호출
+        LongriverSDKAd.instance.ShowInterstitial("");
+        Debug.Log("AdManager: Interstitial ad shown");
     }
 }
