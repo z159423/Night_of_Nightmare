@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6821332487794306494}
   - component: {fileID: 891188607564040063}
   - component: {fileID: 1365071435040245889}
+  - component: {fileID: 2382007218865811149}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -152,6 +153,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &2382007218865811149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83720345615592895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: ad_ticket_1
 --- !u!1 &136457725167627949
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,6 +178,7 @@ GameObject:
   - component: {fileID: 262257438468584223}
   - component: {fileID: 3373040911117255014}
   - component: {fileID: 8535121874575399557}
+  - component: {fileID: 2788042505629117727}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -304,6 +319,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &2788042505629117727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136457725167627949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: gem_2
 --- !u!1 &363390511090726935
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 3795029653955261351}
   _purcahseBtn: {fileID: 1454304936611436506}
-  key: RvTicket_30
+  key: ad_ticket_2
 --- !u!1 &744115196467877130
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +901,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 40.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1102,7 +1130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 2554562129348121168}
   _purcahseBtn: {fileID: 5603854473232096877}
-  key: Gem_5000
+  key: gem_2
 --- !u!1 &1179262851163982692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,7 +2666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 658094368745501104}
   _purcahseBtn: {fileID: 6173691504555427456}
-  key: RvTicket_100
+  key: ad_ticket_3
 --- !u!1 &2882634601821102248
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,7 +3457,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4415,7 +4443,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4691,6 +4719,7 @@ GameObject:
   - component: {fileID: 6786638498294910533}
   - component: {fileID: 5975416504758916659}
   - component: {fileID: 5688127576682930073}
+  - component: {fileID: 1514555320719016865}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -4831,6 +4860,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &1514555320719016865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172936546300891161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: ad_ticket_3
 --- !u!1 &5396042926258552810
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,7 +5028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 3548554666823777608}
   _purcahseBtn: {fileID: 2839035728837749061}
-  key: BoostPack
+  key: boost_pack_1
 --- !u!1 &5524933177509768030
 GameObject:
   m_ObjectHideFlags: 0
@@ -5234,7 +5276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 3389460348428193422}
   _purcahseBtn: {fileID: 1401965081146835831}
-  key: RvTicket_5
+  key: ad_ticket_1
 --- !u!1 &5730258030069408879
 GameObject:
   m_ObjectHideFlags: 0
@@ -6016,7 +6058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 4434835721582729404}
   _purcahseBtn: {fileID: 7457154416472161167}
-  key: Gem_1500
+  key: gem_1
 --- !u!1 &6873829715890334113
 GameObject:
   m_ObjectHideFlags: 0
@@ -6240,7 +6282,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6619,7 +6661,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
-  m_sharedMaterial: {fileID: -6946902509292710788, guid: 39faa458c4e79cf409a035750d7b27b7, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6711,6 +6753,7 @@ GameObject:
   - component: {fileID: 8388845306040626426}
   - component: {fileID: 8318992905786345733}
   - component: {fileID: 7203265021890458919}
+  - component: {fileID: 1590529145010836441}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -6851,6 +6894,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &1590529145010836441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538065236054982899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: gem_1
 --- !u!1 &7744747848338364828
 GameObject:
   m_ObjectHideFlags: 0
@@ -7082,7 +7138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _costText: {fileID: 4915308956348552205}
   _purcahseBtn: {fileID: 5511971876055699106}
-  key: Gem_11000
+  key: gem_3
 --- !u!1 &7908582962102793945
 GameObject:
   m_ObjectHideFlags: 0
@@ -7095,6 +7151,7 @@ GameObject:
   - component: {fileID: 6897403459768826871}
   - component: {fileID: 3513091943967643079}
   - component: {fileID: 1954920164183578776}
+  - component: {fileID: 4350720559607736296}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -7235,6 +7292,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &4350720559607736296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908582962102793945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: ad_ticket_2
 --- !u!1 &7987859069183827184
 GameObject:
   m_ObjectHideFlags: 0
@@ -7322,6 +7392,7 @@ GameObject:
   - component: {fileID: 8916773429741122186}
   - component: {fileID: 835990462211813158}
   - component: {fileID: 7601674711761904984}
+  - component: {fileID: 1198713173462951449}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -7462,6 +7533,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &1198713173462951449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8127229204934468705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: boost_pack_1
 --- !u!1 &8187327188366379273
 GameObject:
   m_ObjectHideFlags: 0
@@ -7890,6 +7974,7 @@ GameObject:
   - component: {fileID: 9156083608326307220}
   - component: {fileID: 4660323011288421546}
   - component: {fileID: 2452362458872102689}
+  - component: {fileID: 2101249238784729963}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -8030,6 +8115,19 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineThickness: 0.3
   faceDilate: 0.3
+--- !u!114 &2101249238784729963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386763605621404781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f555b543be649bc80a2382da309e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: gem_3
 --- !u!1 &8628070088587326370
 GameObject:
   m_ObjectHideFlags: 0

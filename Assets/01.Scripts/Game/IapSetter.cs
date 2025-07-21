@@ -25,7 +25,7 @@ public class IapSetter : MonoBehaviour
         _purcahseBtn.AddButtonEvent(() =>
         {
             // #if !UNITY_EDITOR
-            Managers.IAP.OnPurchaseIap(key, onAfterPurchaseAction);
+            Managers.IAP.PurchaseStart(key, onAfterPurchaseAction);
             // #endif
 
             // #if UNITY_EDITOR

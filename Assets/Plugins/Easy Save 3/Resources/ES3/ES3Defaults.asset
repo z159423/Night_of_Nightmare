@@ -34,6 +34,7 @@ MonoBehaviour:
     - PsdPlugin
     - Cinemachine
     - VHierarchy
+    - IAPResolver
     - NavMeshComponentsExamples
     - NavMeshPlusEditor
     - NavMeshComponentsEditor
@@ -44,6 +45,7 @@ MonoBehaviour:
     - VInspector
     - NavMeshComponentsTestsPlaymode
     - NavMeshComponentsTestsEditmode
+    - Purchasing.Common
     - NavMeshComponentsExamplesEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

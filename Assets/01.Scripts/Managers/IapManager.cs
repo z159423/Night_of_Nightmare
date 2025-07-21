@@ -1,10 +1,110 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LongriverSDKNS;
 using UnityEngine;
+using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
+using UnityEngine.Networking;
 
-public class IapManager : MonoBehaviour
+public class IapManager : MonoBehaviour, IStoreListener
 {
+    public bool init = false;
+    IStoreController m_StoreController; // The Unity Purchasing system.
+    IExtensionProvider m_Extension;
+
+
+    // IStoreListener required methods
+    public void OnInitializeFailed(InitializationFailureReason error)
+    {
+        Debug.LogError($"IAP Initialization Failed: {error}");
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error, string message)
+    {
+        Debug.LogError($"IAP Initialization Failed: {error}, Message: {message}");
+    }
+
+    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
+    {
+        Debug.Log($"ProcessPurchase called: {args.purchasedProduct.definition.id}");
+        // OnPurchaseIap(args.purchasedProduct.definition.id);
+        return PurchaseProcessingResult.Complete;
+    }
+
+    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+    {
+        Debug.LogError($"Purchase failed: {product.definition.id}, Reason: {failureReason}");
+    }
+
+
+    void Start()
+    {
+        // Unity IAP 초기화
+        if (m_StoreController == null)
+        {
+            InitializePurchasing();
+        }
+
+        StartCoroutine(InitIAP());
+    }
+
+    public void InitializePurchasing()
+    {
+        if (IsInitialized())
+            return;
+
+        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+
+        // 모든 IAP 제품 등록
+        builder.AddProduct("ad_ticket_1", ProductType.Consumable);
+        builder.AddProduct("ad_ticket_2", ProductType.Consumable);
+        builder.AddProduct("ad_ticket_3", ProductType.Consumable);
+        builder.AddProduct("gem_1", ProductType.Consumable);
+        builder.AddProduct("gem_2", ProductType.Consumable);
+        builder.AddProduct("gem_3", ProductType.Consumable);
+        builder.AddProduct("boost_pack_1", ProductType.Consumable);
+        builder.AddProduct("character_1", ProductType.Consumable);
+        builder.AddProduct("character_2", ProductType.Consumable);
+
+
+        UnityPurchasing.Initialize(this, builder);
+    }
+
+    private bool IsInitialized()
+    {
+        return m_StoreController != null && m_Extension != null;
+    }
+
+    IEnumerator InitIAP()
+    {
+        while (!IsInitialized())
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        init = true;
+        Debug.Log("IAP 초기화 완료");
+
+        LongriverSDKUserPayment.instance.getShopItemsAsync((ShopItemResult r) =>
+        {
+            print("상품 조회 성공: " + JsonUtility.ToJson(r));
+        }, (State s) =>
+        {
+            print("상품 조회 실패: " + JsonUtility.ToJson(s));
+        });
+    }
+
+    public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    {
+        Debug.Log("In-App Purchasing successfully initialized");
+
+        this.m_StoreController = controller;
+        this.m_Extension = extensions;
+
+        //UpdateUI();
+    }
+
     public void OnPurchaseIap(string productId, Action onAfterPurchase = null)
     {
         // 구매 완료 후 처리 로직
@@ -13,31 +113,31 @@ public class IapManager : MonoBehaviour
 
         switch (productId)
         {
-            case "RvTicket_5":
+            case "ad_ticket_1":
                 Managers.LocalData.PlayerRvTicketCount += 5;
                 break;
 
-            case "RvTicket_30":
+            case "ad_ticket_2":
                 Managers.LocalData.PlayerRvTicketCount += 30;
                 break;
 
-            case "RvTicket_100":
+            case "ad_ticket_3":
                 Managers.LocalData.PlayerRvTicketCount += 100;
                 break;
 
-            case "Gem_1500":
+            case "gem_1":
                 Managers.LocalData.PlayerGemCount += 1500;
                 break;
 
-            case "Gem_5000":
+            case "gem_2":
                 Managers.LocalData.PlayerGemCount += 5000;
                 break;
 
-            case "Gem_11000":
+            case "gem_3":
                 Managers.LocalData.PlayerGemCount += 11000;
                 break;
 
-            case "BoostPack":
+            case "boost_pack_1":
                 Managers.LocalData.PlayerLampCount += 4;
                 Managers.LocalData.playerHammerCount += 4;
                 Managers.LocalData.PlayerHolyShieldCount += 4;
@@ -49,28 +149,114 @@ public class IapManager : MonoBehaviour
         onAfterPurchase?.Invoke();
     }
 
-    // public string GetLocalizedPrice(string productKey)
-    // {
-    //     if (initialized)
-    //     {
-    //         Product product = m_StoreController.products.WithID(productKey);
-    //         if (product != null && product.metadata != null)
-    //         {
-    //             string price = product.metadata.localizedPriceString;  // 현지화된 가격 문자열
-    //             print(price);
-    //             return price;
-    //         }
-    //         else
-    //         {
-    //             Debug.LogError("Product not found or metadata not available.");
-    //             return string.Empty;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("IAP not initialized.");
+    // Implementing IPurchaseItemsListener interface methods
+    public void getPurchaseItems(PurchaseItems purchaseItems)
+    {
+        foreach (var one in purchaseItems.unconsumeItems)
+        {
+            print("find unconsume item" + one.itemId + " " + one.gameOrderId + " and ready to consume");
+            LongriverSDKUserPayment.instance.consumeItem(one.gameOrderId);
+            print("success to unconsume item" + one.itemId + " " + one.gameOrderId);
+        }
+    }
 
-    //         return string.Empty;
-    //     }
-    // }
+    public void getOneTimeItems(OneTimeItemList items)
+    {
+        // TODO: Add your logic here
+        Debug.Log("getOneTimeItems called.");
+    }
+
+    public void getSubscriptionItems(SubscriptionData data)
+    {
+        // TODO: Add your logic here
+        Debug.Log("getSubscriptionItems called.");
+    }
+
+    public void PurchaseStart(string productId, Action onAfterPurchase = null)
+    {
+        LongriverSDKUserPayment.instance.startPayment(productId, "", (StartPaymentResult r) =>
+        {
+            OnPurchaseIap(productId, () =>
+            {
+                Debug.Log($"Purchase completed for product: {productId}");
+                onAfterPurchase?.Invoke();
+
+                SendToDiscord($"결제: 👻 악몽의밤, {productId}, {GetLocalizedPrice(productId)}, 오늘 밤은 치킨이다!!");
+            });
+        }, (State s) =>
+        {
+            Debug.LogError($"Purchase failed for product: {productId}, State: {s}");
+        });
+    }
+
+    public void RestorePurchase()
+    {
+        LongriverSDKUserPayment.instance.restorePurchases();
+    }
+
+    public string GetLocalizedPrice(string productKey)
+    {
+        if (init)
+        {
+            Product product = m_StoreController.products.WithID(productKey);
+            if (product != null && product.metadata != null)
+            {
+                string price = product.metadata.localizedPriceString;  // 현지화된 가격 문자열
+                return price;
+            }
+            else
+            {
+                Debug.LogError("Product not found or metadata not available.");
+                return string.Empty;
+            }
+        }
+        else
+        {
+            Debug.LogError("IAP not initialized.");
+
+            return string.Empty;
+        }
+    }
+
+    // Webhook URL
+    private string webhookUrl = "https://discord.com/api/webhooks/1360623729884926234/8SbVz9zylaP1Zx2MK3VYjNldb1fZbH-ImMQj4ZB9JNyl-h3S5IPsEyzIV5gqo0DTYjDn";
+
+    public void SendToDiscord(string message)
+    {
+        StartCoroutine(SendWebhook(message));
+    }
+
+    private IEnumerator SendWebhook(string message)
+    {
+        // JSON 구성
+        string jsonPayload = JsonUtility.ToJson(new DiscordMessage { content = message });
+
+        // 요청 생성
+        using (UnityWebRequest request = new UnityWebRequest(webhookUrl, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // 요청 전송
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Discord Webhook 전송 성공!");
+            }
+            else
+            {
+                Debug.LogWarning("Discord Webhook 전송 실패: " + request.error);
+            }
+        }
+    }
+
+    // 메시지 포맷 클래스
+    [System.Serializable]
+    private class DiscordMessage
+    {
+        public string content;
+    }
 }

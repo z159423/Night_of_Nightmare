@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using LongriverSDKNS;
 
 public class UI_GameScene_Loading : UI_Scene
 {
@@ -34,6 +35,18 @@ public class UI_GameScene_Loading : UI_Scene
 
         IEnumerator Loading()
         {
+            bool isLogin = false;
+
+            LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+            {
+                print("autologin success " + JsonUtility.ToJson(r));
+                isLogin = true;
+
+            }, delegate (State s)
+            {
+                print("autologin fail " + JsonUtility.ToJson(s));
+            });
+
             var titleImage = GetImage(Images.Title2);
             titleImage.DOFade(1.5f, 1f)
                 .SetLoops(2, LoopType.Yoyo)
@@ -48,7 +61,47 @@ public class UI_GameScene_Loading : UI_Scene
 
             yield return new WaitForSeconds(1f);
 
-            yield return new WaitUntil(() => Managers.Localize.init);
+            // LongriverSDK.instance.SetDebugGeography(1);
+
+            // string umpJson = LongriverSDK.instance.GetUMPParameters();
+
+            // bool isRequired = LongriverSDK.instance.IsPrivacyOptionsRequired();
+            // Dictionary<string, object> umpDict = Json.Deserialize(umpJson) as Dictionary<string, object>;
+            // bool isGDPR = umpDict.ContainsKey("isGDPR") && (bool)umpDict["isGDPR"];
+
+            // bool isPrivacyOptions = false;
+
+            // try
+            // {
+            //     if (isGDPR && isRequired)
+            //     {
+            //         // 展示隐私选项界面
+            //         LongriverSDK.instance.ShowPrivacyOptionsForm((State state) =>
+            //         {
+            //             if (state.code == 200)
+            //             {
+            //                 print($"privacy options - success - {state.code} - {state.msg}");
+            //                 isPrivacyOptions = true;
+            //             }
+            //             else
+            //             {
+            //                 print($"privacy options - failed - {state.code} - {state.msg}");
+            //                 isPrivacyOptions = false;
+            //             }
+            //         });
+            //     }
+            //     else
+            //     {
+            //         isPrivacyOptions = true;
+            //     }
+            // }
+            // catch (System.Exception e)
+            // {
+            //     Debug.LogError($"Error showing privacy options: {e.Message}");
+            //     isPrivacyOptions = true;
+            // }
+
+            yield return new WaitUntil(() => Managers.Localize.init && Managers.IAP.init && isLogin);
 
             var scene = Managers.UI.ShowSceneUI<UI_GameScene_Home>();
             Managers.Audio.PlaySound("bgm_base");

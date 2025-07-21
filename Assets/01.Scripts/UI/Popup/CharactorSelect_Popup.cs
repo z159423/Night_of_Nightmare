@@ -150,8 +150,14 @@ public class CharactorSelect_Popup : UI_Popup
                 var charactorData = Managers.Resource.LoadAll<CharactorData>($"CharactorData/").FirstOrDefault(n => n.charactorType == selectedType);
                 if (charactorData.purchaseType == Define.CharactorPurchaseType.Iap)
                 {
+                    string productId = "";
+                    if (charactorData.charactorType == Define.CharactorType.LampGirl)
+                        productId = "character_1";
+                    else if (charactorData.charactorType == Define.CharactorType.Scientist)
+                        productId = "character_2";
+
                     GetTextMesh(Texts.SelectText).gameObject.SetActive(true);
-                    GetTextMesh(Texts.SelectText).text = "$4.50"; //TODO: IAP 가격 설정
+                    GetTextMesh(Texts.SelectText).text = Managers.IAP.GetLocalizedPrice(productId);
 
                     GetButton(Buttons.SelectBtn).GetComponent<Image>().sprite = btnSprites[0];
 
@@ -159,11 +165,14 @@ public class CharactorSelect_Popup : UI_Popup
                     {
                         //TODO: IAP 구매 로직 추가
 
-                        Managers.LocalData.SetCharactorOwned(charactorData.charactorType, true);
-                        Managers.Game.ChangePlayerCharactor(selectedType);
-                        UpdateUI();
+                        Managers.IAP.PurchaseStart(productId, () =>
+                        {
+                            Managers.LocalData.SetCharactorOwned(charactorData.charactorType, true);
+                            Managers.Game.ChangePlayerCharactor(selectedType);
+                            UpdateUI();
 
-                        Managers.Audio.PlaySound("snd_get_item");
+                            Managers.Audio.PlaySound("snd_get_item");
+                        });
                     });
                 }
                 else if (charactorData.purchaseType == Define.CharactorPurchaseType.Gem)
@@ -180,7 +189,6 @@ public class CharactorSelect_Popup : UI_Popup
                         {
                             Managers.LocalData.PlayerGemCount -= charactorData.requireGem;
                             Managers.LocalData.SetCharactorOwned(charactorData.charactorType, true);
-
                             Managers.Game.ChangePlayerCharactor(selectedType);
 
                             UpdateUI();
