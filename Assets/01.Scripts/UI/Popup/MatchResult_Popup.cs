@@ -50,7 +50,7 @@ public class MatchResult_Popup : UI_Popup
     {
         base.Init();
 
-        GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
+        // GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
         GetImage(Images.RankImage).SetNativeSize();
 
         GetTextMesh(Texts.ContinueText).text = Managers.Localize.GetText("global.str_continue");
@@ -62,6 +62,9 @@ public class MatchResult_Popup : UI_Popup
 
         GetTextMesh(Texts.GemText).text = Managers.LocalData.PlayerGemCount.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
+
+        var lastTier = Define.GetTierByScore(Managers.Game.lastRankPoint);
+        GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{lastTier.ToString()}");
     }
 
     public override void FirstSetting()
@@ -167,13 +170,24 @@ public class MatchResult_Popup : UI_Popup
             GetImage(Images.ResultShine).gameObject.SetActive(isWin);
             GetTextMesh(Texts.RankingPointDiffText).color = colors[isWin ? 0 : 1];
 
+            var lastTier = Define.GetTierByScore(Managers.Game.lastRankPoint);
+
             // 랭킹 포인트 Tween
             int from = isWin ? Managers.LocalData.PlayerRankingPoint - point : Managers.LocalData.PlayerRankingPoint + point;
             TextUtils.UINumberTween(
                 GetTextMesh(Texts.RankingPointText),
                 from,
                 Managers.LocalData.PlayerRankingPoint,
-                3
+                3,
+                onChanging: (value) =>
+                {
+                    var currentTier = Define.GetTierByScore(value);
+                    if (currentTier != lastTier)
+                    {
+                        GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{currentTier.ToString()}");
+                        GetImage(Images.RankImage).SetNativeSize();
+                    }
+                }
             );
 
             StartCoroutine(ShowContinueButton());

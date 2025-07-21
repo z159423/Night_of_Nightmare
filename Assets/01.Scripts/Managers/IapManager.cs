@@ -85,14 +85,6 @@ public class IapManager : MonoBehaviour, IStoreListener
 
         init = true;
         Debug.Log("IAP 초기화 완료");
-
-        LongriverSDKUserPayment.instance.getShopItemsAsync((ShopItemResult r) =>
-        {
-            print("상품 조회 성공: " + JsonUtility.ToJson(r));
-        }, (State s) =>
-        {
-            print("상품 조회 실패: " + JsonUtility.ToJson(s));
-        });
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)

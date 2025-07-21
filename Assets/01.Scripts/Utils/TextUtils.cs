@@ -42,7 +42,7 @@ public static class TextUtils
         return true;
     }
 
-    public static Tween UINumberTween(TextMeshProUGUI text, int start, int end, float duration, string format = null, bool ts = false)
+    public static Tween UINumberTween(TextMeshProUGUI text, int start, int end, float duration, string format = null, bool ts = false, Action<int> onChanging = null)
     {
         start = Mathf.Max(int.MinValue, start);
         end = Mathf.Max(int.MinValue, end);
@@ -56,6 +56,7 @@ public static class TextUtils
         {
             value = v;
             text.text = format.Replace("%d", ts ? $"{v:#,##0}" : $"{v}");
+            onChanging?.Invoke(value); // DOTween 값이 바뀔 때마다 onChanging 실행
         }, end, duration).SetEase(Ease.Linear);
         return _numberTweens[text];
     }
