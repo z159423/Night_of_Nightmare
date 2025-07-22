@@ -7,7 +7,7 @@ using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 using UnityEngine.Networking;
 
-public class IapManager : MonoBehaviour, IStoreListener
+public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 {
     public bool init = false;
     IStoreController m_StoreController; // The Unity Purchasing system.
@@ -146,9 +146,10 @@ public class IapManager : MonoBehaviour, IStoreListener
     {
         foreach (var one in purchaseItems.unconsumeItems)
         {
-            print("find unconsume item" + one.itemId + " " + one.gameOrderId + " and ready to consume");
+            Debug.Log("find unconsume item" + one.itemId + " " + one.gameOrderId + " and ready to consume");
+            // 订单消耗接口实际情况需要等待查单成功后调用(这里只作接口展示)
             LongriverSDKUserPayment.instance.consumeItem(one.gameOrderId);
-            print("success to unconsume item" + one.itemId + " " + one.gameOrderId);
+            Debug.Log("success to unconsume item" + one.itemId + " " + one.gameOrderId);
         }
     }
 
@@ -174,6 +175,8 @@ public class IapManager : MonoBehaviour, IStoreListener
                 onAfterPurchase?.Invoke();
 
                 SendToDiscord($"결제: 👻 악몽의밤, {productId}, {GetLocalizedPrice(productId)}, 오늘 밤은 치킨이다!!");
+
+                LongriverSDKUserPayment.instance.consumeItem(r.gameOrderId);
             });
         }, (State s) =>
         {
