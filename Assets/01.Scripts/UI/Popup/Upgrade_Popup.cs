@@ -95,7 +95,7 @@ public class Upgrade_Popup : UI_Popup
             }
         }, level, true, thisStructure: structure, Exit);
 
-        if (data.canRvUpgrade && data.CanUpgrade(Managers.Game.playerData, level, out string reason))
+        if (data.canRvUpgrade)
         {
             var rvUpgradeSlot = gameObject.FindRecursive("RVUpgradeSlot").GetComponent<StructureSlot>();
 

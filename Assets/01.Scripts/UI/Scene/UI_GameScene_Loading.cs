@@ -65,6 +65,12 @@ public class UI_GameScene_Loading : UI_Scene
                 print("autologin fail " + JsonUtility.ToJson(s));
             });
 
+            LongriverSDKUserPayment.instance.setIPurchaseItemsListener(Managers.IAP);
+            LongriverSDKUserPayment.instance.setTransactionStatusListener((State state) =>
+            {
+                Debug.Log("transaction status code: " + state.code);
+            });
+
             // LongriverSDK.instance.SetDebugGeography(1);
 
             // string umpJson = LongriverSDK.instance.GetUMPParameters();
