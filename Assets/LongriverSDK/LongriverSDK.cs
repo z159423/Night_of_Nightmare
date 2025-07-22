@@ -20,6 +20,10 @@ namespace LongriverSDKNS
         static public LongriverSDK instance;
 
         private bool hasInit = false;
+        public bool HasInit
+        {
+            get { return hasInit; }
+        }
         private Action<InitSuccessResult> initSuccessDelegate;
         private InitSuccessResult saveInitSuccessResult;
         private Action<Dictionary<string, object>> appJumpDelegate;

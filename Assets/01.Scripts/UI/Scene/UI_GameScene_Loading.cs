@@ -35,17 +35,7 @@ public class UI_GameScene_Loading : UI_Scene
 
         IEnumerator Loading()
         {
-            bool isLogin = false;
 
-            LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
-            {
-                print("autologin success " + JsonUtility.ToJson(r));
-                isLogin = true;
-
-            }, delegate (State s)
-            {
-                print("autologin fail " + JsonUtility.ToJson(s));
-            });
 
             var titleImage = GetImage(Images.Title2);
             titleImage.DOFade(1.5f, 1f)
@@ -60,6 +50,20 @@ public class UI_GameScene_Loading : UI_Scene
                 .SetEase(Ease.InOutSine);
 
             yield return new WaitForSeconds(1f);
+
+            bool isLogin = false;
+
+            yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
+
+            LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+            {
+                print("autologin success " + JsonUtility.ToJson(r));
+                isLogin = true;
+
+            }, delegate (State s)
+            {
+                print("autologin fail " + JsonUtility.ToJson(s));
+            });
 
             // LongriverSDK.instance.SetDebugGeography(1);
 
