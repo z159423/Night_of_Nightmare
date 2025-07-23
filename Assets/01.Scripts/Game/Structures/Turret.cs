@@ -192,31 +192,32 @@ public class Turret : Structure
 
         if (playerData.type == Define.CharactorType.Chef)
         {
-            coolDown *= 0.85f;
+            coolDown /= 1.15f;
         }
 
         // TurretBooster가 있을 때만 거리 기반 쿨다운 보정
         if (playerData.structures.Find(n => n.type == Define.StructureType.TurretBooster) != null && target != null)
         {
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            float range = GetAttackRange();
-
-            // 거리가 가까울수록 쿨다운 감소 (최소 0.25배까지)
-            float ratio = Mathf.Clamp01(distance / range);
-            float minRate = 0.25f;
-            float rate = Mathf.Lerp(minRate, 1f, ratio); // 가까울수록 minRate, 멀수록 1
-            coolDown *= rate;
+            
+            // 600px / 거리(px) = 공격속도 배율
+            float speedMultiplier = 5 / distance;
+            
+            // 1 ~ 2.5 사이로 제한
+            speedMultiplier = Mathf.Clamp(speedMultiplier, 1f, 2.5f);
+            
+            coolDown /= speedMultiplier;
         }
 
         // SatelliteAntenna가 있으면 쿨다운 절반
         if (playerData.structures.Find(n => n.type == Define.StructureType.SatelliteAntenna) != null)
         {
-            coolDown *= 0.5f;
+            coolDown /= 1.5f;
         }
 
         if (activeEffects.Any(a => a is OverHeat))
         {
-            coolDown *= 0.5f;
+            coolDown /= 2f;
         }
 
         return coolDown;

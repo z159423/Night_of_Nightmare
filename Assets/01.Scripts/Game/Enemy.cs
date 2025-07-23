@@ -204,7 +204,7 @@ public class Enemy : Charactor
 
     protected override void Update()
     {
-        if (agent != null && agent.hasPath && agent.remainingDistance > 0.01f)
+        if (agent != null && agent.hasPath && agent.remainingDistance > 0.01f && !IsStunned)
         {
             // 오른쪽 이동: y 회전 0, 왼쪽 이동: y 회전 180
             float dir = agent.steeringTarget.x - agent.transform.position.x;

@@ -92,37 +92,37 @@ public class LocalDataManager
     public int PlayerGemCount
     {
         get => PlayerPrefs.GetInt("PlayerGemCount", 200);
-        set { PlayerPrefs.SetInt("PlayerGemCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeGemCount); }
+        set { PlayerPrefs.SetInt("PlayerGemCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeGemCount); }
     }
 
     public int  PlayerRvTicketCount
     {
         get => PlayerPrefs.GetInt("PlayerRvTicketCount", 0);
-        set { PlayerPrefs.SetInt("PlayerRvTicketCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
+        set { PlayerPrefs.SetInt("PlayerRvTicketCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
     }
 
     public int PlayerLampCount
     {
         get => PlayerPrefs.GetInt("PlayerLampCount", 4);
-        set { PlayerPrefs.SetInt("PlayerLampCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeLampCount); }
+        set { PlayerPrefs.SetInt("PlayerLampCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeLampCount); }
     }
 
     public int playerHammerCount
     {
         get => PlayerPrefs.GetInt("PlayerHammerCount", 2);
-        set { PlayerPrefs.SetInt("PlayerHammerCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHammerCount); }
+        set { PlayerPrefs.SetInt("PlayerHammerCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHammerCount); }
     }
 
     public int PlayerHolyShieldCount
     {
         get => PlayerPrefs.GetInt("PlayerHolyShieldCount", 2);
-        set { PlayerPrefs.SetInt("PlayerHolyShieldCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHolyShieldCount); }
+        set { PlayerPrefs.SetInt("PlayerHolyShieldCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHolyShieldCount); }
     }
 
     public int PlayerOverHeatCount
     {
         get => PlayerPrefs.GetInt("PlayerOverHeatCount", 2);
-        set { PlayerPrefs.SetInt("PlayerOverHeatCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeOverHeatCount); }
+        set { PlayerPrefs.SetInt("PlayerOverHeatCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeOverHeatCount); }
     }
 
     public int ChallengeModeLevel
