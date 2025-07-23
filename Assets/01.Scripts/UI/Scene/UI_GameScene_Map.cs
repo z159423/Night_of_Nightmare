@@ -198,7 +198,7 @@ public class UI_GameScene_Map : UI_Scene
                 {
                     Managers.Ad.ShowRewardAd(() =>
                     {
-                        StartCoroutine(StartFireBoost());
+                        StartCoroutine(StartFireBoost(true));
                     });
                 }
             }
@@ -216,7 +216,7 @@ public class UI_GameScene_Map : UI_Scene
                 {
                     Managers.Ad.ShowRewardAd(() =>
                     {
-                        StartCoroutine(StartShieldBoost());
+                        StartCoroutine(StartShieldBoost(true));
                     });
                 }
             }
@@ -234,7 +234,7 @@ public class UI_GameScene_Map : UI_Scene
                 {
                     Managers.Ad.ShowRewardAd(() =>
                     {
-                        StartCoroutine(StartHammerBoost());
+                        StartCoroutine(StartHammerBoost(true));
                     });
                 }
             }
@@ -365,7 +365,7 @@ public class UI_GameScene_Map : UI_Scene
         playerLayout.GetChild(index).GetComponent<CharactorIcon>().AttackedAnimation();
     }
 
-    IEnumerator StartFireBoost()
+    IEnumerator StartFireBoost(bool isAd = false)
     {
         if (canFireBoost)
         {
@@ -379,7 +379,8 @@ public class UI_GameScene_Map : UI_Scene
 
             Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
 
-            Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
+            if (!isAd)
+                Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
             GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canFireBoost = false;
             fireStartTime = DateTime.Now;
@@ -393,14 +394,15 @@ public class UI_GameScene_Map : UI_Scene
         }
     }
 
-    IEnumerator StartShieldBoost()
+    IEnumerator StartShieldBoost(bool isAd = false)
     {
         if (canShieldBoost)
         {
             Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
             Managers.Game.playerData.room.door.AddEffect(new HolyProtection(15));
 
-            Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
+            if (!isAd)
+                Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
             GetButton(Buttons.BoostShieldBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canShieldBoost = false;
             shieldStartTime = DateTime.Now;
@@ -414,14 +416,14 @@ public class UI_GameScene_Map : UI_Scene
         }
     }
 
-    IEnumerator StartHammerBoost()
+    IEnumerator StartHammerBoost(bool isAd = false)
     {
         if (canHammerBoost)
         {
             Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
             StartCoroutine(FireHammerBullet(Managers.Game.enemy));
-
-            Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
+            if (!isAd)
+                Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
             GetButton(Buttons.BoostHammerBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canHammerBoost = false;
             hammerStartTime = DateTime.Now;

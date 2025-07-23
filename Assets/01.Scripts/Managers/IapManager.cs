@@ -67,7 +67,6 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
         builder.AddProduct("character_1", ProductType.Consumable);
         builder.AddProduct("character_2", ProductType.Consumable);
 
-
         UnityPurchasing.Initialize(this, builder);
     }
 
@@ -176,7 +175,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
                 SendToDiscord($"결제: 👻 악몽의밤, {productId}, {GetLocalizedPrice(productId)}, 오늘 밤은 치킨이다!!");
 
-                LongriverSDKUserPayment.instance.consumeItem(r.gameOrderId);
+                // LongriverSDKUserPayment.instance.consumeItem(r.gameOrderId);
             });
         }, (State s) =>
         {
