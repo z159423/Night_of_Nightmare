@@ -725,7 +725,7 @@ public class Enemy : Charactor
             ActiveSicle();
         }
 
-        if (enemyType == Define.EnemyType.SlanderMan && level > 5)
+        if (enemyType == Define.EnemyType.SlanderMan && level > 4)
         {
             ActiveSlanderManKnife();
         }

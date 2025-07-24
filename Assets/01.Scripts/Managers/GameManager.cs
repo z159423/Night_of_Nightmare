@@ -112,10 +112,10 @@ public class GameManager : MonoBehaviour
 
         lastRankPoint = Managers.LocalData.PlayerRankingPoint;
 
+        isChallengeMode = challengeMode;
         lossPoint = LoseRankingPoint();
 
         isGameStart = true;
-        isChallengeMode = challengeMode;
         challengeLevel = level;
 
         playerData = new PlayerData((Define.CharactorType)Managers.LocalData.SelectedCharactor);
