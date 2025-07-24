@@ -35,12 +35,15 @@ public class UI_GameScene_Loading : UI_Scene
 
         IEnumerator Loading()
         {
-
-
             var titleImage = GetImage(Images.Title2);
             titleImage.DOFade(1.5f, 1f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
+
+            yield return new WaitForEndOfFrame();
+
+            Debug.Log("LongRiverSDK 초기화 시작");
+            LongriverSDK.instance.Init();
 
             yield return new WaitForSeconds(2f);
 
@@ -52,6 +55,8 @@ public class UI_GameScene_Loading : UI_Scene
             yield return new WaitForSeconds(1f);
 
             bool isLogin = false;
+
+            Debug.Log("LongRiverSDK 초기화 여부 :" + LongriverSDK.instance.HasInit + " " + (LongriverSDK.instance != null));
 
             yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
 

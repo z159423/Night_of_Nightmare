@@ -64,8 +64,8 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
         builder.AddProduct("gem_2", ProductType.Consumable);
         builder.AddProduct("gem_3", ProductType.Consumable);
         builder.AddProduct("boost_pack_1", ProductType.Consumable);
-        builder.AddProduct("character_1", ProductType.Consumable);
-        builder.AddProduct("character_2", ProductType.Consumable);
+        builder.AddProduct("character_lampgirl", ProductType.Consumable);
+        builder.AddProduct("character_scientist", ProductType.Consumable);
 
         UnityPurchasing.Initialize(this, builder);
     }

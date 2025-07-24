@@ -152,9 +152,9 @@ public class CharactorSelect_Popup : UI_Popup
                 {
                     string productId = "";
                     if (charactorData.charactorType == Define.CharactorType.LampGirl)
-                        productId = "character_1";
+                        productId = "character_lampgirl";
                     else if (charactorData.charactorType == Define.CharactorType.Scientist)
-                        productId = "character_2";
+                        productId = "character_scientist";
 
                     GetTextMesh(Texts.SelectText).gameObject.SetActive(true);
                     GetTextMesh(Texts.SelectText).text = Managers.IAP.GetLocalizedPrice(productId);
