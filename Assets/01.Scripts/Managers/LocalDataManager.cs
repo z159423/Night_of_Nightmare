@@ -182,6 +182,6 @@ public class LocalDataManager
     public int CheatMode
     {
         get => PlayerPrefs.GetInt("CheatMode", 0);
-        set { PlayerPrefs.SetInt("CheatMode", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnCheatModeOn); }
+        set { PlayerPrefs.SetInt("CheatMode", 0); IsSave = true; GameObserver.Call(GameObserverType.Game.OnCheatModeOn); }
     }
 }
