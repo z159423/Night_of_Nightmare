@@ -6,12 +6,16 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 using UnityEngine.Networking;
+using Unity.Services.Core;
+using Unity.Services.Core.Environments;
 
 public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 {
     public bool init = false;
     IStoreController m_StoreController; // The Unity Purchasing system.
     IExtensionProvider m_Extension;
+
+    public string environment = "production";
 
 
     // IStoreListener required methods
@@ -37,35 +41,84 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
         Debug.LogError($"Purchase failed: {product.definition.id}, Reason: {failureReason}");
     }
 
-
-    void Start()
+    async void Awake()
     {
-        // Unity IAP 초기화
-        if (m_StoreController == null)
+        try
         {
-            InitializePurchasing();
-        }
+            var options = new InitializationOptions()
+                .SetEnvironmentName(environment);
 
-        StartCoroutine(InitIAP());
+            await UnityServices.InitializeAsync(options);
+
+            InitializePurchasing();
+
+            StartCoroutine(InitIAP());
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error initializing Unity Services: " + e.Message);
+        }
     }
 
     public void InitializePurchasing()
     {
-        if (IsInitialized())
-            return;
+        Debug.Log("Initializing IAP...");
 
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
+        builder.AddProduct("ad_ticket_1", ProductType.Consumable, new IDs
+        {
+            { "ad_ticket_1", AppleAppStore.Name },
+            { "ad_ticket_1", GooglePlay.Name }
+        });
+
+        builder.AddProduct("ad_ticket_2", ProductType.Consumable, new IDs
+        {
+            { "ad_ticket_2", AppleAppStore.Name },
+            { "ad_ticket_2", GooglePlay.Name }
+        });
+
+        builder.AddProduct("ad_ticket_3", ProductType.Consumable, new IDs
+        {
+            { "ad_ticket_3", AppleAppStore.Name },
+            { "ad_ticket_3", GooglePlay.Name }
+        });
+
+        builder.AddProduct("gem_1", ProductType.Consumable, new IDs
+        {
+            { "gem_1", AppleAppStore.Name },
+            { "gem_1", GooglePlay.Name }
+        });
+
+        builder.AddProduct("gem_2", ProductType.Consumable, new IDs
+        {
+            { "gem_2", AppleAppStore.Name },
+            { "gem_2", GooglePlay.Name }
+        });
+
+        builder.AddProduct("gem_3", ProductType.Consumable, new IDs
+        {
+            { "gem_3", AppleAppStore.Name },
+            { "gem_3", GooglePlay.Name }
+        });
+
+        builder.AddProduct("boost_pack_1", ProductType.Consumable, new IDs
+        {
+            { "boost_pack_1", AppleAppStore.Name },
+            { "boost_pack_1", GooglePlay.Name }
+        });
+
+
         // 모든 IAP 제품 등록
-        builder.AddProduct("ad_ticket_1", ProductType.Consumable);
-        builder.AddProduct("ad_ticket_2", ProductType.Consumable);
-        builder.AddProduct("ad_ticket_3", ProductType.Consumable);
-        builder.AddProduct("gem_1", ProductType.Consumable);
-        builder.AddProduct("gem_2", ProductType.Consumable);
-        builder.AddProduct("gem_3", ProductType.Consumable);
-        builder.AddProduct("boost_pack_1", ProductType.Consumable);
-        builder.AddProduct("character_lampgirl", ProductType.Consumable);
-        builder.AddProduct("character_scientist", ProductType.Consumable);
+        // builder.AddProduct("ad_ticket_1", ProductType.Consumable);
+        // builder.AddProduct("ad_ticket_2", ProductType.Consumable);
+        // builder.AddProduct("ad_ticket_3", ProductType.Consumable);
+        // builder.AddProduct("gem_1", ProductType.Consumable);
+        // builder.AddProduct("gem_2", ProductType.Consumable);
+        // builder.AddProduct("gem_3", ProductType.Consumable);
+        // builder.AddProduct("boost_pack_1", ProductType.Consumable);
+        // builder.AddProduct("character_lampgirl", ProductType.NonConsumable);
+        // builder.AddProduct("character_scientist", ProductType.NonConsumable);
 
         UnityPurchasing.Initialize(this, builder);
     }
@@ -92,6 +145,8 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
         this.m_StoreController = controller;
         this.m_Extension = extensions;
+
+        init = true;
 
         //UpdateUI();
     }
@@ -190,19 +245,21 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public string GetLocalizedPrice(string productKey)
     {
+        Product product = m_StoreController.products.WithID(productKey);
+        if (product != null && product.metadata != null)
+        {
+            string price = product.metadata.localizedPriceString;  // 현지화된 가격 문자열
+            return price;
+        }
+        else
+        {
+            Debug.LogError("Product not found or metadata not available.");
+            return string.Empty;
+        }
+
         if (init)
         {
-            Product product = m_StoreController.products.WithID(productKey);
-            if (product != null && product.metadata != null)
-            {
-                string price = product.metadata.localizedPriceString;  // 현지화된 가격 문자열
-                return price;
-            }
-            else
-            {
-                Debug.LogError("Product not found or metadata not available.");
-                return string.Empty;
-            }
+
         }
         else
         {

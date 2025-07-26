@@ -40,11 +40,6 @@ public class UI_GameScene_Loading : UI_Scene
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
 
-            yield return new WaitForEndOfFrame();
-
-            Debug.Log("LongRiverSDK 초기화 시작");
-            LongriverSDK.instance.Init();
-
             yield return new WaitForSeconds(2f);
 
             var loadingText = GetTextMesh(Texts.LoadingText);
@@ -58,6 +53,13 @@ public class UI_GameScene_Loading : UI_Scene
 
             Debug.Log("LongRiverSDK 초기화 여부 :" + LongriverSDK.instance.HasInit + " " + (LongriverSDK.instance != null));
 
+            while(LongriverSDK.instance.HasInit == false)
+            {
+                yield return new WaitForSeconds(1f);
+
+                LongriverSDK.instance.Init();
+                Debug.Log("LongRiverSDK 초기화 중... " + LongriverSDK.instance.HasInit);
+            }
             yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
 
             LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
@@ -68,6 +70,18 @@ public class UI_GameScene_Loading : UI_Scene
             }, delegate (State s)
             {
                 print("autologin fail " + JsonUtility.ToJson(s));
+
+                LongriverSDKUserPayment.instance.Logout();
+
+                LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+            {
+                print("autologin success " + JsonUtility.ToJson(r));
+                isLogin = true;
+
+            }, delegate (State s)
+            {
+                print("autologin fail " + JsonUtility.ToJson(s));
+            });
             });
 
             LongriverSDKUserPayment.instance.setIPurchaseItemsListener(Managers.IAP);
@@ -116,7 +130,9 @@ public class UI_GameScene_Loading : UI_Scene
             //     isPrivacyOptions = true;
             // }
 
-            yield return new WaitUntil(() => Managers.Localize.init && Managers.IAP.init && isLogin);
+            Debug.Log("현재 진행 상황 : " + Managers.Localize.init + " " + Managers.IAP.init + " " + isLogin);
+
+            yield return new WaitUntil(() => Managers.Localize.init);
 
             var scene = Managers.UI.ShowSceneUI<UI_GameScene_Home>();
             Managers.Audio.PlaySound("bgm_base");
