@@ -108,18 +108,6 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             { "boost_pack_1", GooglePlay.Name }
         });
 
-
-        // 모든 IAP 제품 등록
-        // builder.AddProduct("ad_ticket_1", ProductType.Consumable);
-        // builder.AddProduct("ad_ticket_2", ProductType.Consumable);
-        // builder.AddProduct("ad_ticket_3", ProductType.Consumable);
-        // builder.AddProduct("gem_1", ProductType.Consumable);
-        // builder.AddProduct("gem_2", ProductType.Consumable);
-        // builder.AddProduct("gem_3", ProductType.Consumable);
-        // builder.AddProduct("boost_pack_1", ProductType.Consumable);
-        // builder.AddProduct("character_lampgirl", ProductType.NonConsumable);
-        // builder.AddProduct("character_scientist", ProductType.NonConsumable);
-
         UnityPurchasing.Initialize(this, builder);
     }
 
