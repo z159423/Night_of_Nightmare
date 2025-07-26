@@ -45,10 +45,12 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
     {
         try
         {
+#if UNITY_IOS
             var options = new InitializationOptions()
                 .SetEnvironmentName(environment);
 
             await UnityServices.InitializeAsync(options);
+#endif
 
             InitializePurchasing();
 
