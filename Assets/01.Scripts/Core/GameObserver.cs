@@ -25,7 +25,9 @@ public partial struct GameObserverType
         OnChangeBoostItemCount,
         OnCharactorDie,
         OnPlayerTutorialActing,
-        OnCheatModeOn
+        OnCheatModeOn,
+        OnVolumeChange,
+        OnChangeLocolization,
     }
 
     public enum Data

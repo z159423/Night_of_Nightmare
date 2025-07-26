@@ -95,7 +95,7 @@ public class LocalDataManager
         set { PlayerPrefs.SetInt("PlayerGemCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeGemCount); }
     }
 
-    public int  PlayerRvTicketCount
+    public int PlayerRvTicketCount
     {
         get => PlayerPrefs.GetInt("PlayerRvTicketCount", 0);
         set { PlayerPrefs.SetInt("PlayerRvTicketCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeTicketCount); }
@@ -183,5 +183,11 @@ public class LocalDataManager
     {
         get => PlayerPrefs.GetInt("CheatMode", 0);
         set { PlayerPrefs.SetInt("CheatMode", 0); IsSave = true; GameObserver.Call(GameObserverType.Game.OnCheatModeOn); }
+    }
+
+    public bool Volume
+    {
+        get => PlayerPrefs.GetInt("Volume", 1) == 1;
+        set { PlayerPrefs.SetInt("Volume", value ? 1 : 0); IsSave = true; GameObserver.Call(GameObserverType.Game.OnVolumeChange); }
     }
 }

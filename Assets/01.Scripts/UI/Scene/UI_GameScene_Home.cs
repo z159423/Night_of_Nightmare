@@ -24,7 +24,8 @@ public class UI_GameScene_Home : UI_Scene
         GemBtn,
         AdTicket,
         RankPointUp,
-        RankPointDown
+        RankPointDown,
+        SettingBtn
     }
 
     enum Texts
@@ -229,6 +230,11 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.RankPointDown).AddButtonEvent(() =>
         {
             Managers.LocalData.PlayerRankingPoint -= 100;
+        });
+
+        GetButton(Buttons.SettingBtn).AddButtonEvent(() =>
+        {
+            Managers.UI.ShowPopupUI<Setting_Popup>();
         });
     }
 

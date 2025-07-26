@@ -807,6 +807,18 @@ MonoBehaviour:
     m_Key: global.str_infinity_result_title
     m_Metadata:
       m_Items: []
+  - m_Id: 25095264308215808
+    m_Key: language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25095264379518976
+    m_Key: setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25095264379518977
+    m_Key: restore_purcahse
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

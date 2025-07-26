@@ -809,6 +809,18 @@ MonoBehaviour:
     m_Localized: Copper Ore
     m_Metadata:
       m_Items: []
+  - m_Id: 25095264308215808
+    m_Localized: Langauge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25095264379518976
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25095264379518977
+    m_Localized: Restore Purchase
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

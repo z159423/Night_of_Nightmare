@@ -19,6 +19,13 @@ public class AudioManager : MonoBehaviour
         bgmSource.loop = true;
 
         mainCamera = Camera.main;
+
+        bgmSource.mute = !Managers.LocalData.Volume;
+
+        this.SetListener(GameObserverType.Game.OnVolumeChange, () =>
+        {
+            bgmSource.mute = !Managers.LocalData.Volume;
+        });
     }
 
     public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f, float delay = 0f)
@@ -123,6 +130,7 @@ public class AudioManager : MonoBehaviour
         source.spatialBlend = 1f;
         source.volume = finalVolume;
         source.pitch = pitch == 1 ? data.pitch : pitch;
+        source.mute = !Managers.LocalData.Volume;
 
         if (delay == 0f)
             source.Play();
