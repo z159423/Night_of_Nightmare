@@ -60,7 +60,7 @@ public class UI_GameScene_Loading : UI_Scene
             }
             yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
 
-            while (!LongriverSDKUserPayment.instance.isLogin())
+            if (!LongriverSDKUserPayment.instance.isLogin())
             {
                 LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
                 {
@@ -73,10 +73,9 @@ public class UI_GameScene_Loading : UI_Scene
 
                     LongriverSDKUserPayment.instance.Logout();
                 });
-
-                if (!LongriverSDKUserPayment.instance.isLogin())
-                    yield return new WaitForSeconds(1f);
             }
+
+            yield return new WaitUntil(() => isLogin);
 
             LongriverSDKUserPayment.instance.setIPurchaseItemsListener(Managers.IAP);
             LongriverSDKUserPayment.instance.setTransactionStatusListener((State state) =>
