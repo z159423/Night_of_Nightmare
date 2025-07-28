@@ -56,6 +56,12 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             InitializePurchasing();
 
             StartCoroutine(InitIAP());
+
+            LongriverSDKUserPayment.instance.startPaymentFail += (state =>
+            {
+                if (iapLoadingScene != null)
+                    Managers.Resource.Destroy(iapLoadingScene);
+            });
         }
         catch (Exception e)
         {
