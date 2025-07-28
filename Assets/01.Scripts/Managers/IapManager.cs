@@ -110,6 +110,18 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             { "boost_pack_1", GooglePlay.Name }
         });
 
+        builder.AddProduct("character_lampgirl", ProductType.Consumable, new IDs
+        {
+            { "character_lampgirl", AppleAppStore.Name },
+            { "character_lampgirl", GooglePlay.Name }
+        });
+
+        builder.AddProduct("character_scientist", ProductType.Consumable, new IDs
+        {
+            { "character_scientist", AppleAppStore.Name },
+            { "character_scientist", GooglePlay.Name }
+        });
+
         UnityPurchasing.Initialize(this, builder);
     }
 
