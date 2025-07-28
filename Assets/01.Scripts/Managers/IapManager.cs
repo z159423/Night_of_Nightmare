@@ -17,6 +17,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public string environment = "production";
 
+    static GameObject iapLoadingScene = null;
 
     // IStoreListener required methods
     public void OnInitializeFailed(InitializationFailureReason error)
@@ -223,6 +224,8 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public void PurchaseStart(string productId, Action onAfterPurchase = null)
     {
+        iapLoadingScene = Managers.Resource.Instantiate("LoadingScene", Managers.UI.Root.transform);
+
         LongriverSDKUserPayment.instance.startPayment(productId, "", (StartPaymentResult r) =>
         {
             OnPurchaseIap(productId, () =>
@@ -233,10 +236,16 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
                 SendToDiscord($"결제: 👻 악몽의밤, {productId}, {GetLocalizedPrice(productId)}, 오늘 밤은 치킨이다!!");
 
                 // LongriverSDKUserPayment.instance.consumeItem(r.gameOrderId);
+
+                if (iapLoadingScene != null)
+                    Managers.Resource.Destroy(iapLoadingScene);
             });
         }, (State s) =>
         {
             Debug.LogError($"Purchase failed for product: {productId}, State: {s}");
+
+            if (iapLoadingScene != null)
+                Managers.Resource.Destroy(iapLoadingScene);
         });
     }
 
