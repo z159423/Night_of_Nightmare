@@ -21,6 +21,12 @@ public class Setting_Popup : UI_Popup
         TouchGuard
     }
 
+    enum Texts
+    {
+        OnText,
+        OffText
+    }
+
     public override void Init()
     {
         base.Init();
@@ -31,6 +37,8 @@ public class Setting_Popup : UI_Popup
         });
 
         GetButton(Buttons.VolumeBtn).GetComponent<Image>().sprite = Managers.LocalData.Volume ? Managers.Resource.Load<Sprite>("UI/On_Btn") : Managers.Resource.Load<Sprite>("UI/Off_Btn");
+        GetTextMesh(Texts.OnText).gameObject.SetActive(Managers.LocalData.Volume);
+        GetTextMesh(Texts.OffText).gameObject.SetActive(!Managers.LocalData.Volume);
     }
 
     public override void FirstSetting()
@@ -39,6 +47,7 @@ public class Setting_Popup : UI_Popup
 
         Bind<Button>(typeof(Buttons));
         Bind<Image>(typeof(Images));
+        Bind<TextMeshProUGUI>(typeof(Texts));
 
         GetButton(Buttons.BG).AddButtonEvent(() =>
         {
@@ -51,6 +60,9 @@ public class Setting_Popup : UI_Popup
             Managers.LocalData.Volume = !Managers.LocalData.Volume;
 
             GetButton(Buttons.VolumeBtn).GetComponent<Image>().sprite = Managers.LocalData.Volume ? Managers.Resource.Load<Sprite>("UI/On_Btn") : Managers.Resource.Load<Sprite>("UI/Off_Btn");
+
+            GetTextMesh(Texts.OnText).gameObject.SetActive(Managers.LocalData.Volume);
+            GetTextMesh(Texts.OffText).gameObject.SetActive(!Managers.LocalData.Volume);
         });
 
         GetButton(Buttons.RestorePurchaseBtn).AddButtonEvent(() =>
