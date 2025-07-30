@@ -71,17 +71,22 @@ public class UI_GameScene_Loading : UI_Scene
             {
                 print("autologin fail " + JsonUtility.ToJson(s));
 
-                LongriverSDKUserPayment.instance.Logout();
+                if (LongriverSDKUserPayment.instance.isLogin())
+                {
+                    Debug.Log("이미 로그인 상태입니다.");
 
-                LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
-            {
-                print("autologin success " + JsonUtility.ToJson(r));
-                isLogin = true;
+                    LongriverSDKUserPayment.instance.Logout();
+                    LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+                    {
+                        print("autologin success " + JsonUtility.ToJson(r));
+                        isLogin = true;
 
-            }, delegate (State s)
-            {
-                print("autologin fail " + JsonUtility.ToJson(s));
-            });
+                    }, delegate (State s)
+                    {
+                        print("autologin fail " + JsonUtility.ToJson(s));
+                    });
+                }
+
             });
             // }
 
