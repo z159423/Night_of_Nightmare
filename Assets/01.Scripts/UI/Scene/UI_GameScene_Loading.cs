@@ -21,6 +21,10 @@ public class UI_GameScene_Loading : UI_Scene
 
     bool _init = false;
 
+    static bool startedInit = false;
+
+    static bool isTryAutoLogin = false;
+
     public override void Init()
     {
         base.Init();
@@ -31,14 +35,24 @@ public class UI_GameScene_Loading : UI_Scene
             FirstSetting();
         }
 
+        if (startedInit)
+        {
+            Debug.Log("이미 초기화가 시작되었습니다.");
+            return;
+        }
+
         StartCoroutine(Loading());
 
         IEnumerator Loading()
         {
+            startedInit = true;
+
             var titleImage = GetImage(Images.Title2);
             titleImage.DOFade(1.5f, 1f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
+
+            LongriverSDK.instance.Init();
 
             yield return new WaitForSeconds(2f);
 
@@ -55,40 +69,42 @@ public class UI_GameScene_Loading : UI_Scene
             {
                 yield return new WaitForSeconds(1f);
 
-                LongriverSDK.instance.Init();
                 Debug.Log("LongRiverSDK 초기화 중... " + LongriverSDK.instance.HasInit);
             }
+
             yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
 
-            // if (!LongriverSDKUserPayment.instance.isLogin())
-            // {
-            LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+            if (!isTryAutoLogin)
             {
-                print("autologin success " + JsonUtility.ToJson(r));
-                isLogin = true;
-
-            }, delegate (State s)
-            {
-                print("autologin fail " + JsonUtility.ToJson(s));
-
-                if (LongriverSDKUserPayment.instance.isLogin())
+                isTryAutoLogin = true;
+                LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
                 {
-                    Debug.Log("이미 로그인 상태입니다.");
+                    print("autologin success " + JsonUtility.ToJson(r));
+                    isLogin = true;
 
-                    LongriverSDKUserPayment.instance.Logout();
-                    LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
-                    {
-                        print("autologin success " + JsonUtility.ToJson(r));
-                        isLogin = true;
+                }, delegate (State s)
+                {
+                    print("autologin fail " + JsonUtility.ToJson(s));
 
-                    }, delegate (State s)
-                    {
-                        print("autologin fail " + JsonUtility.ToJson(s));
-                    });
-                }
+                    // if (LongriverSDKUserPayment.instance.isLogin())
+                    // {
+                    //     Debug.Log("이미 로그인 상태입니다.");
 
-            });
-            // }
+                    //     LongriverSDKUserPayment.instance.Logout();
+                    //     LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+                    //     {
+                    //         print("autologin success " + JsonUtility.ToJson(r));
+                    //         isLogin = true;
+
+                    //     }, delegate (State s)
+                    //     {
+                    //         print("autologin fail " + JsonUtility.ToJson(s));
+                    //     });
+                    // }
+
+                });
+            }
+
 
             while (!isLogin)
             {
