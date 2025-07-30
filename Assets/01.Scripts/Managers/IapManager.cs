@@ -17,6 +17,8 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public string environment = "production";
 
+    public ShopItemResult shopItemResult;
+
     static GameObject iapLoadingScene = null;
 
     // IStoreListener required methods
@@ -262,27 +264,19 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public string GetLocalizedPrice(string productKey)
     {
-        Product product = m_StoreController.products.WithID(productKey);
+        Product product = m_StoreController?.products?.WithID(productKey);
         if (product != null && product.metadata != null)
         {
-            string price = product.metadata.localizedPriceString;  // 현지화된 가격 문자열
-            return price;
+            return product.metadata.localizedPriceString; // 현지화된 가격 문자열
         }
         else
         {
+#if UNITY_IOS
+            return shopItemResult?.GetFormattedPrice(productKey) ?? string.Empty;
+#else
             Debug.LogError("Product not found or metadata not available.");
             return string.Empty;
-        }
-
-        if (init)
-        {
-
-        }
-        else
-        {
-            Debug.LogError("IAP not initialized.");
-
-            return string.Empty;
+#endif
         }
     }
 

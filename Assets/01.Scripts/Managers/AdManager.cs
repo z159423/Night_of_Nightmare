@@ -9,11 +9,11 @@ public class AdManager : MonoBehaviour
     public Action rewardAdCompleteCallback;
 
     // 리워드 비디오 리스너 클래스
-    public class RewardVideoListener : LongriverSDKRewardedVideoListener
+    public class AdListener : LongriverSDKRewardedVideoListener, LongriverSDKInterstitialAdListener
     {
         private AdManager adManager;
 
-        public RewardVideoListener(AdManager adManager)
+        public AdListener(AdManager adManager)
         {
             this.adManager = adManager;
         }
@@ -21,11 +21,15 @@ public class AdManager : MonoBehaviour
         public void onRewardedVideoAdPlayStart(string adEntry, CallbackInfo callbackInfo)
         {
             Debug.Log("AdManager: reward video start");
+            // 광고 시작 시 게임 정지
+            Time.timeScale = 0;
         }
 
         public void onRewardedVideoAdPlayFail(string adEntry, string code, string message)
         {
             Debug.Log($"AdManager: reward video play fail - code: {code}, message: {message}");
+            // 광고 실패 시 게임 재개
+            Time.timeScale = 1;
         }
 
         public void onRewardedVideoAdPlayClicked(string adEntry, CallbackInfo callbackInfo)
@@ -36,12 +40,15 @@ public class AdManager : MonoBehaviour
         public void onRewardedVideoAdPlayClosed(string unitId, CallbackInfo callbackInfo)
         {
             Debug.Log("AdManager: reward video close");
+            // 광고 종료 시 게임 재개
+            Time.timeScale = 1;
         }
 
         public void onReward(string unitId, CallbackInfo callbackInfo)
         {
             Debug.Log("AdManager: give reward in onReward");
             adManager.rewardAdCompleteCallback?.Invoke();
+            adManager.rewardAdCompleteCallback = null;
         }
 
         public void onRewardedVideoAdLoaded(string unitId, CallbackInfo callbackInfo)
@@ -53,12 +60,50 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log($"AdManager: reward video load failed - code: {errorCode}, message: {errorMsg}");
         }
+
+        public void onInterstitialAdShow(string adEntry, CallbackInfo callbackInfo)
+        {
+            Debug.Log("AdManager: interstitial ad shown");
+            // 인터스티셜 광고 시작 시 게임 정지
+            Time.timeScale = 0;
+        }
+        /***
+         * 广告关闭
+         * @param unitId 广告位id
+         */
+        public void onInterstitialAdClose(string adEntry, CallbackInfo callbackInfo)
+        {
+            Debug.Log("AdManager: interstitial ad closed");
+            // 인터스티셜 광고 종료 시 게임 재개
+            Time.timeScale = 1;
+        }
+        /***
+         * 广告点击
+         * @param unitId 广告位id
+         */
+        public void onInterstitialAdClick(string adEntry, CallbackInfo callbackInfo)
+        {
+        }
+
+        public void onInterstitialAdLoaded(string unitId, CallbackInfo callbackInfo)
+        {
+        }
+
+        public void onInterstitialAdLoadFailed(string unitId, int errorCode, string errorMsg)
+        {
+
+        }
+
+        public void onInterstitialAdPlayFail(string unitId, int errorCode, string errorMsg)
+        {
+        }
     }
 
     void Start()
     {
         // 리워드 비디오 리스너 설정
-        LongriverSDKAd.instance.SetLongriverSDKRewardedVideoListener(new RewardVideoListener(this));
+        LongriverSDKAd.instance.SetLongriverSDKRewardedVideoListener(new AdListener(this));
+        LongriverSDKAd.instance.SetLongriverSDKInterstitialAdListener(new AdListener(this));
         Debug.Log("AdManager: Reward video listener set");
     }
 
@@ -90,11 +135,15 @@ public class AdManager : MonoBehaviour
             }
         }
     }
-    
+
     public void ShowInterstitialAd()
     {
         // 인터스티셜 광고 호출
-        LongriverSDKAd.instance.ShowInterstitial("");
         Debug.Log("AdManager: Interstitial ad shown");
+        LongriverSDKAd.instance.ShowInterstitial("");
+        // 광고 시작 시 게임 정지
+        Time.timeScale = 0;
     }
+
+
 }

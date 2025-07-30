@@ -60,22 +60,38 @@ public class UI_GameScene_Loading : UI_Scene
             }
             yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
 
-            if (!LongriverSDKUserPayment.instance.isLogin())
+            // if (!LongriverSDKUserPayment.instance.isLogin())
+            // {
+            LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
             {
+                print("autologin success " + JsonUtility.ToJson(r));
+                isLogin = true;
+
+            }, delegate (State s)
+            {
+                print("autologin fail " + JsonUtility.ToJson(s));
+
+                LongriverSDKUserPayment.instance.Logout();
+
                 LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
-                {
-                    print("autologin success " + JsonUtility.ToJson(r));
-                    isLogin = true;
+            {
+                print("autologin success " + JsonUtility.ToJson(r));
+                isLogin = true;
 
-                }, delegate (State s)
-                {
-                    print("autologin fail " + JsonUtility.ToJson(s));
+            }, delegate (State s)
+            {
+                print("autologin fail " + JsonUtility.ToJson(s));
+            });
+            });
+            // }
 
-                    LongriverSDKUserPayment.instance.Logout();
-                });
+            while (!isLogin)
+            {
+                Debug.Log("로그인 중...");
+                yield return new WaitForSeconds(0.5f);
             }
 
-            yield return new WaitUntil(() => isLogin);
+            // yield return new WaitUntil(() => isLogin);
 
             LongriverSDKUserPayment.instance.setIPurchaseItemsListener(Managers.IAP);
             LongriverSDKUserPayment.instance.setTransactionStatusListener((State state) =>
@@ -83,14 +99,20 @@ public class UI_GameScene_Loading : UI_Scene
                 Debug.Log("transaction status code: " + state.code);
             });
 
-            Debug.Log("현재 진행 상황 : " + Managers.Localize.init + " " + Managers.IAP.init + " " + isLogin);
+            while (!Managers.Localize.init || !isLogin)
+            {
+                Debug.Log("현재 진행 상황 : " + Managers.Localize.init + " " + Managers.IAP.init + " " + isLogin);
+                yield return new WaitForSeconds(0.5f);
+            }
 
-            yield return new WaitUntil(() => Managers.Localize.init && Managers.IAP.init && isLogin);
+            // yield return new WaitUntil(() => Managers.Localize.init && Managers.IAP.init && isLogin);
 
             LongriverSDKUserPayment.instance.getShopItemsAsync(delegate (ShopItemResult r)
             {
                 Debug.Log("get item success " + JsonUtility.ToJson(r));
                 var shopItemResult = r;
+
+                Managers.IAP.shopItemResult = shopItemResult;
 
                 foreach (var item in shopItemResult.items)
                 {
