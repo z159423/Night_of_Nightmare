@@ -819,6 +819,10 @@ MonoBehaviour:
     m_Key: restore_purcahse
     m_Metadata:
       m_Items: []
+  - m_Id: 26769077342035968
+    m_Key: shop_loading
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

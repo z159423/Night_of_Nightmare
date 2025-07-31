@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEditor;
 using DG.Tweening;
 using Unity.VisualScripting;
+using LongriverSDKNS;
 
 public class UI_GameScene_Home : UI_Scene
 {
@@ -123,6 +124,12 @@ public class UI_GameScene_Home : UI_Scene
 
         GetButton(Buttons.ShopBtn).AddButtonEvent(() =>
         {
+            if (!GameManager.sdkLogin)
+            {
+                Managers.UI.ShowNotificationPopup("shop_loading", 2);
+                return;
+            }
+
             var lowerbtn = GetButton(Buttons.ShopBtn).GetComponent<LowerBtn>();
 
             SelectLowerBtn(LowerBtnTypes.ShopBtn, lowerbtn);

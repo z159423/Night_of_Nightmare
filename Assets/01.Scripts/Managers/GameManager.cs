@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     private NavMeshDataInstance navMeshInstance;
 
+    public static bool sdkLogin = false;
+
 
     public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
 

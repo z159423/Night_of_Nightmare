@@ -821,6 +821,10 @@ MonoBehaviour:
     m_Localized: Restore Purchase
     m_Metadata:
       m_Items: []
+  - m_Id: 26769077342035968
+    m_Localized: The shop is loading. Please try again in a moment.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
