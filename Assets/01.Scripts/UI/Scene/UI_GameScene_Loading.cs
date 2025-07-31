@@ -42,7 +42,8 @@ public class UI_GameScene_Loading : UI_Scene
         }
 
         StartCoroutine(Loading());
-        StartCoroutine(StartInitSDK());
+
+        Managers.Game.StartCoroutine(StartInitSDK());
 
         IEnumerator Loading()
         {
