@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource bgmSource;
     private Camera mainCamera;
 
+    private bool inGameSoundPuase = false;
+
     private void Start()
     {
         bgmSource = gameObject.AddComponent<AudioSource>();
@@ -30,6 +32,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(string soundKey, Transform sourceTransform = null, float minRangeVolumeMul = -2f, float volumeMul = 1f, float pitch = 1f, float delay = 0f)
     {
+        if (inGameSoundPuase)
+            return;
+
         if (!Define.soundDatas.TryGetValue(soundKey, out var data))
         {
             Debug.LogWarning($"[AudioManager] SoundData not found: {soundKey}");
@@ -172,6 +177,24 @@ public class AudioManager : MonoBehaviour
     public void StopBGM() => bgmSource.Stop();
     public void PauseBGM() => bgmSource.Pause();
     public void ResumeBGM() => bgmSource.UnPause();
+
+    public void InGameSoundPause(bool pause)
+    {
+        if (inGameSoundPuase == pause) return;
+
+        inGameSoundPuase = pause;
+
+        if (pause)
+        {
+            bgmSource.Pause();
+            AudioListener.pause = true;
+        }
+        else
+        {
+            bgmSource.UnPause();
+            AudioListener.pause = false;
+        }
+    }
 }
 
 [System.Serializable]

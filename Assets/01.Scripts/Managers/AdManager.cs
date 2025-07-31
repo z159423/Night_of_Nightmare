@@ -22,7 +22,8 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("AdManager: reward video start");
             // 광고 시작 시 게임 정지
-            Time.timeScale = 0;
+            Time.timeScale = 0.0001f;
+            Managers.Audio.InGameSoundPause(true);
         }
 
         public void onRewardedVideoAdPlayFail(string adEntry, string code, string message)
@@ -30,6 +31,7 @@ public class AdManager : MonoBehaviour
             Debug.Log($"AdManager: reward video play fail - code: {code}, message: {message}");
             // 광고 실패 시 게임 재개
             Time.timeScale = 1;
+            Managers.Audio.InGameSoundPause(false);
         }
 
         public void onRewardedVideoAdPlayClicked(string adEntry, CallbackInfo callbackInfo)
@@ -42,6 +44,7 @@ public class AdManager : MonoBehaviour
             Debug.Log("AdManager: reward video close");
             // 광고 종료 시 게임 재개
             Time.timeScale = 1;
+            Managers.Audio.InGameSoundPause(false);
         }
 
         public void onReward(string unitId, CallbackInfo callbackInfo)
@@ -65,7 +68,8 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("AdManager: interstitial ad shown");
             // 인터스티셜 광고 시작 시 게임 정지
-            Time.timeScale = 0;
+            Time.timeScale = 0.0001f;
+            Managers.Audio.InGameSoundPause(true);
         }
         /***
          * 广告关闭
@@ -76,6 +80,7 @@ public class AdManager : MonoBehaviour
             Debug.Log("AdManager: interstitial ad closed");
             // 인터스티셜 광고 종료 시 게임 재개
             Time.timeScale = 1;
+            Managers.Audio.InGameSoundPause(false);
         }
         /***
          * 广告点击
@@ -142,7 +147,8 @@ public class AdManager : MonoBehaviour
         Debug.Log("AdManager: Interstitial ad shown");
         LongriverSDKAd.instance.ShowInterstitial("");
         // 광고 시작 시 게임 정지
-        Time.timeScale = 0;
+        Time.timeScale = 0.0001f;
+        Managers.Audio.InGameSoundPause(true);
     }
 
 

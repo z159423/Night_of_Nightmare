@@ -52,7 +52,7 @@ public class UI_GameScene_Loading : UI_Scene
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
 
-            LongriverSDK.instance.Init();
+            // LongriverSDK.instance.Init();
 
             yield return new WaitForSeconds(2f);
 
@@ -74,43 +74,72 @@ public class UI_GameScene_Loading : UI_Scene
 
             yield return new WaitUntil(() => LongriverSDK.instance != null && LongriverSDK.instance.HasInit);
 
-            if (!isTryAutoLogin)
+            bool checkLogin = false;
+
+            LongriverSDKUserPayment.instance.checkLoginAsync(delegate (CheckLoginResult r)
             {
-                isTryAutoLogin = true;
-                LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+                Debug.Log("check login success " + JsonUtility.ToJson(r));
+                checkLogin = true;
+
+            }, delegate (State s)
+            {
+                Debug.Log("check login fail " + JsonUtility.ToJson(s));
+                checkLogin = true;
+            });
+
+            while (!checkLogin)
+            {
+                Debug.Log("로그인 상태 확인 중...");
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            if (LongriverSDKUserPayment.instance.isLogin())
+            {
+                Debug.Log("이미 로그인 상태입니다.");
+                isLogin = true;
+            }
+            else
+            {
+                Debug.Log("로그인 시도 중...");
+
+                if (!isTryAutoLogin)
                 {
-                    print("autologin success " + JsonUtility.ToJson(r));
-                    isLogin = true;
+                    isTryAutoLogin = true;
+                    LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+                    {
+                        print("autologin success " + JsonUtility.ToJson(r));
+                        isLogin = true;
 
-                }, delegate (State s)
-                {
-                    print("autologin fail " + JsonUtility.ToJson(s));
+                    }, delegate (State s)
+                    {
+                        print("autologin fail " + JsonUtility.ToJson(s));
 
-                    // if (LongriverSDKUserPayment.instance.isLogin())
-                    // {
-                    //     Debug.Log("이미 로그인 상태입니다.");
+                        // if (LongriverSDKUserPayment.instance.isLogin())
+                        // {
+                        //     Debug.Log("이미 로그인 상태입니다.");
 
-                    //     LongriverSDKUserPayment.instance.Logout();
-                    //     LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
-                    //     {
-                    //         print("autologin success " + JsonUtility.ToJson(r));
-                    //         isLogin = true;
+                        //     LongriverSDKUserPayment.instance.Logout();
+                        //     LongriverSDKUserPayment.instance.autoLoginAsync(true, delegate (AutoLoginResult r)
+                        //     {
+                        //         print("autologin success " + JsonUtility.ToJson(r));
+                        //         isLogin = true;
 
-                    //     }, delegate (State s)
-                    //     {
-                    //         print("autologin fail " + JsonUtility.ToJson(s));
-                    //     });
-                    // }
+                        //     }, delegate (State s)
+                        //     {
+                        //         print("autologin fail " + JsonUtility.ToJson(s));
+                        //     });
+                        // }
 
-                });
+                    });
+                }
             }
 
 
             while (!isLogin)
-            {
-                Debug.Log("로그인 중...");
-                yield return new WaitForSeconds(0.5f);
-            }
+                {
+                    Debug.Log("로그인 중...");
+                    yield return new WaitForSeconds(0.5f);
+                }
 
             // yield return new WaitUntil(() => isLogin);
 
