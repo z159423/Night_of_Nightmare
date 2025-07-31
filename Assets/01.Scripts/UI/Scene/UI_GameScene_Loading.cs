@@ -96,6 +96,9 @@ public class UI_GameScene_Loading : UI_Scene
         {
             Debug.Log("check login fail " + JsonUtility.ToJson(s));
             checkLogin = true;
+            GameManager.sdkLogin = true;
+
+            Slack.ThrowSlackMessage("check Login 실패", "로그인 확인 실패 -  " + s);
         });
 
         while (!checkLogin)
@@ -108,6 +111,7 @@ public class UI_GameScene_Loading : UI_Scene
         {
             Debug.Log("이미 로그인 상태입니다.");
             isLogin = true;
+
         }
         else
         {
@@ -120,10 +124,15 @@ public class UI_GameScene_Loading : UI_Scene
                 {
                     print("autologin success " + JsonUtility.ToJson(r));
                     isLogin = true;
+                    GameManager.sdkLogin = true;
 
                 }, delegate (State s)
                 {
                     print("autologin fail " + JsonUtility.ToJson(s));
+
+                    GameManager.sdkLogin = true;
+
+                    Slack.ThrowSlackMessage("auto Login 실패", "로그인 시도 중 오류가 발생했습니다. " + s);
 
                     // if (LongriverSDKUserPayment.instance.isLogin())
                     // {
@@ -183,6 +192,8 @@ public class UI_GameScene_Loading : UI_Scene
         }, delegate (State s)
         {
             Debug.Log("get item fail " + JsonUtility.ToJson(s));
+
+            Slack.ThrowSlackMessage("get item 실패", "아이템 목록 가져오기 중 오류가 발생했습니다. " + s);
         });
     }
 
