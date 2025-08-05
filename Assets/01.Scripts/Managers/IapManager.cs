@@ -174,7 +174,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             attempts++;
             Debug.Log($"IAP 초기화 대기 중... ({attempts}/{maxAttempts})");
             Debug.Log($"m_StoreController: {m_StoreController != null}, m_Extension: {m_Extension != null}");
-            
+
             yield return new WaitForSeconds(1f);
         }
 
@@ -274,6 +274,12 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public void PurchaseStart(string productId, Action onAfterPurchase = null)
     {
+        if (!GameManager.sdkLogin)
+        {
+            Managers.UI.ShowNotificationPopup("shop_loading", 2);
+            return;
+        }
+
         iapLoadingScene = Managers.Resource.Instantiate("LoadingScene", Managers.UI.Root.transform);
 
         LongriverSDKUserPayment.instance.startPayment(productId, "", (StartPaymentResult r) =>
@@ -307,7 +313,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
     public string GetLocalizedPrice(string productKey)
     {
         Product product = m_StoreController?.products?.WithID(productKey);
-        
+
         print(product + " " + productKey + " " + m_StoreController + " " + m_StoreController.products);
 
         if (product != null && product.metadata != null)
