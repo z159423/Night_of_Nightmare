@@ -57,10 +57,10 @@ public class UI_GameScene_Map : UI_Scene
     bool canFireBoost = true;
     bool canShieldBoost = true;
     bool canHammerBoost = true;
-    DateTime repairStartTime;
-    DateTime fireStartTime;
-    DateTime shieldStartTime;
-    DateTime hammerStartTime;
+    float repairStartTime;
+    float fireStartTime;
+    float shieldStartTime;
+    float hammerStartTime;
 
     private RectTransform hpBarRect;
     private TextMeshProUGUI repairCoolTimeText;
@@ -174,7 +174,7 @@ public class UI_GameScene_Map : UI_Scene
                         Managers.Game.playerData.SelfRepairDoor();
 
                         GetButton(Buttons.RepairBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
-                        repairStartTime = DateTime.Now;
+                        repairStartTime = Time.time; // DateTime.Now 대신 Time.time 사용
                         GetTextMesh(Texts.RepairCoolTimeText).gameObject.SetActive(true);
 
                         yield return new WaitForSeconds(20);
@@ -294,8 +294,8 @@ public class UI_GameScene_Map : UI_Scene
         {
             if (!Managers.Game.playerData.canDoorRepair)
             {
-                TimeSpan timeSpan = DateTime.Now - repairStartTime;
-                float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
+                float elapsedTime = Time.time - repairStartTime; // TimeSpan 계산 대신 단순 뺄셈
+                float remainingTime = Mathf.Max(0f, 20f - elapsedTime);
                 repairCoolTimeText.text = remainingTime.ToString("F1");
             }
 
@@ -315,22 +315,22 @@ public class UI_GameScene_Map : UI_Scene
 
         if (!canFireBoost)
         {
-            TimeSpan timeSpan = DateTime.Now - fireStartTime;
-            float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
+            float elapsedTime = Time.time - fireStartTime;
+            float remainingTime = Mathf.Max(0f, 20f - elapsedTime);
             GetTextMesh(Texts.BoostFireCoolTimeText).text = remainingTime.ToString("F1");
         }
 
         if (!canShieldBoost)
         {
-            TimeSpan timeSpan = DateTime.Now - shieldStartTime;
-            float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
+            float elapsedTime = Time.time - shieldStartTime;
+            float remainingTime = Mathf.Max(0f, 20f - elapsedTime);
             GetTextMesh(Texts.BoostShieldCoolTimeText).text = remainingTime.ToString("F1");
         }
 
         if (!canHammerBoost)
         {
-            TimeSpan timeSpan = DateTime.Now - hammerStartTime;
-            float remainingTime = Mathf.Max(0f, 20f - (float)timeSpan.TotalSeconds);
+            float elapsedTime = Time.time - hammerStartTime;
+            float remainingTime = Mathf.Max(0f, 20f - elapsedTime);
             GetTextMesh(Texts.BoostHammerCoolTimeText).text = remainingTime.ToString("F1");
         }
     }
@@ -383,7 +383,7 @@ public class UI_GameScene_Map : UI_Scene
                 Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
             GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canFireBoost = false;
-            fireStartTime = DateTime.Now;
+            fireStartTime = Time.time; // DateTime.Now 대신 Time.time 사용
             GetTextMesh(Texts.BoostFireCoolTimeText).gameObject.SetActive(true);
 
             yield return new WaitForSeconds(20);
@@ -405,7 +405,7 @@ public class UI_GameScene_Map : UI_Scene
                 Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
             GetButton(Buttons.BoostShieldBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canShieldBoost = false;
-            shieldStartTime = DateTime.Now;
+            shieldStartTime = Time.time; // DateTime.Now 대신 Time.time 사용
             GetTextMesh(Texts.BoostShieldCoolTimeText).gameObject.SetActive(true);
 
             yield return new WaitForSeconds(20);
@@ -426,7 +426,7 @@ public class UI_GameScene_Map : UI_Scene
                 Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
             GetButton(Buttons.BoostHammerBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canHammerBoost = false;
-            hammerStartTime = DateTime.Now;
+            hammerStartTime = Time.time; // DateTime.Now 대신 Time.time 사용
             GetTextMesh(Texts.BoostHammerCoolTimeText).gameObject.SetActive(true);
 
             yield return new WaitForSeconds(20);
