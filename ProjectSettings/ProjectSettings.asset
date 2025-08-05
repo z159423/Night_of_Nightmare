@@ -139,7 +139,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.2.4
+  bundleVersion: 0.2.5
   preloadedAssets:
   - {fileID: 11400000, guid: 611310060210fca4789d41821f695e88, type: 2}
   metroInputSource: 0
@@ -164,7 +164,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.non.game
     Standalone: com.ETG.Night-of-Nightmare
-    iPhone: com.ETG.Night-of-Nightmare
+    iPhone: com.non.game
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -188,7 +188,7 @@ PlayerSettings:
   strictShaderVariantMatching: 0
   VertexChannelCompressionMask: 4054
   iPhoneSdkVersion: 988
-  iOSTargetOSVersionString: 12.0
+  iOSTargetOSVersionString: 13.0
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
   tvOSTargetOSVersionString: 12.0
