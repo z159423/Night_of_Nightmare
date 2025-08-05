@@ -53,9 +53,12 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
                 .SetEnvironmentName(environment);
 
             await UnityServices.InitializeAsync(options);
-#endif
-
+            
+            // Unity Services 초기화 완료 후 IAP 초기화
             InitializePurchasing();
+#else
+            InitializePurchasing();
+#endif
 
             StartCoroutine(InitIAP());
 
@@ -73,10 +76,29 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public void InitializePurchasing()
     {
-        Debug.Log("Initializing IAP...");
+        Debug.Log("IAP 초기화 시작...");
+
+        if (IsInitialized())
+        {
+            Debug.Log("이미 초기화됨");
+            return;
+        }
 
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
+        // iOS에서는 Bundle ID를 포함한 전체 Product ID 사용
+#if UNITY_IOS
+        string bundleId = Application.identifier; // 또는 직접 입력
+        builder.AddProduct($"{bundleId}.ad_ticket_1", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.ad_ticket_2", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.ad_ticket_3", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.gem_1", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.gem_2", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.gem_3", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.boost_pack_1", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.character_lampgirl", ProductType.Consumable);
+        builder.AddProduct($"{bundleId}.character_scientist", ProductType.Consumable);
+#else
         builder.AddProduct("ad_ticket_1", ProductType.Consumable, new IDs
         {
             { "ad_ticket_1", AppleAppStore.Name },
@@ -130,7 +152,9 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             { "character_scientist", AppleAppStore.Name },
             { "character_scientist", GooglePlay.Name }
         });
+#endif
 
+        Debug.Log("UnityPurchasing.Initialize 호출");
         UnityPurchasing.Initialize(this, builder);
     }
 
@@ -141,13 +165,31 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     IEnumerator InitIAP()
     {
-        while (!IsInitialized())
+        Debug.Log("InitIAP 시작");
+        int attempts = 0;
+        const int maxAttempts = 30; // 30초 타임아웃
+
+        while (!IsInitialized() && attempts < maxAttempts)
         {
-            yield return new WaitForSeconds(0.1f);
+            attempts++;
+            Debug.Log($"IAP 초기화 대기 중... ({attempts}/{maxAttempts})");
+            Debug.Log($"m_StoreController: {m_StoreController != null}, m_Extension: {m_Extension != null}");
+            
+            yield return new WaitForSeconds(1f);
         }
 
-        init = true;
-        Debug.Log("IAP 초기화 완료");
+        if (IsInitialized())
+        {
+            init = true;
+            Debug.Log("IAP 초기화 완료!");
+        }
+        else
+        {
+            Debug.LogError("IAP 초기화 타임아웃 - 초기화 재시도");
+            // 재시도 로직
+            yield return new WaitForSeconds(2f);
+            InitializePurchasing();
+        }
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)

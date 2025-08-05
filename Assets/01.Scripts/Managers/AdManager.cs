@@ -51,7 +51,6 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("AdManager: give reward in onReward");
             adManager.rewardAdCompleteCallback?.Invoke();
-            adManager.rewardAdCompleteCallback = null;
         }
 
         public void onRewardedVideoAdLoaded(string unitId, CallbackInfo callbackInfo)
@@ -128,6 +127,7 @@ public class AdManager : MonoBehaviour
             if (hasReward)
             {
                 // 광고 호출하고 광고가 끝나면 onComplete 호출
+                rewardAdCompleteCallback = null;
                 rewardAdCompleteCallback = onComplete;
                 Debug.Log("AdManager: Calling ShowReward");
                 LongriverSDKAd.instance.ShowReward("");
