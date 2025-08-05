@@ -86,19 +86,6 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-        // iOS에서는 Bundle ID를 포함한 전체 Product ID 사용
-#if UNITY_IOS
-        string bundleId = "com.non.game";
-        builder.AddProduct($"{bundleId}.ad_ticket_1", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.ad_ticket_2", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.ad_ticket_3", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.gem_1", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.gem_2", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.gem_3", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.boost_pack_1", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.character_lampgirl", ProductType.Consumable);
-        builder.AddProduct($"{bundleId}.character_scientist", ProductType.Consumable);
-#else
         builder.AddProduct("ad_ticket_1", ProductType.Consumable, new IDs
         {
             { "ad_ticket_1", AppleAppStore.Name },
@@ -141,18 +128,17 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             { "boost_pack_1", GooglePlay.Name }
         });
 
-        builder.AddProduct("character_lampgirl", ProductType.Consumable, new IDs
+        builder.AddProduct("character_lampgirl", ProductType.NonConsumable, new IDs
         {
             { "character_lampgirl", AppleAppStore.Name },
             { "character_lampgirl", GooglePlay.Name }
         });
 
-        builder.AddProduct("character_scientist", ProductType.Consumable, new IDs
+        builder.AddProduct("character_scientist", ProductType.NonConsumable, new IDs
         {
             { "character_scientist", AppleAppStore.Name },
             { "character_scientist", GooglePlay.Name }
         });
-#endif
 
         Debug.Log("UnityPurchasing.Initialize 호출");
         UnityPurchasing.Initialize(this, builder);
@@ -326,7 +312,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             return shopItemResult?.GetFormattedPrice(productKey) ?? string.Empty;
 #else
                         Debug.LogError("Product not found or metadata not available.");
-            return string.Empty;
+            return "-";
 #endif
         }
     }
