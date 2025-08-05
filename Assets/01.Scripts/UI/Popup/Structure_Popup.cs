@@ -75,6 +75,10 @@ public class Structure_Popup : UI_Popup
 
         layout = gameObject.FindRecursive("Layout").GetComponent<VerticalLayoutGroup>();
 
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        layout.GetComponentInParent<ScrollRect>(true).enabled = true;
+#endif
+
         GetButton(Buttons.BasicBtn).AddButtonEvent(() => SelectTap(TapTypes.Basic));
         GetButton(Buttons.OreBtn).AddButtonEvent(() => SelectTap(TapTypes.Ore));
         GetButton(Buttons.GuardBtn).AddButtonEvent(() => SelectTap(TapTypes.Guard));

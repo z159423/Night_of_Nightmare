@@ -181,8 +181,13 @@ public class LocalDataManager
 
     public int CheatMode
     {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        get => PlayerPrefs.GetInt("CheatMode", 1);
+        set { PlayerPrefs.SetInt("CheatMode", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnCheatModeOn); }
+#else
         get => PlayerPrefs.GetInt("CheatMode", 0);
         set { PlayerPrefs.SetInt("CheatMode", 0); IsSave = true; GameObserver.Call(GameObserverType.Game.OnCheatModeOn); }
+#endif
     }
 
     public bool Volume
