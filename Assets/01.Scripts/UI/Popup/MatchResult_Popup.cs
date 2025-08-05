@@ -90,6 +90,9 @@ public class MatchResult_Popup : UI_Popup
                 {
                     Managers.LocalData.PlayerGemCount += GemCount * 4;
 
+                    Managers.Game.StartCoroutine(sound());
+                    // Managers.Audio.PlaySound("snd_get_item");
+
                     Exit();
                 });
             }
@@ -105,8 +108,16 @@ public class MatchResult_Popup : UI_Popup
         {
             //광고 안보고 그냥 잼 획득
             Managers.LocalData.PlayerGemCount += GemCount;
+
+            Managers.Audio.PlaySound("snd_get_item");
             Exit();
         });
+
+        IEnumerator sound()
+        {
+            yield return new WaitForSeconds(0.01f);
+            Managers.Audio.PlaySound("snd_get_item");
+        }
     }
 
     void ActiveResult()
