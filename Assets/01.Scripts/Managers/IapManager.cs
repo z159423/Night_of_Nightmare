@@ -274,6 +274,12 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
     public void PurchaseStart(string productId, Action onAfterPurchase = null)
     {
+        if (!GameManager.sdkLogin)
+        {
+            Managers.UI.ShowNotificationPopup("shop_loading", 2);
+            return;
+        }
+
         iapLoadingScene = Managers.Resource.Instantiate("LoadingScene", Managers.UI.Root.transform);
 
         LongriverSDKUserPayment.instance.startPayment(productId, "", (StartPaymentResult r) =>
