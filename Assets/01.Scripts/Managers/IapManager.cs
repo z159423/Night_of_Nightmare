@@ -265,18 +265,21 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
     public string GetLocalizedPrice(string productKey)
     {
         Product product = m_StoreController?.products?.WithID(productKey);
+        
+        print(product + " " + productKey + " " + m_StoreController + " " + m_StoreController.products);
+
         if (product != null && product.metadata != null)
         {
             return product.metadata.localizedPriceString; // 현지화된 가격 문자열
         }
         else
         {
-#if UNITY_IOS
-            return shopItemResult?.GetFormattedPrice(productKey) ?? string.Empty;
-#else
-            Debug.LogError("Product not found or metadata not available.");
+            // #if UNITY_IOS
+            //             return shopItemResult?.GetFormattedPrice(productKey) ?? string.Empty;
+            // #else
+            //             Debug.LogError("Product not found or metadata not available.");
             return string.Empty;
-#endif
+            // #endif
         }
     }
 
