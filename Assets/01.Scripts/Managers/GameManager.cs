@@ -55,6 +55,15 @@ public class GameManager : MonoBehaviour
 
     public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
 
+    void Awake()
+    {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.unityLogger.logEnabled = true;
+#else
+        Debug.unityLogger.logEnabled = false;
+#endif
+    }
+
     void Start()
     {
         StartCoroutine(Timer());
