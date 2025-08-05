@@ -60,18 +60,37 @@ public class Room : MonoBehaviour
             return null;
 
         Structure closest = findStructures[0];
-        float minDist = Vector3.Distance(position, closest.transform.position);
+        float minPathDist = GetPathDistance(position, closest.transform.position);
 
         for (int i = 1; i < findStructures.Count; i++)
         {
-            float dist = Vector3.Distance(position, findStructures[i].transform.position);
-            if (dist < minDist)
+            float pathDist = GetPathDistance(position, findStructures[i].transform.position);
+            if (pathDist < minPathDist)
             {
-                minDist = dist;
+                minPathDist = pathDist;
                 closest = findStructures[i];
             }
         }
 
         return closest;
+    }
+
+    // NavMesh를 이용해 두 지점 사이의 경로 길이를 구하는 함수
+    float GetPathDistance(Vector3 start, Vector3 end)
+    {
+        UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
+        if (UnityEngine.AI.NavMesh.CalculatePath(start, end, UnityEngine.AI.NavMesh.AllAreas, path))
+        {
+            float distance = 0f;
+            if (path.corners.Length < 2)
+                return float.MaxValue;
+
+            for (int i = 1; i < path.corners.Length; i++)
+            {
+                distance += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+            return distance;
+        }
+        return float.MaxValue;
     }
 }
