@@ -53,7 +53,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
                 .SetEnvironmentName(environment);
 
             await UnityServices.InitializeAsync(options);
-            
+
             // Unity Services 초기화 완료 후 IAP 초기화
             InitializePurchasing();
 #else
@@ -88,7 +88,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
 
         // iOS에서는 Bundle ID를 포함한 전체 Product ID 사용
 #if UNITY_IOS
-        string bundleId = Application.identifier; // 또는 직접 입력
+        string bundleId = "com.non.game";
         builder.AddProduct($"{bundleId}.ad_ticket_1", ProductType.Consumable);
         builder.AddProduct($"{bundleId}.ad_ticket_2", ProductType.Consumable);
         builder.AddProduct($"{bundleId}.ad_ticket_3", ProductType.Consumable);
@@ -174,7 +174,7 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
             attempts++;
             Debug.Log($"IAP 초기화 대기 중... ({attempts}/{maxAttempts})");
             Debug.Log($"m_StoreController: {m_StoreController != null}, m_Extension: {m_Extension != null}");
-            
+
             yield return new WaitForSeconds(1f);
         }
 
@@ -307,8 +307,8 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
     public string GetLocalizedPrice(string productKey)
     {
         Product product = m_StoreController?.products?.WithID(productKey);
-        
-        print(product + " " + productKey + " " + m_StoreController + " " + m_StoreController.products);
+
+        // print(product + " " + productKey + " " + m_StoreController + " " + m_StoreController.products);
 
         if (product != null && product.metadata != null)
         {
@@ -316,12 +316,12 @@ public class IapManager : MonoBehaviour, IStoreListener, IPurchaseItemsListener
         }
         else
         {
-            // #if UNITY_IOS
-            //             return shopItemResult?.GetFormattedPrice(productKey) ?? string.Empty;
-            // #else
-            //             Debug.LogError("Product not found or metadata not available.");
+#if UNITY_IOS
+            return shopItemResult?.GetFormattedPrice(productKey) ?? string.Empty;
+#else
+                        Debug.LogError("Product not found or metadata not available.");
             return string.Empty;
-            // #endif
+#endif
         }
     }
 
