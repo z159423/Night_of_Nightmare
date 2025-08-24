@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
                 if (isGameStart)
                 {
                     playTime++;
+
+                    GameObserver.Call(GameObserverType.Game.Timer);
                 }
             }
         }

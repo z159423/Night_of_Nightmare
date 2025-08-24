@@ -17,6 +17,8 @@ public class Managers : SingletonStatic<Managers>
     public static CameraManager Camera { get; set; } = new CameraManager();
     public static IapManager IAP { get; set; } = new IapManager();
     public static AdManager Ad { get; set; } = new AdManager();
+    public static AttendanceManager Attendance { get; set; } = new AttendanceManager();
+
 
 
     public void CreateManagers()
@@ -32,6 +34,7 @@ public class Managers : SingletonStatic<Managers>
         Audio = transform.AddComponent<AudioManager>();
         IAP = transform.AddComponent<IapManager>();
         Ad = transform.AddComponent<AdManager>();
+        Attendance = transform.AddComponent<AttendanceManager>();
     }
 
     private void Update()

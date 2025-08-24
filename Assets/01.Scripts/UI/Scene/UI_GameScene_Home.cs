@@ -26,7 +26,9 @@ public class UI_GameScene_Home : UI_Scene
         AdTicket,
         RankPointUp,
         RankPointDown,
-        SettingBtn
+        SettingBtn,
+        AttendanceBtn,
+        TimeRewardBtn
     }
 
     enum Texts

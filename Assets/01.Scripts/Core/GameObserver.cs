@@ -28,6 +28,7 @@ public partial struct GameObserverType
         OnCheatModeOn,
         OnVolumeChange,
         OnChangeLocolization,
+        Timer
     }
 
     public enum Data
