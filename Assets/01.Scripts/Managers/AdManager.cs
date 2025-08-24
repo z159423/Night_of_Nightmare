@@ -143,6 +143,8 @@ public class AdManager : MonoBehaviour
 
     public void ShowInterstitialAd()
     {
+        return;
+
         // 인터스티셜 광고 호출
         Debug.Log("AdManager: Interstitial ad shown");
         LongriverSDKAd.instance.ShowInterstitial("");
@@ -150,6 +152,4 @@ public class AdManager : MonoBehaviour
         Time.timeScale = 0.0001f;
         Managers.Audio.InGameSoundPause(true);
     }
-
-
 }
