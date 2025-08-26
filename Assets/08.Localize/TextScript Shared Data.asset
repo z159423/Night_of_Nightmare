@@ -823,6 +823,14 @@ MonoBehaviour:
     m_Key: shop_loading
     m_Metadata:
       m_Items: []
+  - m_Id: 36309656806072320
+    m_Key: attendance_remain_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36332500168450048
+    m_Key: attendance_ready
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

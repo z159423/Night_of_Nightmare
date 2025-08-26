@@ -45,13 +45,13 @@ public class AttendanceManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(last) && last == today)
         {
-            reason = "Already claimed today (UTC).";
+            reason = "already claimed";
             return false;
         }
 
         if (DaysClaimed >= 7)
         {
-            reason = "All rewards completed.";
+            reason = "already claimed";
             return false;
         }
 
@@ -112,6 +112,7 @@ public class AttendanceManager : MonoBehaviour
                 break;
         }
 
+        Managers.Audio.PlaySound("snd_get_item");
 
         // 상태 갱신
         PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, TodayUtcDateStr);
@@ -179,7 +180,7 @@ public class AttendanceManager : MonoBehaviour
     /// <summary>
     /// 특정 날짜(1~7)의 보상을 획득 가능한지 확인합니다.
     /// </summary>
-    /// <param name="day">확인할 날짜 (1~7)</param>
+    /// <param name="day">확인할 출석체크 날짜 (1~7일차)</param>
     /// <param name="reason">획득 불가능한 이유</param>
     /// <returns>획득 가능하면 true, 불가능하면 false</returns>
     public bool CanClaimDay(int day, out string reason)
@@ -194,24 +195,23 @@ public class AttendanceManager : MonoBehaviour
         // 모든 보상이 완료된 경우
         if (IsFinished)
         {
-            reason = "All rewards completed.";
+            reason = "already claimed";
             return false;
         }
 
-        int dayIndex = day - 1; // 0-based 인덱스로 변환
-        int currentDaysClaimed = DaysClaimed;
+        int currentDaysClaimed = DaysClaimed; // 현재까지 수령한 일수 (0~7)
 
-        // 이미 해당 날짜의 보상을 받은 경우
-        if (dayIndex < currentDaysClaimed)
+        // 이미 해당 일차의 보상을 받은 경우
+        if (day <= currentDaysClaimed)
         {
-            reason = $"already claimed";
+            reason = "already claimed";
             return false;
         }
 
-        // 아직 차례가 되지 않은 경우 (순서대로만 받을 수 있음)
-        if (dayIndex > currentDaysClaimed)
+        // 순서대로만 받을 수 있음 (다음 차례가 아닌 경우)
+        if (day != currentDaysClaimed + 1)
         {
-            reason = $"not yet";
+            reason = "not yet";
             return false;
         }
 
@@ -220,12 +220,52 @@ public class AttendanceManager : MonoBehaviour
         string today = TodayUtcDateStr;
         if (!string.IsNullOrEmpty(last) && last == today)
         {
-            reason = "Already claimed today (UTC).";
+            reason = "already claimed today";
             return false;
         }
 
         reason = null;
         return true;
+    }
+
+    /// <summary>
+    /// 다음 수령까지 남은 시간을 반환합니다.
+    /// </summary>
+    /// <returns>남은 시간 TimeSpan. 이미 수령 가능하면 TimeSpan.Zero</returns>
+    public TimeSpan GetTimeUntilNextClaim()
+    {
+        // 모든 보상이 완료된 경우
+        if (IsFinished)
+            return TimeSpan.Zero;
+
+        string last = PlayerPrefs.GetString(KEY_LAST_CLAIM_UTC_DATE, string.Empty);
+        string today = TodayUtcDateStr;
+
+        // 오늘 아직 수령하지 않았거나, 처음 실행하는 경우
+        if (string.IsNullOrEmpty(last) || last != today)
+            return TimeSpan.Zero;
+
+        // 오늘 이미 수령했으면 내일 UTC 자정까지 대기
+        DateTime nextClaimTime = DateTime.UtcNow.Date.AddDays(1);
+        TimeSpan timeUntilNext = nextClaimTime - DateTime.UtcNow;
+
+        // 음수가 나오면 0으로 처리 (이미 수령 가능)
+        return timeUntilNext.TotalSeconds > 0 ? timeUntilNext : TimeSpan.Zero;
+    }
+
+    /// <summary>
+    /// 다음 수령까지 남은 시간을 문자열로 반환합니다.
+    /// </summary>
+    /// <returns>남은 시간 문자열 (예: "23:45:30", "수령 가능")</returns>
+    public string GetTimeUntilNextClaimString()
+    {
+        TimeSpan timeLeft = GetTimeUntilNextClaim();
+
+        if (timeLeft == TimeSpan.Zero)
+            return "";
+            // return Managers.Localize.GetText("attendance_ready");
+
+        return Managers.Localize.GetDynamicText("attendance_remain_time", $"{timeLeft.Hours:D2}:{timeLeft.Minutes:D2}:{timeLeft.Seconds:D2}");
     }
 
     // ======= 예시: UI 버튼에서 호출 =======

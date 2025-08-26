@@ -18,7 +18,7 @@ public class AttendanceSlotUI : UI_Base
 
     enum Texts
     {
-
+        DayText
     }
 
     bool isInit;
@@ -29,13 +29,15 @@ public class AttendanceSlotUI : UI_Base
     {
         FirstSetting();
 
-        this.SetListener(GameObserverType.Game.Timer, CheckReddot);
+        this.SetListener(GameObserverType.Game.Timer, UpdateUI);
+
+        GetTextMesh(Texts.DayText).text = "Day " + day;
         UpdateUI();
     }
 
     public void FirstSetting()
     {
-        if (!isInit) return;
+        if (isInit) return;
 
         isInit = true;
 
@@ -46,9 +48,15 @@ public class AttendanceSlotUI : UI_Base
         GetButton(Buttons.AttendenceBtn).AddButtonEvent(() =>
         {
             // 출석체크 팝업
-            Managers.Attendance.TryClaimToday(out var reason);
+            if (Managers.Attendance.TryClaimToday(out var reason))
+            {
+                // 출석체크 성공
+            }
+
             UpdateUI();
         }, false);
+
+        UpdateUI();
     }
 
     public void UpdateUI()
@@ -57,6 +65,8 @@ public class AttendanceSlotUI : UI_Base
         {
             GetImage(Images.Black).gameObject.SetActive(false);
             GetImage(Images.CheckImage).gameObject.SetActive(false);
+            GetImage(Images.Reddot).gameObject.SetActive(true);
+
         }
         else
         {
@@ -72,18 +82,6 @@ public class AttendanceSlotUI : UI_Base
                 GetImage(Images.CheckImage).gameObject.SetActive(false);
                 GetImage(Images.Reddot).gameObject.SetActive(false);
             }
-        }
-    }
-
-    public void CheckReddot()
-    {
-        if (Managers.Attendance.CanClaimToday(out var reason))
-        {
-            GetImage(Images.Reddot).gameObject.SetActive(true);
-        }
-        else
-        {
-            GetImage(Images.Reddot).gameObject.SetActive(false);
         }
     }
 }

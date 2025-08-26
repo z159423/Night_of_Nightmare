@@ -503,6 +503,7 @@ RectTransform:
   m_Children:
   - {fileID: 9203336010289216253}
   - {fileID: 2144699771228655029}
+  - {fileID: 6561818177057506366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -545,6 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4add19ca8f52634dbed52a00fec0777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  day: 0
 --- !u!1 &3845950380279799850
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,6 +634,7 @@ GameObject:
   - component: {fileID: 6561818177057506366}
   - component: {fileID: 1480818125764738695}
   - component: {fileID: 213104687272962753}
+  - component: {fileID: 369025488452569986}
   m_Layer: 5
   m_Name: Black
   m_TagString: Untagged
@@ -646,17 +649,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6448922263141296530}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2144699771228655029}
+  m_Father: {fileID: 7629570309687059138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 350}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1480818125764738695
 CanvasRenderer:
@@ -696,6 +699,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &369025488452569986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448922263141296530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56d4edc6ac870c4d83abefdb5fb6baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 1
+  animationType: 0
+  staticSize: 0
 --- !u!1 &7199768244002325258
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6324440565946438589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -806,7 +824,6 @@ RectTransform:
   - {fileID: 7105822257678788971}
   - {fileID: 1224564119367153602}
   - {fileID: 6324440565946438589}
-  - {fileID: 6561818177057506366}
   - {fileID: 3819879505797166960}
   m_Father: {fileID: 7629570309687059138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

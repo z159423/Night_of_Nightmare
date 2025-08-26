@@ -75,9 +75,8 @@ public class GameManager : MonoBehaviour
                 if (isGameStart)
                 {
                     playTime++;
-
-                    GameObserver.Call(GameObserverType.Game.Timer);
                 }
+                GameObserver.Call(GameObserverType.Game.Timer);
             }
         }
         Application.targetFrameRate = 60;

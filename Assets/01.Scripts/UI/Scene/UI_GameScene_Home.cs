@@ -102,6 +102,11 @@ public class UI_GameScene_Home : UI_Scene
         GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
 
         challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 1);
+
+        this.SetListener(GameObserverType.Game.Timer, () =>
+        {
+            GetButton(Buttons.AttendanceBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.Attendance.CanClaimToday(out var reason));
+        });
     }
 
     public void FirstSetting()
@@ -245,6 +250,12 @@ public class UI_GameScene_Home : UI_Scene
         {
             Managers.UI.ShowPopupUI<Setting_Popup>();
         });
+
+        GetButton(Buttons.AttendanceBtn).AddButtonEvent(() =>
+        {
+            Managers.UI.ShowPopupUI<Attendance_Popup>();
+        });
+
     }
 
     public override void Show()
