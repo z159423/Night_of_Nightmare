@@ -119,10 +119,23 @@ public class AttendanceManager : MonoBehaviour
         PlayerPrefs.SetInt(KEY_DAYS_CLAIMED, nextIndex + 1);
 
         // 7일차 완료 처리
+        bool isCompleted = false;
         if (nextIndex + 1 >= 7)
+        {
             PlayerPrefs.SetInt(KEY_FINISHED, 1);
+            isCompleted = true;
+        }
 
         PlayerPrefs.Save();
+
+        // 다음 출석체크 푸시 알림 예약 (완료되지 않은 경우에만)
+        if (!isCompleted)
+        {
+            // 내일 오전 9시에 알림 예약
+            DateTime tomorrow9AM = DateTime.Now.Date.AddDays(1).AddHours(9);
+
+            Managers.Push.ScheduleNotification("Attendance", Managers.Localize.GetText("attendance_push"), tomorrow9AM, "Attendance");
+        }
 
         reason = null;
         return true;
@@ -263,7 +276,7 @@ public class AttendanceManager : MonoBehaviour
 
         if (timeLeft == TimeSpan.Zero)
             return "";
-            // return Managers.Localize.GetText("attendance_ready");
+        // return Managers.Localize.GetText("attendance_ready");
 
         return Managers.Localize.GetDynamicText("attendance_remain_time", $"{timeLeft.Hours:D2}:{timeLeft.Minutes:D2}:{timeLeft.Seconds:D2}");
     }
