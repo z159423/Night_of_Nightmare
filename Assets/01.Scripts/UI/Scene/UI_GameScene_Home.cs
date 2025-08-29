@@ -28,13 +28,14 @@ public class UI_GameScene_Home : UI_Scene
         RankPointDown,
         SettingBtn,
         AttendanceBtn,
-        TimeRewardBtn
+        SessionRewardBtn
     }
 
     enum Texts
     {
         GemText,
-        TicketCount
+        TicketCount,
+        SessionRewardText
     }
 
     enum Images
@@ -105,7 +106,7 @@ public class UI_GameScene_Home : UI_Scene
 
         this.SetListener(GameObserverType.Game.Timer, () =>
         {
-            GetButton(Buttons.AttendanceBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.Attendance.CanClaimToday(out var reason));
+            UpdateUI();
         });
     }
 
@@ -256,6 +257,18 @@ public class UI_GameScene_Home : UI_Scene
             Managers.UI.ShowPopupUI<Attendance_Popup>();
         });
 
+        GetButton(Buttons.SessionRewardBtn).AddButtonEvent(() =>
+        {
+            Managers.UI.ShowPopupUI<SessionReward_Popup>();
+        });
+    }
+
+    void UpdateUI()
+    {
+        GetButton(Buttons.AttendanceBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.Attendance.CanClaimToday(out var reason));
+
+        GetButton(Buttons.SessionRewardBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.SessionReward.IsNextRewardClaimable());
+        GetTextMesh(Texts.SessionRewardText).text = Managers.SessionReward.SecondsToNextReward() == -1 ? "" : SessionRewardManager.FormatHMS(Managers.SessionReward.SecondsToNextReward());
     }
 
     public override void Show()

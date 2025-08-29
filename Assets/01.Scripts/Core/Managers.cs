@@ -18,7 +18,8 @@ public class Managers : SingletonStatic<Managers>
     public static IapManager IAP { get; set; } = new IapManager();
     public static AdManager Ad { get; set; } = new AdManager();
     public static AttendanceManager Attendance { get; set; } = new AttendanceManager();
-
+    public static PushManager Push { get; set; } = new PushManager();
+    public static SessionRewardManager SessionReward { get; set; } = new SessionRewardManager();
 
 
     public void CreateManagers()
@@ -35,6 +36,8 @@ public class Managers : SingletonStatic<Managers>
         IAP = transform.AddComponent<IapManager>();
         Ad = transform.AddComponent<AdManager>();
         Attendance = transform.AddComponent<AttendanceManager>();
+        Push = transform.AddComponent<PushManager>();
+        SessionReward = transform.AddComponent<SessionRewardManager>();
     }
 
     private void Update()
