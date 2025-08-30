@@ -130,8 +130,10 @@ public class SessionRewardManager : MonoBehaviour
     }
 
     // === [수정] TryClaim(): 수령 성공 시 캡 재계산 ===
-    public bool TryClaim(int minutes)
+    public bool TryClaim(int minutes, out List<(Define.ItemType, uiParticleMarkerType)> items)
     {
+        items = new List<(Define.ItemType, uiParticleMarkerType)>();
+
         if (!CanClaim(minutes)) return false;
 
         if (_dummyRewards.Any(x => x == minutes))
@@ -143,10 +145,12 @@ public class SessionRewardManager : MonoBehaviour
             {
                 case 10:
                     Managers.LocalData.PlayerGemCount += 100;
+                    items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                     break;
 
                 case 20:
                     Managers.LocalData.PlayerRvTicketCount += 2;
+                    items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                     break;
 
                 case 30:
@@ -154,14 +158,20 @@ public class SessionRewardManager : MonoBehaviour
                     Managers.LocalData.playerHammerCount += 1;
                     Managers.LocalData.PlayerHolyShieldCount += 1;
                     Managers.LocalData.PlayerOverHeatCount += 1;
+                    items.Add((Define.ItemType.Boost_Fire, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Hammer, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Lamp, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Shield, uiParticleMarkerType.BoostBtn));
                     break;
 
                 case 40:
                     Managers.LocalData.PlayerGemCount += 300;
+                    items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                     break;
 
                 case 50:
                     Managers.LocalData.PlayerRvTicketCount += 2;
+                    items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                     break;
 
                 case 60:
@@ -169,6 +179,10 @@ public class SessionRewardManager : MonoBehaviour
                     Managers.LocalData.playerHammerCount += 3;
                     Managers.LocalData.PlayerHolyShieldCount += 3;
                     Managers.LocalData.PlayerOverHeatCount += 3;
+                    items.Add((Define.ItemType.Boost_Fire, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Hammer, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Lamp, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Shield, uiParticleMarkerType.BoostBtn));
                     break;
             }
 

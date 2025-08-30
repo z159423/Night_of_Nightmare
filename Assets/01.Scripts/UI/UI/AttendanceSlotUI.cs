@@ -48,9 +48,13 @@ public class AttendanceSlotUI : UI_Base
         GetButton(Buttons.AttendenceBtn).AddButtonEvent(() =>
         {
             // 출석체크 팝업
-            if (Managers.Attendance.TryClaimToday(out var reason))
+            if (Managers.Attendance.TryClaimToday(out var items))
             {
                 // 출석체크 성공
+                foreach (var item in items)
+                {
+                    Managers.UI.GenerateUIParticle(transform, item.Item2, item.Item1);
+                }
             }
 
             UpdateUI();

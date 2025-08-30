@@ -710,4 +710,14 @@ public class Define
     { "snd_wizard_die", new SoundData { soundKey = "snd_wizard_die", baseVolume = 0.4f, pitch = 1f, maxVolumeRange = -1f, minRangeVolumeMul = -1f } },
     { "snd_build", new SoundData { soundKey = "snd_build", baseVolume = 1f, pitch = 1.1f, maxVolumeRange = 432f, minRangeVolumeMul = 0.6f } }
 };
+
+    public enum ItemType
+    {
+        Gem,
+        Ticket,
+        Boost_Fire,
+        Boost_Hammer,
+        Boost_Lamp,
+        Boost_Shield
+    }
 }

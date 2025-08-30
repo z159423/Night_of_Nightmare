@@ -4,9 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
+
+public enum uiParticleMarkerType
+{
+    GemIcon,
+    TicketIcon,
+    BoostBtn
+}
 
 public class UIManager : MonoBehaviour
 {
+    public Dictionary<uiParticleMarkerType, Transform> uiParticleMarkers = new Dictionary<uiParticleMarkerType, Transform>();
+
     int _order = -10;
 
     List<UI_Popup> _popupList = new List<UI_Popup>();
@@ -519,5 +529,60 @@ public class UIManager : MonoBehaviour
         notification = Managers.Resource.Instantiate("Notification_Popup" + (index != 0 ? $"_{index}" : ""), Managers.UI.Root.transform).gameObject;
         notification.GetComponent<Notification_Popup>().Init();
         notification.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText(key));
+    }
+
+    public void GenerateUIParticle(Transform start, uiParticleMarkerType markerType, Define.ItemType item)
+    {
+        GameObject particle = Managers.Resource.Instantiate("UI_Particle", start);
+        particle.GetComponent<Image>().sprite = GetItemIcon(item);
+        particle.transform.SetParent(Managers.UI.Root.transform);
+
+        // 시작 위치에 랜덤 오프셋 추가 (±30픽셀 범위)
+        Vector3 randomOffset = new Vector3(
+            UnityEngine.Random.Range(-30f, 30f),
+            UnityEngine.Random.Range(-30f, 30f),
+            0f
+        );
+        particle.transform.position = start.position + randomOffset;
+
+        // 초기 스케일을 0으로 설정
+        particle.transform.localScale = Vector3.zero;
+
+        // 시퀀스 생성
+        Sequence sequence = DOTween.Sequence();
+
+        // 1단계: 크기 0에서 뿅하고 나타나기 (약간 오버슈트)
+        sequence.Append(particle.transform.DOScale(Vector3.one * 1.2f, 0.3f).SetEase(Ease.OutBack));
+
+        // 2단계: 원래 크기로 살짝 줄어들기
+        sequence.Append(particle.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutQuad));
+
+        // 3단계: 뒤로 살짝 물러나기 (목적지 반대 방향으로)
+        Vector3 startPos = particle.transform.position; // 이미 랜덤 오프셋이 적용된 위치
+        Vector3 endPos = Managers.UI.uiParticleMarkers[markerType].position;
+        Vector3 direction = (endPos - startPos).normalized;
+
+        // 후진 거리도 살짝 랜덤하게 (40~60픽셀)
+        float backwardDistance = UnityEngine.Random.Range(40f, 60f);
+        Vector3 backwardPos = startPos - direction * backwardDistance;
+
+        sequence.Append(particle.transform.DOMove(backwardPos, 0.2f).SetEase(Ease.OutQuad));
+
+        // 4단계: 목적지로 자연스럽게 이동 (베지어 커브처럼)
+        sequence.Append(particle.transform.DOMove(endPos, 0.8f).SetEase(Ease.InOutCubic));
+
+        // 5단계: 도착하면서 살짝 축소
+        sequence.Join(particle.transform.DOScale(Vector3.one * 0.8f, 0.8f).SetEase(Ease.InQuad));
+
+        // 완료 시 파괴
+        sequence.OnComplete(() =>
+        {
+            Managers.Resource.Destroy(particle);
+        });
+    }
+
+    public static Sprite GetItemIcon(Define.ItemType item)
+    {
+        return Managers.Resource.Load<Sprite>($"Icon/{item.ToString()}");
     }
 }

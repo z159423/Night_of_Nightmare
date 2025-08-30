@@ -1,5 +1,7 @@
 using Unity.Notifications.Android;
+#if UNITY_IOS
 using Unity.Notifications.iOS;
+#endif
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -52,7 +54,7 @@ public class PushManager : MonoBehaviour
         // 안드로이드에서는 SendNotification이 int ID를 반환함
         int androidId = AndroidNotificationCenter.SendNotification(notification, "default_channel");
         androidNotificationIds[identifier] = androidId;
-        
+
 #elif UNITY_IOS
         var notification = new iOSNotification()
         {

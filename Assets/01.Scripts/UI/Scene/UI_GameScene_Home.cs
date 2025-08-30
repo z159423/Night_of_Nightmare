@@ -41,7 +41,7 @@ public class UI_GameScene_Home : UI_Scene
     enum Images
     {
         TouchGuard,
-
+        RankImage
     }
 
     public enum LowerBtnTypes
@@ -108,6 +108,8 @@ public class UI_GameScene_Home : UI_Scene
         {
             UpdateUI();
         });
+
+        GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
     }
 
     public void FirstSetting()
@@ -265,7 +267,7 @@ public class UI_GameScene_Home : UI_Scene
 
     void UpdateUI()
     {
-        GetButton(Buttons.AttendanceBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.Attendance.CanClaimToday(out var reason));
+        GetButton(Buttons.AttendanceBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.Attendance.CanClaimToday());
 
         GetButton(Buttons.SessionRewardBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.SessionReward.IsNextRewardClaimable());
         GetTextMesh(Texts.SessionRewardText).text = Managers.SessionReward.SecondsToNextReward() == -1 ? "" : SessionRewardManager.FormatHMS(Managers.SessionReward.SecondsToNextReward());

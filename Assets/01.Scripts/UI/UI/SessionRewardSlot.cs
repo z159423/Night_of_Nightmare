@@ -48,9 +48,13 @@ public class SessionRewardSlot : UI_Base
         GetButton(Buttons.RewardBtn).AddButtonEvent(() =>
         {
             // 출석체크 팝업
-            if (Managers.SessionReward.TryClaim(rewardMin))
+            if (Managers.SessionReward.TryClaim(rewardMin, out var items))
             {
                 // 출석체크 성공
+                foreach (var item in items)
+                {
+                    Managers.UI.GenerateUIParticle(transform, item.Item2, item.Item1);
+                }
             }
 
             UpdateUI();

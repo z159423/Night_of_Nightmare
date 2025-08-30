@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -32,11 +33,10 @@ public class AttendanceManager : MonoBehaviour
     public static string TodayUtcDateStr => DateTime.UtcNow.Date.ToString("yyyy-MM-dd");
 
     /// <summary>오늘 수령 가능 여부와 이유를 반환</summary>
-    public bool CanClaimToday(out string reason)
+    public bool CanClaimToday()
     {
         if (IsFinished)
         {
-            reason = "All rewards completed.";
             return false;
         }
 
@@ -45,17 +45,14 @@ public class AttendanceManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(last) && last == today)
         {
-            reason = "already claimed";
             return false;
         }
 
         if (DaysClaimed >= 7)
         {
-            reason = "already claimed";
             return false;
         }
 
-        reason = null;
         return true;
     }
 
@@ -64,24 +61,26 @@ public class AttendanceManager : MonoBehaviour
     /// - 여러 날 건너뛰었어도 하루에 1칸만 진행
     /// - 7일차 수령 시 완료 처리
     /// </summary>
-    public bool TryClaimToday(out string reason)
+    public bool TryClaimToday(out List<(Define.ItemType, uiParticleMarkerType)> items)
     {
-        if (!CanClaimToday(out reason))
+        items = new List<(Define.ItemType, uiParticleMarkerType)>();
+
+        if (!CanClaimToday())
             return false;
 
         int nextIndex = DaysClaimed; // 0-based 인덱스
         if (nextIndex < 0 || nextIndex >= 7)
         {
-            reason = "Invalid reward index.";
             return false;
         }
 
-        // 지급될 
+        // 지급될 아이템 목록
 
         switch (nextIndex)
         {
             case 0:
                 Managers.LocalData.PlayerGemCount += 200;
+                items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                 break;
 
             case 1:
@@ -91,20 +90,26 @@ public class AttendanceManager : MonoBehaviour
             case 2:
                 Managers.LocalData.PlayerGemCount += 300;
                 Managers.LocalData.PlayerRvTicketCount += 1;
+                items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
+                items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                 break;
 
             case 3:
                 Managers.LocalData.PlayerGemCount += 500;
+                items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
 
                 break;
 
             case 4:
                 Managers.LocalData.PlayerGemCount += 600;
                 Managers.LocalData.PlayerRvTicketCount += 1;
+                items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
+                items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                 break;
 
             case 5:
                 Managers.LocalData.PlayerGemCount += 1000;
+                items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                 break;
 
             case 6:
@@ -137,26 +142,23 @@ public class AttendanceManager : MonoBehaviour
             Managers.Push.ScheduleNotification("Attendance", Managers.Localize.GetText("attendance_push"), tomorrow9AM, "Attendance");
         }
 
-        reason = null;
         return true;
     }
 
     /// <summary>
     /// 오늘 받을 예정인 보상을 미리보기(수령 가능할 때). 수령 불가면 false.
     /// </summary>
-    public bool TryGetTodayPreview(out string reason)
+    public bool TryGetTodayPreview()
     {
-        if (!CanClaimToday(out reason))
+        if (!CanClaimToday())
             return false;
 
         int nextIndex = DaysClaimed; // 0-based
         if (nextIndex < 0 || nextIndex >= 7)
         {
-            reason = "Invalid reward index.";
             return false;
         }
 
-        reason = null;
         return true;
     }
 

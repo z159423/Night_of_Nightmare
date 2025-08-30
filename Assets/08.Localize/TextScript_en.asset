@@ -833,6 +833,26 @@ MonoBehaviour:
     m_Localized: Available to claim
     m_Metadata:
       m_Items: []
+  - m_Id: 37405838760452096
+    m_Localized: You can claim your attendance reward. Log in now!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37405838806589440
+    m_Localized: 'Until reset: @1'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37405838806589441
+    m_Localized: 'Until next reward: @1'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37405838806589442
+    m_Localized: You have claimed all rewards!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37780864751869952
+    m_Localized: Attendance
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

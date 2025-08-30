@@ -831,6 +831,26 @@ MonoBehaviour:
     m_Key: attendance_ready
     m_Metadata:
       m_Items: []
+  - m_Id: 37405838760452096
+    m_Key: attendance_push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37405838806589440
+    m_Key: session_reward_reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37405838806589441
+    m_Key: session_reward_next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37405838806589442
+    m_Key: session_reward_complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37780864751869952
+    m_Key: attendance
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
