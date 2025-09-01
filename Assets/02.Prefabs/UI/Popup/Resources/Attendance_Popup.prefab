@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 8021239456413755118}
-  KeyString: global.str_shop
+  KeyString: attendance
   IsPassRTL: 0
 --- !u!1 &2408652179376691692
 GameObject:

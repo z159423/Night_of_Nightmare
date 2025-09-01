@@ -177,7 +177,9 @@ public class UI_GameScene_Home : UI_Scene
                 btn.transform.DOScale(1f, 0.12f).SetEase(Ease.Linear);
             });
 
-            Managers.UI.ShowNotificationPopup("global.str_update_coming_soon", 2);
+            // Managers.UI.ShowNotificationPopup("global.str_update_coming_soon", 2);
+
+            Managers.UI.ShowPopupUI<Ability_Popup>();
         });
 
         GetButton(Buttons.RankModeBtn).AddButtonEvent(() =>

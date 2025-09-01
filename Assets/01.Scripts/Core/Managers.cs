@@ -20,6 +20,7 @@ public class Managers : SingletonStatic<Managers>
     public static AttendanceManager Attendance { get; set; } = new AttendanceManager();
     public static PushManager Push { get; set; } = new PushManager();
     public static SessionRewardManager SessionReward { get; set; } = new SessionRewardManager();
+    public static AbilityManager Ability { get; set; } = new AbilityManager();
 
 
     public void CreateManagers()
@@ -38,6 +39,7 @@ public class Managers : SingletonStatic<Managers>
         Attendance = transform.AddComponent<AttendanceManager>();
         Push = transform.AddComponent<PushManager>();
         SessionReward = transform.AddComponent<SessionRewardManager>();
+        Ability = transform.AddComponent<AbilityManager>();
     }
 
     private void Update()
