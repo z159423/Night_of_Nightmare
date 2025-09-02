@@ -298,192 +298,238 @@ public class UI_GameScene_Home : UI_Scene
 
     public void SelectLowerBtn(LowerBtnTypes type, LowerBtn btn)
     {
-        if (selectedLowerBtn == btn)
-            return;
+        if (selectedLowerBtn == btn) return;
 
         btn.Select();
-
         selectedLowerBtn.UnSelect();
         selectedLowerBtn = btn;
 
         GetImage(Images.TouchGuard).gameObject.SetActive(true);
 
+        // 현재 팝업 처리
         if (currentPopup != null)
         {
-            float moveValue = selectedLowerBtnType == LowerBtnTypes.BoostBtn ? 1500f : -1500f;
-
-            if (currentPopup is Ability_Popup)
-            {
-                currentPopup.ClosePopupUI();
-                currentPopup = null;
-
-                SetLowerBtn();
-            }
-            else if (type == LowerBtnTypes.CharacterBtn)
-            {
-                SetLowerBtn();
-            }
-            else
-            {
-                currentPopup.transform.DOLocalMoveX(moveValue, 0.5f).SetEase(Ease.InCubic).OnComplete(() =>
-                {
-                    currentPopup.ClosePopupUI();
-                    currentPopup = null;
-
-                    if (type != LowerBtnTypes.CharacterBtn)
-                        SetLowerBtn();
-
-                });
-            }
+            HandleCurrentPopup(type);
         }
         else
         {
-            SetLowerBtn();
+            TransitionToNewState(type);
         }
+    }
 
-        void SetLowerBtn()
+    private void HandleCurrentPopup(LowerBtnTypes newType)
+    {
+        if (currentPopup is Ability_Popup)
         {
-            if (type == LowerBtnTypes.HomeBtn)
-            {
-                if (selectedLowerBtnType == LowerBtnTypes.CharacterBtn)
-                {
-                    GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.RankModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
-                    {
-                        GetButton(Buttons.RankModeBtn).transform.DOScale(1, 0.3f);
-                    });
-                    GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.ChallengeModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
-                    {
-                        GetButton(Buttons.ChallengeModeBtn).transform.DOScale(1, 0.3f);
-                    });
-
-                    lowerMenu.transform.DOLocalMoveY(400, 0.5f).SetRelative().OnComplete(() =>
-                    {
-                        GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                    });
-
-                    Managers.Camera.ChangeCameraLensOrthoSizeAndPosition(7, new Vector3(0, 0f, -10), 0.5f);
-
-                }
-                else if (selectedLowerBtnType == LowerBtnTypes.BoostBtn ||
-                         selectedLowerBtnType == LowerBtnTypes.ShopBtn || selectedLowerBtnType == LowerBtnTypes.QeustBtn)
-                {
-                    GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.RankModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
-                    {
-                        GetButton(Buttons.RankModeBtn).transform.DOScale(1, 0.3f);
-                    });
-                    GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.ChallengeModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
-                    {
-                        GetButton(Buttons.ChallengeModeBtn).transform.DOScale(1, 0.3f);
-                        GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                    });
-                }
-            }
-            else
-            {
-                if (type == LowerBtnTypes.CharacterBtn)
-                {
-                    if (selectedLowerBtnType != LowerBtnTypes.BoostBtn && selectedLowerBtnType != LowerBtnTypes.ShopBtn && selectedLowerBtnType != LowerBtnTypes.QeustBtn)
-                    {
-                        GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(1500f, 0.5f).SetEase(Ease.InCubic);
-                        GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(1500f, 0.5f).SetEase(Ease.InCubic);
-                    }
-
-                    lowerMenu.transform.DOLocalMoveY(-400, 0.5f).SetRelative();
-
-                    Managers.Camera.ChangeCameraLensOrthoSizeAndPosition(5, new Vector3(0, -1.5f, -10), 0.5f);
-
-                    StartCoroutine(wait());
-
-                    IEnumerator wait()
-                    {
-                        yield return new WaitForSeconds(0.5f);
-
-                        var popup = Managers.UI.ShowPopupUI<CharactorSelect_Popup>();
-                        popup.onExit = () =>
-                        {
-                            SelectLowerBtn(LowerBtnTypes.HomeBtn, GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>());
-                        };
-
-                        GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                    }
-                }
-                else if (type == LowerBtnTypes.BoostBtn)
-                {
-                    if (selectedLowerBtnType == LowerBtnTypes.HomeBtn)
-                    {
-                        GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(-1500, 0.5f).SetEase(Ease.InCubic);
-                        GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(-1500, 0.5f).SetEase(Ease.InCubic);
-                    }
-
-                    StartCoroutine(wait());
-
-                    IEnumerator wait()
-                    {
-                        if (selectedLowerBtnType != LowerBtnTypes.ShopBtn)
-                            yield return new WaitForSeconds(0.5f);
-
-                        var popup = Managers.UI.ShowPopupUI<BoostShop_Popup>();
-
-                        currentPopup = popup;
-                        GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                    }
-                }
-                else if (type == LowerBtnTypes.ShopBtn)
-                {
-                    if (selectedLowerBtnType == LowerBtnTypes.HomeBtn)
-                    {
-                        GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(1500, 0.5f).SetEase(Ease.InCubic);
-                        GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(1500, 0.5f).SetEase(Ease.InCubic);
-                    }
-
-                    StartCoroutine(wait());
-
-                    IEnumerator wait()
-                    {
-                        if (selectedLowerBtnType != LowerBtnTypes.BoostBtn)
-                            yield return new WaitForSeconds(0.5f);
-                        var popup = Managers.UI.ShowPopupUI<IapShop_Popup>();
-
-                        currentPopup = popup;
-                        GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                    }
-                }
-                else if (type == LowerBtnTypes.QeustBtn)
-                {
-                    StartCoroutine(wait());
-
-                    IEnumerator wait()
-                    {
-                        if (selectedLowerBtnType == LowerBtnTypes.BoostBtn ||
-                                                 selectedLowerBtnType == LowerBtnTypes.ShopBtn)
-                        {
-                            // GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.RankModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
-                            // {
-                            //     GetButton(Buttons.RankModeBtn).transform.DOScale(1, 0.3f);
-                            // });
-                            // GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic).OnStart(() => GetButton(Buttons.ChallengeModeBtn).transform.localScale = Vector3.zero).OnComplete(() =>
-                            // {
-                            //     GetButton(Buttons.ChallengeModeBtn).transform.DOScale(1, 0.3f);
-                            //     GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                            // });
-                        }
-
-                        yield return new WaitForSeconds(0.3f);
-                        var popup = Managers.UI.ShowPopupUI<Ability_Popup>();
-
-                        popup.transform.SetParent(lowerMenu.transform.parent);
-                        popup.transform.SetSiblingIndex(lowerMenu.transform.GetSiblingIndex());
-
-                        currentPopup = popup;
-
-                        GetImage(Images.TouchGuard).gameObject.SetActive(false);
-                    }
-                }
-            }
-
-            selectedLowerBtnType = type;
-
-            GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
+            // Ability 팝업은 바로 닫기
+            currentPopup.ClosePopupUI();
+            currentPopup = null;
+            TransitionToNewState(newType);
         }
+        else
+        {
+            // 다른 팝업들은 슬라이드 아웃 애니메이션
+            float moveValue = selectedLowerBtnType == LowerBtnTypes.BoostBtn ? 1500f : -1500f;
+            currentPopup.transform.DOLocalMoveX(moveValue, 0.5f).SetEase(Ease.InCubic).OnComplete(() =>
+            {
+                currentPopup.ClosePopupUI();
+                currentPopup = null;
+                TransitionToNewState(newType);
+            });
+        }
+    }
+
+    private void TransitionToNewState(LowerBtnTypes newType)
+    {
+        var transition = GetTransitionPlan(selectedLowerBtnType, newType);
+        ExecuteTransition(transition, newType);
+    }
+
+    private TransitionPlan GetTransitionPlan(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        return new TransitionPlan
+        {
+            needsGameButtonAnimation = NeedsGameButtonAnimation(from, to),
+            needsLowerMenuMove = NeedsLowerMenuMove(from, to),
+            needsCameraChange = NeedsCameraChange(from, to),
+            waitTime = GetWaitTime(from, to),
+            finalAction = GetFinalAction(to)
+        };
+    }
+
+    private bool NeedsGameButtonAnimation(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        // HomeBtn으로 돌아가거나, HomeBtn에서 나가는 경우
+        return to == LowerBtnTypes.HomeBtn || 
+               (from == LowerBtnTypes.HomeBtn && to != LowerBtnTypes.HomeBtn);
+    }
+
+    private bool NeedsLowerMenuMove(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        // CharacterBtn으로 가거나 CharacterBtn에서 나오는 모든 경우
+        return to == LowerBtnTypes.CharacterBtn || from == LowerBtnTypes.CharacterBtn;
+    }
+
+    private bool NeedsCameraChange(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        return NeedsLowerMenuMove(from, to);
+    }
+
+    private float GetWaitTime(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        if (to == LowerBtnTypes.CharacterBtn) return 0.5f;
+        if (to == LowerBtnTypes.BoostBtn && from != LowerBtnTypes.ShopBtn) return 0.5f;
+        if (to == LowerBtnTypes.ShopBtn && from != LowerBtnTypes.BoostBtn) return 0.5f;
+        if (to == LowerBtnTypes.QeustBtn) return 0.3f;
+        return 0f;
+    }
+
+    private System.Action GetFinalAction(LowerBtnTypes to)
+    {
+        return to switch
+        {
+            LowerBtnTypes.CharacterBtn => ShowCharacterPopup,
+            LowerBtnTypes.BoostBtn => ShowBoostPopup,
+            LowerBtnTypes.ShopBtn => ShowShopPopup,
+            LowerBtnTypes.QeustBtn => ShowAbilityPopup,
+            _ => () => GetImage(Images.TouchGuard).gameObject.SetActive(false)
+        };
+    }
+
+    private void ExecuteTransition(TransitionPlan plan, LowerBtnTypes newType)
+    {
+        // 게임 버튼 애니메이션
+        if (plan.needsGameButtonAnimation)
+        {
+            AnimateGameButtons(selectedLowerBtnType, newType);
+        }
+
+        // 하단 메뉴 이동
+        if (plan.needsLowerMenuMove)
+        {
+            AnimateLowerMenu(selectedLowerBtnType, newType);
+        }
+
+        // 카메라 변경
+        if (plan.needsCameraChange)
+        {
+            AnimateCamera(selectedLowerBtnType, newType);
+        }
+
+        // 최종 액션 실행
+        StartCoroutine(ExecuteFinalAction(plan.waitTime, plan.finalAction, newType));
+    }
+
+    private void AnimateGameButtons(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        if (to == LowerBtnTypes.HomeBtn)
+        {
+            // 게임 버튼들을 화면으로 복귀
+            AnimateGameButtonsIn();
+        }
+        else if (from == LowerBtnTypes.HomeBtn)
+        {
+            // 게임 버튼들을 화면 밖으로
+            float moveX = (to == LowerBtnTypes.ShopBtn) ? 1500f : -1500f;
+            AnimateGameButtonsOut(moveX);
+        }
+    }
+
+    private void AnimateGameButtonsIn()
+    {
+        GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic)
+            .OnStart(() => GetButton(Buttons.RankModeBtn).transform.localScale = Vector3.zero)
+            .OnComplete(() => GetButton(Buttons.RankModeBtn).transform.DOScale(1, 0.3f));
+
+        GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(0f, 0).SetEase(Ease.InCubic)
+            .OnStart(() => GetButton(Buttons.ChallengeModeBtn).transform.localScale = Vector3.zero)
+            .OnComplete(() => GetButton(Buttons.ChallengeModeBtn).transform.DOScale(1, 0.3f));
+    }
+
+    private void AnimateGameButtonsOut(float moveX)
+    {
+        GetButton(Buttons.RankModeBtn).transform.DOLocalMoveX(moveX, 0.5f).SetEase(Ease.InCubic);
+        GetButton(Buttons.ChallengeModeBtn).transform.DOLocalMoveX(moveX, 0.5f).SetEase(Ease.InCubic);
+    }
+
+    private void AnimateLowerMenu(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        if (to == LowerBtnTypes.CharacterBtn)
+        {
+            // 어떤 버튼에서든 CharacterBtn으로 갈 때 - 메뉴 내리기
+            lowerMenu.transform.DOLocalMoveY(-400, 0.5f).SetRelative();
+        }
+        else if (from == LowerBtnTypes.CharacterBtn)
+        {
+            // CharacterBtn에서 다른 버튼으로 갈 때 - 메뉴 올리기
+            lowerMenu.transform.DOLocalMoveY(400, 0.5f).SetRelative()
+                .OnComplete(() => GetImage(Images.TouchGuard).gameObject.SetActive(false));
+        }
+    }
+
+    private void AnimateCamera(LowerBtnTypes from, LowerBtnTypes to)
+    {
+        if (to == LowerBtnTypes.CharacterBtn)
+        {
+            // 어떤 버튼에서든 CharacterBtn으로 갈 때 - 카메라 줌인
+            Managers.Camera.ChangeCameraLensOrthoSizeAndPosition(5, new Vector3(0, -1.5f, -10), 0.5f);
+        }
+        else if (from == LowerBtnTypes.CharacterBtn)
+        {
+            // CharacterBtn에서 다른 버튼으로 갈 때 - 카메라 줌아웃
+            Managers.Camera.ChangeCameraLensOrthoSizeAndPosition(7, new Vector3(0, 0f, -10), 0.5f);
+        }
+    }
+
+    private IEnumerator ExecuteFinalAction(float waitTime, System.Action action, LowerBtnTypes newType)
+    {
+        if (waitTime > 0)
+            yield return new WaitForSeconds(waitTime);
+
+        action?.Invoke();
+        
+        selectedLowerBtnType = newType;
+        GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
+    }
+
+    // 팝업 표시 메서드들
+    private void ShowCharacterPopup()
+    {
+        var popup = Managers.UI.ShowPopupUI<CharactorSelect_Popup>();
+        popup.onExit = () => SelectLowerBtn(LowerBtnTypes.HomeBtn, GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>());
+        GetImage(Images.TouchGuard).gameObject.SetActive(false);
+    }
+
+    private void ShowBoostPopup()
+    {
+        var popup = Managers.UI.ShowPopupUI<BoostShop_Popup>();
+        currentPopup = popup;
+        GetImage(Images.TouchGuard).gameObject.SetActive(false);
+    }
+
+    private void ShowShopPopup()
+    {
+        var popup = Managers.UI.ShowPopupUI<IapShop_Popup>();
+        currentPopup = popup;
+        GetImage(Images.TouchGuard).gameObject.SetActive(false);
+    }
+
+    private void ShowAbilityPopup()
+    {
+        var popup = Managers.UI.ShowPopupUI<Ability_Popup>();
+        popup.transform.SetParent(lowerMenu.transform.parent);
+        popup.transform.SetSiblingIndex(lowerMenu.transform.GetSiblingIndex());
+        currentPopup = popup;
+        GetImage(Images.TouchGuard).gameObject.SetActive(false);
+    }
+
+    // 헬퍼 클래스
+    private class TransitionPlan
+    {
+        public bool needsGameButtonAnimation;
+        public bool needsLowerMenuMove;
+        public bool needsCameraChange;
+        public float waitTime;
+        public System.Action finalAction;
     }
 }
