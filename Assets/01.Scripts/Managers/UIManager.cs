@@ -535,12 +535,13 @@ public class UIManager : MonoBehaviour
     {
         GameObject particle = Managers.Resource.Instantiate("UI_Particle", start);
         particle.GetComponent<Image>().sprite = GetItemIcon(item);
+        particle.GetComponent<Image>().SetNativeSize();
         particle.transform.SetParent(Managers.UI.Root.transform);
 
         // 시작 위치에 랜덤 오프셋 추가 (±30픽셀 범위)
         Vector3 randomOffset = new Vector3(
-            UnityEngine.Random.Range(-30f, 30f),
-            UnityEngine.Random.Range(-30f, 30f),
+            UnityEngine.Random.Range(-50f, 50f),
+            UnityEngine.Random.Range(-50f, 50f),
             0f
         );
         particle.transform.position = start.position + randomOffset;
@@ -568,8 +569,10 @@ public class UIManager : MonoBehaviour
 
         sequence.Append(particle.transform.DOMove(backwardPos, 0.2f).SetEase(Ease.OutQuad));
 
+        sequence.AppendInterval(UnityEngine.Random.Range(0, 0.2f));
+
         // 4단계: 목적지로 자연스럽게 이동 (베지어 커브처럼)
-        sequence.Append(particle.transform.DOMove(endPos, 0.8f).SetEase(Ease.InOutCubic));
+        sequence.Append(particle.transform.DOMove(endPos, UnityEngine.Random.Range(0.7f, 0.8f)).SetEase(Ease.InOutCubic));
 
         // 5단계: 도착하면서 살짝 축소
         sequence.Join(particle.transform.DOScale(Vector3.one * 0.8f, 0.8f).SetEase(Ease.InQuad));

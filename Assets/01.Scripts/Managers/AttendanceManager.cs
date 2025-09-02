@@ -81,6 +81,8 @@ public class AttendanceManager : MonoBehaviour
             case 0:
                 Managers.LocalData.PlayerGemCount += 200;
                 items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
+
+                items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                 break;
 
             case 1:

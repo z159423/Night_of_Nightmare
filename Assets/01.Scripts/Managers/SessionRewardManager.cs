@@ -160,7 +160,7 @@ public class SessionRewardManager : MonoBehaviour
                     Managers.LocalData.PlayerOverHeatCount += 1;
                     items.Add((Define.ItemType.Boost_Fire, uiParticleMarkerType.BoostBtn));
                     items.Add((Define.ItemType.Boost_Hammer, uiParticleMarkerType.BoostBtn));
-                    items.Add((Define.ItemType.Boost_Lamp, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Ramp, uiParticleMarkerType.BoostBtn));
                     items.Add((Define.ItemType.Boost_Shield, uiParticleMarkerType.BoostBtn));
                     break;
 
@@ -181,7 +181,7 @@ public class SessionRewardManager : MonoBehaviour
                     Managers.LocalData.PlayerOverHeatCount += 3;
                     items.Add((Define.ItemType.Boost_Fire, uiParticleMarkerType.BoostBtn));
                     items.Add((Define.ItemType.Boost_Hammer, uiParticleMarkerType.BoostBtn));
-                    items.Add((Define.ItemType.Boost_Lamp, uiParticleMarkerType.BoostBtn));
+                    items.Add((Define.ItemType.Boost_Ramp, uiParticleMarkerType.BoostBtn));
                     items.Add((Define.ItemType.Boost_Shield, uiParticleMarkerType.BoostBtn));
                     break;
             }

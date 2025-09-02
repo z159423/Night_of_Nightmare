@@ -89,7 +89,7 @@ public class AbilitySlotUI : UI_Base
             GetButton(Buttons.AdditionalBtn).gameObject.SetActive(false);
         }
 
-        GetTextMesh(Texts.NeedTierText).text = $"[{ability.needTier}]";
+        GetTextMesh(Texts.NeedTierText).text = Define.GetTierName(ability.needTier);
 
         if (last)
         {

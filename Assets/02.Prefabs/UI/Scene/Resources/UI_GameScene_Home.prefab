@@ -2849,15 +2849,15 @@ RectTransform:
   m_Children:
   - {fileID: 5305875914069489490}
   - {fileID: 3520392394275298458}
+  - {fileID: 5672323266835639856}
+  - {fileID: 4428577569233616375}
+  - {fileID: 4457527914800310594}
   - {fileID: 4382537291106733298}
   - {fileID: 4790150841715304058}
   - {fileID: 9173838708842131507}
   - {fileID: 348326811558547496}
   - {fileID: 3668699482577082702}
   - {fileID: 4797061865550527049}
-  - {fileID: 4457527914800310594}
-  - {fileID: 5672323266835639856}
-  - {fileID: 4428577569233616375}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3565,6 +3565,7 @@ GameObject:
   - component: {fileID: 7350175915678711036}
   - component: {fileID: 571962738675843575}
   - component: {fileID: 8752596831203685759}
+  - component: {fileID: 1466614207981706843}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -3629,6 +3630,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1466614207981706843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7093706790017950833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a367ca6647201b4ca44e887e18cce95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  markerType: 1
 --- !u!1 &7220853197383569321
 GameObject:
   m_ObjectHideFlags: 0
