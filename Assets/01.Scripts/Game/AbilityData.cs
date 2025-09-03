@@ -91,6 +91,13 @@ public class AbilityData : ScriptableObject
     {
         return additionalAbilities.Find(a => a.needTier == tier);
     }
+
+    public int GetAdditionalAbilityIndex(Define.Tier tier)
+    {
+        return additionalAbilities.FindIndex(a => a.needTier == tier);
+    }
+
+
 }
 
 [System.Serializable]
@@ -100,6 +107,11 @@ public class Ability
     public float value;
     public int cost;
     public Define.Tier needTier;
+
+    public string GetAbilityDesc()
+    {
+        return Managers.Localize.GetDynamicText("ability_desc_" + type, value.ToString());
+    }
 }
 
 public enum AbilityType

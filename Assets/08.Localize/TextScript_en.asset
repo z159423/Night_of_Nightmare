@@ -853,6 +853,58 @@ MonoBehaviour:
     m_Localized: Attendance
     m_Metadata:
       m_Items: []
+  - m_Id: 39206186609254400
+    m_Localized: Online Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391744
+    m_Localized: Ability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391745
+    m_Localized: Turret attack power increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391746
+    m_Localized: Gate HP increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391747
+    m_Localized: Turret attack range increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391748
+    m_Localized: Turret critical hit chance increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391749
+    m_Localized: Turret critical damage increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391750
+    m_Localized: Turret attack speed increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391751
+    m_Localized: Bed gold production increases by @1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391752
+    m_Localized: Gate repair ability increases by @1% based on HP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391753
+    m_Localized: Repair station ability increases by @1% based on HP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391754
+    m_Localized: Generator energy production increases by @1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391755
+    m_Localized: Tower double attack chance increases by @1%.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

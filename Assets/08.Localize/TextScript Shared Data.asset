@@ -851,6 +851,58 @@ MonoBehaviour:
     m_Key: attendance
     m_Metadata:
       m_Items: []
+  - m_Id: 39206186609254400
+    m_Key: session_reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391744
+    m_Key: ability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391745
+    m_Key: ability_desc_AttackDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391746
+    m_Key: ability_desc_DoorHp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391747
+    m_Key: ability_desc_AttackRange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391748
+    m_Key: ability_desc_CriticalChance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391749
+    m_Key: ability_desc_CriticalDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391750
+    m_Key: ability_desc_AttackSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391751
+    m_Key: ability_desc_BedGoldGain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391752
+    m_Key: ability_desc_DoorRepairMul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391753
+    m_Key: ability_desc_RepairStationMul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391754
+    m_Key: ability_desc_GeneratorMul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39206186655391755
+    m_Key: ability_desc_TurretDoubleAttack
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

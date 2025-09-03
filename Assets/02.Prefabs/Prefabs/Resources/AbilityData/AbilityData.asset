@@ -206,31 +206,31 @@ MonoBehaviour:
     cost: 100
     needTier: 24
   additionalAbilities:
-  - type: 5
+  - type: 1
     value: 5
     cost: 50
     needTier: 4
-  - type: 6
+  - type: 7
     value: 1
     cost: 120
     needTier: 8
-  - type: 7
+  - type: 8
     value: 3
     cost: 140
     needTier: 12
-  - type: 8
+  - type: 9
     value: 1
     cost: 200
     needTier: 16
-  - type: 9
+  - type: 10
     value: 1
     cost: 250
     needTier: 20
-  - type: 10
+  - type: 11
     value: 3
     cost: 300
     needTier: 23
-  - type: 10
+  - type: 11
     value: 3
     cost: 500
     needTier: 24

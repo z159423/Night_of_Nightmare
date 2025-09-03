@@ -342,7 +342,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-
             var pointRange = TierWinGetPoint[GetPlayerCurrentTier()];
             point = Random.Range(pointRange.Item1, pointRange.Item2);
 

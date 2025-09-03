@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.Mathematics;
 
 public class AbilitySlotUI : UI_Base
 {
@@ -30,6 +31,9 @@ public class AbilitySlotUI : UI_Base
 
     bool init;
 
+    int abilityIndex = -1;
+    int additionalAbilityIndex = -1;
+
     public override void Init()
     {
         if (!init)
@@ -49,10 +53,21 @@ public class AbilitySlotUI : UI_Base
         Bind<Button>(typeof(Buttons));
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
+
+        this.SetListener(GameObserverType.Game.OnAbilityChanged, () =>
+        {
+            UpdateUI();
+        });
     }
 
-    public void Setting(Ability ability, Ability additionalAbility = null, bool first = false, bool last = false)
+    public void Setting(int abilityIndex, int additionalAbilityIndex = -1, bool first = false, bool last = false)
     {
+        this.abilityIndex = abilityIndex;
+        this.additionalAbilityIndex = additionalAbilityIndex;
+
+        var ability = Managers.Ability.GetAbility(abilityIndex);
+        var additionalAbility = Managers.Ability.GetAdditionalAbility(additionalAbilityIndex);
+
         if (first)
         {
             GetImage(Images.Line1).gameObject.SetActive(true);
@@ -69,19 +84,33 @@ public class AbilitySlotUI : UI_Base
 
         GetButton(Buttons.AbilityBtn).image.sprite = Managers.Resource.Load<Sprite>($"Ability/ability_{(int)ability.type}");
 
+        if ((int)ability.needTier <= Managers.LocalData.PlayerHighestTier)
+            GetButton(Buttons.AbilityBtn).image.color = Color.white;
+        else
+            GetButton(Buttons.AbilityBtn).image.color = new Color32(50, 50, 50, 255);
+
         GetButton(Buttons.AbilityBtn).AddButtonEvent(() =>
         {
-
+            GetComponentInParent<Ability_Popup>().GenerateAbilityBubble(transform, abilityIndex, -1);
         });
+
+        GetImage(Images.AbilityReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAbility(abilityIndex));
 
         if (additionalAbility != null)
         {
-            GetButton(Buttons.AdditionalBtn).image.sprite = Managers.Resource.Load<Sprite>($"Ability/ability_{additionalAbility.type}");
+            GetButton(Buttons.AdditionalBtn).image.sprite = Managers.Resource.Load<Sprite>($"Ability/ability_{(int)additionalAbility.type}");
+
+            if ((int)additionalAbility.needTier <= Managers.LocalData.PlayerHighestTier)
+                GetButton(Buttons.AdditionalBtn).image.color = Color.white;
+            else
+                GetButton(Buttons.AdditionalBtn).image.color = new Color32(50, 50, 50, 255);
 
             GetButton(Buttons.AdditionalBtn).AddButtonEvent(() =>
             {
-
+                GetComponentInParent<Ability_Popup>().GenerateAbilityBubble(transform, -1, additionalAbilityIndex);
             });
+
+            GetImage(Images.AdditionalReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAdditionalAbility(additionalAbilityIndex));
         }
         else
         {
@@ -95,12 +124,17 @@ public class AbilitySlotUI : UI_Base
         {
             GetImage(Images.Line3).gameObject.SetActive(false);
         }
-
-        UpdateUI();
     }
 
     void UpdateUI()
     {
+        var additionalAbility = Managers.Ability.GetAdditionalAbility(additionalAbilityIndex);
 
+        GetImage(Images.AbilityReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAbility(abilityIndex));
+
+        if (additionalAbility != null)
+        {
+            GetImage(Images.AdditionalReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAdditionalAbility(additionalAbilityIndex));
+        }
     }
 }

@@ -86,7 +86,19 @@ public class LocalDataManager
     public int PlayerRankingPoint
     {
         get => PlayerPrefs.GetInt("PlayerRankingPoint", 0);
-        set { PlayerPrefs.SetInt("PlayerRankingPoint", value); IsSave = true; }
+        set
+        {
+            PlayerPrefs.SetInt("PlayerRankingPoint", value); IsSave = true;
+
+            if (PlayerHighestTier < (int)Define.GetTierByScore(PlayerRankingPoint))
+                PlayerHighestTier = (int)Define.GetTierByScore(PlayerRankingPoint);
+        }
+    }
+
+    public int PlayerHighestTier
+    {
+        get => PlayerPrefs.GetInt("PlayerHighestTier", 0);
+        set { PlayerPrefs.SetInt("PlayerHighestTier", value); IsSave = true; }
     }
 
     public int PlayerGemCount

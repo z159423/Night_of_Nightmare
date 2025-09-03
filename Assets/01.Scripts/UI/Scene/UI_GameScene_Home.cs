@@ -17,7 +17,7 @@ public class UI_GameScene_Home : UI_Scene
         CharacterBtn,
         HomeBtn,
         BoostBtn,
-        QeustBtn,
+        AbilityBtn,
         RankModeBtn,
         ChallengeModeBtn,
         CenterCharactorBtn,
@@ -126,7 +126,7 @@ public class UI_GameScene_Home : UI_Scene
         GetButton(Buttons.CharacterBtn).GetComponent<LowerBtn>().Init();
         GetButton(Buttons.HomeBtn).GetComponent<LowerBtn>().Init();
         GetButton(Buttons.BoostBtn).GetComponent<LowerBtn>().Init();
-        GetButton(Buttons.QeustBtn).GetComponent<LowerBtn>().Init();
+        GetButton(Buttons.AbilityBtn).GetComponent<LowerBtn>().Init();
 
         challengeLock = gameObject.FindRecursive("ChallengeLock");
 
@@ -168,9 +168,9 @@ public class UI_GameScene_Home : UI_Scene
             SelectLowerBtn(LowerBtnTypes.BoostBtn, lowerbtn);
         });
 
-        GetButton(Buttons.QeustBtn).AddButtonEvent(() =>
+        GetButton(Buttons.AbilityBtn).AddButtonEvent(() =>
         {
-            var lowerbtn = GetButton(Buttons.QeustBtn).GetComponent<LowerBtn>();
+            var lowerbtn = GetButton(Buttons.AbilityBtn).GetComponent<LowerBtn>();
 
             SelectLowerBtn(LowerBtnTypes.QeustBtn, lowerbtn);
         });
