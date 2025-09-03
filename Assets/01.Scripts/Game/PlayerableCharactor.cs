@@ -15,8 +15,6 @@ public abstract class PlayerableCharactor : Charactor
 
     public bool die = false;
 
-
-
     public override void SetBodySkin()
     {
         if (bodySpriteRenderer == null)

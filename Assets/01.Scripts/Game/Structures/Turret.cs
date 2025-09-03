@@ -105,7 +105,13 @@ public class Turret : Structure
                 bullet.transform.position = target.transform.position;
                 Managers.Resource.Destroy(bullet);
                 bullets.Remove(bullet);
-                target.Hit((int)Managers.Game.GetStructureData(type).argment1[level]);
+
+                var damage = (int)Managers.Game.GetStructureData(type).argment1[level];
+
+                if (IsPlayerStructure())
+                    damage = Mathf.RoundToInt(damage * Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackDamage));
+
+                target.Hit(damage);
 
                 Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: 0.4f);
 
@@ -145,7 +151,7 @@ public class Turret : Structure
     public override void UpgradeTo(int levelTo)
     {
         base.UpgradeTo(levelTo);
-        
+
         if (body == null || head == null)
         {
             body = gameObject.FindRecursive("Body");
@@ -183,12 +189,20 @@ public class Turret : Structure
 
         range = (playerData.structures.Find(n => n.type == Define.StructureType.Telescope) != null) ? (range * 1.2f) : range;
 
+        if (IsPlayerStructure())
+            range = Mathf.RoundToInt(range * Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackRange));
+
         return range;
     }
 
     public virtual float GetAttackSpeed()
     {
         float coolDown = attackCooldown;
+
+        if (IsPlayerStructure())
+        {
+            coolDown /= (1 + (Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackSpeed) * 0.01f));
+        }
 
         if (playerData.type == Define.CharactorType.Chef)
         {
@@ -199,13 +213,13 @@ public class Turret : Structure
         if (playerData.structures.Find(n => n.type == Define.StructureType.TurretBooster) != null && target != null)
         {
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            
+
             // 600px / 거리(px) = 공격속도 배율
             float speedMultiplier = 5 / distance;
-            
+
             // 1 ~ 2.5 사이로 제한
             speedMultiplier = Mathf.Clamp(speedMultiplier, 1f, 2.5f);
-            
+
             coolDown /= speedMultiplier;
         }
 

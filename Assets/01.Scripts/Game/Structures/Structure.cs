@@ -31,6 +31,11 @@ public abstract class Structure : MonoBehaviour
 
     protected float upgradePercent = 2.5f;
 
+    protected bool IsPlayerStructure()
+    {
+        return playerData == Managers.Game.playerData;
+    }
+
     protected virtual void Start()
     {
         if (spriteRenderer == null)
@@ -91,7 +96,7 @@ public abstract class Structure : MonoBehaviour
 
     public virtual void SetBodySprite()
     {
-        
+
     }
 
     public virtual void Hit(float damage)
@@ -367,7 +372,13 @@ public class SelfDoorRepair : StructureEffect
             while (tickTimer >= 1f)
             {
                 tickTimer -= 1f;
-                door.Heal(Mathf.RoundToInt(door.GetMaxHp() * 0.07f));
+
+                float healPercent = 0.07f;
+
+                if (Managers.Ability.GetHasAbilityValueSum(AbilityType.DoorRepairMul) > 0)
+                    healPercent += 0.03f;
+
+                door.Heal(Mathf.RoundToInt(door.GetMaxHp() * healPercent));
 
                 Managers.Audio.PlaySound("snd_stage_unlock", structure.transform, minRangeVolumeMul: 0.4f, volumeMul: 0.8f);
             }

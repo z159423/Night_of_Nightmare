@@ -298,11 +298,26 @@ public class AbilityManager : MonoBehaviour
             return null;
         return abilityData.abilities[abilityIndex];
     }
-    
+
     public Ability GetAdditionalAbility(int abilityIndex)
     {
         if (abilityIndex < 0 || abilityIndex >= abilityData.additionalAbilities.Count)
             return null;
         return abilityData.additionalAbilities[abilityIndex];
+    }
+
+    public float GetHasAbilityValueSum(AbilityType type)
+    {
+        float sum = 0;
+
+        foreach (var ability in GetAllPurchasedAbilities())
+        {
+            if (ability.type == type)
+            {
+                sum += ability.value;
+            }
+        }
+
+        return sum;
     }
 }

@@ -45,7 +45,7 @@ public class Door : Structure
 
         bodySpriteRenderer = gameObject.FindRecursive("Body").GetComponent<SpriteRenderer>();
 
-        MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
+        MaxHp = GetDoorMaxHp();
         Hp = MaxHp;
 
         repair = gameObject.FindRecursive("Repair").transform;
@@ -82,7 +82,14 @@ public class Door : Structure
                 {
                     Managers.Audio.PlaySound("snd_stage_unlock", playerData.structures.Find(n => n.type == Define.StructureType.RepairStation).transform, minRangeVolumeMul: 0.6f, volumeMul: 0.8f);
 
-                    RepaireDoor(0.02f);
+                    float healPercent = 0.02f;
+
+                    if (Managers.Ability.GetHasAbilityValueSum(AbilityType.RepairStationMul) > 0)
+                    {
+                        healPercent += 0.01f;
+                    }
+
+                    RepaireDoor(healPercent);
                 }
             }
         }
@@ -204,7 +211,7 @@ public class Door : Structure
 
     public void SetStat()
     {
-        MaxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
+        MaxHp = GetDoorMaxHp();
         Hp = MaxHp;
     }
 
@@ -255,5 +262,15 @@ public class Door : Structure
         bodySpriteRenderer.color = Color.white;
 
         coolerParticle.gameObject.SetActive(false);
+    }
+
+    int GetDoorMaxHp()
+    {
+        var hp = GetDoorMaxHp();
+
+        if (IsPlayerStructure())
+            hp = Mathf.RoundToInt(hp * Managers.Ability.GetHasAbilityValueSum(AbilityType.DoorHp));
+
+        return hp;
     }
 }

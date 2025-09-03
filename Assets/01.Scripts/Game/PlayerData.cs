@@ -26,6 +26,11 @@ public class PlayerData
 
     public bool freeDoorUpgrade = false;
 
+    bool IsPlayer()
+    {
+        return this == Managers.Game.playerData;
+    }
+
     public Dictionary<StructureType, int> rvUpgradeCount = new Dictionary<Define.StructureType, int>()
     {
 
@@ -65,6 +70,11 @@ public class PlayerData
 
         float delay = 0;
 
+        if (IsPlayer())
+        {
+            coinValue += (int)Managers.Ability.GetHasAbilityValueSum(AbilityType.BedGoldGain);
+        }
+
         if (room != null && room.bed != null)
         {
             room.bed.ResourceGetParticle(coinValue);
@@ -93,10 +103,17 @@ public class PlayerData
             Managers.Audio.PlaySound("snd_coin", room.bed.transform, minRangeVolumeMul: 0.8f, delay: delay);
         }
 
-        foreach (var generator in structures.Where(s => s.type == Define.StructureType.Generator))
+        foreach (var generator in structures.Where(s => s.type == StructureType.Generator))
         {
-            generator.GetComponent<Generator>().ResourceGetParticle((int)Managers.Game.GetStructureData(Define.StructureType.Generator).argment1[generator.level]);
-            energy += (int)Managers.Game.GetStructureData(StructureType.Generator).argment1[generator.level];
+            int _energy = (int)Managers.Game.GetStructureData(StructureType.Generator).argment1[generator.level];
+
+            if (IsPlayer() && Managers.Ability.GetHasAbilityValueSum(AbilityType.GeneratorMul) > 0)
+            {
+                _energy += 1;
+            }
+
+            generator.GetComponent<Generator>().ResourceGetParticle(_energy);
+            energy += _energy;
 
             Managers.Audio.PlaySound("snd_tick", room.bed.transform, minRangeVolumeMul: 0.6f);
         }
