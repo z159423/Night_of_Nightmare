@@ -110,6 +110,7 @@ public class UI_GameScene_Home : UI_Scene
         });
 
         GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
+        GetImage(Images.RankImage).SetNativeSize();
     }
 
     public void FirstSetting()

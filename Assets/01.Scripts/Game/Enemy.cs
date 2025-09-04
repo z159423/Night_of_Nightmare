@@ -632,7 +632,7 @@ public class Enemy : Charactor
     {
 
     }
-    public void Hit(int damage, bool particle = true)
+    public void Hit(int damage, bool particle = true, bool critical = false)
     {
         hp -= damage;
         if (hp <= 0)
@@ -685,6 +685,11 @@ public class Enemy : Charactor
             var particle = Managers.Resource.Instantiate("Particles/SmokeParticle");
 
             particle.transform.position = transform.position + new Vector3(UnityEngine.Random.Range(-0.2f, 0.2f), UnityEngine.Random.Range(-0.2f, 0.2f), -0.4f);
+
+            if (critical)
+            {
+                particle.transform.localScale = Vector3.one * 1.3f;
+            }
 
             yield return new WaitForSeconds(1f);
 

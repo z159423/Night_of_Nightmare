@@ -65,14 +65,20 @@ public class Turret : Structure
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         head.transform.rotation = Quaternion.Euler(0, 0, angle + headOffset);
 
-        // 총알 생성
-        var bullet = Managers.Resource.Instantiate("Bullet");
-        bullet.transform.position = transform.position;
-
-        bullets.Add(bullet);
-
         float bulletSpeed = 10f;
-        StartCoroutine(BulletFollowTarget(bullet, target, bulletSpeed));
+
+        if (IsPlayerStructure() && Managers.Ability.GetHasAbilityValueSum(AbilityType.TurretDoubleAttack) > Random.Range(0, 100))
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                var bullet2 = Managers.Resource.Instantiate("Bullet");
+                bullet2.transform.position = transform.position;
+
+                bullets.Add(bullet2);
+
+                StartCoroutine(BulletFollowTarget(bullet2, target, bulletSpeed));
+            }
+        }
 
         var goldenChest = playerData.structures.Any(n => n.type == Define.StructureType.GoldenChest);
 
@@ -108,10 +114,24 @@ public class Turret : Structure
 
                 var damage = (int)Managers.Game.GetStructureData(type).argment1[level];
 
+                bool critical = false;
+
                 if (IsPlayerStructure())
+                {
                     damage = Mathf.RoundToInt(damage * Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackDamage));
 
-                target.Hit(damage);
+                    if (Managers.Ability.GetHasAbilityValueSum(AbilityType.CriticalChance) > Random.Range(0, 100f))
+                    {
+                        var criticalDamage = Managers.Ability.GetHasAbilityValueSum(AbilityType.CriticalDamage);
+
+                        damage = Mathf.RoundToInt(damage * (1.5f + (criticalDamage * 0.01f)));
+                        // 크리티컬 이펙트
+
+                        critical = true;
+                    }
+                }
+
+                target.Hit(damage, critical: critical);
 
                 Managers.Audio.PlaySound("snd_tower_hit", target.transform, minRangeVolumeMul: 0.4f);
 

@@ -266,7 +266,7 @@ public class Door : Structure
 
     int GetDoorMaxHp()
     {
-        var hp = GetDoorMaxHp();
+        var hp = MaxHp;
 
         if (IsPlayerStructure())
             hp = Mathf.RoundToInt(hp * Managers.Ability.GetHasAbilityValueSum(AbilityType.DoorHp));

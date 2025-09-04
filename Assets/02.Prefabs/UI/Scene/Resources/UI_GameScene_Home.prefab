@@ -1804,6 +1804,7 @@ GameObject:
   - component: {fileID: 4951974731926170269}
   - component: {fileID: 7221864382788020620}
   - component: {fileID: 2525853030152685708}
+  - component: {fileID: 3939030275466316722}
   m_Layer: 0
   m_Name: RankImage
   m_TagString: Untagged
@@ -1883,6 +1884,21 @@ MonoBehaviour:
   phase: 0
   animationType: 0
   staticSize: 1
+--- !u!114 &3939030275466316722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892802257772070436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 20, y: -20}
+  m_UseGraphicAlpha: 1
 --- !u!1 &4055666671838773307
 GameObject:
   m_ObjectHideFlags: 0

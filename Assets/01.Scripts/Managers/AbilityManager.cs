@@ -318,6 +318,14 @@ public class AbilityManager : MonoBehaviour
             }
         }
 
+        foreach (var ability in GetAllPurchasedAdditionalAbilities())
+        {
+            if (ability.type == type)
+            {
+                sum += ability.value;
+            }
+        }
+
         return sum;
     }
 }
