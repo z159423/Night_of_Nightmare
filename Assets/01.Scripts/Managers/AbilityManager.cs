@@ -31,6 +31,13 @@ public class AbilityManager : MonoBehaviour
             return false;
         }
 
+        // 추가 조건: 이전 인덱스의 능력을 먼저 구매해야 함
+        if (abilityIndex > 0 && !purchasedAbilityIndices.Contains(abilityIndex - 1))
+        {
+            Debug.Log($"이전 능력을 먼저 구매해야 합니다. (인덱스 {abilityIndex - 1})");
+            return false;
+        }
+
         var ability = abilityData.abilities[abilityIndex];
 
         // 플레이어 티어 체크
@@ -84,6 +91,13 @@ public class AbilityManager : MonoBehaviour
         }
 
         var ability = abilityData.additionalAbilities[additionalAbilityIndex];
+
+        // 추가 조건: 같은 티어의 기본 능력을 최소 1개 구매했어야 함
+        if (!HasPurchasedAbilityInTier(ability.needTier))
+        {
+            Debug.Log($"같은 티어({ability.needTier})의 기본 능력을 먼저 구매해야 합니다.");
+            return false;
+        }
 
         // 플레이어 티어 체크
         var playerTier = Define.GetPlayerCurrentTier();
@@ -327,5 +341,88 @@ public class AbilityManager : MonoBehaviour
         }
 
         return sum;
+    }
+
+    // 추가 헬퍼 메서드: 특정 티어의 기본 능력을 구매했는지 확인
+    private bool HasPurchasedAbilityInTier(Define.Tier tier)
+    {
+        foreach (var abilityIndex in purchasedAbilityIndices)
+        {
+            var ability = abilityData.abilities[abilityIndex];
+            if (ability.needTier == tier)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 디버그용: 특정 티어에서 구매한 기본 능력 개수 반환
+    public int GetPurchasedAbilityCountInTier(Define.Tier tier)
+    {
+        int count = 0;
+        foreach (var abilityIndex in purchasedAbilityIndices)
+        {
+            var ability = abilityData.abilities[abilityIndex];
+            if (ability.needTier == tier)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // 구매 가능한 다음 능력 인덱스 반환 (순차 구매용)
+    public int GetNextPurchasableAbilityIndex()
+    {
+        for (int i = 0; i < abilityData.abilities.Count; i++)
+        {
+            if (CanPurchaseAbility(i))
+            {
+                return i;
+            }
+        }
+        return -1; // 구매 가능한 능력이 없음
+    }
+
+    // 특정 티어에서 구매 가능한 추가 능력들 반환
+    public List<int> GetPurchasableAdditionalAbilityIndicesInTier(Define.Tier tier)
+    {
+        var result = new List<int>();
+
+        for (int i = 0; i < abilityData.additionalAbilities.Count; i++)
+        {
+            var ability = abilityData.additionalAbilities[i];
+            if (ability.needTier == tier && CanPurchaseAdditionalAbility(i))
+            {
+                result.Add(i);
+            }
+        }
+
+        return result;
+    }
+
+    // 특정 인덱스의 추가 능력이 구매 가능한지 확인하는 메서드
+    public int GetNextPurchasableAdditionalAbilityIndex(Define.Tier tier)
+    {
+        for (int i = 0; i < abilityData.additionalAbilities.Count; i++)
+        {
+            var ability = abilityData.additionalAbilities[i];
+            if (ability.needTier == tier && CanPurchaseAdditionalAbility(i))
+            {
+                return i;
+            }
+        }
+        return -1; // 구매 가능한 추가 능력이 없음
+    }
+
+    public int GetAbilityCount()
+    {
+        return abilityData.abilities.Count;
+    }
+
+    public int GetAdditionalAbilityCount()
+    {
+        return abilityData.additionalAbilities.Count;
     }
 }

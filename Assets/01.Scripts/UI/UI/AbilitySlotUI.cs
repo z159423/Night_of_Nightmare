@@ -124,17 +124,75 @@ public class AbilitySlotUI : UI_Base
         {
             GetImage(Images.Line3).gameObject.SetActive(false);
         }
+
+        UpdateUI();
     }
 
     void UpdateUI()
     {
+        var ability = Managers.Ability.GetAbility(abilityIndex);
         var additionalAbility = Managers.Ability.GetAdditionalAbility(additionalAbilityIndex);
 
+        // 기본 능력 빨간점 업데이트
         GetImage(Images.AbilityReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAbility(abilityIndex));
 
+        // 추가 능력 빨간점 업데이트
         if (additionalAbility != null)
         {
             GetImage(Images.AdditionalReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAdditionalAbility(additionalAbilityIndex));
+        }
+
+        // === 라인 색상 업데이트 ===
+        
+        // Line1 (중간 다리와 이어지는 라인) - 기본 능력 상태에 따라
+        bool currentAbilityPurchased = Managers.Ability.HasAbility(abilityIndex);
+        bool currentAbilityCanPurchase = Managers.Ability.CanPurchaseAbility(abilityIndex);
+        
+        if (currentAbilityPurchased || currentAbilityCanPurchase)
+        {
+            GetImage(Images.Line1).color = Color.white;
+        }
+        else
+        {
+            GetImage(Images.Line1).color = Color.black;
+        }
+
+        // Line2 (추가 능력과 이어지는 라인) - 추가 능력이 있을 때만
+        if (additionalAbility != null)
+        {
+            bool additionalAbilityPurchased = Managers.Ability.HasAdditionalAbility(additionalAbilityIndex);
+            bool additionalAbilityCanPurchase = Managers.Ability.CanPurchaseAdditionalAbility(additionalAbilityIndex);
+            
+            if (additionalAbilityPurchased || additionalAbilityCanPurchase)
+            {
+                GetImage(Images.Line2).color = Color.white;
+            }
+            else
+            {
+                GetImage(Images.Line2).color = Color.black;
+            }
+        }
+
+        // Line3 (다음 기본 능력과 이어지는 라인) - 다음 능력의 상태에 따라
+        int nextAbilityIndex = abilityIndex + 1;
+        if (nextAbilityIndex < Managers.Ability.GetAbilityCount()) // GetAbilityCount() 메서드 필요
+        {
+            bool nextAbilityPurchased = Managers.Ability.HasAbility(nextAbilityIndex);
+            bool nextAbilityCanPurchase = Managers.Ability.CanPurchaseAbility(nextAbilityIndex);
+            
+            if (nextAbilityPurchased || nextAbilityCanPurchase)
+            {
+                GetImage(Images.Line3).color = Color.white;
+            }
+            else
+            {
+                GetImage(Images.Line3).color = Color.black;
+            }
+        }
+        else
+        {
+            // 마지막 능력인 경우 Line3는 숨김
+            GetImage(Images.Line3).gameObject.SetActive(false);
         }
     }
 }

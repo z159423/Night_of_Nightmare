@@ -125,7 +125,7 @@ class QClear : EditorWindow
             // Clear 메서드 추가
             insertList.Add($"    [MenuItem(\"QTool/Clear/{key}\", priority = 1)]");
             insertList.Add($"    public static void Clear{key}() {{ PlayerPrefs.DeleteKey(\"{key}\"); Debug.Log(\"<Color=red>PlayerPrefs Delete : {key}</color>\"); }}");
-            
+
             // Log 메서드 추가
             insertList.Add($"    [MenuItem(\"QTool/Log/{key}\", priority = 1)]");
             insertList.Add($"    public static void Log{key}() {{ var value = GetPlayerPrefsValue(\"{key}\"); Debug.Log($\"<Color=cyan>{key}</color> : {{value}}\"); }}");
@@ -147,7 +147,7 @@ class QClear : EditorWindow
 
         File.WriteAllLines(AssetDatabase.GUIDToAssetPath(currentScript[0]), allLines, System.Text.Encoding.UTF8);
         AssetDatabase.ImportAsset(AssetDatabase.GUIDToAssetPath(currentScript[0]));
-        
+
         Debug.Log($"<Color=green>Generated Clear and Log methods for {keys.Count} PlayerPrefs keys!</color>");
     }
 
@@ -229,5 +229,22 @@ class QClear : EditorWindow
     [MenuItem("QTool/Log/Volume", priority = 1)]
     public static void LogVolume() { var value = GetPlayerPrefsValue("Volume"); Debug.Log($"<Color=cyan>Volume</color> : {value}"); }
     // End
+
+
+
+    [MenuItem("QTool/Clear/Session Reward Data", priority = 1)]
+    public static void ClearSessionRewardData()
+    {
+        var sessionManager = FindObjectOfType<SessionRewardManager>();
+        if (sessionManager != null)
+        {
+            sessionManager.DeleteSaveData();
+            Debug.Log("<Color=red>Session Reward Data Deleted</color>");
+        }
+        else
+        {
+            Debug.LogWarning("SessionRewardManager not found in scene");
+        }
+    }
 }
 #endif
