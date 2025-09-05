@@ -85,6 +85,7 @@ public class SessionRewardManager : MonoBehaviour
         if (pause)
         {
             // 백그라운드로 갈 때 현재까지의 접속 시간 저장
+            _running = false; // 백그라운드에서는 시간 계산 중지
             Save();
         }
         else
@@ -96,6 +97,7 @@ public class SessionRewardManager : MonoBehaviour
             _state.sessionStartUnix = NowUnix();
             _isFirstFrame = true;
             _tick = 0f; // tick 초기화
+            _running = true; // 시간 계산 재시작
         }
     }
 
@@ -112,8 +114,16 @@ public class SessionRewardManager : MonoBehaviour
     {
         if (!_running) return;
 
-        // 매 프레임 1초 누적
-        _tick += Time.unscaledDeltaTime;
+        // 첫 프레임은 deltaTime이 비정상적으로 클 수 있으므로 스킵
+        if (_isFirstFrame)
+        {
+            _isFirstFrame = false;
+            return;
+        }
+
+        // deltaTime 제한 (최대 1초로 제한하여 비정상적인 시간 점프 방지)
+        float deltaTime = Mathf.Min(Time.unscaledDeltaTime, 1f);
+        _tick += deltaTime;
 
         // 9시 경계는 1분 저장 타이밍에도 검사하지만, 실시간 반영을 위해 1초 루프에서도 가볍게 체크
         // (날짜 바뀌는 순간을 놓치지 않기 위함)
@@ -122,12 +132,12 @@ public class SessionRewardManager : MonoBehaviour
             ResetForNewServiceDay();
         }
 
-        // === [수정] Update()의 누적 로직 ===
+        // 1초마다 접속 시간 증가
         if (_tick >= 1f)
         {
             _tick -= 1f;
 
-            // ★캡까지 도달한 경우 더 이상 증가하지 않음
+            // 캡까지 도달한 경우 더 이상 증가하지 않음
             if (_state.accumulatedSecondsToday < _capSeconds)
             {
                 _state.accumulatedSecondsToday++;
