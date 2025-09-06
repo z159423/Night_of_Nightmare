@@ -84,10 +84,19 @@ public class AbilitySlotUI : UI_Base
 
         GetButton(Buttons.AbilityBtn).image.sprite = Managers.Resource.Load<Sprite>($"Ability/ability_{(int)ability.type}");
 
-        if ((int)ability.needTier <= Managers.LocalData.PlayerHighestTier)
+
+        //이건 구매 가능한 티어일때 색 넣는거
+        // if ((int)ability.needTier <= Managers.LocalData.PlayerHighestTier)
+        //     GetButton(Buttons.AbilityBtn).image.color = Color.white;
+        // else
+        //     GetButton(Buttons.AbilityBtn).image.color = new Color32(50, 50, 50, 255);
+
+        //이건 아직 구매 안한 상태면 그냥 색 다 빼는거
+        if (Managers.Ability.HasAbility(abilityIndex))
             GetButton(Buttons.AbilityBtn).image.color = Color.white;
         else
             GetButton(Buttons.AbilityBtn).image.color = new Color32(50, 50, 50, 255);
+
 
         GetButton(Buttons.AbilityBtn).AddButtonEvent(() =>
         {
@@ -100,7 +109,12 @@ public class AbilitySlotUI : UI_Base
         {
             GetButton(Buttons.AdditionalBtn).image.sprite = Managers.Resource.Load<Sprite>($"Ability/ability_{(int)additionalAbility.type}");
 
-            if ((int)additionalAbility.needTier <= Managers.LocalData.PlayerHighestTier)
+            // if ((int)additionalAbility.needTier <= Managers.LocalData.PlayerHighestTier)
+            //     GetButton(Buttons.AdditionalBtn).image.color = Color.white;
+            // else
+            //     GetButton(Buttons.AdditionalBtn).image.color = new Color32(50, 50, 50, 255);
+
+            if (Managers.Ability.HasAdditionalAbility(additionalAbilityIndex))
                 GetButton(Buttons.AdditionalBtn).image.color = Color.white;
             else
                 GetButton(Buttons.AdditionalBtn).image.color = new Color32(50, 50, 50, 255);
@@ -143,12 +157,12 @@ public class AbilitySlotUI : UI_Base
         }
 
         // === 라인 색상 업데이트 ===
-        
+
         // Line1 (중간 다리와 이어지는 라인) - 기본 능력 상태에 따라
         bool currentAbilityPurchased = Managers.Ability.HasAbility(abilityIndex);
         bool currentAbilityCanPurchase = Managers.Ability.CanPurchaseAbility(abilityIndex);
-        
-        if (currentAbilityPurchased || currentAbilityCanPurchase)
+
+        if (currentAbilityPurchased)
         {
             GetImage(Images.Line1).color = Color.white;
         }
@@ -157,13 +171,17 @@ public class AbilitySlotUI : UI_Base
             GetImage(Images.Line1).color = Color.black;
         }
 
+        if (Managers.Ability.HasAbility(abilityIndex))
+            GetButton(Buttons.AbilityBtn).image.color = Color.white;
+        else
+            GetButton(Buttons.AbilityBtn).image.color = new Color32(50, 50, 50, 255);
+
         // Line2 (추가 능력과 이어지는 라인) - 추가 능력이 있을 때만
         if (additionalAbility != null)
         {
-            bool additionalAbilityPurchased = Managers.Ability.HasAdditionalAbility(additionalAbilityIndex);
             bool additionalAbilityCanPurchase = Managers.Ability.CanPurchaseAdditionalAbility(additionalAbilityIndex);
-            
-            if (additionalAbilityPurchased || additionalAbilityCanPurchase)
+
+            if (additionalAbilityCanPurchase || Managers.Ability.HasAdditionalAbility(additionalAbilityIndex))
             {
                 GetImage(Images.Line2).color = Color.white;
             }
@@ -171,6 +189,11 @@ public class AbilitySlotUI : UI_Base
             {
                 GetImage(Images.Line2).color = Color.black;
             }
+
+            if (Managers.Ability.HasAdditionalAbility(additionalAbilityIndex))
+                GetButton(Buttons.AdditionalBtn).image.color = Color.white;
+            else
+                GetButton(Buttons.AdditionalBtn).image.color = new Color32(50, 50, 50, 255);
         }
 
         // Line3 (다음 기본 능력과 이어지는 라인) - 다음 능력의 상태에 따라
@@ -179,7 +202,7 @@ public class AbilitySlotUI : UI_Base
         {
             bool nextAbilityPurchased = Managers.Ability.HasAbility(nextAbilityIndex);
             bool nextAbilityCanPurchase = Managers.Ability.CanPurchaseAbility(nextAbilityIndex);
-            
+
             if (nextAbilityPurchased || nextAbilityCanPurchase)
             {
                 GetImage(Images.Line3).color = Color.white;

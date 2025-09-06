@@ -795,7 +795,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177208
-    m_Localized: "\uB7AD\uD06C \uBAA8\uB4DC 1\uD68C \uC2B9\uB9AC\uC2DC \uD574\uAE08"
+    m_Localized: "\uB7AD\uD06C \uBAA8\uB4DC 3\uD68C \uC2B9\uB9AC\uC2DC \uD574\uAE08"
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177209
@@ -934,6 +934,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 39206186655391755
     m_Localized: "\uD0C0\uC6CC \uB354\uBE14\uC5B4\uD0DD \uD655\uB960\uC774 @1% \uC99D\uAC00\uD569\uB2C8\uB2E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40160811676049408
+    m_Localized: "\uC18C\uC9C0\uC911"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40328723019833344
+    m_Localized: "\uC545\uBABD\uC758 \uBC24"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40348539273322496
+    m_Localized: "\uD68D\uB4DD \uAC00\uB2A5 \uD69F\uC218 : @1"
     m_Metadata:
       m_Items: []
   references:

@@ -52,6 +52,9 @@ public class GameManager : MonoBehaviour
 
     public static bool sdkLogin = false;
 
+    public bool goldRvBonus = false;
+    public bool energyRvBonus = false;
+
 
     public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
 
@@ -239,6 +242,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (goldRvBonus)
+        {
+            Managers.Game.playerData.coin += 100;
+            goldRvBonus = false;
+        }
+
+        if (energyRvBonus)
+        {
+            Managers.Game.playerData.energy += 100;
+            energyRvBonus = false;
+        }
+
         // 반지름 1.6유닛(160px) 원 안에 랜덤 스폰
     }
     void SetPos(Transform trans)
@@ -308,6 +323,8 @@ public class GameManager : MonoBehaviour
 
         Managers.UI.CloseAllPopupUI();
 
+        Managers.LocalData.PlayerGameCount++;
+
         GoHome();
 
         var result = Managers.UI.ShowPopupUI<MatchResult_Popup>();
@@ -328,6 +345,7 @@ public class GameManager : MonoBehaviour
         Managers.UI.CloseAllPopupUI();
 
         Managers.LocalData.PlayerWinCount++;
+        Managers.LocalData.PlayerGameCount++;
 
         int point = 0;
 

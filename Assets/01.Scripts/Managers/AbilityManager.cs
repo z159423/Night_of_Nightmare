@@ -40,9 +40,9 @@ public class AbilityManager : MonoBehaviour
 
         var ability = abilityData.abilities[abilityIndex];
 
-        // 플레이어 티어 체크
-        var playerTier = Define.GetPlayerCurrentTier();
-        if (!IsTierHigherOrEqual(playerTier, ability.needTier))
+        // 플레이어 최고 달성 티어 확인
+        var playerTier = Managers.LocalData.PlayerHighestTier;
+        if (!IsTierHigherOrEqual((Define.Tier)playerTier, ability.needTier))
         {
             Debug.Log($"티어가 부족합니다. 필요: {ability.needTier}, 현재: {playerTier}");
             return false;
@@ -100,8 +100,8 @@ public class AbilityManager : MonoBehaviour
         }
 
         // 플레이어 티어 체크
-        var playerTier = Define.GetPlayerCurrentTier();
-        if (!IsTierHigherOrEqual(playerTier, ability.needTier))
+        var playerTier = Managers.LocalData.PlayerHighestTier;
+        if (!IsTierHigherOrEqual((Define.Tier)playerTier, ability.needTier))
         {
             Debug.Log($"티어가 부족합니다. 필요: {ability.needTier}, 현재: {playerTier}");
             return false;
@@ -424,5 +424,10 @@ public class AbilityManager : MonoBehaviour
     public int GetAdditionalAbilityCount()
     {
         return abilityData.additionalAbilities.Count;
+    }
+
+    public int GetHasAbilityCount()
+    {
+        return purchasedAbilityIndices.Count;
     }
 }

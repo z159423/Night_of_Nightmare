@@ -80,6 +80,7 @@ public class AttendanceManager : MonoBehaviour
         {
             case 0:
                 Managers.LocalData.PlayerGemCount += 200;
+
                 items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                 break;
 
@@ -139,7 +140,7 @@ public class AttendanceManager : MonoBehaviour
             // 내일 오전 9시에 알림 예약
             DateTime tomorrow9AM = DateTime.Now.Date.AddDays(1).AddHours(9);
 
-            Managers.Push.ScheduleNotification("Attendance", Managers.Localize.GetText("attendance_push"), tomorrow9AM, "Attendance");
+            Managers.Push.ScheduleNotification(Managers.Localize.GetText("non_title"), Managers.Localize.GetText("attendance_push"), tomorrow9AM, "Attendance");
         }
 
         return true;

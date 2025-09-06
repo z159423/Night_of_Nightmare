@@ -83,6 +83,12 @@ public class LocalDataManager
         set { PlayerPrefs.SetInt("PlayerWinCount", value); IsSave = true; }
     }
 
+    public int PlayerGameCount
+    {
+        get => PlayerPrefs.GetInt("PlayerGameCount", 0);
+        set { PlayerPrefs.SetInt("PlayerGameCount", value); IsSave = true; }
+    }
+
     public int PlayerRankingPoint
     {
         get => PlayerPrefs.GetInt("PlayerRankingPoint", 0);
@@ -206,5 +212,17 @@ public class LocalDataManager
     {
         get => PlayerPrefs.GetInt("Volume", 1) == 1;
         set { PlayerPrefs.SetInt("Volume", value ? 1 : 0); IsSave = true; GameObserver.Call(GameObserverType.Game.OnVolumeChange); }
+    }
+
+    public int RandomBoxRvCount
+    {
+        get => PlayerPrefs.GetInt("RandomBoxRvCount", 0);
+        set { PlayerPrefs.SetInt("RandomBoxRvCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnShowRandomReward); }
+    }
+
+    public int RandomBoxRvShowDay
+    {
+        get => PlayerPrefs.GetInt("RandomBoxRvShowDay", -1);
+        set { PlayerPrefs.SetInt("RandomBoxRvShowDay", value); IsSave = true; }
     }
 }

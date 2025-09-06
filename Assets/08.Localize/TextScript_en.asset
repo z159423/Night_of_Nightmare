@@ -774,7 +774,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177208
-    m_Localized: Unlocks after 1 win in Rank Mode
+    m_Localized: Unlocks after 3 win in Rank Mode
     m_Metadata:
       m_Items: []
   - m_Id: 9823531126251520
@@ -903,6 +903,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 39206186655391755
     m_Localized: Tower double attack chance increases by @1%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40160811676049408
+    m_Localized: Owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40328723019833344
+    m_Localized: Night of Nightmare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40348539273322496
+    m_Localized: 'Remaining claims: @1'
     m_Metadata:
       m_Items: []
   references:

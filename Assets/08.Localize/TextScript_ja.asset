@@ -775,7 +775,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177208
-    m_Localized: "\u30E9\u30F3\u30AF\u30E2\u30FC\u30C91\u56DE\u52DD\u5229\u3067\u89E3\u653E"
+    m_Localized: "\u30E9\u30F3\u30AF\u30E2\u30FC\u30C93\u56DE\u52DD\u5229\u3067\u89E3\u653E"
     m_Metadata:
       m_Items: []
   - m_Id: 9823531126251520
@@ -904,6 +904,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 39206186655391755
     m_Localized: "\u30BF\u30EF\u30FC\u306E\u30C0\u30D6\u30EB\u30A2\u30BF\u30C3\u30AF\u78BA\u7387\u304C@1%\u5897\u52A0\u3057\u307E\u3059"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40160811676049408
+    m_Localized: "\u6240\u6301\u6E08\u307F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40328723019833344
+    m_Localized: Night of Nightmare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40348539273322496
+    m_Localized: "\u7372\u5F97\u53EF\u80FD\u56DE\u6570\uFF1A@1"
     m_Metadata:
       m_Items: []
   references:

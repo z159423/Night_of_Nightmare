@@ -28,14 +28,17 @@ public class UI_GameScene_Home : UI_Scene
         RankPointDown,
         SettingBtn,
         AttendanceBtn,
-        SessionRewardBtn
+        SessionRewardBtn,
+        RankModeRvBtn,
+        RandomBoxRvBtn
     }
 
     enum Texts
     {
         GemText,
         TicketCount,
-        SessionRewardText
+        SessionRewardText,
+        RandomBoxRvCountText
     }
 
     enum Images
@@ -69,6 +72,8 @@ public class UI_GameScene_Home : UI_Scene
     private GameObject challengeLock;
 
     private Transform cheat;
+
+    private Ability_Popup abilityPopup;
 
 
     public override void Init()
@@ -111,6 +116,24 @@ public class UI_GameScene_Home : UI_Scene
 
         GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
         GetImage(Images.RankImage).SetNativeSize();
+
+        GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(Managers.LocalData.PlayerWinCount >= 1 || (!Managers.Game.goldRvBonus && !Managers.Game.energyRvBonus));
+
+        this.SetListener(GameObserverType.Game.OnShowRandomReward, () =>
+        {
+            if (Managers.LocalData.RandomBoxRvCount >= 5)
+            {
+                GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(false);
+            }
+            else
+            {
+                GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(true);
+            }
+
+            GetTextMesh(Texts.RandomBoxRvCountText).text = $"{Managers.LocalData.RandomBoxRvCount} / 5";
+        });
+
+        GetTextMesh(Texts.RandomBoxRvCountText).text = $"{Managers.LocalData.RandomBoxRvCount} / 5";
     }
 
     public void FirstSetting()
@@ -272,6 +295,31 @@ public class UI_GameScene_Home : UI_Scene
         {
             Managers.UI.ShowPopupUI<SessionReward_Popup>();
         });
+
+        GetButton(Buttons.RankModeRvBtn).AddButtonEvent(() =>
+        {
+            var popup = Managers.UI.ShowPopupUI<StartRv_Popup>();
+
+            popup.onShowRv = () =>
+            {
+                Managers.Game.goldRvBonus = false;
+                Managers.Game.energyRvBonus = false;
+
+                if (UnityEngine.Random.Range(0, 2) == 0)
+                    Managers.Game.energyRvBonus = true;
+                else
+                    Managers.Game.goldRvBonus = true;
+
+                GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(false);
+            };
+        });
+
+        GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(Managers.LocalData.RandomBoxRvCount < 5 || Managers.LocalData.RandomBoxRvShowDay != System.DateTime.Now.Day);
+
+        GetButton(Buttons.RandomBoxRvBtn).AddButtonEvent(() =>
+        {
+            var popup = Managers.UI.ShowPopupUI<RandomBoxRv_Popup>();
+        });
     }
 
     void UpdateUI()
@@ -289,7 +337,7 @@ public class UI_GameScene_Home : UI_Scene
         if (challengeLock == null)
             challengeLock = gameObject.FindRecursive("ChallengeLock");
 
-        challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 1);
+        challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 3);
     }
 
     public override void Hide()
@@ -323,7 +371,8 @@ public class UI_GameScene_Home : UI_Scene
         if (currentPopup is Ability_Popup)
         {
             // Ability 팝업은 바로 닫기
-            currentPopup.ClosePopupUI();
+            // currentPopup.ClosePopupUI();
+            currentPopup.gameObject.SetActive(false);
             currentPopup = null;
             TransitionToNewState(newType);
         }
@@ -361,7 +410,7 @@ public class UI_GameScene_Home : UI_Scene
     private bool NeedsGameButtonAnimation(LowerBtnTypes from, LowerBtnTypes to)
     {
         // HomeBtn으로 돌아가거나, HomeBtn에서 나가는 경우
-        return to == LowerBtnTypes.HomeBtn || 
+        return to == LowerBtnTypes.HomeBtn ||
                (from == LowerBtnTypes.HomeBtn && to != LowerBtnTypes.HomeBtn);
     }
 
@@ -488,7 +537,7 @@ public class UI_GameScene_Home : UI_Scene
             yield return new WaitForSeconds(waitTime);
 
         action?.Invoke();
-        
+
         selectedLowerBtnType = newType;
         GameObserver.Call(GameObserverType.Game.OnChangeHomeLowerBtn);
     }
@@ -517,10 +566,21 @@ public class UI_GameScene_Home : UI_Scene
 
     private void ShowAbilityPopup()
     {
-        var popup = Managers.UI.ShowPopupUI<Ability_Popup>();
-        popup.transform.SetParent(lowerMenu.transform.parent);
-        popup.transform.SetSiblingIndex(lowerMenu.transform.GetSiblingIndex());
-        currentPopup = popup;
+        if (abilityPopup == null)
+        {
+            var popup = Managers.UI.ShowPopupUI<Ability_Popup>();
+            popup.transform.SetParent(lowerMenu.transform.parent);
+            popup.transform.SetSiblingIndex(lowerMenu.transform.GetSiblingIndex());
+            currentPopup = popup;
+            abilityPopup = popup;
+        }
+        else
+        {
+            abilityPopup.gameObject.SetActive(true);
+            GameObserver.Call(GameObserverType.Game.OnAbilityChanged);
+            currentPopup = abilityPopup;
+        }
+
         GetImage(Images.TouchGuard).gameObject.SetActive(false);
     }
 

@@ -15,7 +15,7 @@ public class AbilityBubbleUI : UI_Base
 
     enum Images
     {
-
+        IsHasBtn
     }
 
     enum Texts
@@ -94,7 +94,15 @@ public class AbilityBubbleUI : UI_Base
 
             GetButton(Buttons.PurchaseBtn).image.sprite = sprites[0];
         }
-        // }
+
+        if (isAdditional ? Managers.Ability.HasAdditionalAbility(abilityIndex) : Managers.Ability.HasAbility(abilityIndex))
+        {
+            GetImage(Images.IsHasBtn).gameObject.SetActive(true);
+        }
+        else
+        {
+            GetImage(Images.IsHasBtn).gameObject.SetActive(false);
+        }
     }
 
     public void UpdateUI()

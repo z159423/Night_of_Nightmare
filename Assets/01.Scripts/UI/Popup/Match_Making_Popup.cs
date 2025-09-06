@@ -18,7 +18,9 @@ public class Match_Making_Popup : UI_Popup
     enum Images
     {
         TouchGuard,
-        RankImage
+        RankImage,
+        CoinRvImage,
+        EnergyRvImage
     }
 
     enum Texts
@@ -51,6 +53,15 @@ public class Match_Making_Popup : UI_Popup
         GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
         GetImage(Images.RankImage).SetNativeSize();
         GetTextMesh(Texts.RankingPointText).text = Define.GetPlayerCurrentTier().ToString() + "<br>" + Managers.LocalData.PlayerRankingPoint.ToString();
+
+        GetImage(Images.CoinRvImage).gameObject.SetActive(Managers.Game.goldRvBonus);
+        GetImage(Images.EnergyRvImage).gameObject.SetActive(Managers.Game.energyRvBonus);
+
+        if (Managers.Game.goldRvBonus)
+            Managers.UI.GenerateUIParticle(transform, GetImage(Images.CoinRvImage).transform, GetImage(Images.CoinRvImage).sprite, Vector3.one * 3);
+
+        if (Managers.Game.energyRvBonus)
+            Managers.UI.GenerateUIParticle(transform, GetImage(Images.EnergyRvImage).transform, GetImage(Images.EnergyRvImage).sprite, Vector3.one * 3);
 
         OpenAnimation();
     }
