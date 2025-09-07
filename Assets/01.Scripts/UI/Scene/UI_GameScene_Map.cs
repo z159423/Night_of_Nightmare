@@ -37,7 +37,8 @@ public class UI_GameScene_Map : UI_Scene
         BoostFireCountText,
         BoostShieldCountText,
         BoostHammerCountText,
-        TutorialText
+        TutorialText,
+        TutorialRewardText
     }
 
     enum Images
@@ -46,7 +47,8 @@ public class UI_GameScene_Map : UI_Scene
         Tutorial,
         BoostFireRvIcon,
         BoostShieldRvIcon,
-        BoostHammerRvIcon
+        BoostHammerRvIcon,
+        TutorialRewardGemImage
     }
 
     private Transform playerLayout;
@@ -533,6 +535,7 @@ public class UI_GameScene_Map : UI_Scene
             GetImage(Images.Tutorial).gameObject.SetActive(true);
             GetImage(Images.Tutorial).sprite = tutorialSprites[0];
             GetTextMesh(Texts.TutorialText).text = GetTutorialText(currentTutorial);
+            GetTextMesh(Texts.TutorialRewardText).text = currentTutorial.gemRewardCount.ToString();
 
             TutorialCheck();
         }
@@ -575,6 +578,10 @@ public class UI_GameScene_Map : UI_Scene
 
     public void OnClearTutorial()
     {
+        Managers.LocalData.PlayerGemCount += currentTutorial.gemRewardCount;
+
+        Managers.UI.GenerateUIParticle(GetImage(Images.TutorialRewardGemImage).transform, uiParticleMarkerType.GemIcon, Define.ItemType.Gem);
+
         currentTutorial = null;
         Managers.LocalData.PlayerTutorialStep++;
 

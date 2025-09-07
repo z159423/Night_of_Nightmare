@@ -21,6 +21,7 @@ public class Managers : SingletonStatic<Managers>
     public static PushManager Push { get; set; } = new PushManager();
     public static SessionRewardManager SessionReward { get; set; } = new SessionRewardManager();
     public static AbilityManager Ability { get; set; } = new AbilityManager();
+    public static TutorialManager Tutorial { get; set; } = new TutorialManager();
 
 
     public void CreateManagers()
@@ -40,6 +41,7 @@ public class Managers : SingletonStatic<Managers>
         Push = transform.AddComponent<PushManager>();
         SessionReward = transform.AddComponent<SessionRewardManager>();
         Ability = transform.AddComponent<AbilityManager>();
+        Tutorial = transform.AddComponent<TutorialManager>();
     }
 
     private void Update()

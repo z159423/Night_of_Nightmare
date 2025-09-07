@@ -44,7 +44,8 @@ public class UI_GameScene_Home : UI_Scene
     enum Images
     {
         TouchGuard,
-        RankImage
+        RankImage,
+        RandomBoxReddot
     }
 
     public enum LowerBtnTypes
@@ -112,28 +113,73 @@ public class UI_GameScene_Home : UI_Scene
         this.SetListener(GameObserverType.Game.Timer, () =>
         {
             UpdateUI();
+            SetRandomRvText();
+
         });
 
         GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
         GetImage(Images.RankImage).SetNativeSize();
 
-        GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(Managers.LocalData.PlayerWinCount >= 1 || (!Managers.Game.goldRvBonus && !Managers.Game.energyRvBonus));
+        GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(Managers.LocalData.PlayerGameCount >= 1 && (!Managers.Game.goldRvBonus && !Managers.Game.energyRvBonus));
 
         this.SetListener(GameObserverType.Game.OnShowRandomReward, () =>
         {
-            if (Managers.LocalData.RandomBoxRvCount >= 5)
+            SetRandomRvText();
+        });
+
+        SetRandomRvText();
+
+        void SetRandomRvText()
+        {
+            // 현재 로컬 시간
+            var now = System.DateTime.Now;
+
+            // 마지막 시청 날짜 불러오기 (Unix timestamp를 DateTime으로 변환)
+            var lastShowTime = System.DateTimeOffset.FromUnixTimeSeconds(Managers.LocalData.RandomBoxRvShowDate).ToLocalTime().DateTime;
+
+            // 서비스 날짜 기준으로 날짜가 바뀌었는지 확인
+            // 현재 시간이 9시 이전이면 전날로 간주, 9시 이후면 당일로 간주
+            var currentServiceDate = now.Hour < 9 ? now.Date.AddDays(-1) : now.Date;
+            var lastServiceDate = lastShowTime.Hour < 9 ? lastShowTime.Date.AddDays(-1) : lastShowTime.Date;
+
+            // 서비스 날짜가 다르면 카운트 리셋
+            if (currentServiceDate != lastServiceDate)
             {
-                GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(false);
+                GetTextMesh(Texts.RandomBoxRvCountText).text = $"0 / {Define.RandomBoxRvCount}";
             }
             else
             {
-                GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(true);
+                if (Managers.LocalData.RandomBoxRvCount >= Define.RandomBoxRvCount)
+                {
+                    GetTextMesh(Texts.RandomBoxRvCountText).text = $"리셋 가능";
+                }
+                else
+                {
+                    var nextResetTime = lastShowTime.AddDays(1).Date.AddHours(9); // 다음 리셋 시간 (다음 날 9시)
+                    var timeRemaining = nextResetTime - now; // 남은 시간 계산
+
+                    if (timeRemaining.TotalSeconds < 0)
+                    {
+                        // 이미 리셋 시간이 지났다면 카운트를 리셋
+                        Managers.LocalData.RandomBoxRvCount = 0;
+                        GetTextMesh(Texts.RandomBoxRvCountText).text = $"0 / {Define.RandomBoxRvCount}";
+                    }
+                    else
+                    {
+                        GetTextMesh(Texts.RandomBoxRvCountText).text = Util.FormatTimeRemaining(timeRemaining);
+                    }
+                }
+
+                GetTextMesh(Texts.RandomBoxRvCountText).text = $"{Managers.LocalData.RandomBoxRvCount} / {Define.RandomBoxRvCount}";
             }
+        }
 
-            GetTextMesh(Texts.RandomBoxRvCountText).text = $"{Managers.LocalData.RandomBoxRvCount} / 5";
-        });
+        GetImage(Images.RandomBoxReddot).gameObject.SetActive(!Managers.LocalData.IsOpenRandomBoxRv);
 
-        GetTextMesh(Texts.RandomBoxRvCountText).text = $"{Managers.LocalData.RandomBoxRvCount} / 5";
+        if (!Managers.Tutorial.IsTutorialCompleted(PlayerTutorialStep.StartRankGame))
+        {
+            Managers.Tutorial.GenerateButtonMask(GetButton(Buttons.RankModeBtn), PlayerTutorialStep.StartRankGame);
+        }
     }
 
     public void FirstSetting()
@@ -314,18 +360,19 @@ public class UI_GameScene_Home : UI_Scene
             };
         });
 
-        GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(Managers.LocalData.RandomBoxRvCount < 5 || Managers.LocalData.RandomBoxRvShowDay != System.DateTime.Now.Day);
+        GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(ShouldShowRandomBoxRvBtn());
 
         GetButton(Buttons.RandomBoxRvBtn).AddButtonEvent(() =>
         {
             var popup = Managers.UI.ShowPopupUI<RandomBoxRv_Popup>();
+
+            GetImage(Images.RandomBoxReddot).gameObject.SetActive(false);
         });
     }
 
     void UpdateUI()
     {
         GetButton(Buttons.AttendanceBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.Attendance.CanClaimToday());
-
         GetButton(Buttons.SessionRewardBtn).gameObject.FindRecursive("Reddot").SetActive(Managers.SessionReward.IsNextRewardClaimable());
         GetTextMesh(Texts.SessionRewardText).text = Managers.SessionReward.SecondsToNextReward() == -1 ? "" : SessionRewardManager.FormatHMS(Managers.SessionReward.SecondsToNextReward());
     }
@@ -592,5 +639,21 @@ public class UI_GameScene_Home : UI_Scene
         public bool needsCameraChange;
         public float waitTime;
         public System.Action finalAction;
+    }
+
+    bool ShouldShowRandomBoxRvBtn()
+    {
+        // 현재 로컬 시간
+        var now = System.DateTime.Now;
+
+        // 마지막 시청 날짜 불러오기 (Unix timestamp를 DateTime으로 변환)
+        var lastShowTime = System.DateTimeOffset.FromUnixTimeSeconds(Managers.LocalData.RandomBoxRvShowDate).DateTime;
+
+        // 서비스 날짜 기준으로 날짜가 바뀌었는지 확인
+        var currentServiceDate = now.Hour < 9 ? now.Date.AddDays(-1) : now.Date;
+        var lastServiceDate = lastShowTime.Hour < 9 ? lastShowTime.Date.AddDays(-1) : lastShowTime.Date;
+
+        // 서비스 날짜가 다르거나, 같은 날인데 5회 미만이면 버튼 표시
+        return currentServiceDate != lastServiceDate || Managers.LocalData.RandomBoxRvCount < Define.RandomBoxRvCount;
     }
 }

@@ -182,7 +182,8 @@ public class Door : Structure
         if (hpBar != null)
         {
             hpBar.gameObject.SetActive(true);
-            hpBarBody.localScale = new Vector3((float)Hp / MaxHp, 1, 1);
+            float hpRatio = (MaxHp != 0) ? (float)Hp / MaxHp : 0f;
+            hpBarBody.localScale = new Vector3(hpRatio, 1, 1);
         }
     }
 
@@ -266,11 +267,11 @@ public class Door : Structure
 
     int GetDoorMaxHp()
     {
-        var hp = MaxHp;
+        int maxHp = (int)Managers.Game.GetStructureData(Define.StructureType.Door).argment1[level];
 
         if (IsPlayerStructure())
-            hp = Mathf.RoundToInt(hp * Managers.Ability.GetHasAbilityValueSum(AbilityType.DoorHp));
+            maxHp = Mathf.RoundToInt(maxHp * (1 + Managers.Ability.GetHasAbilityValueSum(AbilityType.DoorHp) * 0.01f));
 
-        return hp;
+        return maxHp;
     }
 }

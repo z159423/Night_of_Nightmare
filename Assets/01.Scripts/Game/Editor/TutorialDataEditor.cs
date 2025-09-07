@@ -33,6 +33,8 @@ public class TutorialDataEditor : Editor
                 break;
         }
 
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("gemRewardCount"));
+
         serializedObject.ApplyModifiedProperties();
     }
 }

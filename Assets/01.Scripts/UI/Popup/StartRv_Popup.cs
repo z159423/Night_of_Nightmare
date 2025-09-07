@@ -10,7 +10,8 @@ public class StartRv_Popup : UI_Popup
     enum Buttons
     {
         BG,
-        RvBtn
+        RvBtn,
+        CloseBtn
     }
 
     enum Images
@@ -43,6 +44,12 @@ public class StartRv_Popup : UI_Popup
         Bind<TextMeshProUGUI>(typeof(Texts));
 
         GetButton(Buttons.BG).AddButtonEvent(() =>
+        {
+            GetImage(Images.TouchGuard).gameObject.SetActive(true);
+            ClosePop(gameObject.FindRecursive("Panel").transform);
+        }, false);
+
+        GetButton(Buttons.CloseBtn).AddButtonEvent(() =>
         {
             GetImage(Images.TouchGuard).gameObject.SetActive(true);
             ClosePop(gameObject.FindRecursive("Panel").transform);

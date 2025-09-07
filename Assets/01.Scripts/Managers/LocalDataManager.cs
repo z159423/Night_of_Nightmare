@@ -220,9 +220,33 @@ public class LocalDataManager
         set { PlayerPrefs.SetInt("RandomBoxRvCount", value); IsSave = true; GameObserver.Call(GameObserverType.Game.OnShowRandomReward); }
     }
 
-    public int RandomBoxRvShowDay
+    public long RandomBoxRvShowDate
     {
-        get => PlayerPrefs.GetInt("RandomBoxRvShowDay", -1);
-        set { PlayerPrefs.SetInt("RandomBoxRvShowDay", value); IsSave = true; }
+        get => long.TryParse(PlayerPrefs.GetString("RandomBoxRvShowDate", "0"), out long result) ? result : 0;
+        set { PlayerPrefs.SetString("RandomBoxRvShowDate", value.ToString()); IsSave = true; }
+    }
+
+    public bool IsOpenRandomBoxRv
+    {
+        get => PlayerPrefs.GetInt("IsOpenRandomBoxRv", 0) == 1;
+        set { PlayerPrefs.SetInt("IsOpenRandomBoxRv", value ? 1 : 0); IsSave = true; }
+    }
+
+    public int TutorialFlags
+    {
+        get => PlayerPrefs.GetInt("TutorialFlags", 0);
+        set { PlayerPrefs.SetInt("TutorialFlags", value); PlayerPrefs.Save(); }
+    }
+
+    public bool IsTutorialCompleted(int step)
+    {
+        int mask = 1 << step;
+        return (TutorialFlags & mask) != 0;
+    }
+
+    public void CompleteTutorial(int step)
+    {
+        int mask = 1 << step;
+        TutorialFlags |= mask;
     }
 }

@@ -17,4 +17,5 @@ public class TutorialData : ScriptableObject
     public Define.StructureType purchaseType;
     public int purchaseCount = 0;
     public int upgradeLevel = 0;
+    public int gemRewardCount = 40;
 }

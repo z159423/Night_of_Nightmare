@@ -56,18 +56,18 @@ public class Define
     public static string GetTierName(Tier tier)
     {
         string tierString = tier.ToString();
-        
+
         // 마지막 문자가 숫자인지 확인
         if (tierString.Length > 1 && char.IsDigit(tierString[tierString.Length - 1]))
         {
             // 숫자 부분과 문자 부분 분리
             string numberPart = tierString[tierString.Length - 1].ToString();
             string textPart = tierString.Substring(0, tierString.Length - 1);
-            
+
             // 가공된 형태로 반환
             return $"{textPart}\n<size=130%>{numberPart}</size>";
         }
-        
+
         // 숫자가 없는 경우 그대로 반환
         return tierString;
     }
@@ -739,4 +739,6 @@ public class Define
         Boost_Ramp,
         Boost_Shield
     }
+
+    public static int RandomBoxRvCount = 5;
 }

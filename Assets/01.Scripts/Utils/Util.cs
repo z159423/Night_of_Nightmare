@@ -139,7 +139,7 @@ public static class Util
     }
 
     public static void AddButtonEvent(this Button go, UnityEngine.Events.UnityAction action, bool sound = true)
-    {       
+    {
         go.onClick.RemoveAllListeners();
         go.onClick.AddListener(() =>
         {
@@ -423,5 +423,14 @@ public static class Util
         // 일치하는 클립이 없는 경우 0을 반환하거나 오류 처리를 추가할 수 있음
         Debug.LogWarning($"Animation with name {animationName} not found.");
         return 0f;
+    }
+
+    public static string FormatTimeRemaining(System.TimeSpan timeSpan)
+    {
+        int hours = (int)timeSpan.TotalHours;
+        int minutes = timeSpan.Minutes;
+        int seconds = timeSpan.Seconds;
+
+        return $"{hours:D2}:{minutes:D2}:{seconds:D2}";
     }
 }

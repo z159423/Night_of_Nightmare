@@ -64,6 +64,8 @@ public class Match_Making_Popup : UI_Popup
             Managers.UI.GenerateUIParticle(transform, GetImage(Images.EnergyRvImage).transform, GetImage(Images.EnergyRvImage).sprite, Vector3.one * 3);
 
         OpenAnimation();
+
+        GetButton(Buttons.ExitBtn).gameObject.SetActive(Managers.LocalData.PlayerGameCount > 0);
     }
 
     void Update()

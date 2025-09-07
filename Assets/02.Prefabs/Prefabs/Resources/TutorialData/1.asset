@@ -15,3 +15,6 @@ MonoBehaviour:
   jubjectType: 0
   upgradeType: 0
   purchaseType: 0
+  purchaseCount: 0
+  upgradeLevel: 0
+  gemRewardCount: 10

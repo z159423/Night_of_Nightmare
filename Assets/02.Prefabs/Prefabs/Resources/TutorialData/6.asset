@@ -16,4 +16,5 @@ MonoBehaviour:
   upgradeType: 100
   purchaseType: 0
   purchaseCount: 2
-  upgradeCount: 4
+  upgradeLevel: 0
+  gemRewardCount: 15
