@@ -356,7 +356,10 @@ public class GameManager : MonoBehaviour
         {
             if (challengeLevel == Managers.LocalData.ChallengeModeLevel)
             {
-
+                if (challengeLevel == 10)
+                {
+                    Managers.LocalData.SetCharactorOwned(CharactorType.Miner, true);
+                }
                 Managers.LocalData.ChallengeModeLevel = challengeLevel + 1;
             }
         }

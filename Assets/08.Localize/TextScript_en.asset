@@ -617,15 +617,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177169
-    m_Localized: Install 1 lamp<br>for free
+    m_Localized: Install 4 lamp<br>for free
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177170
-    m_Localized: 10% discount on<br>all minerals
+    m_Localized: 20% discount on<br>all minerals
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177171
-    m_Localized: 10% discount on all generators<br>Start with 10 energy
+    m_Localized: 40% discount on all generators<br>Start with 10 energy
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177172
@@ -939,6 +939,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 40641231089803266
     m_Localized: Throws a hammer to stun enemies and deal damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40688716072067072
+    m_Localized: '*Obtainable by clearing Challenge Mode Night 10.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40688716118204417
+    m_Localized: '*Obtainable by completing Day 2 login.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40696380873220096
+    m_Localized: '*Unlocks upon reaching Diamond 4 (2400) in Rank Mode.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40696380873220097
+    m_Localized: '*Obtainable by completing Day 7 login.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40699521555472384
+    m_Localized: Use Target
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40699521559666688
+    m_Localized: Watch Ad
     m_Metadata:
       m_Items: []
   references:

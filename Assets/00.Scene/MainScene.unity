@@ -4496,6 +4496,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1742482555818428908, guid: 9bc6d225c06344343a837ab6545fb82d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3626403302706794048, guid: 9bc6d225c06344343a837ab6545fb82d, type: 3}
       propertyPath: m_Name
       value: EditorAdMockUnderCanvas

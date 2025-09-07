@@ -16,7 +16,9 @@ public class RandomBoxRv_Popup : UI_Popup
 
     enum Images
     {
-        TouchGuard
+        TouchGuard,
+        Ticket,
+        Rv
     }
 
     enum Texts
@@ -38,6 +40,13 @@ public class RandomBoxRv_Popup : UI_Popup
         OpenAnimation(() =>
         {
             GetImage(Images.TouchGuard).gameObject.SetActive(false);
+        });
+
+        this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>
+        {
+            int ticketCount = Managers.LocalData.PlayerRvTicketCount;
+            GetImage(Images.Ticket).gameObject.SetActive(ticketCount > 0);
+            GetImage(Images.Rv).gameObject.SetActive(ticketCount <= 0);
         });
     }
 
@@ -65,6 +74,9 @@ public class RandomBoxRv_Popup : UI_Popup
 
         GetButton(Buttons.RvBtn).AddButtonEvent(() =>
         {
+            if (Managers.LocalData.RandomBoxRvCount >= Define.RandomBoxRvCount)
+                return;
+
             Managers.Ad.ShowRewardAd(() =>
             {
                 // 현재 로컬 시간
@@ -202,6 +214,10 @@ public class RandomBoxRv_Popup : UI_Popup
             GetTextMesh(Texts.ResetText).gameObject.SetActive(false);
             GetButton(Buttons.RvBtn).image.sprite = btnSprites[0];
         }
+
+        int ticketCount = Managers.LocalData.PlayerRvTicketCount;
+        GetImage(Images.Ticket).gameObject.SetActive(ticketCount > 0);
+        GetImage(Images.Rv).gameObject.SetActive(ticketCount <= 0);
     }
 
     // 다음 9시 리셋 시간 계산

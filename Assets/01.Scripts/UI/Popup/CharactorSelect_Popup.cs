@@ -147,6 +147,9 @@ public class CharactorSelect_Popup : UI_Popup
             }
             else
             {
+                if (selectedType != Define.CharactorType.Scientist)
+                    GetTextMesh(Texts.CharactorDesc).text += "<br><size=80%><color=#FFD08D>" + Managers.Localize.GetText("achive_" + selectedType) + "</color></size>";
+
                 var charactorData = Managers.Resource.LoadAll<CharactorData>($"CharactorData/").FirstOrDefault(n => n.charactorType == selectedType);
                 if (charactorData.purchaseType == Define.CharactorPurchaseType.Iap)
                 {

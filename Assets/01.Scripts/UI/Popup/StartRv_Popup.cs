@@ -16,7 +16,9 @@ public class StartRv_Popup : UI_Popup
 
     enum Images
     {
-        TouchGuard
+        TouchGuard,
+        Rv,
+        Ticket
     }
 
     enum Texts
@@ -33,6 +35,16 @@ public class StartRv_Popup : UI_Popup
         {
             GetImage(Images.TouchGuard).gameObject.SetActive(false);
         });
+
+        Action updateTicketImages = () =>
+        {
+            int ticketCount = Managers.LocalData.PlayerRvTicketCount;
+            GetImage(Images.Ticket).gameObject.SetActive(ticketCount > 0);
+            GetImage(Images.Rv).gameObject.SetActive(ticketCount <= 0);
+        };
+
+        this.SetListener(GameObserverType.Game.OnChangeTicketCount, updateTicketImages);
+        updateTicketImages();
     }
 
     public override void FirstSetting()

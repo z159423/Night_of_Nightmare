@@ -939,6 +939,30 @@ MonoBehaviour:
     m_Key: tutorial_Hammer
     m_Metadata:
       m_Items: []
+  - m_Id: 40688716072067072
+    m_Key: achive_Miner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40696380873220096
+    m_Key: achive_ReapireMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40688716118204417
+    m_Key: achive_Chef
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40696380873220097
+    m_Key: achive_LampGirl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40699521555472384
+    m_Key: use_ticket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40699521559666688
+    m_Key: watch_ad
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

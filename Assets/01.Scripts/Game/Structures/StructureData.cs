@@ -74,11 +74,11 @@ public class StructureData : ScriptableObject
         if (playerData.type == CharactorType.Miner && category == StructureCategory.Ore)
         {
             // 광부 캐릭터가 오레 구조물을 구매할 때는 에너지를 10% 할인
-            return Mathf.RoundToInt(upgradeEnergy[level] * 0.9f);
+            return Mathf.RoundToInt(upgradeEnergy[level] * 0.8f);
         }
         else if (playerData.type == CharactorType.Scientist && structureType == StructureType.Generator)
         {
-            return Mathf.RoundToInt(upgradeEnergy[level] * 0.9f);
+            return Mathf.RoundToInt(upgradeEnergy[level] * 0.6f);
         }
 
         return upgradeEnergy[level];

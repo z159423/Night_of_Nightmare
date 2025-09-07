@@ -97,7 +97,15 @@ public class LocalDataManager
             PlayerPrefs.SetInt("PlayerRankingPoint", value); IsSave = true;
 
             if (PlayerHighestTier < (int)Define.GetTierByScore(PlayerRankingPoint))
+            {
                 PlayerHighestTier = (int)Define.GetTierByScore(PlayerRankingPoint);
+
+                if (PlayerHighestTier == (int)Define.Tier.Diamond4)
+                {
+                    SetCharactorOwned(Define.CharactorType.ReapireMan, true);
+                }
+            }
+
         }
     }
 

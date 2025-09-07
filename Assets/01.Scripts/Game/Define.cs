@@ -595,7 +595,7 @@ public class Define
         {
             return true;
         }
-        else if (playerData.type == CharactorType.LampGirl && structureType == StructureType.Lamp && playerData.freeLampCount < 1)
+        else if (playerData.type == CharactorType.LampGirl && structureType == StructureType.Lamp && playerData.freeLampCount < 4)
         {
             return true;
         }
