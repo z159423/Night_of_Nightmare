@@ -55,6 +55,9 @@ public class GameManager : MonoBehaviour
     public bool goldRvBonus = false;
     public bool energyRvBonus = false;
 
+    public bool enemyGodMode = false;
+    public bool playerDoorGodMode = false;
+
 
     public List<HomeCharactor> homeCharactors = new List<HomeCharactor>();
 
@@ -353,6 +356,7 @@ public class GameManager : MonoBehaviour
         {
             if (challengeLevel == Managers.LocalData.ChallengeModeLevel)
             {
+
                 Managers.LocalData.ChallengeModeLevel = challengeLevel + 1;
             }
         }

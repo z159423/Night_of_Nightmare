@@ -284,6 +284,8 @@ public class AttendanceManager : MonoBehaviour
         return Managers.Localize.GetDynamicText("attendance_remain_time", $"{timeLeft.Hours:D2}:{timeLeft.Minutes:D2}:{timeLeft.Seconds:D2}");
     }
 
+    
+
     // ======= 예시: UI 버튼에서 호출 =======
     // public void OnClickClaim()
     // {
@@ -297,4 +299,107 @@ public class AttendanceManager : MonoBehaviour
     //         Debug.Log($"Cannot claim: {reason}");
     //     }
     // }
+
+    /// <summary>
+    /// [테스트용] 출석체크를 다음 날 획득 가능한 상태로 만듭니다.
+    /// 현재 날짜를 어제로 설정하여 오늘 수령이 가능하도록 합니다.
+    /// </summary>
+    public void TestSetNextDayAvailable()
+    {
+        if (IsFinished)
+        {
+            Debug.LogWarning("AttendanceManager: 출석체크가 이미 완료된 상태입니다.");
+            return;
+        }
+
+        // 어제 날짜로 설정하여 오늘 수령 가능하게 만듦
+        DateTime yesterday = DateTime.UtcNow.Date.AddDays(-1);
+        string yesterdayStr = yesterday.ToString("yyyy-MM-dd");
+        
+        PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, yesterdayStr);
+        PlayerPrefs.Save();
+        
+        Debug.Log($"AttendanceManager: 테스트용 - 다음 출석체크 수령 가능하도록 설정됨 (마지막 수령일: {yesterdayStr})");
+        Debug.Log($"현재 진행 상황: {DaysClaimed}/7일, 오늘 수령 가능: {CanClaimToday()}");
+    }
+
+    /// <summary>
+    /// [테스트용] 출석체크를 완전히 리셋합니다.
+    /// 모든 출석체크 데이터를 초기화하여 1일차부터 다시 시작할 수 있게 합니다.
+    /// </summary>
+    public void TestResetAttendance()
+    {
+        PlayerPrefs.DeleteKey(KEY_LAST_CLAIM_UTC_DATE);
+        PlayerPrefs.DeleteKey(KEY_DAYS_CLAIMED);
+        PlayerPrefs.DeleteKey(KEY_FINISHED);
+        PlayerPrefs.Save();
+        
+        Debug.Log("AttendanceManager: 테스트용 - 출석체크 완전 리셋됨");
+        Debug.Log($"현재 진행 상황: {DaysClaimed}/7일, 오늘 수령 가능: {CanClaimToday()}");
+    }
+
+    /// <summary>
+    /// [테스트용] 특정 날짜로 출석체크 진행 상황을 설정합니다.
+    /// </summary>
+    /// <param name="targetDay">설정할 날짜 (0~7, 0=시작 전, 7=완료)</param>
+    /// <param name="makeAvailableToday">오늘 수령 가능하게 할지 여부</param>
+    public void TestSetAttendanceDay(int targetDay, bool makeAvailableToday = true)
+    {
+        if (targetDay < 0 || targetDay > 7)
+        {
+            Debug.LogError("AttendanceManager: 유효하지 않은 날짜입니다. (0~7 범위)");
+            return;
+        }
+
+        // 진행 일수 설정
+        PlayerPrefs.SetInt(KEY_DAYS_CLAIMED, targetDay);
+        
+        // 7일 완료 여부 설정
+        if (targetDay >= 7)
+        {
+            PlayerPrefs.SetInt(KEY_FINISHED, 1);
+            PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, TodayUtcDateStr);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(KEY_FINISHED, 0);
+            
+            if (makeAvailableToday)
+            {
+                // 오늘 수령 가능하게 하려면 어제 날짜로 설정
+                DateTime yesterday = DateTime.UtcNow.Date.AddDays(-1);
+                PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, yesterday.ToString("yyyy-MM-dd"));
+            }
+            else
+            {
+                // 오늘 수령 불가능하게 하려면 오늘 날짜로 설정
+                PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, TodayUtcDateStr);
+            }
+        }
+        
+        PlayerPrefs.Save();
+        
+        string availableText = targetDay >= 7 ? "완료됨" : (makeAvailableToday ? "가능" : "불가능");
+        Debug.Log($"AttendanceManager: 테스트용 - {targetDay}일차로 설정됨, 오늘 수령: {availableText}");
+        Debug.Log($"현재 진행 상황: {DaysClaimed}/7일, 오늘 수령 가능: {CanClaimToday()}");
+    }
+
+    /// <summary>
+    /// [테스트용] 현재 출석체크 상태를 로그로 출력합니다.
+    /// </summary>
+    public void TestLogCurrentStatus()
+    {
+        var status = GetStatus();
+        string lastClaimDate = PlayerPrefs.GetString(KEY_LAST_CLAIM_UTC_DATE, "없음");
+        
+        Debug.Log("=== 출석체크 현재 상태 ===");
+        Debug.Log($"진행 일수: {status.daysClaimed}/7일");
+        Debug.Log($"오늘 수령 여부: {status.claimedToday}");
+        Debug.Log($"완료 여부: {status.finished}");
+        Debug.Log($"마지막 수령 날짜: {lastClaimDate}");
+        Debug.Log($"오늘 수령 가능: {CanClaimToday()}");
+        Debug.Log($"다음 수령까지 남은 시간: {GetTimeUntilNextClaimString()}");
+        Debug.Log($"오늘 UTC 날짜: {TodayUtcDateStr}");
+        Debug.Log("=======================");
+    }
 }

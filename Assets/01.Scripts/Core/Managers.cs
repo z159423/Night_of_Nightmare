@@ -22,6 +22,7 @@ public class Managers : SingletonStatic<Managers>
     public static SessionRewardManager SessionReward { get; set; } = new SessionRewardManager();
     public static AbilityManager Ability { get; set; } = new AbilityManager();
     public static TutorialManager Tutorial { get; set; } = new TutorialManager();
+    public static CheatManager Cheat { get; set; } = new CheatManager();
 
 
     public void CreateManagers()
@@ -42,6 +43,7 @@ public class Managers : SingletonStatic<Managers>
         SessionReward = transform.AddComponent<SessionRewardManager>();
         Ability = transform.AddComponent<AbilityManager>();
         Tutorial = transform.AddComponent<TutorialManager>();
+        Cheat = transform.AddComponent<CheatManager>();
     }
 
     private void Update()

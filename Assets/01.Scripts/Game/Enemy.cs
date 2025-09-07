@@ -641,6 +641,9 @@ public class Enemy : Charactor
     }
     public void Hit(int damage, bool particle = true, bool critical = false)
     {
+        if (Managers.Game.enemyGodMode)
+            return;
+
         hp -= damage;
         if (hp <= 0)
         {

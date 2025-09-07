@@ -539,4 +539,192 @@ public class SessionRewardManager : MonoBehaviour
 
         Debug.Log("[SessionRewardManager] Today's session reward data has been reset.");
     }
+
+    /// <summary>
+    /// [테스트용] 세션 보상 시간을 1분(60초) 앞당깁니다.
+    /// 누적 시간을 60초 증가시켜서 다음 보상에 더 빨리 도달할 수 있게 합니다.
+    /// </summary>
+    public void TestAddOneMinute()
+    {
+        if (_state == null)
+        {
+            Debug.LogWarning("[SessionRewardManager] State is null, cannot add time.");
+            return;
+        }
+
+        // 캡을 넘지 않는 선에서 60초 추가
+        int targetSeconds = _state.accumulatedSecondsToday + 60;
+        if (targetSeconds > _capSeconds)
+        {
+            targetSeconds = _capSeconds;
+        }
+
+        _state.accumulatedSecondsToday = targetSeconds;
+        Save();
+
+        Debug.Log($"[SessionRewardManager] 테스트용 - 1분(60초) 추가됨");
+        Debug.Log($"현재 누적 시간: {_state.accumulatedSecondsToday}초 ({_state.accumulatedSecondsToday / 60}분)");
+        Debug.Log($"다음 보상까지: {SecondsToNextReward()}초");
+    }
+
+    /// <summary>
+    /// [테스트용] 다음 세션 보상을 바로 받을 수 있게 만듭니다.
+    /// 현재 미수령 보상의 필요 시간까지 누적 시간을 설정합니다.
+    /// </summary>
+    public void TestSetNextRewardAvailable()
+    {
+        if (_state == null)
+        {
+            Debug.LogWarning("[SessionRewardManager] State is null, cannot set next reward.");
+            return;
+        }
+
+        int nextIndex = GetNextUnclaimedIndex();
+        if (nextIndex < 0)
+        {
+            Debug.Log("[SessionRewardManager] 모든 세션 보상이 이미 수령 완료되었습니다.");
+            return;
+        }
+
+        int requiredSeconds = ThresholdSeconds[nextIndex];
+        _state.accumulatedSecondsToday = requiredSeconds;
+        Save();
+
+        int minutes = requiredSeconds / 60;
+        Debug.Log($"[SessionRewardManager] 테스트용 - {minutes}분 보상을 바로 받을 수 있도록 설정됨");
+        Debug.Log($"현재 누적 시간: {_state.accumulatedSecondsToday}초 ({_state.accumulatedSecondsToday / 60}분)");
+        Debug.Log($"수령 가능한 보상: {minutes}분");
+    }
+
+    /// <summary>
+    /// [테스트용] 세션 보상을 완전히 초기화합니다.
+    /// 모든 세션 보상 데이터를 삭제하고 0분부터 다시 시작합니다.
+    /// </summary>
+    public void TestResetSessionReward()
+    {
+        DeleteSaveData(); // 기존 메서드 활용
+        Debug.Log("[SessionRewardManager] 테스트용 - 세션 보상 완전 초기화됨");
+    }
+
+    /// <summary>
+    /// [테스트용] 특정 시간(분)까지 누적 시간을 설정합니다.
+    /// </summary>
+    /// <param name="targetMinutes">설정할 누적 시간(분)</param>
+    public void TestSetAccumulatedTime(int targetMinutes)
+    {
+        if (_state == null)
+        {
+            Debug.LogWarning("[SessionRewardManager] State is null, cannot set time.");
+            return;
+        }
+
+        if (targetMinutes < 0 || targetMinutes > 60)
+        {
+            Debug.LogError("[SessionRewardManager] 유효하지 않은 시간입니다. (0~60분 범위)");
+            return;
+        }
+
+        int targetSeconds = targetMinutes * 60;
+        
+        // 캡을 넘지 않도록 조정
+        if (targetSeconds > _capSeconds)
+        {
+            targetSeconds = _capSeconds;
+        }
+
+        _state.accumulatedSecondsToday = targetSeconds;
+        Save();
+
+        Debug.Log($"[SessionRewardManager] 테스트용 - 누적 시간을 {targetMinutes}분({targetSeconds}초)로 설정됨");
+        Debug.Log($"다음 보상까지: {SecondsToNextReward()}초");
+    }
+
+    /// <summary>
+    /// [테스트용] 모든 세션 보상을 수령 완료 상태로 만듭니다.
+    /// </summary>
+    public void TestCompleteAllRewards()
+    {
+        if (_state == null)
+        {
+            Debug.LogWarning("[SessionRewardManager] State is null, cannot complete rewards.");
+            return;
+        }
+
+        // 60분까지 누적 시간 설정
+        _state.accumulatedSecondsToday = 3600; // 60분 = 3600초
+        
+        // 모든 보상을 수령 완료로 설정
+        _state.claimedMinutes.Clear();
+        _state.claimedMinutes.AddRange(new int[] { 10, 20, 30, 40, 50, 60 });
+
+        RecomputeCap();
+        Save();
+
+        Debug.Log("[SessionRewardManager] 테스트용 - 모든 세션 보상을 수령 완료 상태로 설정됨");
+    }
+
+    /// <summary>
+    /// [테스트용] 특정 보상만 수령 완료 상태로 설정합니다.
+    /// </summary>
+    /// <param name="minutes">수령 완료로 설정할 보상 시간(10, 20, 30, 40, 50, 60)</param>
+    public void TestClaimSpecificReward(int minutes)
+    {
+        if (_state == null)
+        {
+            Debug.LogWarning("[SessionRewardManager] State is null, cannot claim reward.");
+            return;
+        }
+
+        if (minutes % 10 != 0 || minutes < 10 || minutes > 60)
+        {
+            Debug.LogError("[SessionRewardManager] 유효하지 않은 보상 시간입니다. (10, 20, 30, 40, 50, 60 중 선택)");
+            return;
+        }
+
+        // 해당 시간까지 누적 시간 설정 (최소한)
+        int requiredSeconds = minutes * 60;
+        if (_state.accumulatedSecondsToday < requiredSeconds)
+        {
+            _state.accumulatedSecondsToday = requiredSeconds;
+        }
+
+        // 보상 수령 처리
+        if (!_state.claimedMinutes.Contains(minutes))
+        {
+            _state.claimedMinutes.Add(minutes);
+        }
+
+        RecomputeCap();
+        Save();
+
+        Debug.Log($"[SessionRewardManager] 테스트용 - {minutes}분 보상을 수령 완료로 설정됨");
+    }
+
+    /// <summary>
+    /// [테스트용] 현재 세션 보상 상태를 로그로 출력합니다.
+    /// </summary>
+    public void TestLogCurrentStatus()
+    {
+        if (_state == null)
+        {
+            Debug.LogWarning("[SessionRewardManager] State is null, cannot log status.");
+            return;
+        }
+
+        Debug.Log("=== 세션 보상 현재 상태 ===");
+        Debug.Log($"서비스 날짜: {_state.serviceDate}");
+        Debug.Log($"누적 시간: {_state.accumulatedSecondsToday}초 ({_state.accumulatedSecondsToday / 60}분)");
+        Debug.Log($"현재 캡: {_capSeconds}초 ({_capSeconds / 60}분)");
+        Debug.Log($"수령 완료 보상: [{string.Join(", ", _state.claimedMinutes)}]분");
+        Debug.Log($"다음 보상까지: {SecondsToNextReward()}초");
+        Debug.Log($"다음 리셋까지: {SecondsToDailyReset()}");
+        
+        Debug.Log("=== 각 보상 상태 ===");
+        foreach (var (minutes, reached, claimed) in GetAllRewardStatus())
+        {
+            string status = claimed ? "수령완료" : (reached ? "수령가능" : "미도달");
+            Debug.Log($"{minutes}분 보상: {status} (필요: {minutes * 60}초)");
+        }
+        Debug.Log("========================");
+    }
 }

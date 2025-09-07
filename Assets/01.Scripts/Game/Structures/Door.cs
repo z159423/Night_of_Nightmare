@@ -139,6 +139,9 @@ public class Door : Structure
 
     public override void Hit(float damage)
     {
+        if (Managers.Game.playerDoorGodMode)
+            return;
+
         // 에너지 쉴드가 활성화 중이면 데미지 무시
         if (energyShield || activeEffects.Any(e => e is HolyProtection))
         {
