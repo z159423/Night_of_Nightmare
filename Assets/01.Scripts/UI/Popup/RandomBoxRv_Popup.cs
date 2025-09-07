@@ -133,6 +133,8 @@ public class RandomBoxRv_Popup : UI_Popup
 
                 GameObserver.Call(GameObserverType.Game.OnShowRandomReward);
 
+                Managers.Audio.PlaySound("snd_get_item");
+
                 // ClosePop(gameObject.FindRecursive("Panel").transform);
 
                 UpdateUI();

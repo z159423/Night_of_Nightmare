@@ -73,6 +73,8 @@ public class StartRv_Popup : UI_Popup
             {
                 onShowRv?.Invoke();
                 ClosePop(gameObject.FindRecursive("Panel").transform);
+
+                Managers.Audio.PlaySound("snd_get_item");
             });
         }, false);
     }
