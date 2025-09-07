@@ -63,7 +63,7 @@ public class TutorialTouchBox : UI_Popup
         {
             var bubble = Managers.Resource.Instantiate("TutorialBubbleUI", transform).GetComponent<TutorialBubbleUI>();
             bubble.Init();
-            bubble.GetComponent<RectTransform>().position = new Vector2(myRect.position.x - 550, myRect.position.y);
+            bubble.GetComponent<RectTransform>().position = new Vector2(myRect.position.x - 520, myRect.position.y);
             bubble.SetText((PlayerTutorialStep)tutorialIndex);
         }
     }
