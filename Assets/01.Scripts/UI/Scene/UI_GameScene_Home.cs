@@ -176,10 +176,7 @@ public class UI_GameScene_Home : UI_Scene
 
         GetImage(Images.RandomBoxReddot).gameObject.SetActive(!Managers.LocalData.IsOpenRandomBoxRv);
 
-        if (!Managers.Tutorial.IsTutorialCompleted(PlayerTutorialStep.StartRankGame))
-        {
-            Managers.Tutorial.GenerateButtonMask(GetButton(Buttons.RankModeBtn), PlayerTutorialStep.StartRankGame);
-        }
+        Managers.Tutorial.StartTutorial(GetButton(Buttons.RankModeBtn), PlayerTutorialStep.StartRankGame);
     }
 
     public void FirstSetting()

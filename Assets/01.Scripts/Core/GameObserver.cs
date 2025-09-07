@@ -30,7 +30,10 @@ public partial struct GameObserverType
         OnChangeLocolization,
         Timer,
         OnAbilityChanged,
-        OnShowRandomReward
+        OnShowRandomReward,
+        OnChangeEnemyHp,
+        OnNeedStartDoorTutorial,
+        OnNeedStartShieldTutorial
     }
 
     public enum Data

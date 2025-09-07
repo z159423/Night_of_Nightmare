@@ -66,6 +66,8 @@ public class Match_Making_Popup : UI_Popup
         OpenAnimation();
 
         GetButton(Buttons.ExitBtn).gameObject.SetActive(Managers.LocalData.PlayerGameCount > 0);
+
+        Managers.Tutorial.StartTutorial(GetButton(Buttons.MatchBtn), PlayerTutorialStep.StartMatching);
     }
 
     void Update()
@@ -132,12 +134,19 @@ public class Match_Making_Popup : UI_Popup
                         Managers.Game.OnRankGameStart(isChallengeMode, challengeStage);
                     });
 
-                    yield return new WaitForSeconds(5f);
-
-                    if (!Managers.Game.isGameStart)
+                    if (!Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.TouchToStart))
                     {
-                        Exit();
-                        Managers.Game.OnRankGameStart(isChallengeMode, challengeStage);
+                        Managers.Tutorial.StartTutorial(GetButton(Buttons.MatchingBtn), PlayerTutorialStep.TouchToStart);
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(5f);
+
+                        if (!Managers.Game.isGameStart)
+                        {
+                            Exit();
+                            Managers.Game.OnRankGameStart(isChallengeMode, challengeStage);
+                        }
                     }
                 }
             }

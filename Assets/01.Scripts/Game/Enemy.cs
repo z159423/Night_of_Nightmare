@@ -12,6 +12,7 @@ using static EnemyEffect;
 using System;
 using System.Data;
 using Unity.VisualScripting;
+using Unity.Mathematics;
 
 public class Enemy : Charactor
 {
@@ -447,7 +448,13 @@ public class Enemy : Charactor
     {
         List<PlayerableCharactor> players = new List<PlayerableCharactor>();
 
-        players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null && currentTarget != n));
+        bool isClearAllMapTutorial = Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.FixDoor) && Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.OverHeat)
+            && Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Hammer) && Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Shield);
+
+        if (!isClearAllMapTutorial && Managers.Game.playerData.room != null)
+            players.AddRange(Managers.Game.charactors.Where(n => n.playerData == Managers.Game.playerData && !n.die && n.currentActiveRoom != null));
+        else
+            players.AddRange(Managers.Game.charactors.Where(n => !n.die && n.currentActiveRoom != null && currentTarget != n));
 
         if (players.Count > 0)
         {
@@ -676,6 +683,8 @@ public class Enemy : Charactor
                 ).OnComplete(() => isPunching = false); // 트윈 끝나면 플래그 해제
             }
         }
+
+        GameObserver.Call(GameObserverType.Game.OnChangeEnemyHp);
 
         if (particle)
             StartCoroutine(Particle());

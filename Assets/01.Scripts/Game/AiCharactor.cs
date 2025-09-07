@@ -124,7 +124,10 @@ public class AiCharactor : PlayerableCharactor
 
     public void FindBed()
     {
-        List<Bed> inactiveBeds = Managers.Game.beds.FindAll(bed => !bed.active);
+        bool isClearFixDoorTutorial = Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.FixDoor);
+
+        var inactiveBeds = Managers.Game.beds.FindAll(bed => !bed.active && (isClearFixDoorTutorial ? !bed.tutorialBed : true));
+
         if (inactiveBeds.Count > 0)
         {
             int randomIndex = Random.Range(0, inactiveBeds.Count);

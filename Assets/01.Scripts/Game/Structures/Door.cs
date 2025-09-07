@@ -175,6 +175,19 @@ public class Door : Structure
         base.Hit(damage);
 
         ShowHpBar();
+
+        if (IsPlayerStructure())
+        {
+            if (Hp < MaxHp * 0.7f && !Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.FixDoor))
+            {
+                GameObserver.Call(GameObserverType.Game.OnNeedStartDoorTutorial);
+            }
+
+            if (Hp < MaxHp * 0.4f && !Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Shield))
+            {
+                GameObserver.Call(GameObserverType.Game.OnNeedStartShieldTutorial);
+            }
+        }
     }
 
     public void ShowHpBar()

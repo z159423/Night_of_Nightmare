@@ -65,63 +65,66 @@ public class RandomBoxRv_Popup : UI_Popup
 
         GetButton(Buttons.RvBtn).AddButtonEvent(() =>
         {
-            // 현재 로컬 시간
-            var now = System.DateTime.Now;
-
-            // 마지막 시청 날짜 불러오기 (Unix timestamp를 DateTime으로 변환)
-            var lastShowTime = System.DateTimeOffset.FromUnixTimeSeconds(Managers.LocalData.RandomBoxRvShowDate).ToLocalTime().DateTime;
-
-            // 서비스 날짜 기준으로 날짜가 바뀌었는지 확인
-            // 현재 시간이 9시 이전이면 전날로 간주, 9시 이후면 당일로 간주
-            var currentServiceDate = now.Hour < 9 ? now.Date.AddDays(-1) : now.Date;
-            var lastServiceDate = lastShowTime.Hour < 9 ? lastShowTime.Date.AddDays(-1) : lastShowTime.Date;
-
-            // 서비스 날짜가 다르면 카운트 리셋
-            if (currentServiceDate.Day != lastServiceDate.Day)
+            Managers.Ad.ShowRewardAd(() =>
             {
-                Managers.LocalData.RandomBoxRvCount = 1;
-            }
-            else
-            {
-                if (Managers.LocalData.RandomBoxRvCount >= Define.RandomBoxRvCount)
-                    return;
+                // 현재 로컬 시간
+                var now = System.DateTime.Now;
 
-                Managers.LocalData.RandomBoxRvCount++;
-            }
+                // 마지막 시청 날짜 불러오기 (Unix timestamp를 DateTime으로 변환)
+                var lastShowTime = System.DateTimeOffset.FromUnixTimeSeconds(Managers.LocalData.RandomBoxRvShowDate).ToLocalTime().DateTime;
 
-            onShowRv?.Invoke();
+                // 서비스 날짜 기준으로 날짜가 바뀌었는지 확인
+                // 현재 시간이 9시 이전이면 전날로 간주, 9시 이후면 당일로 간주
+                var currentServiceDate = now.Hour < 9 ? now.Date.AddDays(-1) : now.Date;
+                var lastServiceDate = lastShowTime.Hour < 9 ? lastShowTime.Date.AddDays(-1) : lastShowTime.Date;
 
-            Managers.LocalData.PlayerGemCount += 50;
-            Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.GemIcon, Define.ItemType.Gem);
+                // 서비스 날짜가 다르면 카운트 리셋
+                if (currentServiceDate.Day != lastServiceDate.Day)
+                {
+                    Managers.LocalData.RandomBoxRvCount = 1;
+                }
+                else
+                {
+                    if (Managers.LocalData.RandomBoxRvCount >= Define.RandomBoxRvCount)
+                        return;
 
-            switch (UnityEngine.Random.Range(0, 4))
-            {
-                case 0:
-                    Managers.LocalData.AddBoostItem(Define.BoostType.Lamp, 1);
-                    Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Ramp);
-                    break;
-                case 1:
-                    Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, 1);
-                    Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Hammer);
-                    break;
-                case 2:
-                    Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, 1);
-                    Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Shield);
-                    break;
-                case 3:
-                    Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, 1);
-                    Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Fire);
-                    break;
-            }
+                    Managers.LocalData.RandomBoxRvCount++;
+                }
 
-            // 현재 시간을 Unix timestamp로 저장
-            Managers.LocalData.RandomBoxRvShowDate = System.DateTimeOffset.Now.ToUnixTimeSeconds();
+                onShowRv?.Invoke();
 
-            GameObserver.Call(GameObserverType.Game.OnShowRandomReward);
+                Managers.LocalData.PlayerGemCount += 50;
+                Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.GemIcon, Define.ItemType.Gem);
 
-            // ClosePop(gameObject.FindRecursive("Panel").transform);
+                switch (UnityEngine.Random.Range(0, 4))
+                {
+                    case 0:
+                        Managers.LocalData.AddBoostItem(Define.BoostType.Lamp, 1);
+                        Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Ramp);
+                        break;
+                    case 1:
+                        Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, 1);
+                        Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Hammer);
+                        break;
+                    case 2:
+                        Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, 1);
+                        Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Shield);
+                        break;
+                    case 3:
+                        Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, 1);
+                        Managers.UI.GenerateUIParticle(Managers.UI._currentScene.transform, uiParticleMarkerType.BoostBtn, Define.ItemType.Boost_Fire);
+                        break;
+                }
 
-            UpdateUI();
+                // 현재 시간을 Unix timestamp로 저장
+                Managers.LocalData.RandomBoxRvShowDate = System.DateTimeOffset.Now.ToUnixTimeSeconds();
+
+                GameObserver.Call(GameObserverType.Game.OnShowRandomReward);
+
+                // ClosePop(gameObject.FindRecursive("Panel").transform);
+
+                UpdateUI();
+            });
         }, false);
 
         UpdateUI();

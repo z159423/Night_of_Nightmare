@@ -16,13 +16,19 @@ public enum PlayerTutorialStep
 
 public class TutorialManager : MonoBehaviour
 {
-    public void GenerateButtonMask(Button targetBtn, PlayerTutorialStep playerTutorialStep)
+    public void StartTutorial(Button targetBtn, PlayerTutorialStep playerTutorialStep, bool timePuase = false, bool descBubble = false)
     {
+        if (Managers.LocalData.IsTutorialCompleted((int)playerTutorialStep))
+            return;
+
         var mask = Managers.UI.ShowPopupUI<TutorialTouchBox>();
-        mask.Setting(targetBtn, (int)playerTutorialStep);
+        mask.Setting(targetBtn, (int)playerTutorialStep, timePuase, descBubble);
+
+        if (timePuase)
+            Time.timeScale = 0f;
     }
 
-    public bool IsTutorialCompleted(PlayerTutorialStep playerTutorialStep)
+    public bool IsCompletedTutorial(PlayerTutorialStep playerTutorialStep)
     {
         return Managers.LocalData.IsTutorialCompleted((int)playerTutorialStep);
     }

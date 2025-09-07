@@ -917,6 +917,30 @@ MonoBehaviour:
     m_Localized: 'Remaining claims: @1'
     m_Metadata:
       m_Items: []
+  - m_Id: 40546705138491392
+    m_Localized: Watch an ad to receive 50 Gems and 1 random boost.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40546705184628736
+    m_Localized: Gain 100 Gold or Energy at the start of the game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231047860224
+    m_Localized: You can repair the gate to restore its HP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231089803264
+    m_Localized: Overheats the turret for a while, increasing its attack speed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231089803265
+    m_Localized: Makes the gate invincible for a certain duration.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231089803266
+    m_Localized: Throws a hammer to stun enemies and deal damage.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

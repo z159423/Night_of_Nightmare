@@ -923,6 +923,22 @@ MonoBehaviour:
     m_Key: startrv_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 40641231047860224
+    m_Key: tutorial_FixDoor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231089803264
+    m_Key: tutorial_OverHeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231089803265
+    m_Key: tutorial_Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40641231089803266
+    m_Key: tutorial_Hammer
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -66,18 +66,21 @@ public class Turret : Structure
         head.transform.rotation = Quaternion.Euler(0, 0, angle + headOffset);
 
         float bulletSpeed = 10f;
+        int bulletCount = 1;
 
         if (IsPlayerStructure() && Managers.Ability.GetHasAbilityValueSum(AbilityType.TurretDoubleAttack) > Random.Range(0, 100))
         {
-            for (int i = 0; i < 2; i++)
-            {
-                var bullet2 = Managers.Resource.Instantiate("Bullet");
-                bullet2.transform.position = transform.position;
+            bulletCount = 2;
+        }
 
-                bullets.Add(bullet2);
+        for (int i = 0; i < bulletCount; i++)
+        {
+            var bullet = Managers.Resource.Instantiate("Bullet");
+            bullet.transform.position = transform.position;
 
-                StartCoroutine(BulletFollowTarget(bullet2, target, bulletSpeed));
-            }
+            bullets.Add(bullet);
+
+            StartCoroutine(BulletFollowTarget(bullet, target, bulletSpeed));
         }
 
         var goldenChest = playerData.structures.Any(n => n.type == Define.StructureType.GoldenChest);
@@ -118,7 +121,7 @@ public class Turret : Structure
 
                 if (IsPlayerStructure())
                 {
-                    damage = Mathf.RoundToInt(damage * Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackDamage));
+                    damage = Mathf.RoundToInt(damage * (1 + (Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackDamage) * 0.01f)));
 
                     if (Managers.Ability.GetHasAbilityValueSum(AbilityType.CriticalChance) > Random.Range(0, 100f))
                     {
@@ -210,7 +213,7 @@ public class Turret : Structure
         range = (playerData.structures.Find(n => n.type == Define.StructureType.Telescope) != null) ? (range * 1.2f) : range;
 
         if (IsPlayerStructure())
-            range = Mathf.RoundToInt(range * Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackRange));
+            range = Mathf.RoundToInt(range * ((1 + (Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackRange) * 0.01f))));
 
         return range;
     }

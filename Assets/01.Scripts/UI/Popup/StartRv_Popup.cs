@@ -57,9 +57,11 @@ public class StartRv_Popup : UI_Popup
 
         GetButton(Buttons.RvBtn).AddButtonEvent(() =>
         {
-            onShowRv?.Invoke();
-            ClosePop(gameObject.FindRecursive("Panel").transform);
-
+            Managers.Ad.ShowRewardAd(() =>
+            {
+                onShowRv?.Invoke();
+                ClosePop(gameObject.FindRecursive("Panel").transform);
+            });
         }, false);
     }
 }

@@ -142,6 +142,32 @@ public class UI_GameScene_Map : UI_Scene
             hpbar.gameObject.SetActive(true);
         });
 
+        this.SetListener(GameObserverType.Game.OnChangeEnemyHp, () =>
+        {
+            if (Managers.Game.enemy != null)
+            {
+                var enemy = Managers.Game.enemy;
+                if (enemy.hp < enemy.MaxHp * 0.7f)
+                {
+                    Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostFireBtn), PlayerTutorialStep.OverHeat, true, true);
+                }
+
+                if (enemy.hp < enemy.MaxHp * 0.3f)
+                {
+                    Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostHammerBtn), PlayerTutorialStep.Hammer, true, true);
+                }
+            }
+        });
+
+        this.SetListener(GameObserverType.Game.OnNeedStartDoorTutorial, () =>
+        {
+            Managers.Tutorial.StartTutorial(GetButton(Buttons.RepairBtn), PlayerTutorialStep.FixDoor, true, true);
+        });
+
+        this.SetListener(GameObserverType.Game.OnNeedStartShieldTutorial, () =>
+        {
+            Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostShieldBtn), PlayerTutorialStep.Shield, true, true);
+        });
     }
 
     public void FirstSetting()
@@ -166,6 +192,11 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.RepairBtn).AddButtonEvent(() =>
         {
+            if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.FixDoor) == false)
+            {
+                return;
+            }
+
             if (Managers.Game.playerData.canDoorRepair && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
             {
                 StartCoroutine(RepairDoor());
@@ -190,6 +221,11 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.BoostFireBtn).AddButtonEvent(() =>
         {
+            if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.OverHeat) == false)
+            {
+                return;
+            }
+
             if (canFireBoost)
             {
                 if (Managers.LocalData.GetBoostItemCount(Define.BoostType.Overheat) > 0)
@@ -208,6 +244,11 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.BoostShieldBtn).AddButtonEvent(() =>
         {
+            if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Shield) == false)
+            {
+                return;
+            }
+
             if (canShieldBoost && Managers.Game.playerData.room != null && !Managers.Game.playerData.room.door.destroyed)
             {
                 if (Managers.LocalData.GetBoostItemCount(Define.BoostType.HolyProtection) > 0)
@@ -226,6 +267,11 @@ public class UI_GameScene_Map : UI_Scene
 
         GetButton(Buttons.BoostHammerBtn).AddButtonEvent(() =>
         {
+            if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Hammer) == false)
+            {
+                return;
+            }
+
             if (canHammerBoost && Managers.Game.enemy != null)
             {
                 if (Managers.LocalData.GetBoostItemCount(Define.BoostType.HammerThrow) > 0)

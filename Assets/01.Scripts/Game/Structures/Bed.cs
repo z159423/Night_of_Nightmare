@@ -18,6 +18,8 @@ public class Bed : Structure
 
     public float delay = 0;
 
+    public bool tutorialBed = false;
+
     protected override void Start()
     {
         base.Start();
