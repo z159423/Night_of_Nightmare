@@ -115,13 +115,13 @@ public class Turret : Structure
                 Managers.Resource.Destroy(bullet);
                 bullets.Remove(bullet);
 
-                var damage = (int)Managers.Game.GetStructureData(type).argment1[level];
+                float damage = Managers.Game.GetStructureData(type).argment1[level];
 
                 bool critical = false;
 
                 if (IsPlayerStructure())
                 {
-                    damage = Mathf.RoundToInt(damage * (1 + (Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackDamage) * 0.01f)));
+                    damage = damage * (1 + (Managers.Ability.GetHasAbilityValueSum(AbilityType.AttackDamage) * 0.01f));
 
                     if (Managers.Ability.GetHasAbilityValueSum(AbilityType.CriticalChance) > Random.Range(0, 100f))
                     {

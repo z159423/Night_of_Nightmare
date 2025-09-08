@@ -639,7 +639,7 @@ public class Enemy : Charactor
     {
 
     }
-    public void Hit(int damage, bool particle = true, bool critical = false)
+    public void Hit(float damage, bool particle = true, bool critical = false)
     {
         if (Managers.Game.enemyGodMode)
             return;
@@ -955,7 +955,7 @@ public class Enemy : Charactor
             yield return new WaitForSeconds(0.2f);
 
             _damage.text = attackPower.Value.ToString("F1");
-            _hp.text = $"{Mathf.RoundToInt(hp).ToString()} / {Mathf.RoundToInt(MaxHp).ToString()}";
+            _hp.text = $"{hp.ToString("F1")} / {MaxHp.ToString("F1")}";
         }
     }
 }
