@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Linq;
 using Unity.VisualScripting;
+using TMPro;
 
 public class Turret : Structure
 {
@@ -71,6 +72,32 @@ public class Turret : Structure
         if (IsPlayerStructure() && Managers.Ability.GetHasAbilityValueSum(AbilityType.TurretDoubleAttack) > Random.Range(0, 100))
         {
             bulletCount = 2;
+
+            // #if DEVELOPMENT_BUILD
+            if (bulletCount == 2)
+            {
+                var particle = Managers.Resource.Instantiate("CritOrDouble");
+
+                particle.GetComponentInChildren<TextMeshPro>().text = "Double Attack!";
+                particle.GetComponentInChildren<TextMeshPro>().color = new Color32(245, 114, 109, 255);
+                // x, y 각각 -0.5 ~ 0.5 범위 랜덤 위치
+
+                particle.transform.position = transform.position;
+                particle.transform.localPosition = new Vector3(
+                Random.Range(-0.5f, 0.5f),
+                Random.Range(-0.5f, 0.5f),
+                0f
+                );
+
+                DG.Tweening.Sequence seq = DOTween.Sequence();
+                seq.Append(particle.transform.DOLocalMove(new Vector3(1.125f, 0, 0), 0.8f).SetEase(Ease.Linear).SetRelative());
+                seq.AppendInterval(0.2f);
+                seq.OnComplete(() =>
+                {
+                    Managers.Resource.Destroy(particle);
+                });
+            }
+            // #endif
         }
 
         for (int i = 0; i < bulletCount; i++)
@@ -131,6 +158,27 @@ public class Turret : Structure
                         // 크리티컬 이펙트
 
                         critical = true;
+
+                        var particle = Managers.Resource.Instantiate("CritOrDouble");
+
+                        particle.GetComponentInChildren<TextMeshPro>().text = "Crit!";
+                        particle.GetComponentInChildren<TextMeshPro>().color = new Color32(255, 109, 109, 255);
+                        // x, y 각각 -0.5 ~ 0.5 범위 랜덤 위치
+
+                        particle.transform.position = target.transform.position;
+                        particle.transform.localPosition = new Vector3(
+                        Random.Range(-0.5f, 0.5f),
+                        Random.Range(-0.5f, 0.5f),
+                        0f
+                        );
+
+                        DG.Tweening.Sequence seq = DOTween.Sequence();
+                        seq.Append(particle.transform.DOLocalMove(new Vector3(1.125f, 0, 0), 0.8f).SetEase(Ease.Linear).SetRelative());
+                        seq.AppendInterval(0.2f);
+                        seq.OnComplete(() =>
+                        {
+                            Managers.Resource.Destroy(particle);
+                        });
                     }
                 }
 

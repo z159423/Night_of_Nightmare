@@ -135,19 +135,19 @@ public class LocalDataManager
 
     public int playerHammerCount
     {
-        get => PlayerPrefs.GetInt("PlayerHammerCount", 2);
+        get => PlayerPrefs.GetInt("PlayerHammerCount", 3);
         set { PlayerPrefs.SetInt("PlayerHammerCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHammerCount); }
     }
 
     public int PlayerHolyShieldCount
     {
-        get => PlayerPrefs.GetInt("PlayerHolyShieldCount", 2);
+        get => PlayerPrefs.GetInt("PlayerHolyShieldCount", 3);
         set { PlayerPrefs.SetInt("PlayerHolyShieldCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeHolyShieldCount); }
     }
 
     public int PlayerOverHeatCount
     {
-        get => PlayerPrefs.GetInt("PlayerOverHeatCount", 2);
+        get => PlayerPrefs.GetInt("PlayerOverHeatCount", 3);
         set { PlayerPrefs.SetInt("PlayerOverHeatCount", Mathf.Clamp(value, 0, int.MaxValue)); IsSave = true; GameObserver.Call(GameObserverType.Game.OnChangeOverHeatCount); }
     }
 

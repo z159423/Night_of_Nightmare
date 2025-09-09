@@ -82,26 +82,26 @@ public class MatchResult_Popup : UI_Popup
 
         GetButton(Buttons.ClaimBtn).AddButtonEvent(() =>
         {
-            if (iswin)
+            // if (iswin)
+            // {
+            //광고 보고 잼 4배 추가로 획득
+            //이긴 경우 이 버튼 클릭하면 RV 광고 재생
+            Managers.Ad.ShowRewardAd(() =>
             {
-                //광고 보고 잼 4배 추가로 획득
-                //이긴 경우 이 버튼 클릭하면 RV 광고 재생
-                Managers.Ad.ShowRewardAd(() =>
-                {
-                    Managers.LocalData.PlayerGemCount += GemCount * 4;
+                Managers.LocalData.PlayerGemCount += GemCount * 3;
 
-                    Managers.Game.StartCoroutine(sound());
-                    // Managers.Audio.PlaySound("snd_get_item");
+                Managers.Game.StartCoroutine(sound());
+                // Managers.Audio.PlaySound("snd_get_item");
 
-                    Exit();
-                });
-            }
-            else
-            {
-                Managers.LocalData.PlayerGemCount += GemCount;
-                Managers.Ad.ShowInterstitialAd();
                 Exit();
-            }
+            });
+            // }
+            // else
+            // {
+            //     Managers.LocalData.PlayerGemCount += GemCount;
+            //     Managers.Ad.ShowInterstitialAd();
+            //     Exit();
+            // }
         });
 
         GetButton(Buttons.NoThanksBtn).AddButtonEvent(() =>
@@ -138,14 +138,11 @@ public class MatchResult_Popup : UI_Popup
 
             GetButton(Buttons.ClaimBtn).transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
 
-            if (iswin)
-            {
-                yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.5f);
 
-                GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().alpha = 0f;
-                GetButton(Buttons.NoThanksBtn).gameObject.SetActive(true);
-                GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().DOFade(1f, 2f);
-            }
+            GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().alpha = 0f;
+            GetButton(Buttons.NoThanksBtn).gameObject.SetActive(true);
+            GetButton(Buttons.NoThanksBtn).GetComponent<CanvasGroup>().DOFade(1f, 2f);
         }
     }
 
@@ -161,13 +158,13 @@ public class MatchResult_Popup : UI_Popup
         GetTextMesh(Texts.RankingPointDiffText).text = (isWin ? "+" : "-") + point.ToString();
 
         // 공통 GemCountText, NoThanksGemCountText, RVIcon, ResultTitle, ClaimText
-        int claimGem = isWin ? GemCount * 4 : GemCount;
+        int claimGem = GemCount * 3;
         GetTextMesh(Texts.GemCountText).text = $"x {claimGem}";
         GetTextMesh(Texts.NoThanksGemCountText).text = $"x {GemCount}";
-        GetImage(Images.RVIcon).gameObject.SetActive(isWin);
+        GetImage(Images.RVIcon).gameObject.SetActive(true);
         GetTextMesh(Texts.ResultTitle).text = Managers.Localize.GetText(isWin ? "global.str_win_reward" : "global.str_lose");
         GetTextMesh(Texts.ClaimText).text = isWin
-            ? Managers.Localize.GetDynamicText("global.str_claim_reward", 4.ToString())
+            ? Managers.Localize.GetDynamicText("global.str_claim_reward", 3.ToString())
             : Managers.Localize.GetText("global.str_claim");
 
         if (isChallengeMode)

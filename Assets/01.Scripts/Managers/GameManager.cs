@@ -130,8 +130,6 @@ public class GameManager : MonoBehaviour
 
         lastRankPoint = Managers.LocalData.PlayerRankingPoint;
 
-        Managers.LocalData.PlayerGameCount++;
-
         isChallengeMode = challengeMode;
         lossPoint = LoseRankingPoint();
 
@@ -337,6 +335,8 @@ public class GameManager : MonoBehaviour
 
         isChallengeMode = false;
         inGame = false;
+
+        Managers.LocalData.PlayerGameCount++;
     }
 
     [Button("GameWin")]
@@ -348,6 +348,8 @@ public class GameManager : MonoBehaviour
         Managers.UI.CloseAllPopupUI();
 
         Managers.LocalData.PlayerWinCount++;
+        Managers.LocalData.PlayerGameCount++;
+
         int point = 0;
 
         Managers.LocalData.PlayerRankingPoint += (int)lossPoint;

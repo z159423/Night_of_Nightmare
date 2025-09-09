@@ -108,7 +108,7 @@ public class UI_GameScene_Home : UI_Scene
         GetTextMesh(Texts.GemText).text = Managers.LocalData.PlayerGemCount.ToString();
         GetTextMesh(Texts.TicketCount).text = Managers.LocalData.PlayerRvTicketCount.ToString();
 
-        challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 1);
+        challengeLock.SetActive(Managers.LocalData.PlayerWinCount < 3);
 
         this.SetListener(GameObserverType.Game.Timer, () =>
         {

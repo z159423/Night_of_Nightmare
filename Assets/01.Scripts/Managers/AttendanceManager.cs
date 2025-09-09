@@ -90,7 +90,7 @@ public class AttendanceManager : MonoBehaviour
 
             case 2:
                 Managers.LocalData.PlayerGemCount += 300;
-                Managers.LocalData.PlayerRvTicketCount += 1;
+                Managers.LocalData.PlayerRvTicketCount += 3;
                 items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                 items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                 break;
@@ -103,7 +103,7 @@ public class AttendanceManager : MonoBehaviour
 
             case 4:
                 Managers.LocalData.PlayerGemCount += 600;
-                Managers.LocalData.PlayerRvTicketCount += 1;
+                Managers.LocalData.PlayerRvTicketCount += 6;
                 items.Add((Define.ItemType.Gem, uiParticleMarkerType.GemIcon));
                 items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                 break;

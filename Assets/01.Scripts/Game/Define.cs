@@ -321,9 +321,10 @@ public class Define
                 }
             }
             count = Mathf.RoundToInt(count * multiplier);
+            count = Mathf.Clamp(count, 10, int.MaxValue);
         }
-
-        count = Mathf.Clamp(count, 10, int.MaxValue);
+        else
+            count = Mathf.Clamp(count, 40, int.MaxValue);
 
         return count;
     }

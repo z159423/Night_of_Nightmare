@@ -14,73 +14,110 @@ public class AbilityData : ScriptableObject
     public void GenerateAbilitiesData()
     {
         abilities.Clear();
+        additionalAbilities.Clear();
 
-        // 데이터 배열 (type, value, cost, tier) - 표에 맞춰서 조건 수동 입력
+        // 기본 능력 데이터 배열 (type, value, cost, tier)
         var abilityData = new (int type, float value, int cost, Define.Tier tier)[]
         {   
-            // 기본 능력들
-            (1, 3f, 5, Define.Tier.Iron3),
-            (2, 5f, 5, Define.Tier.Iron3),        // Iron3 사용 (이전 조건)
-            (3, 5f, 10, Define.Tier.Iron2),
-            (4, 0.5f, 10, Define.Tier.Iron2),     // Iron2 사용 (이전 조건)
-            (1, 3f, 10, Define.Tier.Iron1),
-            (5, 5f, 15, Define.Tier.Iron1),       // Iron1 사용 (이전 조건)
-            (2, 5f, 15, Define.Tier.Bronze4),
-            (1, 3f, 20, Define.Tier.Bronze4),     // Bronze4 사용 (이전 조건)
-            (4, 0.5f, 20, Define.Tier.Bronze3),
-            (5, 10f, 20, Define.Tier.Bronze3),    // Bronze3 사용 (이전 조건)
-            (1, 3f, 25, Define.Tier.Bronze2),
-            (2, 5f, 25, Define.Tier.Bronze2),     // Bronze2 사용 (이전 조건)
-            (3, 5f, 25, Define.Tier.Bronze1),
-            (5, 10f, 25, Define.Tier.Bronze1),    // Bronze1 사용 (이전 조건)
-            (1, 3f, 30, Define.Tier.Silver4),
-            (2, 5f, 30, Define.Tier.Silver4),     // Silver4 사용 (이전 조건)
-            (4, 2.5f, 30, Define.Tier.Silver3),
-            (5, 10f, 30, Define.Tier.Silver3),    // Silver3 사용 (이전 조건)
-            (1, 3f, 30, Define.Tier.Silver2),
-            (6, 5f, 35, Define.Tier.Silver2),     // Silver2 사용 (이전 조건)
-            (2, 5f, 35, Define.Tier.Silver1),
-            (1, 3f, 35, Define.Tier.Silver1),     // Silver1 사용 (이전 조건)
-            (3, 5f, 35, Define.Tier.Gold4),
-            (1, 3f, 40, Define.Tier.Gold4),       // Gold4 사용 (이전 조건)
-            (2, 5f, 40, Define.Tier.Gold3),
-            (4, 0.5f, 40, Define.Tier.Gold3),     // Gold3 사용 (이전 조건)
-            (5, 10f, 40, Define.Tier.Gold2),
-            (6, 5f, 40, Define.Tier.Gold2),       // Gold2 사용 (이전 조건)
-            (1, 3f, 40, Define.Tier.Gold1),
-            (2, 5f, 40, Define.Tier.Gold1),       // Gold1 사용 (이전 조건)
-            (3, 10f, 40, Define.Tier.Platinum4),
-            (6, 5f, 50, Define.Tier.Platinum4),   // Platinum4 사용 (이전 조건)
-            (1, 3f, 50, Define.Tier.Platinum3),
-            (2, 5f, 50, Define.Tier.Platinum3),   // Platinum3 사용 (이전 조건)
-            (1, 3f, 50, Define.Tier.Platinum2),
-            (2, 5f, 50, Define.Tier.Platinum2),   // Platinum2 사용 (이전 조건)
-            (3, 5f, 50, Define.Tier.Platinum1),
-            (1, 3f, 50, Define.Tier.Platinum1),   // Platinum1 사용 (이전 조건)
-            (2, 5f, 50, Define.Tier.Emerald4),
-            (6, 5f, 60, Define.Tier.Emerald4),    // Emerald4 사용 (이전 조건)
-            (1, 3f, 70, Define.Tier.Emerald3),
-            (2, 5f, 80, Define.Tier.Emerald3),    // Emerald3 사용 (이전 조건)
-            (1, 3f, 90, Define.Tier.Emerald2),
-            (2, 5f, 100, Define.Tier.Emerald2),   // Emerald2 사용 (이전 조건)
-            (3, 5f, 100, Define.Tier.Emerald1),
-            (1, 3f, 100, Define.Tier.Emerald1),   // Emerald1 사용 (이전 조건)
-            (2, 5f, 100, Define.Tier.Emerald1),   // Emerald1 사용 (이전 조건)
-            (4, 1f, 100, Define.Tier.Diamond4),
+            // Iron 티어
+            (1, 3f, 15, Define.Tier.Iron3),       // 포탑 공격력 3% 증가
+            (2, 5f, 15, Define.Tier.Iron3),       // 문 체력 5% 증가
+            (3, 5f, 15, Define.Tier.Iron2),       // 포탑 공격 사거리 5% 증가
+            (4, 0.5f, 15, Define.Tier.Iron2),     // 포탑 치명타 확률 0.5% 증가
+            (1, 3f, 20, Define.Tier.Iron1),       // 포탑 공격력 3% 증가
+            (5, 5f, 20, Define.Tier.Iron1),       // 포탑 치명타 피해량 5% 증가
+            
+            // Bronze 티어
+            (2, 5f, 25, Define.Tier.Bronze4),     // 문 체력 5% 증가
+            (1, 3f, 30, Define.Tier.Bronze4),     // 포탑 공격력 3% 증가
+            (4, 0.5f, 35, Define.Tier.Bronze3),   // 포탑 치명타 확률 0.5% 증가
+            (5, 10f, 40, Define.Tier.Bronze3),    // 포탑 치명타 피해량 10% 증가
+            (1, 3f, 45, Define.Tier.Bronze2),     // 포탑 공격력 3% 증가
+            (2, 5f, 50, Define.Tier.Bronze2),     // 문 체력 5% 증가
+            (3, 5f, 60, Define.Tier.Bronze1),     // 포탑 공격 사거리 5% 증가
+            (5, 10f, 70, Define.Tier.Bronze1),    // 포탑 치명타 피해량 10% 증가
+            
+            // Silver 티어
+            (1, 3f, 80, Define.Tier.Silver4),     // 포탑 공격력 3% 증가
+            (2, 5f, 90, Define.Tier.Silver4),     // 문 체력 5% 증가
+            (4, 2.5f, 100, Define.Tier.Silver3),  // 포탑 치명타 확률 2.5% 증가
+            (5, 10f, 115, Define.Tier.Silver3),   // 포탑 치명타 피해량 10% 증가
+            (1, 3f, 130, Define.Tier.Silver2),    // 포탑 공격력 3% 증가
+            (6, 5f, 145, Define.Tier.Silver2),    // 포탑 공격속도 5% 증가
+            (2, 5f, 160, Define.Tier.Silver1),    // 문 체력 5% 증가
+            (1, 3f, 175, Define.Tier.Silver1),    // 포탑 공격력 3% 증가
+            
+            // Gold 티어
+            (3, 5f, 190, Define.Tier.Gold4),      // 포탑 공격 사거리 5% 증가
+            (1, 3f, 210, Define.Tier.Gold4),      // 포탑 공격력 3% 증가
+            (2, 5f, 230, Define.Tier.Gold3),      // 문 체력 5% 증가
+            (4, 0.5f, 250, Define.Tier.Gold3),    // 포탑 치명타 확률 0.5% 증가
+            (5, 10f, 270, Define.Tier.Gold2),     // 포탑 치명타 피해량 10% 증가
+            (6, 5f, 290, Define.Tier.Gold2),      // 포탑 공격속도 5% 증가
+            (1, 3f, 310, Define.Tier.Gold1),      // 포탑 공격력 3% 증가
+            (2, 5f, 330, Define.Tier.Gold1),      // 문 체력 5% 증가
+            
+            // Platinum 티어
+            (3, 10f, 350, Define.Tier.Platinum4), // 포탑 공격 사거리 10% 증가
+            (6, 5f, 375, Define.Tier.Platinum4),  // 포탑 공격속도 5% 증가
+            (1, 3f, 400, Define.Tier.Platinum3),  // 포탑 공격력 3% 증가
+            (2, 5f, 425, Define.Tier.Platinum3),  // 문 체력 5% 증가
+            (1, 3f, 450, Define.Tier.Platinum2),  // 포탑 공격력 3% 증가
+            (2, 5f, 475, Define.Tier.Platinum2),  // 문 체력 5% 증가
+            (3, 5f, 500, Define.Tier.Platinum1),  // 포탑 공격 사거리 5% 증가
+            (1, 3f, 500, Define.Tier.Platinum1),  // 포탑 공격력 3% 증가
+            
+            // Emerald 티어
+            (2, 5f, 500, Define.Tier.Emerald4),   // 문 체력 5% 증가
+            (6, 5f, 500, Define.Tier.Emerald4),   // 포탑 공격속도 5% 증가
+            (1, 3f, 500, Define.Tier.Emerald3),   // 포탑 공격력 3% 증가
+            (2, 5f, 500, Define.Tier.Emerald3),   // 문 체력 5% 증가
+            (1, 3f, 500, Define.Tier.Emerald2),   // 포탑 공격력 3% 증가
+            (2, 5f, 500, Define.Tier.Emerald2),   // 문 체력 5% 증가
+            (3, 5f, 500, Define.Tier.Emerald1),   // 포탑 공격 사거리 5% 증가
+            (1, 3f, 500, Define.Tier.Emerald1),   // 포탑 공격력 3% 증가
+            (2, 5f, 500, Define.Tier.Emerald1),   // 문 체력 5% 증가
+            
+            // Diamond 티어
+            (4, 1f, 500, Define.Tier.Diamond4),   // 포탑 치명타 확률 1% 증가
+        };
+
+        // 추가 능력 데이터 배열 (type, value, cost, tier)
+        var additionalAbilityData = new (int type, float value, int cost, Define.Tier tier)[]
+        {
+            (6, 5f, 50, Define.Tier.Bronze4),     // 포탑 공격속도 5% 증가
+            (7, 1f, 150, Define.Tier.Silver4),    // 침대 골드 생산량 1 증가
+            (8, 3f, 225, Define.Tier.Gold4),      // 문 수리 능력 체력비례 3%
+            (9, 1f, 400, Define.Tier.Platinum4),  // 수리대 수리 능력 체력비례 1% 증가
+            (10, 1f, 1000, Define.Tier.Emerald4), // 발전기 에너지 생산량 1 증가
+            (11, 3f, 1500, Define.Tier.Emerald1), // 타워 더블어택 확률 3%
+            (11, 3f, 2000, Define.Tier.Diamond4), // 타워 더블어택 확률 3%
         };
 
         foreach (var data in abilityData)
         {
             abilities.Add(new Ability
             {
-                type = (AbilityType)(data.type), // 1-11 그대로 사용 (enum 값 수정됨)
+                type = (AbilityType)(data.type),
                 value = data.value,
                 cost = data.cost,
                 needTier = data.tier
             });
         }
 
-        Debug.Log($"Generated {abilities.Count} abilities");
+        foreach (var data in additionalAbilityData)
+        {
+            additionalAbilities.Add(new Ability
+            {
+                type = (AbilityType)(data.type),
+                value = data.value,
+                cost = data.cost,
+                needTier = data.tier
+            });
+        }
+
+        Debug.Log($"Generated {abilities.Count} abilities and {additionalAbilities.Count} additional abilities");
+        
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);

@@ -147,6 +147,9 @@ public class Enemy : Charactor
         attackPower.BaseValue = Define.GetEnemyDamage(enemyType, level);
         moveSpeed.BaseValue = baseMoveSpeed;
 
+        if (Managers.LocalData.PlayerGameCount == 0)
+            attackPower.AddMultiplier(0.5f);
+
         skills.Add(new AttackSpeedSkill());
         skills.Add(new AttackDamageSkill());
         skills.Add(new Creepylaughter());

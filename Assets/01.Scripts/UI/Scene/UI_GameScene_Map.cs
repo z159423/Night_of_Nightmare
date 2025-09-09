@@ -428,7 +428,8 @@ public class UI_GameScene_Map : UI_Scene
             Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
 
             if (!isAd)
-                Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
+                if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.OverHeat))
+                    Managers.LocalData.AddBoostItem(Define.BoostType.Overheat, -1);
             GetButton(Buttons.BoostFireBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canFireBoost = false;
             fireStartTime = Time.time; // DateTime.Now 대신 Time.time 사용
@@ -450,7 +451,8 @@ public class UI_GameScene_Map : UI_Scene
             Managers.Game.playerData.room.door.AddEffect(new HolyProtection(15));
 
             if (!isAd)
-                Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
+                if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.OverHeat))
+                    Managers.LocalData.AddBoostItem(Define.BoostType.HolyProtection, -1);
             GetButton(Buttons.BoostShieldBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canShieldBoost = false;
             shieldStartTime = Time.time; // DateTime.Now 대신 Time.time 사용
@@ -471,7 +473,8 @@ public class UI_GameScene_Map : UI_Scene
             Managers.Audio.PlaySound("snd_get", minRangeVolumeMul: -1f);
             StartCoroutine(FireHammerBullet(Managers.Game.enemy));
             if (!isAd)
-                Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
+                if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.OverHeat))
+                    Managers.LocalData.AddBoostItem(Define.BoostType.HammerThrow, -1);
             GetButton(Buttons.BoostHammerBtn).GetComponent<Image>().color = new Color32(25, 25, 25, 255);
             canHammerBoost = false;
             hammerStartTime = Time.time; // DateTime.Now 대신 Time.time 사용

@@ -214,7 +214,7 @@ public class SessionRewardManager : MonoBehaviour
                     break;
 
                 case 50:
-                    Managers.LocalData.PlayerRvTicketCount += 2;
+                    Managers.LocalData.PlayerRvTicketCount += 4;
                     items.Add((Define.ItemType.Ticket, uiParticleMarkerType.TicketIcon));
                     break;
 
