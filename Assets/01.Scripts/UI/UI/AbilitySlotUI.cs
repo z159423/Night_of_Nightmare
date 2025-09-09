@@ -133,6 +133,7 @@ public class AbilitySlotUI : UI_Base
         }
 
         GetTextMesh(Texts.NeedTierText).text = Define.GetTierName(ability.needTier);
+        GetTextMesh(Texts.NeedTierText).color = Define.TierColor[ability.needTier];
 
         if (last)
         {

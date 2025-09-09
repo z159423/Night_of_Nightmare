@@ -474,7 +474,7 @@ public class UI_GameScene_Home : UI_Scene
         if (to == LowerBtnTypes.CharacterBtn) return 0.5f;
         if (to == LowerBtnTypes.BoostBtn && from != LowerBtnTypes.ShopBtn) return 0.5f;
         if (to == LowerBtnTypes.ShopBtn && from != LowerBtnTypes.BoostBtn) return 0.5f;
-        if (to == LowerBtnTypes.QeustBtn) return 0.3f;
+        if (to == LowerBtnTypes.QeustBtn) return 0.5f;
         return 0f;
     }
 
