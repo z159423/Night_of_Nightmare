@@ -3124,7 +3124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5091277031776358394, guid: 4214a7cc174c27e49aab181f73adedb2, type: 3}
       propertyPath: m_text
-      value: X2
+      value: X4
       objectReference: {fileID: 0}
     - target: {fileID: 5656026819177912454, guid: 4214a7cc174c27e49aab181f73adedb2, type: 3}
       propertyPath: rewardMin
