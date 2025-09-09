@@ -126,7 +126,7 @@ public class AiCharactor : PlayerableCharactor
     {
         bool isClearFixDoorTutorial = Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.FixDoor);
 
-        var inactiveBeds = Managers.Game.beds.FindAll(bed => !bed.active && (isClearFixDoorTutorial ? !bed.tutorialBed : true));
+        var inactiveBeds = Managers.Game.beds.FindAll(bed => !bed.active && (!isClearFixDoorTutorial ? !bed.tutorialBed : true));
 
         if (inactiveBeds.Count > 0)
         {
