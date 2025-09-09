@@ -85,6 +85,9 @@ public class CheatManager : MonoBehaviour
 
     void DetectShake()
     {
+        if (cheatPanel != null && cheatPanel.activeSelf)
+            return;
+
         Vector3 acceleration = Input.acceleration;
         Vector3 deltaAcceleration = acceleration - lastAcceleration;
         lastAcceleration = acceleration;
