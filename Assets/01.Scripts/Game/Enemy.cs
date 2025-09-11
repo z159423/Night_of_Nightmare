@@ -475,6 +475,9 @@ public class Enemy : Charactor
 
             while (true)
             {
+                if(currentRoom == null || currentRoom.bed == null)
+                    break;
+                    
                 if (currentRoom.bed.active && !currentRoom.bed.destroyed)
                     roomStack.Add(currentRoom);
 
