@@ -65,11 +65,11 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        // #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         Debug.unityLogger.logEnabled = true;
-        // #else
-        //         Debug.unityLogger.logEnabled = false;
-        // #endif
+#else
+                Debug.unityLogger.logEnabled = false;
+#endif
     }
 
     void Start()
