@@ -44,7 +44,8 @@ public class UI_GameScene_Home : UI_Scene
     {
         TouchGuard,
         RankImage,
-        RandomBoxReddot
+        RandomBoxReddot,
+        AbilityReddot
     }
 
     public enum LowerBtnTypes
@@ -177,6 +178,8 @@ public class UI_GameScene_Home : UI_Scene
         GetImage(Images.RandomBoxReddot).gameObject.SetActive(!Managers.LocalData.IsOpenRandomBoxRv);
 
         Managers.Tutorial.StartTutorial(GetButton(Buttons.RankModeBtn), PlayerTutorialStep.StartRankGame);
+
+        GetImage(Images.AbilityReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAnyAbility());
     }
 
     public void FirstSetting()
@@ -291,6 +294,12 @@ public class UI_GameScene_Home : UI_Scene
         this.SetListener(GameObserverType.Game.OnChangeGemCount, () =>
         {
             GetTextMesh(Texts.GemText).text = Managers.LocalData.PlayerGemCount.ToString();
+            GetImage(Images.AbilityReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAnyAbility());
+        });
+
+        this.SetListener(GameObserverType.Game.OnAbilityChanged, () =>
+        {
+            GetImage(Images.AbilityReddot).gameObject.SetActive(Managers.Ability.CanPurchaseAnyAbility());
         });
 
         this.SetListener(GameObserverType.Game.OnChangeTicketCount, () =>

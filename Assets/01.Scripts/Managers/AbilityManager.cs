@@ -139,6 +139,34 @@ public class AbilityManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// 현재 플레이어가 어떤 어빌리티라도 구매할 수 있는지 확인합니다.
+    /// 기본 어빌리티와 추가 어빌리티를 모두 체크합니다.
+    /// </summary>
+    /// <returns>구매 가능한 어빌리티가 하나라도 있으면 true</returns>
+    public bool CanPurchaseAnyAbility()
+    {
+        // 기본 어빌리티 체크
+        for (int i = 0; i < abilityData.abilities.Count; i++)
+        {
+            if (CanPurchaseAbility(i))
+            {
+                return true;
+            }
+        }
+
+        // 추가 어빌리티 체크
+        for (int i = 0; i < abilityData.additionalAbilities.Count; i++)
+        {
+            if (CanPurchaseAdditionalAbility(i))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void AddAbility(int abilityIndex)
     {
         // 능력 인덱스만 추가 (중복 체크는 CanPurchaseAbility에서 이미 함)
