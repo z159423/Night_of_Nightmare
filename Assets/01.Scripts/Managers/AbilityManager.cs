@@ -75,8 +75,6 @@ public class AbilityManager : MonoBehaviour
         AddAbility(abilityIndex);
 
         Debug.Log($"능력 구매 완료: {ability.type} (+{ability.value})");
-
-        Managers.Firebase.GameEvent("Purchase_Ability", abilityIndex.ToString());
         return true;
     }
 
@@ -138,8 +136,6 @@ public class AbilityManager : MonoBehaviour
 
         Debug.Log($"추가 능력 구매 완료: {ability.type} (+{ability.value})");
         GameObserver.Call(GameObserverType.Game.OnAbilityChanged);
-
-        Managers.Firebase.GameEvent("Purchase_AdditionalAbility", additionalAbilityIndex.ToString());
         return true;
     }
 

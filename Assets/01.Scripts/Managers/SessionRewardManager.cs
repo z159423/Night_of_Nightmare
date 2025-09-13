@@ -47,7 +47,7 @@ public class SessionRewardManager : MonoBehaviour
     {
         LoadOrInit();
         CheckDailyResetIfNeeded();
-
+        
         // 세션 시작 시각 기록
         _state.sessionStartUnix = NowUnix();
         _isFirstFrame = true;
@@ -61,7 +61,7 @@ public class SessionRewardManager : MonoBehaviour
         {
             _running = true;
             _isFirstFrame = true;
-
+            
             // 세션 재시작 시각 기록
             _state.sessionStartUnix = NowUnix();
         }
@@ -81,7 +81,7 @@ public class SessionRewardManager : MonoBehaviour
     {
         // _state가 null일 수 있으므로 null 체크 추가
         if (_state == null) return;
-
+        
         if (pause)
         {
             // 백그라운드로 갈 때 현재까지의 접속 시간 저장
@@ -92,7 +92,7 @@ public class SessionRewardManager : MonoBehaviour
         {
             // 포그라운드로 복귀할 때
             CheckDailyResetIfNeeded();
-
+            
             // 세션 재시작 시각 기록 (중요!)
             _state.sessionStartUnix = NowUnix();
             _isFirstFrame = true;
@@ -229,8 +229,6 @@ public class SessionRewardManager : MonoBehaviour
                     items.Add((Define.ItemType.Boost_Shield, uiParticleMarkerType.BoostBtn));
                     break;
             }
-
-            Managers.Firebase.GameEvent("SessionReward_Claim", minutes.ToString());
 
             Managers.Audio.PlaySound("snd_get_item");
 
@@ -503,7 +501,7 @@ public class SessionRewardManager : MonoBehaviour
 
             // 캡 재설정
             RecomputeCap();
-
+            
             // 카운터들 초기화
             _sinceLastSave = 0;
             _tick = 0f;
@@ -627,7 +625,7 @@ public class SessionRewardManager : MonoBehaviour
         }
 
         int targetSeconds = targetMinutes * 60;
-
+        
         // 캡을 넘지 않도록 조정
         if (targetSeconds > _capSeconds)
         {
@@ -654,7 +652,7 @@ public class SessionRewardManager : MonoBehaviour
 
         // 60분까지 누적 시간 설정
         _state.accumulatedSecondsToday = 3600; // 60분 = 3600초
-
+        
         // 모든 보상을 수령 완료로 설정
         _state.claimedMinutes.Clear();
         _state.claimedMinutes.AddRange(new int[] { 10, 20, 30, 40, 50, 60 });
@@ -720,7 +718,7 @@ public class SessionRewardManager : MonoBehaviour
         Debug.Log($"수령 완료 보상: [{string.Join(", ", _state.claimedMinutes)}]분");
         Debug.Log($"다음 보상까지: {SecondsToNextReward()}초");
         Debug.Log($"다음 리셋까지: {SecondsToDailyReset()}");
-
+        
         Debug.Log("=== 각 보상 상태 ===");
         foreach (var (minutes, reached, claimed) in GetAllRewardStatus())
         {

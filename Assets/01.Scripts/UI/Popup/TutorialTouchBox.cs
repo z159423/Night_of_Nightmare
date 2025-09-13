@@ -38,8 +38,6 @@ public class TutorialTouchBox : UI_Popup
         GetButton(Buttons.Btn).AddButtonEvent(() =>
         {
             Managers.LocalData.CompleteTutorial(tutorialIndex);
-
-            Managers.Firebase.GameEvent("StartTutorialComplete", tutorialIndex.ToString());
             button.onClick.Invoke();
 
             if (timePause)

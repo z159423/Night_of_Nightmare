@@ -23,7 +23,6 @@ public class Managers : SingletonStatic<Managers>
     public static AbilityManager Ability { get; set; } = new AbilityManager();
     public static TutorialManager Tutorial { get; set; } = new TutorialManager();
     public static CheatManager Cheat { get; set; } = new CheatManager();
-    public static FirebaseManager Firebase { get; set; } = null;
 
 
     public void CreateManagers()
@@ -45,7 +44,6 @@ public class Managers : SingletonStatic<Managers>
         Ability = transform.AddComponent<AbilityManager>();
         Tutorial = transform.AddComponent<TutorialManager>();
         Cheat = transform.AddComponent<CheatManager>();
-        Firebase = transform.AddComponent<FirebaseManager>();
     }
 
     private void Update()

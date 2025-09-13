@@ -51,8 +51,6 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("AdManager: give reward in onReward");
             adManager.rewardAdCompleteCallback?.Invoke();
-
-            Managers.Firebase.GameEvent("RewardAd_Claim", adManager.adKeyword);
         }
 
         public void onRewardedVideoAdLoaded(string unitId, CallbackInfo callbackInfo)
@@ -105,8 +103,6 @@ public class AdManager : MonoBehaviour
         }
     }
 
-    private string adKeyword = "";
-
     void Start()
     {
         // 리워드 비디오 리스너 설정
@@ -115,7 +111,7 @@ public class AdManager : MonoBehaviour
         Debug.Log("AdManager: Reward video listener set");
     }
 
-    public void ShowRewardAd(Action onComplete, string adKeyword = "")
+    public void ShowRewardAd(Action onComplete)
     {
         if (Managers.LocalData.PlayerRvTicketCount > 0)
         {
@@ -135,8 +131,6 @@ public class AdManager : MonoBehaviour
                 rewardAdCompleteCallback = onComplete;
                 Debug.Log("AdManager: Calling ShowReward");
                 LongriverSDKAd.instance.ShowReward("");
-
-                this.adKeyword = adKeyword;
             }
             else
             {

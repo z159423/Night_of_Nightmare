@@ -118,8 +118,6 @@ public class AttendanceManager : MonoBehaviour
                 break;
         }
 
-        Managers.Firebase.GameEvent("Attendance_Claim", nextIndex.ToString());
-
         Managers.Audio.PlaySound("snd_get_item");
 
         // 상태 갱신
@@ -286,7 +284,7 @@ public class AttendanceManager : MonoBehaviour
         return Managers.Localize.GetDynamicText("attendance_remain_time", $"{timeLeft.Hours:D2}:{timeLeft.Minutes:D2}:{timeLeft.Seconds:D2}");
     }
 
-
+    
 
     // ======= 예시: UI 버튼에서 호출 =======
     // public void OnClickClaim()
@@ -317,10 +315,10 @@ public class AttendanceManager : MonoBehaviour
         // 어제 날짜로 설정하여 오늘 수령 가능하게 만듦
         DateTime yesterday = DateTime.UtcNow.Date.AddDays(-1);
         string yesterdayStr = yesterday.ToString("yyyy-MM-dd");
-
+        
         PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, yesterdayStr);
         PlayerPrefs.Save();
-
+        
         Debug.Log($"AttendanceManager: 테스트용 - 다음 출석체크 수령 가능하도록 설정됨 (마지막 수령일: {yesterdayStr})");
         Debug.Log($"현재 진행 상황: {DaysClaimed}/7일, 오늘 수령 가능: {CanClaimToday()}");
     }
@@ -335,7 +333,7 @@ public class AttendanceManager : MonoBehaviour
         PlayerPrefs.DeleteKey(KEY_DAYS_CLAIMED);
         PlayerPrefs.DeleteKey(KEY_FINISHED);
         PlayerPrefs.Save();
-
+        
         Debug.Log("AttendanceManager: 테스트용 - 출석체크 완전 리셋됨");
         Debug.Log($"현재 진행 상황: {DaysClaimed}/7일, 오늘 수령 가능: {CanClaimToday()}");
     }
@@ -355,7 +353,7 @@ public class AttendanceManager : MonoBehaviour
 
         // 진행 일수 설정
         PlayerPrefs.SetInt(KEY_DAYS_CLAIMED, targetDay);
-
+        
         // 7일 완료 여부 설정
         if (targetDay >= 7)
         {
@@ -365,7 +363,7 @@ public class AttendanceManager : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt(KEY_FINISHED, 0);
-
+            
             if (makeAvailableToday)
             {
                 // 오늘 수령 가능하게 하려면 어제 날짜로 설정
@@ -378,9 +376,9 @@ public class AttendanceManager : MonoBehaviour
                 PlayerPrefs.SetString(KEY_LAST_CLAIM_UTC_DATE, TodayUtcDateStr);
             }
         }
-
+        
         PlayerPrefs.Save();
-
+        
         string availableText = targetDay >= 7 ? "완료됨" : (makeAvailableToday ? "가능" : "불가능");
         Debug.Log($"AttendanceManager: 테스트용 - {targetDay}일차로 설정됨, 오늘 수령: {availableText}");
         Debug.Log($"현재 진행 상황: {DaysClaimed}/7일, 오늘 수령 가능: {CanClaimToday()}");
@@ -393,7 +391,7 @@ public class AttendanceManager : MonoBehaviour
     {
         var status = GetStatus();
         string lastClaimDate = PlayerPrefs.GetString(KEY_LAST_CLAIM_UTC_DATE, "없음");
-
+        
         Debug.Log("=== 출석체크 현재 상태 ===");
         Debug.Log($"진행 일수: {status.daysClaimed}/7일");
         Debug.Log($"오늘 수령 여부: {status.claimedToday}");
