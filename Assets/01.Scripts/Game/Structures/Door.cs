@@ -181,14 +181,24 @@ public class Door : Structure
 
         if (IsPlayerStructure())
         {
-            if (Hp < MaxHp * 0.7f && !Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.FixDoor))
+            if (Hp < MaxHp * 0.7f)
             {
-                GameObserver.Call(GameObserverType.Game.OnNeedStartDoorTutorial);
+                Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().TryStartTutorial(PlayerTutorialStep.FixDoor);
             }
 
-            if (Hp < MaxHp * 0.4f && !Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Shield))
+            if (Hp < MaxHp * 0.6f)
             {
-                GameObserver.Call(GameObserverType.Game.OnNeedStartShieldTutorial);
+                Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().TryStartTutorial(PlayerTutorialStep.OverHeat);
+            }
+
+            if (Hp < MaxHp * 0.5f)
+            {
+                Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().TryStartTutorial(PlayerTutorialStep.Shield);
+            }
+
+            if (Hp < MaxHp * 0.3f)
+            {
+                Managers.UI._currentScene.GetComponent<UI_GameScene_Map>().TryStartTutorial(PlayerTutorialStep.Hammer);
             }
         }
     }

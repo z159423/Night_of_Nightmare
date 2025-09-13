@@ -149,24 +149,24 @@ public class UI_GameScene_Map : UI_Scene
                 var enemy = Managers.Game.enemy;
                 if (enemy.hp < enemy.MaxHp * 0.7f)
                 {
-                    Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostFireBtn), PlayerTutorialStep.OverHeat, true, true);
+                    TryStartTutorial(PlayerTutorialStep.FixDoor);
+                }
+
+                if (enemy.hp < enemy.MaxHp * 0.6f)
+                {
+                    TryStartTutorial(PlayerTutorialStep.OverHeat);
+                }
+
+                if (enemy.hp < enemy.MaxHp * 0.5f)
+                {
+                    TryStartTutorial(PlayerTutorialStep.Shield);
                 }
 
                 if (enemy.hp < enemy.MaxHp * 0.3f)
                 {
-                    Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostHammerBtn), PlayerTutorialStep.Hammer, true, true);
+                    TryStartTutorial(PlayerTutorialStep.Hammer);
                 }
             }
-        });
-
-        this.SetListener(GameObserverType.Game.OnNeedStartDoorTutorial, () =>
-        {
-            Managers.Tutorial.StartTutorial(GetButton(Buttons.RepairBtn), PlayerTutorialStep.FixDoor, true, true);
-        });
-
-        this.SetListener(GameObserverType.Game.OnNeedStartShieldTutorial, () =>
-        {
-            Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostShieldBtn), PlayerTutorialStep.Shield, true, true);
         });
     }
 
@@ -651,6 +651,8 @@ public class UI_GameScene_Map : UI_Scene
 
             StartTutorial();
         }
+
+        Managers.Firebase.GameEvent("ClearTutorial", Managers.LocalData.PlayerTutorialStep.ToString());
     }
 
     string GetTutorialText(TutorialData tutorialData)
@@ -713,6 +715,25 @@ public class UI_GameScene_Map : UI_Scene
         {
             GetTextMesh(Texts.BoostHammerCountText).transform.parent.gameObject.SetActive(false);
             GetImage(Images.BoostHammerRvIcon).gameObject.SetActive(true);
+        }
+    }
+
+    public void TryStartTutorial(PlayerTutorialStep step)
+    {
+        switch (step)
+        {
+            case PlayerTutorialStep.FixDoor:
+                Managers.Tutorial.StartTutorial(GetButton(Buttons.RepairBtn), PlayerTutorialStep.FixDoor, true, true);
+                break;
+            case PlayerTutorialStep.OverHeat:
+                Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostFireBtn), PlayerTutorialStep.OverHeat, true, true);
+                break;
+            case PlayerTutorialStep.Shield:
+                Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostShieldBtn), PlayerTutorialStep.Shield, true, true);
+                break;
+            case PlayerTutorialStep.Hammer:
+                Managers.Tutorial.StartTutorial(GetButton(Buttons.BoostHammerBtn), PlayerTutorialStep.Hammer, true, true);
+                break;
         }
     }
 
