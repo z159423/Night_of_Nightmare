@@ -7,6 +7,8 @@ using System.Linq;
 using static Define;
 using NavMeshPlus.Components;
 using UnityEngine.AI;
+using Firebase.Crashlytics;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -63,11 +65,11 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-// #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        // #if UNITY_EDITOR || DEVELOPMENT_BUILD
         Debug.unityLogger.logEnabled = true;
-// #else
-//         Debug.unityLogger.logEnabled = false;
-// #endif
+        // #else
+        //         Debug.unityLogger.logEnabled = false;
+        // #endif
     }
 
     void Start()
@@ -257,6 +259,8 @@ public class GameManager : MonoBehaviour
             energyRvBonus = false;
         }
 
+        Managers.Firebase.GameEvent("RankGameStart", Managers.LocalData.PlayerGameCount.ToString());
+
         // 반지름 1.6유닛(160px) 원 안에 랜덤 스폰
     }
     void SetPos(Transform trans)
@@ -337,6 +341,15 @@ public class GameManager : MonoBehaviour
         inGame = false;
 
         Managers.LocalData.PlayerGameCount++;
+
+        if (!isChallengeMode)
+        {
+            Managers.Firebase.GameEvent("RankGameLose", Managers.LocalData.PlayerGameCount.ToString());
+        }
+        else
+        {
+            Managers.Firebase.GameEvent("ChallengeModeLose", challengeLevel.ToString());
+        }
     }
 
     [Button("GameWin")]
@@ -356,6 +369,8 @@ public class GameManager : MonoBehaviour
 
         if (isChallengeMode)
         {
+            Managers.Firebase.GameEvent("Win_ChallengeMode", challengeLevel.ToString());
+
             if (challengeLevel == Managers.LocalData.ChallengeModeLevel)
             {
                 if (challengeLevel == 10)
@@ -371,6 +386,8 @@ public class GameManager : MonoBehaviour
             point = Random.Range(pointRange.Item1, pointRange.Item2);
 
             Managers.LocalData.PlayerRankingPoint += point;
+
+            Managers.Firebase.GameEvent("Win_RankMode", (Managers.LocalData.PlayerWinCount - 1).ToString());
         }
 
         GoHome();

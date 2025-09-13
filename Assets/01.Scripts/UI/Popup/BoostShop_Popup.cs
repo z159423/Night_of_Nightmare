@@ -46,6 +46,9 @@ public class BoostShop_Popup : UI_Popup
                 Managers.LocalData.PlayerGemCount -= data.price;
 
                 Managers.Audio.PlaySound("snd_get_item");
+
+                Managers.Firebase.GameEvent("Purchase_BoostItem", data.type.ToString());
+
             }, data);
         }
 

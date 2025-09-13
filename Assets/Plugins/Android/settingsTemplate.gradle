@@ -36,6 +36,9 @@ dependencyResolutionManagement {
         maven {
             url "https://sdk.tapjoy.com" // Assets/LongriverSDK/Editor/Dependencies.xml:11
         }
+        maven {
+            url (unityProjectPath + "/Assets/GeneratedLocalRepo/Firebase/m2repository") // Assets/Firebase/Editor/AnalyticsDependencies.xml:18, Assets/Firebase/Editor/AppDependencies.xml:22, Assets/Firebase/Editor/CrashlyticsDependencies.xml:20
+        }
         mavenLocal()
 // Android Resolver Repos End
         flatDir {
