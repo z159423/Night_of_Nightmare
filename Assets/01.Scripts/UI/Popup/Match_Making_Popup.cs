@@ -12,7 +12,8 @@ public class Match_Making_Popup : UI_Popup
         ExitBtn,
         MatchBtn,
         InfoBtn,
-        MatchingBtn
+        MatchingBtn,
+        RankModeRvBtn
     }
 
     enum Images
@@ -54,20 +55,15 @@ public class Match_Making_Popup : UI_Popup
         GetImage(Images.RankImage).SetNativeSize();
         GetTextMesh(Texts.RankingPointText).text = Define.GetPlayerCurrentTier().ToString() + "<br>" + Managers.LocalData.PlayerRankingPoint.ToString();
 
-        GetImage(Images.CoinRvImage).gameObject.SetActive(Managers.Game.goldRvBonus);
-        GetImage(Images.EnergyRvImage).gameObject.SetActive(Managers.Game.energyRvBonus);
-
-        if (Managers.Game.goldRvBonus)
-            Managers.UI.GenerateUIParticle(transform, GetImage(Images.CoinRvImage).transform, GetImage(Images.CoinRvImage).sprite, Vector3.one * 3);
-
-        if (Managers.Game.energyRvBonus)
-            Managers.UI.GenerateUIParticle(transform, GetImage(Images.EnergyRvImage).transform, GetImage(Images.EnergyRvImage).sprite, Vector3.one * 3);
-
+        OnShowStartRv();
         OpenAnimation();
 
         GetButton(Buttons.ExitBtn).gameObject.SetActive(Managers.LocalData.PlayerGameCount > 0);
 
         Managers.Tutorial.StartTutorial(GetButton(Buttons.MatchBtn), PlayerTutorialStep.StartMatching);
+
+        GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(Managers.LocalData.PlayerGameCount >= 1 && (!Managers.Game.goldRvBonus && !Managers.Game.energyRvBonus));
+
     }
 
     void Update()
@@ -152,6 +148,26 @@ public class Match_Making_Popup : UI_Popup
             }
         });
 
+        GetButton(Buttons.RankModeRvBtn).AddButtonEvent(() =>
+        {
+            var popup = Managers.UI.ShowPopupUI<StartRv_Popup>();
+
+            popup.onShowRv = () =>
+            {
+                Managers.Game.goldRvBonus = false;
+                Managers.Game.energyRvBonus = false;
+
+                if (UnityEngine.Random.Range(0, 2) == 0)
+                    Managers.Game.energyRvBonus = true;
+                else
+                    Managers.Game.goldRvBonus = true;
+
+                GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(false);
+
+                OnShowStartRv();
+            };
+        });
+
         GetTextMesh(Texts.MatchingTimeText).text = Managers.Localize.GetDynamicText("global.str_matching", matchingTime.ToString("F1"));
     }
 
@@ -225,5 +241,17 @@ public class Match_Making_Popup : UI_Popup
     private void Exit()
     {
         ClosePopupUI();
+    }
+
+    private void OnShowStartRv()
+    {
+        GetImage(Images.CoinRvImage).gameObject.SetActive(Managers.Game.goldRvBonus);
+        GetImage(Images.EnergyRvImage).gameObject.SetActive(Managers.Game.energyRvBonus);
+
+        if (Managers.Game.goldRvBonus)
+            Managers.UI.GenerateUIParticle(transform, GetImage(Images.CoinRvImage).transform, GetImage(Images.CoinRvImage).sprite, Vector3.one * 3);
+
+        if (Managers.Game.energyRvBonus)
+            Managers.UI.GenerateUIParticle(transform, GetImage(Images.EnergyRvImage).transform, GetImage(Images.EnergyRvImage).sprite, Vector3.one * 3);
     }
 }

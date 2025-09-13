@@ -774,7 +774,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9781154177208
-    m_Localized: Unlocks after 3 win in Rank Mode
+    m_Localized: Unlocks after @1 win in Rank Mode
     m_Metadata:
       m_Items: []
   - m_Id: 9823531126251520

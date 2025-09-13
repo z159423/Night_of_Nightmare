@@ -36,8 +36,8 @@ public class PlayerCharactor : PlayerableCharactor
         pathLineRenderer.endColor = new Color32(255, 194, 117, 180);
         pathLineRenderer.textureMode = LineTextureMode.Tile;
         pathLineRenderer.materials = new Material[] { Managers.Resource.Load<Material>("TutorialRenderer") };
-        pathLineRenderer.startWidth = 0.75f;
-        pathLineRenderer.endWidth = 0.75f;
+        pathLineRenderer.startWidth = 0.65f;
+        pathLineRenderer.endWidth = 0.65f;
         pathLineRenderer.sortingOrder = 1;
         pathLineRenderer.useWorldSpace = true;
         pathLineRenderer.enabled = false;
@@ -174,9 +174,9 @@ public class PlayerCharactor : PlayerableCharactor
                 float distance = Vector3.Distance(current, next);
 
                 // 거리가 충분히 긴 경우에만 보간 포인트 추가 (0.5f 이상)
-                if (distance > 0.01f)
+                if (distance > 0.2f)
                 {
-                    int interpolationCount = Mathf.Clamp(Mathf.RoundToInt(distance / 0.1f), 1, 20); // 최대 5개 보간점
+                    int interpolationCount = Mathf.Clamp(Mathf.RoundToInt(distance / 0.1f), 1, 5); // 최대 5개 보간점
 
                     for (int j = 1; j <= interpolationCount; j++)
                     {

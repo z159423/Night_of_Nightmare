@@ -528,7 +528,7 @@ public class UIManager : MonoBehaviour
 
         notification = Managers.Resource.Instantiate("Notification_Popup" + (index != 0 ? $"_{index}" : ""), Managers.UI.Root.transform).gameObject;
         notification.GetComponent<Notification_Popup>().Init();
-        notification.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetText(key));
+        notification.GetComponent<Notification_Popup>().Setting(Managers.Localize.GetDynamicText(key, (3 - Managers.LocalData.PlayerWinCount).ToString()));
     }
 
     public void GenerateUIParticle(Transform start, uiParticleMarkerType markerType, Define.ItemType item)

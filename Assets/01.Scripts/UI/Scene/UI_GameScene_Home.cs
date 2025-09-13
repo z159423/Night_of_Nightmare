@@ -29,7 +29,6 @@ public class UI_GameScene_Home : UI_Scene
         SettingBtn,
         AttendanceBtn,
         SessionRewardBtn,
-        RankModeRvBtn,
         RandomBoxRvBtn
     }
 
@@ -76,6 +75,8 @@ public class UI_GameScene_Home : UI_Scene
 
     private Ability_Popup abilityPopup;
 
+    private RectTransform sideMenu;
+
 
     public override void Init()
     {
@@ -120,7 +121,6 @@ public class UI_GameScene_Home : UI_Scene
         GetImage(Images.RankImage).sprite = Managers.Resource.Load<Sprite>($"Tier/{Define.GetPlayerCurrentTier().ToString()}");
         GetImage(Images.RankImage).SetNativeSize();
 
-        GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(Managers.LocalData.PlayerGameCount >= 1 && (!Managers.Game.goldRvBonus && !Managers.Game.energyRvBonus));
 
         this.SetListener(GameObserverType.Game.OnShowRandomReward, () =>
         {
@@ -198,6 +198,8 @@ public class UI_GameScene_Home : UI_Scene
         challengeLock = gameObject.FindRecursive("ChallengeLock");
 
         cheat = gameObject.FindRecursive("Cheat").transform;
+
+        sideMenu = gameObject.FindRecursive("SideMenu").GetComponent<RectTransform>();
 
         GetButton(Buttons.ShopBtn).AddButtonEvent(() =>
         {
@@ -339,23 +341,6 @@ public class UI_GameScene_Home : UI_Scene
             Managers.UI.ShowPopupUI<SessionReward_Popup>();
         });
 
-        GetButton(Buttons.RankModeRvBtn).AddButtonEvent(() =>
-        {
-            var popup = Managers.UI.ShowPopupUI<StartRv_Popup>();
-
-            popup.onShowRv = () =>
-            {
-                Managers.Game.goldRvBonus = false;
-                Managers.Game.energyRvBonus = false;
-
-                if (UnityEngine.Random.Range(0, 2) == 0)
-                    Managers.Game.energyRvBonus = true;
-                else
-                    Managers.Game.goldRvBonus = true;
-
-                GetButton(Buttons.RankModeRvBtn).gameObject.SetActive(false);
-            };
-        });
 
         GetButton(Buttons.RandomBoxRvBtn).gameObject.SetActive(ShouldShowRandomBoxRvBtn());
 
@@ -447,7 +432,8 @@ public class UI_GameScene_Home : UI_Scene
             needsLowerMenuMove = NeedsLowerMenuMove(from, to),
             needsCameraChange = NeedsCameraChange(from, to),
             waitTime = GetWaitTime(from, to),
-            finalAction = GetFinalAction(to)
+            finalAction = GetFinalAction(to),
+            showSideMenu = IsShowSideMenu(to)
         };
     }
 
@@ -509,6 +495,8 @@ public class UI_GameScene_Home : UI_Scene
         {
             AnimateCamera(selectedLowerBtnType, newType);
         }
+
+        ShowSideMenu(plan.showSideMenu);
 
         // 최종 액션 실행
         StartCoroutine(ExecuteFinalAction(plan.waitTime, plan.finalAction, newType));
@@ -636,6 +624,7 @@ public class UI_GameScene_Home : UI_Scene
         public bool needsCameraChange;
         public float waitTime;
         public System.Action finalAction;
+        public bool showSideMenu;
     }
 
     bool ShouldShowRandomBoxRvBtn()
@@ -652,5 +641,15 @@ public class UI_GameScene_Home : UI_Scene
 
         // 서비스 날짜가 다르거나, 같은 날인데 5회 미만이면 버튼 표시
         return currentServiceDate != lastServiceDate || Managers.LocalData.RandomBoxRvCount < Define.RandomBoxRvCount;
+    }
+
+    bool IsShowSideMenu(LowerBtnTypes to)
+    {
+        return to == LowerBtnTypes.HomeBtn;
+    }
+
+    void ShowSideMenu(bool show)
+    {
+        sideMenu.DOAnchorPosX(show ? -110 : 110, 0.5f).SetEase(Ease.OutCubic);
     }
 }

@@ -29,7 +29,7 @@ public class CheatManager : MonoBehaviour
     void Start()
     {
         // Development 모드일 때만 치트 활성화
-        enableCheat = Debug.isDebugBuild || Application.isEditor;
+        enableCheat = true;
 
         if (enableCheat)
         {
