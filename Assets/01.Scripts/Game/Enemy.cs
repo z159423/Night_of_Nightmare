@@ -475,9 +475,9 @@ public class Enemy : Charactor
 
             while (true)
             {
-                if(currentRoom == null || currentRoom.bed == null)
+                if (currentRoom == null || currentRoom.bed == null)
                     break;
-                    
+
                 if (currentRoom.bed.active && !currentRoom.bed.destroyed)
                     roomStack.Add(currentRoom);
 
@@ -538,7 +538,9 @@ public class Enemy : Charactor
             yield break;
 
         canAttack = false;
-        currentExp++;
+
+        if (Managers.Tutorial.IsCompletedTutorial(PlayerTutorialStep.Hammer))
+            currentExp++;
 
         Vector3 originalPosition = body.localPosition;
         Vector3 targetPosition = Vector3.zero;

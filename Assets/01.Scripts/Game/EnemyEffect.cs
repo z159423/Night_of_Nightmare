@@ -13,6 +13,9 @@ public abstract class EnemyEffect
 
     public void Apply(Enemy enemy)
     {
+        if (enemy == null || enemy.Agent == null)
+            return;
+
         IsActive = true;
         elapsedTime = 0f;
         OnApply(enemy);
@@ -55,6 +58,9 @@ public class BleedEffect : EnemyEffect
 
     protected override void OnApply(Enemy enemy)
     {
+        if (enemy == null || enemy.Agent == null)
+            return;
+
         tickTimer = 0f;
         // 출혈 이펙트 등 필요시 추가
 
@@ -93,6 +99,9 @@ public class FreezeEffect : EnemyEffect
 
     protected override void OnApply(Enemy enemy)
     {
+        if (enemy == null || enemy.Agent == null)
+            return;
+
         enemy.attackSpeed.AddMultiplier(attackSpeedMultiplier);
     }
 
@@ -117,6 +126,9 @@ public class StunEffect : EnemyEffect
 
     protected override void OnApply(Enemy enemy)
     {
+        if (enemy == null || enemy.Agent == null || !enemy.Agent.isOnNavMesh)
+            return;
+
         enemy.Agent.isStopped = true;
         enemy.Agent.velocity = Vector3.zero;
         enemy.stunParticle.gameObject.SetActive(true);
@@ -143,6 +155,9 @@ public class PoisonEffect : EnemyEffect
 
     protected override void OnApply(Enemy enemy)
     {
+        if (enemy == null || enemy.Agent == null)
+            return;
+
         tickTimer = 0f;
         // 필요시 이펙트 추가 (예: enemy.poisonParticle.Play();)
         enemy.poisonParticle.GetComponent<ParticleSystem>().Play();

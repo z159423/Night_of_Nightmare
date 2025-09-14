@@ -24,6 +24,12 @@ public class TutorialManager : MonoBehaviour
         var mask = Managers.UI.ShowPopupUI<TutorialTouchBox>();
         mask.Setting(targetBtn, (int)playerTutorialStep, timePuase, descBubble);
 
+        if (playerTutorialStep == PlayerTutorialStep.Hammer && Managers.Game.enemy != null)
+        {
+            Managers.Game.enemy.hp = Managers.Game.enemy.MaxHp * 0.1f;
+            Managers.Game.enemy.SetHpBar();
+        }
+
         if (timePuase)
             Time.timeScale = 0f;
     }

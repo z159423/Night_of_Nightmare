@@ -130,7 +130,7 @@ public class CharactorController : MonoBehaviour
 
                 if (isDragging)
                 {
-                    float cameraMoveSpeed = 0.8f;
+                    float cameraMoveSpeed = 0.67f;
                     Vector3 move = new Vector3(-dragDelta.x, -dragDelta.y, 0) * cameraMoveSpeed * Time.deltaTime;
 
                     if (mapVirtualCamera != null)
