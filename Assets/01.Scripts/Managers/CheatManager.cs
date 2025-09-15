@@ -63,6 +63,7 @@ public class CheatManager : MonoBehaviour
         CreateCheatUI();
     }
 
+#if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
     void Update()
     {
         if (!enableCheat) return;
@@ -82,6 +83,7 @@ public class CheatManager : MonoBehaviour
             ToggleCheatPanel();
         }
     }
+#endif
 
     void DetectShake()
     {
