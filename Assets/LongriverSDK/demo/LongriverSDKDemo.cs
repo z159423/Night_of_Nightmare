@@ -844,6 +844,17 @@ namespace LongriverSDKNS
             }
 
             y += buttonHeight + 10;
+            if (GUI.Button(new Rect(0, y, buttonWith, buttonHeight), "login with apple_sign", btnStyle))
+            {
+                LongriverSDKUserPayment.instance.loginWithTypeAsync(LOGIN_TYPE.APPLE_SIGN, delegate (LoginResult r) {
+                    log("login success " + JsonUtility.ToJson(r));
+
+                }, delegate (State s) {
+                    log("login fail " + JsonUtility.ToJson(s));
+                });
+            }
+
+            y += buttonHeight + 10;
             if (GUI.Button(new Rect(0, y, buttonWith, buttonHeight), "bind with device", btnStyle))
             {
                 LongriverSDKUserPayment.instance.bindWithTypeAsync(LOGIN_TYPE.DEVICE, delegate (UserInfoResult r) {

@@ -89,8 +89,16 @@ namespace LongriverSDKNS
         {
             bridge.Logout();
         }
-
+        
+        [Obsolete("该方法已废弃，请使用DeleteAccount方法替代，用法一致", false)]
         public void SignOut(Action<SignOutResult> success, Action<State> failed)
+        {
+            signOutSuccess = success;
+            signOutFailed = failed;
+            bridge.SignOut();
+        }
+        
+        public void DeleteAccount(Action<SignOutResult> success, Action<State> failed)
         {
             signOutSuccess = success;
             signOutFailed = failed;

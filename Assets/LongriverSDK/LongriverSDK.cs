@@ -15,7 +15,7 @@ namespace LongriverSDKNS
     {
 
         // -- static --
-        static public string SDK_VERSION = "V0.0.67";
+        static public string SDK_VERSION = "V0.0.71";
         static public string APP_JUMP_SECRET_KEY = "8C34BFB0F00F4631BD7897A84F19EFBE";
         static public LongriverSDK instance;
 

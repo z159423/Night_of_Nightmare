@@ -44,16 +44,16 @@ public class LongriverSDKApplovinPostBuild
             {"bigo-ads-max-adapter"                     , "4.6.0.0"     },
         }},
         {V3, new Dictionary<string, string>() {
-            // {"AppLovinMediationFyberAdapter"            , "8.3.7.0"     },
-            {"AppLovinMediationByteDanceAdapter"        , "7.2.0.5.0"   },
-            {"AppLovinMediationFacebookAdapter"         , "6.20.0.0"    },
-            {"AppLovinMediationIronSourceAdapter"       , "8.9.1.0.1"   },
-            {"AppLovinMediationMintegralAdapter"        , "7.7.8.0.0"   },
-            {"AppLovinMediationUnityAdsAdapter"         , "4.15.0.0"    },
-            {"AppLovinMediationVungleAdapter"           , "7.5.1.4"     },
-            {"AppLovinMediationGoogleAdManagerAdapter"  , "12.6.0.0"    },
-            {"AppLovinMediationGoogleAdapter"           , "12.6.0.0"    },
-            {"bigo-ads-max-adapter"                     , "4.8.1.0"     },
+            // {"AppLovinMediationFyberAdapter"            , "8.3.8.0"     },
+            {"AppLovinMediationByteDanceAdapter"        , "7.5.0.5.0"   },
+            {"AppLovinMediationFacebookAdapter"         , "6.20.1.0"    },
+            {"AppLovinMediationIronSourceAdapter"       , "8.10.0.0.1"   },
+            {"AppLovinMediationMintegralAdapter"        , "7.7.9.0.0"   },
+            {"AppLovinMediationUnityAdsAdapter"         , "4.16.1.0"    },
+            {"AppLovinMediationVungleAdapter"           , "7.5.3.0"     },
+            {"AppLovinMediationGoogleAdManagerAdapter"  , "12.9.0.0"    },
+            {"AppLovinMediationGoogleAdapter"           , "12.9.0.0"    },
+            {"bigo-ads-max-adapter"                     , "4.9.1.0"     },
         }},
     };
 
@@ -68,7 +68,7 @@ public class LongriverSDKApplovinPostBuild
         }},
         {V3, new Dictionary<string, string>() {
             {AppLovinSDK, V3},
-            {"Google-Mobile-Ads-SDK", "12.6.0.0"},
+            {"Google-Mobile-Ads-SDK", "12.9.0.0"},
         }},
     };
 

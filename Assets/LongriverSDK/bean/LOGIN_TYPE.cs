@@ -13,7 +13,9 @@ namespace LongriverSDKNS
         [DoNotRename]
         GOOGLE_PLAY,
         [DoNotRename]
-        GAME_CENTER
+        GAME_CENTER,
+        [DoNotRename]
+        APPLE_SIGN
     }
 
     public class LOGIN_TYPE_HELPER
