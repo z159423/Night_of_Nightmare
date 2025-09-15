@@ -22,7 +22,7 @@ public class Managers : SingletonStatic<Managers>
     public static SessionRewardManager SessionReward { get; set; } = new SessionRewardManager();
     public static AbilityManager Ability { get; set; } = new AbilityManager();
     public static TutorialManager Tutorial { get; set; } = new TutorialManager();
-#if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
+#if UNITY_EDITOR || Development_BUILD
     public static CheatManager Cheat { get; set; } = new CheatManager();
 #endif
 
@@ -45,7 +45,7 @@ public class Managers : SingletonStatic<Managers>
         SessionReward = transform.AddComponent<SessionRewardManager>();
         Ability = transform.AddComponent<AbilityManager>();
         Tutorial = transform.AddComponent<TutorialManager>();
-#if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
+#if UNITY_EDITOR || Development_BUILD
         Cheat = transform.AddComponent<CheatManager>();
 #endif
 
