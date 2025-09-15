@@ -11,6 +11,18 @@ namespace LongriverSDKNS
     {
         [UnityEngine.SerializeField]
         public List<ShopItem> items = new List<ShopItem>();
+
+        public string GetFormattedPrice(string itemId)
+        {
+            foreach (var item in items)
+            {
+                if (item.itemId == itemId)
+                {
+                    return item.formattedPrice;
+                }
+            }
+            return string.Empty;
+        }
     }
 }
 
